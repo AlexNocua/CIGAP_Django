@@ -1,0 +1,17 @@
+<!-- plataform_CIGAP/templates/login.html -->
+{% extends 'estudiante/base_estudiante.html' %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block content %}
+  <h2>Login</h2>
+  <form action="" method="post">
+    {% csrf_token %}
+    <!-- campos del formulario de login -->
+    <input type="text" name="username" placeholder="Username" />
+    <input type="password" name="password" placeholder="Password" />
+    <button type="submit">Login</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,68 @@
+.prueba {
+  background: #2b2b2b;
+  display: flex;
+  color: #fff;
+  position: relative;
+  /* Asegura que los elementos hijos absolutamente posicionados estén relacionados con este contenedor */
+  overflow: hidden;
+  /* Oculta cualquier contenido que se desplace fuera del contenedor */
+}
+
+.titulo, .informacion {
+  width: 50%;
+}
+
+
+
+.cubes {
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+}
+
+.cube {
+  animation: girar 3s infinite;
+  position: absolute;
+  top: 50%;
+  /* Centra los cubos verticalmente */
+  transform: translateY(-50%);
+  /* Ajusta el centro vertical de los cubos */
+}
+
+.cube:first-child {
+  width: 20px;
+  height: 20px;
+  background: green;
+}
+
+.cube:nth-child(2) {
+  width: 20px;
+  height: 20px;
+  background: rgb(141, 126, 98);
+}
+
+.cube:nth-child(3) {
+  width: 20px;
+  height: 20px;
+  background: rgb(20, 9, 82);
+}
+
+.cube:nth-child(4) {
+  width: 20px;
+  height: 20px;
+  background: rgb(255, 0, 0);
+}
+
+@keyframes girar {
+  0% {
+    transform: translate(-100px, -50%);
+    /* Inicia fuera del contenedor a la izquierda */
+  }
+
+  100% {
+    transform: translate(100vw, -50%);
+    /* Se mueve hacia la derecha y se oculta fuera del contenedor */
+  }
+}

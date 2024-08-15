@@ -168,6 +168,30 @@
         "documentation": {}
     },
     {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponsePermanentRedirect",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
         "label": "HttpResponse",
         "importPath": "django.http",
         "description": "django.http",
@@ -294,11 +318,20 @@
         "documentation": {}
     },
     {
-        "label": "funcionando",
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.director.urls",
+        "description": "plataform_CIGAP.director.urls",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_director, name='principal_director')\n]",
+        "detail": "plataform_CIGAP.director.urls",
+        "documentation": {}
+    },
+    {
+        "label": "principal_director",
         "kind": 2,
         "importPath": "plataform_CIGAP.director.views",
         "description": "plataform_CIGAP.director.views",
-        "peekOfCode": "def funcionando(request):\n    return HttpResponse('app_ director funcionando.')",
+        "peekOfCode": "def principal_director(request):\n    return render(request, 'director/principal_director.html')",
         "detail": "plataform_CIGAP.director.views",
         "documentation": {}
     },
@@ -312,20 +345,92 @@
         "documentation": {}
     },
     {
+        "label": "FormLogin",
+        "kind": 6,
+        "importPath": "plataform_CIGAP.estudiante.forms",
+        "description": "plataform_CIGAP.estudiante.forms",
+        "peekOfCode": "class FormLogin(forms.ModelForm):\n    model = ModelLoginUser\n    fields = '__all__'",
+        "detail": "plataform_CIGAP.estudiante.forms",
+        "documentation": {}
+    },
+    {
+        "label": "ModelLoginUser",
+        "kind": 6,
+        "importPath": "plataform_CIGAP.estudiante.models",
+        "description": "plataform_CIGAP.estudiante.models",
+        "peekOfCode": "class ModelLoginUser(models.Model):\n    primer_nombre = models.CharField(max_length=100)\n    segundo_nombre = models.CharField(max_length=100)\n    primer_apellido = models.CharField(max_length=100)\n    segundo_apellido = models.CharField(max_length=100)\n    semestre_curso = models.IntegerField()\n    user_email = models.CharField(max_length=100)\n    contraseña = models.IntegerField()\n# creacion del modelo para guardar los datos del anteproyecto\nclass Anteproyecto (models.Model):",
+        "detail": "plataform_CIGAP.estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "Anteproyect",
+        "kind": 6,
+        "importPath": "plataform_CIGAP.estudiante.models",
+        "description": "plataform_CIGAP.estudiante.models",
+        "peekOfCode": "class Anteproyecto (models.Model):\n    titulo = models.CharField(max_length=200)\n    num_estudiantes = models.IntegerField()\n    anteproyecto = models.FileField()\n    num_solicitud_anteproyecto = models.IntegerField()\n    estado_solicitud_anteproyecto = models.BooleanField()\n    director = models.CharField(max_length=200)\n    coodirector = models.CharField(max_length=200)\n# creacion del modelo de monografia o proyecto de grado\nclass ProyectoGrado (models.Model):",
+        "detail": "plataform_CIGAP.estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "ProyectoGrad",
+        "kind": 6,
+        "importPath": "plataform_CIGAP.estudiante.models",
+        "description": "plataform_CIGAP.estudiante.models",
+        "peekOfCode": "class ProyectoGrado (models.Model):\n    pass\nclass EtapasProyecto (models.Model):\n    pass\n# creacion del modelo mas grande respecto a relaciones con otras aplicaciones\n# Modelo de Observaciones\nclass Observaciones (models.Model):\n    pass",
+        "detail": "plataform_CIGAP.estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "EtapasProyect",
+        "kind": 6,
+        "importPath": "plataform_CIGAP.estudiante.models",
+        "description": "plataform_CIGAP.estudiante.models",
+        "peekOfCode": "class EtapasProyecto (models.Model):\n    pass\n# creacion del modelo mas grande respecto a relaciones con otras aplicaciones\n# Modelo de Observaciones\nclass Observaciones (models.Model):\n    pass",
+        "detail": "plataform_CIGAP.estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "Observacione",
+        "kind": 6,
+        "importPath": "plataform_CIGAP.estudiante.models",
+        "description": "plataform_CIGAP.estudiante.models",
+        "peekOfCode": "class Observaciones (models.Model):\n    pass",
+        "detail": "plataform_CIGAP.estudiante.models",
+        "documentation": {}
+    },
+    {
         "label": "urlpatterns",
         "kind": 5,
         "importPath": "plataform_CIGAP.estudiante.urls",
         "description": "plataform_CIGAP.estudiante.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando')\n]",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando'),\n    path('principal', views.principal, name='principal'),\n    path('estudiante', views.estudiante, name='estudiante'),\n]",
         "detail": "plataform_CIGAP.estudiante.urls",
         "documentation": {}
     },
     {
-        "label": "funcionand",
+        "label": "funcionando",
         "kind": 2,
         "importPath": "plataform_CIGAP.estudiante.views",
         "description": "plataform_CIGAP.estudiante.views",
-        "peekOfCode": "def funcionando (request):\n    return HttpResponse('app_ estudiante funcionando.')",
+        "peekOfCode": "def funcionando(request):\n    return HttpResponse('app_ estudiante funcionando.')\ndef principal(request):\n    return render(request, 'estudiante/base_estudiante.html')\ndef estudiante(request):\n    return render(request, 'estudiante/estudiante.html')",
+        "detail": "plataform_CIGAP.estudiante.views",
+        "documentation": {}
+    },
+    {
+        "label": "principal",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.estudiante.views",
+        "description": "plataform_CIGAP.estudiante.views",
+        "peekOfCode": "def principal(request):\n    return render(request, 'estudiante/base_estudiante.html')\ndef estudiante(request):\n    return render(request, 'estudiante/estudiante.html')",
+        "detail": "plataform_CIGAP.estudiante.views",
+        "documentation": {}
+    },
+    {
+        "label": "estudiante",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.estudiante.views",
+        "description": "plataform_CIGAP.estudiante.views",
+        "peekOfCode": "def estudiante(request):\n    return render(request, 'estudiante/estudiante.html')",
         "detail": "plataform_CIGAP.estudiante.views",
         "documentation": {}
     },
@@ -370,7 +475,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia', ",
+        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia',",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -379,7 +484,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia', \n    'director', \n    'estudiante',",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia',\n    'director',\n    'estudiante',",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -397,7 +502,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "ROOT_URLCONF = 'plataform_CIGAP.urls'\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',",
+        "peekOfCode": "ROOT_URLCONF = 'plataform_CIGAP.urls'\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # Directorio global de templates\n        'DIRS': [os.path.join(BASE_DIR, 'plataform_CIGAP', 'templates')],\n        # 'DIRS': ['templates'],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -406,7 +511,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',\n                'django.contrib.auth.context_processors.auth',",
+        "peekOfCode": "TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # Directorio global de templates\n        'DIRS': [os.path.join(BASE_DIR, 'plataform_CIGAP', 'templates')],\n        # 'DIRS': ['templates'],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -442,7 +547,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = 'static/'\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -451,7 +556,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = 'static/'\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -460,7 +565,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = 'static/'\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -469,7 +574,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = 'static/'\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -478,7 +583,25 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
         "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "STATIC_URL = 'static/'\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "peekOfCode": "STATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_DIRS",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "peekOfCode": "STATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_ROOT",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "peekOfCode": "STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
         "detail": "plataform_CIGAP.plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -496,8 +619,17 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.plataform_CIGAP.urls",
         "description": "plataform_CIGAP.plataform_CIGAP.urls",
-        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('estudiante/', include('estudiante.urls')),\n    path('director/', include('director.urls')),\n    path('correspondencia/', include('correspondencia.urls')),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', views.login, name='login'),\n    path('admin/', admin.site.urls),\n    path('estudiante/', include('estudiante.urls')),\n    path('director/', include('director.urls')),\n    path('correspondencia/', include('correspondencia.urls')),\n]",
         "detail": "plataform_CIGAP.plataform_CIGAP.urls",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.plataform_CIGAP.views",
+        "description": "plataform_CIGAP.plataform_CIGAP.views",
+        "peekOfCode": "def login(request):\n    return render(request, \"login.html\")",
+        "detail": "plataform_CIGAP.plataform_CIGAP.views",
         "documentation": {}
     },
     {

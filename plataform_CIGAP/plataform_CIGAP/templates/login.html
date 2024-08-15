@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block tittle %}
+  Login
+{% endblock %}
+
+{% block extra_head %}
+  <!--      
+    Importacion de la carpeta static styles y manipulacion del DOM    
+          -->
+  {% load static %}
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  
+  <link rel="stylesheet" href="{% static 'css/toast.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/styleForm.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}" />
+  <!-- Esta es una biblioteca de alertas -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link rel="stylesheet" href="./src/css/alertRecuperarCuenta.css" />
+{% endblock %}
+{% block content %}
+  <div class="d-flex justify-content-center align-items-center h-100">
+  
+
+    <img class="fondo" src="{% static 'icons/logoUDEC.png' %}" alt="Logo UDEC" />
+    <div id="contenedor" class="container p-0 rounded overflow-hidden w-75 h-75 m-5">
+      <div id="contentINF" class="w-50 z-3">
+        <div id="contentINF1" class="classInfo col w-100 h-100 flex-column p-3 pb-5 justify-content-end" style="display: flex; color: aliceblue;">
+          <div class="pb-5">
+            <h1>CIGAP Ubaté</h1>
+            <p>Plataforma virtual para el control de información y gestión de anteproyectos y proyectos de grado.</p>
+          </div>
+
+          <span class="m-0 pt-5"><p class="m-0 p-0 text-end">Desarrollado para estudiantes de la facultad de ingeniería y comité de trabajos de grado de la seccional Ubaté.</p></span>
+        </div>
+
+        <div id="contentINF2" class="classInfo infoRegister col w-100 h-100 d-flex flex-column p-3 pb-5 justify-content-end" style="display: none; color: aliceblue;">
+          <div class="position-absolute" style="top: 20px;">
+            <button id="btnvolver" class="border-0 p-1 btn-volver">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+              </svg><span class="m-1">Volver</span>
+            </button>
+          </div>
+          <div class="pb-5">
+            <h1>Regístrate</h1>
+            <p>Ingresa los siguientes datos y se nuestro nuevo usuario.</p>
+          </div>
+
+          <span class="m-0 pt-5"><p class="m-0 p-0 text-end">Desarrollado para estudiantes de la facultad de ingeniería y comité de trabajos de grado de la seccional Ubaté.</p></span>
+        </div>
+      </div>
+      <div id="col_datos" class="w-50">
+        <section id="sectionLogin" class="login rounded overflow-hidden justify-content-center flex-row w-100 h-100" style="display: flex;">
+          <div class="d-flex w-100 h-100 justify-content-around align-items-center" style="background:#2a2a2a ;">
+            <div id="camposDoLogin" class="camposLogin col justify-content-end w-100 h-100 d-flex flex-column">
+              <div class="contentLogin d-flex w-100 flex-column justify-content-center align-items-center">
+                <h1 class="pb-3 text-center">Login</h1>
+                <div class="d-flex pb-5 flex-column w-75 mb-3">
+                  <p class="p-0 pb-2 m-0">Email</p>
+                  <div class="contenedoresInput bg-white rounded-3 d-flex justify-content-center align-items-center">
+                    <input id="email" type="email" class="custom-input w-100 p-1 rounded-3 border-0" placeholder="example@app.com" />
+                    <svg class="m-2 me-3" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16" style="color: rgb(48, 48, 48);">
+                      <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
+                    </svg>
+                  </div>
+
+                  <p class="pt-3 pb-2 m-0">Password</p>
+                  <div class="contenedoresInput bg-white d-flex justify-content-center align-items-center rounded-3 overflow-hidden">
+                    <input id="password" type="password" class="custom-input w-100 p-1 rounded-pill border-0" placeholder="" />
+                    <button id="btnMostrarOcultar" class="border-0 rounded-3">
+                      <svg id="iconOn" class="m-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16" style="color: rgb(48, 48, 48);">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                      </svg>
+                      <!-- Configurar visibilidad -->
+                      <svg id="iconOff" style="display: none; color: rgb(48, 48, 48);" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill m-2" viewBox="0 0 16 16">
+                        <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
+                        <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <p class="m-0 mb-2">¿Olvidaste tu contraseña?</p>
+                <span class="m-0 d-flex col">
+                  <div class="d-flex">
+                    <div class="part1"></div>
+                    <div class="part1"></div>
+                    <div class="part1"></div>
+                    <div class="part1"></div>
+                  </div>
+                  <a id="linkRecuperar" class="m-0 d-flex p-0 fst-italic text-center position-static justify-content-center align-items-center">Recupera tu cuenta</a>
+                  <div class="d-flex">
+                    <div class="part"></div>
+                    <div class="part"></div>
+                    <div class="part"></div>
+                    <div class="part"></div>
+                  </div>
+                </span>
+              </div>
+
+              <div class="textinferiores d-flex pb-3 mt-5 justify-content-center align-items-center flex-column">
+                <button id="submit" class="buttonIngresar rounded-top border-0 w-100 p-2 text-center fw-bold">Ingresar</button>
+
+                <p class="m-0 mt-3">¿No tiene una cuenta?</p>
+
+                <span class="m-0"><p id="btnform" class="btnform m-0 fw-bold">Cree una</p></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sectionForm" class="sectionForm rounded overflow-hidden justify-content-center flex-row w-100 h-100" class="formulario p-3 rounded overflow-hidden justify-content-center flex-row w-50 h-100 flex-column">
+          <div class="d-flex w-100 h-100 justify-content-center" style="background:#2a2a2a ;">
+            <form id="campoForm" class="campoForm row w-100 pt-3 z-3">
+              <h5 class="text-center">Ingrese la siguiente informacion:</h5>
+              <div id="div_inputs" class="col-md-6">
+                <label id="form-label" for="inputNombre" class="form-label d-flex justify-content-between d-flex justify-content-between">Nombre</label>
+                <input type="text" class="form-control" id="inputNombre" placeholder="Tu nombre" required />
+              </div>
+              <div id="div_inputs" class="col-md-6">
+                <label id="form-label2" for="inputApellido" class="form-label d-flex justify-content-between">Apellido</label>
+                <input type="text" class="form-control" id="inputApellido" placeholder="Tu apellido" required />
+              </div>
+              <div id="div_inputs" class="col-6">
+                <label id="form-label3" for="inputCorreo" class="form-label d-flex justify-content-between">Correo</label>
+                <input type="email" class="form-control" id="inputCorreo" placeholder="Example@email.com" required />
+              </div>
+              <div id="div_inputs" class="col-6">
+                <label id="form-label4" for="inputRol" class="form-label d-flex justify-content-between">Rol</label>
+                <select id="inputRol" class="form-select" aria-label="Default select example">
+                  <option value="Selecciona un rol" selected>Selecciona un rol</option>
+                  <option value="Administrativo">Administrativo</option>
+                  <option value="Usuario">Usuario</option>
+                </select>
+              </div>
+              <div id="div_inputs" class="col">
+                <label id="form-label5" for="inputPassword" class="form-label d-flex justify-content-between">Password</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Digita tu contraseña" required />
+              </div>
+              <div class="col">
+                <label id="form-label6" for="inputVerifyPassword" class="form-label d-flex justify-content-between">Verifique su password</label>
+                <input type="password" class="form-control" id="inputVerifyPassword" placeholder="Verifica tu contraseña" required />
+              </div>
+
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck" />
+                  <label id="gridCheck" class="form-check-label" for="gridCheck">Estoy de acuerdo con la política de tratamiento de datos personales autorizando su manejo en la plataforma de gestión.</label>
+                </div>
+              </div>
+              <button id="btnSubmitForm" type="button" class="buttonIngresar border-0 w-100 p-2 text-center fw-bold">Registrar</button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- toast verifica que ingreses los datos -->
+    <div  class="position-fixed bottom-0 end-0 p-3 bg-transparent" style="z-index: 2000">
+      <div id="liveToast" class="toast bg-transparent" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="" class="rounded me-2" alt="" />
+          <strong class="me-auto">Sistema de Gestión</strong>
+          <small>Ahora</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="toast-text" class="toast-body"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script type="text/javascript">
+      emailjs.init('IDrBsYbgt6bDembxR')
+    </script>
+
+    <!-- importante especificar que este scrip de base de datos como modulo -->
+    <script type="module" src="{% static 'js/ManipulacionComponentes.js' %}"></script>
+    <script type="module" src="{% static 'js/Animaciones.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <script type="module" src="src/js/ManipulacionComponentes.js"></script>
+    <script type="module" src="src/js/Animaciones.js"></script>
+  </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+ #liveToast, strong, small {
+    color: #fff;
+ }
+
+
+
+ #liveToast {
+    background: var(--colores_institucionalesfondo1);
+ }
+
+ .toast {
+    background: transparent;
+ }
+div #toast-text{
+   background: #ffffff;
+   color:var(--colores_institucionalesTextoNegrilla);
+}
+ .toast-header {
+    background: var(--colores_institucionalesfondo1);
+ }

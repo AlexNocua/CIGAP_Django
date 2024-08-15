@@ -1,3 +1,5 @@
+from . import views
+
 """
 URL configuration for plataform_CIGAP project.
 
@@ -18,6 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', views.login, name='login'),
     path('admin/', admin.site.urls),
     path('estudiante/', include('estudiante.urls')),
     path('director/', include('director.urls')),
