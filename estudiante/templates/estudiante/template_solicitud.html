@@ -1,0 +1,10 @@
+{% extends 'estudiante/base_estudiante.html' %}
+
+{% block solicitud %}
+  <h2 class="m-3">Crea tu solicitud</h2>
+  <form action="{% url 'estudiante:solicitud' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Enviar" />
+  </form>
+{% endblock %}

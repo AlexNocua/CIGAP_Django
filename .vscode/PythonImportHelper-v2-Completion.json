@@ -32,6 +32,30 @@
         "documentation": {}
     },
     {
+        "label": "messages",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
         "label": "AppConfig",
         "importPath": "django.apps",
         "description": "django.apps",
@@ -77,6 +101,86 @@
         "description": "django.db",
         "isExtraImport": true,
         "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
         "documentation": {}
     },
     {
@@ -144,7 +248,47 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -168,7 +312,7 @@
         "documentation": {}
     },
     {
-        "label": "render",
+        "label": "redirect",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -232,11 +376,125 @@
         "documentation": {}
     },
     {
-        "label": "HttpResponsePermanentRedirect",
-        "importPath": "django.http",
-        "description": "django.http",
+        "label": "django.contrib.auth.models",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "django.http",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "Group",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "Group",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "runpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "runpy",
+        "description": "runpy",
+        "detail": "runpy",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
         "documentation": {}
     },
     {
@@ -246,6 +504,154 @@
         "importPath": "os",
         "description": "os",
         "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "MinValueValidator",
+        "importPath": "django.core.validators",
+        "description": "django.core.validators",
+        "isExtraImport": true,
+        "detail": "django.core.validators",
+        "documentation": {}
+    },
+    {
+        "label": "MaxValueValidator",
+        "importPath": "django.core.validators",
+        "description": "django.core.validators",
+        "isExtraImport": true,
+        "detail": "django.core.validators",
+        "documentation": {}
+    },
+    {
+        "label": "django.contrib.auth.validators",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.contrib.auth.validators",
+        "description": "django.contrib.auth.validators",
+        "detail": "django.contrib.auth.validators",
+        "documentation": {}
+    },
+    {
+        "label": "django.utils.timezone",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.utils.timezone",
+        "description": "django.utils.timezone",
+        "detail": "django.utils.timezone",
+        "documentation": {}
+    },
+    {
+        "label": "UserAdmin",
+        "importPath": "django.contrib.auth.admin",
+        "description": "django.contrib.auth.admin",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.admin",
+        "documentation": {}
+    },
+    {
+        "label": "Estudiante",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "isExtraImport": true,
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "Estudiante",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "isExtraImport": true,
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "AuthenticationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
+        "label": "AuthenticationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
         "documentation": {}
     },
     {
@@ -273,381 +679,615 @@
         "documentation": {}
     },
     {
-        "label": "sys",
+        "label": "CorrespondenciaConfig",
         "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sys",
-        "description": "sys",
-        "detail": "sys",
+        "importPath": "correspondencia.apps",
+        "description": "correspondencia.apps",
+        "peekOfCode": "class CorrespondenciaConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'correspondencia'",
+        "detail": "correspondencia.apps",
         "documentation": {}
     },
     {
-        "label": "CorrespondenciaConfig",
-        "kind": 6,
-        "importPath": "plataform_CIGAP.correspondencia.apps",
-        "description": "plataform_CIGAP.correspondencia.apps",
-        "peekOfCode": "class CorrespondenciaConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'correspondencia'",
-        "detail": "plataform_CIGAP.correspondencia.apps",
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "correspondencia.urls",
+        "description": "correspondencia.urls",
+        "peekOfCode": "app_name = 'correspondencia'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando')\n]",
+        "detail": "correspondencia.urls",
         "documentation": {}
     },
     {
         "label": "urlpatterns",
         "kind": 5,
-        "importPath": "plataform_CIGAP.correspondencia.urls",
-        "description": "plataform_CIGAP.correspondencia.urls",
+        "importPath": "correspondencia.urls",
+        "description": "correspondencia.urls",
         "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando')\n]",
-        "detail": "plataform_CIGAP.correspondencia.urls",
+        "detail": "correspondencia.urls",
         "documentation": {}
     },
     {
         "label": "funcionand",
         "kind": 2,
-        "importPath": "plataform_CIGAP.correspondencia.views",
-        "description": "plataform_CIGAP.correspondencia.views",
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
         "peekOfCode": "def funcionando (request):\n    return HttpResponse('app_ correspondencia funcionando.')",
-        "detail": "plataform_CIGAP.correspondencia.views",
+        "detail": "correspondencia.views",
         "documentation": {}
     },
     {
         "label": "DirectorConfig",
         "kind": 6,
-        "importPath": "plataform_CIGAP.director.apps",
-        "description": "plataform_CIGAP.director.apps",
+        "importPath": "director.apps",
+        "description": "director.apps",
         "peekOfCode": "class DirectorConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'director'",
-        "detail": "plataform_CIGAP.director.apps",
+        "detail": "director.apps",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "director.urls",
+        "description": "director.urls",
+        "peekOfCode": "app_name = 'director'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.base_director, name='base_director')\n]",
+        "detail": "director.urls",
         "documentation": {}
     },
     {
         "label": "urlpatterns",
         "kind": 5,
-        "importPath": "plataform_CIGAP.director.urls",
-        "description": "plataform_CIGAP.director.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_director, name='principal_director')\n]",
-        "detail": "plataform_CIGAP.director.urls",
+        "importPath": "director.urls",
+        "description": "director.urls",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.base_director, name='base_director')\n]",
+        "detail": "director.urls",
         "documentation": {}
     },
     {
-        "label": "principal_director",
+        "label": "base_director",
         "kind": 2,
-        "importPath": "plataform_CIGAP.director.views",
-        "description": "plataform_CIGAP.director.views",
-        "peekOfCode": "def principal_director(request):\n    return render(request, 'director/principal_director.html')",
-        "detail": "plataform_CIGAP.director.views",
+        "importPath": "director.views",
+        "description": "director.views",
+        "peekOfCode": "def base_director(request):\n    return render(request, 'director/base_director.html')",
+        "detail": "director.views",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "base = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "env.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": "env.Scripts.activate_this",
+        "description": "env.Scripts.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": "env.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "EstudianteConfig",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.apps",
-        "description": "plataform_CIGAP.estudiante.apps",
+        "importPath": "estudiante.apps",
+        "description": "estudiante.apps",
         "peekOfCode": "class EstudianteConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'estudiante'",
-        "detail": "plataform_CIGAP.estudiante.apps",
+        "detail": "estudiante.apps",
         "documentation": {}
     },
     {
-        "label": "FormLogin",
+        "label": "FormPrimeraSolicitud",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.forms",
-        "description": "plataform_CIGAP.estudiante.forms",
-        "peekOfCode": "class FormLogin(forms.ModelForm):\n    model = ModelLoginUser\n    fields = '__all__'",
-        "detail": "plataform_CIGAP.estudiante.forms",
+        "importPath": "estudiante.forms",
+        "description": "estudiante.forms",
+        "peekOfCode": "class FormPrimeraSolicitud(forms.ModelForm):\n    class Meta:\n        model = ModelPrimeraSolicitud\n        fields = '__all__'",
+        "detail": "estudiante.forms",
         "documentation": {}
     },
     {
-        "label": "ModelLoginUser",
+        "label": "Estudiante",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.models",
-        "description": "plataform_CIGAP.estudiante.models",
-        "peekOfCode": "class ModelLoginUser(models.Model):\n    primer_nombre = models.CharField(max_length=100)\n    segundo_nombre = models.CharField(max_length=100)\n    primer_apellido = models.CharField(max_length=100)\n    segundo_apellido = models.CharField(max_length=100)\n    semestre_curso = models.IntegerField()\n    user_email = models.CharField(max_length=100)\n    contraseña = models.IntegerField()\n# creacion del modelo para guardar los datos del anteproyecto\nclass Anteproyecto (models.Model):",
-        "detail": "plataform_CIGAP.estudiante.models",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "peekOfCode": "class Estudiante(models.Model):\n    nombres = models.CharField(max_length=100, verbose_name='Nombres')\n    apellidos = models.CharField(max_length=100, verbose_name='Apellidos')\n    email = models.EmailField(\n        max_length=100, unique=True, verbose_name='Correo')\n    # Otros campos y métodos que necesites\n# creacion del modelo de primera solicitud.\n#!funcionando\nclass ModelPrimeraSolicitud(models.Model):\n    tematica = models.CharField(",
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "ModelPrimeraSolicitud",
+        "kind": 6,
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "peekOfCode": "class ModelPrimeraSolicitud(models.Model):\n    tematica = models.CharField(\n        verbose_name='Inscribe la temática a tratar', max_length=1000)\n    LINEAS_INVESTIGACION_CHOICES = [\n        ('IA', 'Inteligencia Artificial'),\n        ('BD', 'Bases de Datos'),\n        ('RS', 'Redes y Seguridad'),\n        ('SI', 'Sistemas de Información'),\n        ('DS', 'Desarrollo de Software'),\n    ]",
+        "detail": "estudiante.models",
         "documentation": {}
     },
     {
         "label": "Anteproyect",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.models",
-        "description": "plataform_CIGAP.estudiante.models",
-        "peekOfCode": "class Anteproyecto (models.Model):\n    titulo = models.CharField(max_length=200)\n    num_estudiantes = models.IntegerField()\n    anteproyecto = models.FileField()\n    num_solicitud_anteproyecto = models.IntegerField()\n    estado_solicitud_anteproyecto = models.BooleanField()\n    director = models.CharField(max_length=200)\n    coodirector = models.CharField(max_length=200)\n# creacion del modelo de monografia o proyecto de grado\nclass ProyectoGrado (models.Model):",
-        "detail": "plataform_CIGAP.estudiante.models",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "peekOfCode": "class Anteproyecto (models.Model):\n    nombre_proyecto = models.CharField(max_length=200)\n    num_integrantes = models.IntegerField(\n        validators=[MaxValueValidator(2), MinValueValidator(2)])\n    carta_presentacion = models.FileField()\n    anteproyecto = models.FileField()\n    num_solicitud_anteproyecto = models.IntegerField()\n    estado_solicitud_anteproyecto = models.BooleanField()\n    director = models.CharField(max_length=200)\n    coodirector = models.CharField(max_length=200)",
+        "detail": "estudiante.models",
         "documentation": {}
     },
     {
         "label": "ProyectoGrad",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.models",
-        "description": "plataform_CIGAP.estudiante.models",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
         "peekOfCode": "class ProyectoGrado (models.Model):\n    pass\nclass EtapasProyecto (models.Model):\n    pass\n# creacion del modelo mas grande respecto a relaciones con otras aplicaciones\n# Modelo de Observaciones\nclass Observaciones (models.Model):\n    pass",
-        "detail": "plataform_CIGAP.estudiante.models",
+        "detail": "estudiante.models",
         "documentation": {}
     },
     {
         "label": "EtapasProyect",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.models",
-        "description": "plataform_CIGAP.estudiante.models",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
         "peekOfCode": "class EtapasProyecto (models.Model):\n    pass\n# creacion del modelo mas grande respecto a relaciones con otras aplicaciones\n# Modelo de Observaciones\nclass Observaciones (models.Model):\n    pass",
-        "detail": "plataform_CIGAP.estudiante.models",
+        "detail": "estudiante.models",
         "documentation": {}
     },
     {
         "label": "Observacione",
         "kind": 6,
-        "importPath": "plataform_CIGAP.estudiante.models",
-        "description": "plataform_CIGAP.estudiante.models",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
         "peekOfCode": "class Observaciones (models.Model):\n    pass",
-        "detail": "plataform_CIGAP.estudiante.models",
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "estudiante.urls",
+        "description": "estudiante.urls",
+        "peekOfCode": "app_name = 'estudiante'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n]",
+        "detail": "estudiante.urls",
         "documentation": {}
     },
     {
         "label": "urlpatterns",
         "kind": 5,
-        "importPath": "plataform_CIGAP.estudiante.urls",
-        "description": "plataform_CIGAP.estudiante.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando'),\n    path('principal', views.principal, name='principal'),\n    path('estudiante', views.estudiante, name='estudiante'),\n]",
-        "detail": "plataform_CIGAP.estudiante.urls",
+        "importPath": "estudiante.urls",
+        "description": "estudiante.urls",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n]",
+        "detail": "estudiante.urls",
         "documentation": {}
     },
     {
-        "label": "funcionando",
+        "label": "principal_estudiante",
         "kind": 2,
-        "importPath": "plataform_CIGAP.estudiante.views",
-        "description": "plataform_CIGAP.estudiante.views",
-        "peekOfCode": "def funcionando(request):\n    return HttpResponse('app_ estudiante funcionando.')\ndef principal(request):\n    return render(request, 'estudiante/base_estudiante.html')\ndef estudiante(request):\n    return render(request, 'estudiante/estudiante.html')",
-        "detail": "plataform_CIGAP.estudiante.views",
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def principal_estudiante(request):\n    return render(request, 'estudiante/base_estudiante.html')\n# vista del template para la solicitud\n#!funcionando\n@login_required\ndef solicitud(request):\n    if request.method == 'POST':\n        form = FormPrimeraSolicitud(request.POST)\n        if form.is_valid():\n            form.save()",
+        "detail": "estudiante.views",
         "documentation": {}
     },
     {
-        "label": "principal",
+        "label": "solicitud",
         "kind": 2,
-        "importPath": "plataform_CIGAP.estudiante.views",
-        "description": "plataform_CIGAP.estudiante.views",
-        "peekOfCode": "def principal(request):\n    return render(request, 'estudiante/base_estudiante.html')\ndef estudiante(request):\n    return render(request, 'estudiante/estudiante.html')",
-        "detail": "plataform_CIGAP.estudiante.views",
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormPrimeraSolicitud(request.POST)\n        if form.is_valid():\n            form.save()\n        return redirect('estudiante:solicitud')\n    else:\n        form = FormPrimeraSolicitud\n        context = {'form': form}\n        return render(request, 'estudiante/template_solicitud.html', context)",
+        "detail": "estudiante.views",
         "documentation": {}
     },
     {
-        "label": "estudiante",
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0001_initial",
+        "description": "login.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Usuarios',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('password', models.CharField(max_length=128, verbose_name='password')),",
+        "detail": "login.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0002_alter_usuarios_options_alter_usuarios_managers_and_more",
+        "description": "login.migrations.0002_alter_usuarios_options_alter_usuarios_managers_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('auth', '0012_alter_user_first_name_max_length'),\n        ('login', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name='usuarios',\n            options={'verbose_name': 'user', 'verbose_name_plural': 'users'},\n        ),",
+        "detail": "login.migrations.0002_alter_usuarios_options_alter_usuarios_managers_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0003_remove_usuarios_username",
+        "description": "login.migrations.0003_remove_usuarios_username",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0002_alter_usuarios_options_alter_usuarios_managers_and_more'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='usuarios',\n            name='username',\n        ),\n    ]",
+        "detail": "login.migrations.0003_remove_usuarios_username",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0004_alter_usuarios_email",
+        "description": "login.migrations.0004_alter_usuarios_email",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0003_remove_usuarios_username'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='usuarios',\n            name='email',\n            field=models.EmailField(max_length=254, unique=True),\n        ),",
+        "detail": "login.migrations.0004_alter_usuarios_email",
+        "documentation": {}
+    },
+    {
+        "label": "CustomUserAdmin",
+        "kind": 6,
+        "importPath": "login.admin",
+        "description": "login.admin",
+        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    form = CustomUserCreationForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),\n        ('Personal info', {'fields': ('nombres', 'apellidos')}),\n        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups')}),",
+        "detail": "login.admin",
+        "documentation": {}
+    },
+    {
+        "label": "LoginConfig",
+        "kind": 6,
+        "importPath": "login.apps",
+        "description": "login.apps",
+        "peekOfCode": "class LoginConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'login'",
+        "detail": "login.apps",
+        "documentation": {}
+    },
+    {
+        "label": "CustomUserCreationForm",
+        "kind": 6,
+        "importPath": "login.forms",
+        "description": "login.forms",
+        "peekOfCode": "class CustomUserCreationForm(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n    def save(self, commit=True):\n        user = super().save(commit=False)\n        user.is_active = True\n        # Asegura que la contraseña se encripte correctamente\n        user.set_password(self.cleaned_data[\"password1\"])\n        if commit:",
+        "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "FormRegistro",
+        "kind": 6,
+        "importPath": "login.forms",
+        "description": "login.forms",
+        "peekOfCode": "class FormRegistro(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n        widgets = {\n            'nombres': forms.TextInput(attrs={'placeholder': 'Digita tus nombres', 'class': 'form-control'}),\n            'apellidos': forms.TextInput(attrs={'placeholder': 'Digita tus apellidos', 'class': 'form-control'}),\n            'email': forms.EmailInput(attrs={'placeholder': 'example@correo.com', 'class': 'form-control'}),\n            'password1': forms.PasswordInput(attrs={\n                'placeholder': 'Contraseña mayor a 8 caracteres',",
+        "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Usuarios",
+        "kind": 6,
+        "importPath": "login.models",
+        "description": "login.models",
+        "peekOfCode": "class Usuarios(AbstractUser):\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    email = models.EmailField(unique=True)  # Cambiado a EmailField para validación adicional\n    username = None  # Eliminamos el campo username de AbstractUser\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = ['nombres', 'apellidos']\n    def __str__(self):\n        return self.email",
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "login.urls",
+        "description": "login.urls",
+        "peekOfCode": "app_name = 'login'\nurlpatterns = [\n    #  ruta de registro para el patterns de la app\n    path('', views.loginapps, name='loginapps'),\n    path('registro', views.registro, name='registro'),\n]",
+        "detail": "login.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "login.urls",
+        "description": "login.urls",
+        "peekOfCode": "urlpatterns = [\n    #  ruta de registro para el patterns de la app\n    path('', views.loginapps, name='loginapps'),\n    path('registro', views.registro, name='registro'),\n]",
+        "detail": "login.urls",
+        "documentation": {}
+    },
+    {
+        "label": "loginapps",
         "kind": 2,
-        "importPath": "plataform_CIGAP.estudiante.views",
-        "description": "plataform_CIGAP.estudiante.views",
-        "peekOfCode": "def estudiante(request):\n    return render(request, 'estudiante/estudiante.html')",
-        "detail": "plataform_CIGAP.estudiante.views",
+        "importPath": "login.views",
+        "description": "login.views",
+        "peekOfCode": "def loginapps(request):\n    if request.method == 'POST':\n        username = request.POST.get('email')\n        password = request.POST.get('password')\n        print(f\"Username: {username}, Password: {password}\")\n        user = authenticate(request, username=username, password=password)\n        print(f\"Authenticated User: {user}\")\n        if user is not None:\n            print(\"User is authenticated\")\n            auth_login(request, user)",
+        "detail": "login.views",
+        "documentation": {}
+    },
+    {
+        "label": "registro",
+        "kind": 2,
+        "importPath": "login.views",
+        "description": "login.views",
+        "peekOfCode": "def registro(request):\n    # # ejemplo de uso de mensajes\n    # messages.success(request, 'Operación exitosa.')\n    # # Agregar un mensaje de error\n    # messages.error(request, 'Hubo un error en la operación.')\n    # # Agregar un mensaje de advertencia\n    # messages.warning(request, 'Advertencia: Verifica los detalles.')\n    # # Agregar un mensaje informativo\n    # messages.info(request, 'Información: Revisa la sección de ayuda.')\n    if request.method == 'POST':",
+        "detail": "login.views",
         "documentation": {}
     },
     {
         "label": "application",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.asgi",
-        "description": "plataform_CIGAP.plataform_CIGAP.asgi",
+        "importPath": "plataform_CIGAP.asgi",
+        "description": "plataform_CIGAP.asgi",
         "peekOfCode": "application = get_asgi_application()",
-        "detail": "plataform_CIGAP.plataform_CIGAP.asgi",
+        "detail": "plataform_CIGAP.asgi",
         "documentation": {}
     },
     {
         "label": "BASE_DIR",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "SECRET_KEY",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "SECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "DEBUG",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "ALLOWED_HOSTS",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia',",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "INSTALLED_APPS",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia',\n    'director',\n    'estudiante',",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "MIDDLEWARE",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\nROOT_URLCONF = 'plataform_CIGAP.urls'",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "ROOT_URLCONF",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "ROOT_URLCONF = 'plataform_CIGAP.urls'\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # Directorio global de templates\n        'DIRS': [os.path.join(BASE_DIR, 'plataform_CIGAP', 'templates')],\n        # 'DIRS': ['templates'],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "TEMPLATES",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # Directorio global de templates\n        'DIRS': [os.path.join(BASE_DIR, 'plataform_CIGAP', 'templates')],\n        # 'DIRS': ['templates'],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "WSGI_APPLICATION",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "WSGI_APPLICATION = 'plataform_CIGAP.wsgi.application'\n# Database\n# https://docs.djangoproject.com/en/5.0/ref/settings/#databases\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': BASE_DIR / 'db.sqlite3',\n    }\n}\n# Password validation",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "DATABASES",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': BASE_DIR / 'db.sqlite3',\n    }\n}\n# Password validation\n# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators\nAUTH_PASSWORD_VALIDATORS = [\n    {",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "AUTH_PASSWORD_VALIDATORS",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "AUTH_PASSWORD_VALIDATORS = [\n    {\n        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',\n    },",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "LANGUAGE_CODE",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "TIME_ZONE",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "USE_I18N",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "USE_TZ",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
         "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "STATIC_URL",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "STATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "STATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "STATICFILES_DIRS",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "STATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "STATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "STATIC_ROOT",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "DEFAULT_AUTO_FIELD",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.plataform_CIGAP.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
-        "detail": "plataform_CIGAP.plataform_CIGAP.settings",
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [",
+        "detail": "plataform_CIGAP.settings",
+        "documentation": {}
+    },
+    {
+        "label": "AUTH_USER_MODEL",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "AUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "detail": "plataform_CIGAP.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LANGUAGE_CODE",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "LANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "detail": "plataform_CIGAP.settings",
+        "documentation": {}
+    },
+    {
+        "label": "AUTHENTICATION_BACKENDS",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "AUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
     {
         "label": "urlpatterns",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.urls",
-        "description": "plataform_CIGAP.plataform_CIGAP.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', views.login, name='login'),\n    path('admin/', admin.site.urls),\n    path('estudiante/', include('estudiante.urls')),\n    path('director/', include('director.urls')),\n    path('correspondencia/', include('correspondencia.urls')),\n]",
-        "detail": "plataform_CIGAP.plataform_CIGAP.urls",
-        "documentation": {}
-    },
-    {
-        "label": "login",
-        "kind": 2,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.views",
-        "description": "plataform_CIGAP.plataform_CIGAP.views",
-        "peekOfCode": "def login(request):\n    return render(request, \"login.html\")",
-        "detail": "plataform_CIGAP.plataform_CIGAP.views",
+        "importPath": "plataform_CIGAP.urls",
+        "description": "plataform_CIGAP.urls",
+        "peekOfCode": "urlpatterns = [\n    #  ruta de registro para el patterns de la app\n    # path('registro/', views.registro, name='registro'),\n    # path('', views.loginapps, name='loginapps'),\n    path('admin/', admin.site.urls),\n    path('estudiante/', include('estudiante.urls')),\n    path('director/', include('director.urls')),\n    path('correspondencia/', include('correspondencia.urls')),\n    path('', include('login.urls')),\n]",
+        "detail": "plataform_CIGAP.urls",
         "documentation": {}
     },
     {
         "label": "application",
         "kind": 5,
-        "importPath": "plataform_CIGAP.plataform_CIGAP.wsgi",
-        "description": "plataform_CIGAP.plataform_CIGAP.wsgi",
+        "importPath": "plataform_CIGAP.wsgi",
+        "description": "plataform_CIGAP.wsgi",
         "peekOfCode": "application = get_wsgi_application()",
-        "detail": "plataform_CIGAP.plataform_CIGAP.wsgi",
+        "detail": "plataform_CIGAP.wsgi",
         "documentation": {}
     },
     {
         "label": "main",
         "kind": 2,
-        "importPath": "plataform_CIGAP.manage",
-        "description": "plataform_CIGAP.manage",
+        "importPath": "manage",
+        "description": "manage",
         "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'plataform_CIGAP.settings')\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
-        "detail": "plataform_CIGAP.manage",
+        "detail": "manage",
         "documentation": {}
     }
 ]

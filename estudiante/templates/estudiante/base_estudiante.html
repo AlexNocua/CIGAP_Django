@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Estudiante
+{% endblock %}
+
+{% block extra_head %}
+  {% comment %}aqui se van a importar los estilos personalizados de la aplicacion estudiante{% endcomment %}
+
+  <link rel="stylesheet" href="{% static 'estudiante/css/stylePrincipla.css' %}" />
+{% endblock %}
+
+{% block principal_estudiante %}
+  {% include 'components/header.html' %}
+  {% include 'estudiante/components/nav_modulos.html' %}
+
+  {{ request.nombres }}
+
+  <main class="container">
+    {% block solicitud %}
+
+    {% endblock %}
+    {% block informacion_proyecto %}
+
+    {% endblock %}
+    {% block linea_tiempo %}
+
+    {% endblock %}
+    {% block doc_cargados %}
+
+    {% endblock %}
+  </main>
+{% endblock %}
