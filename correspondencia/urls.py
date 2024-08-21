@@ -7,5 +7,7 @@ app_name = 'correspondencia'
 # Definicion de las rutas de la aplicacion
 urlpatterns = [
     # verificacion del funcionamiento de las rutas de las aplicaciones
-    path('', views.funcionando, name='funcionando')
+    # path('', views.funcionando, name='funcionando')
+    path('', views.principal_correspondencia, name='principal_correspondencia'),
+
 ]

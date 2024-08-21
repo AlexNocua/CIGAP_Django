@@ -52,7 +52,23 @@ img {
 }
 
 
+.cuenta a {
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.2s;
+}
 
+.cuenta a:nth-child(2):hover {
+    transform: scale(1.1);
+    transition: all 0.2s;
+    color: red;
+}
+
+.cuenta a:hover {
+    transform: scale(1.1);
+    transition: all 0.2s;
+    color: #fff;
+}
 
 .cubes {
 

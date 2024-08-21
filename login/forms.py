@@ -29,7 +29,7 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
-# importacion de la creacion de usuario por DkJANGO
+
 
 # creacion del formulario del registro
 

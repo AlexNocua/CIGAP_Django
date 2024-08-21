@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from .forms import FormPrimeraSolicitud
 from django.contrib.auth.decorators import login_required
+from plataform_CIGAP.decoradores import grupo_usuario
+
 
 # Create your views here.
 
@@ -10,10 +12,8 @@ from django.contrib.auth.decorators import login_required
 #     return HttpResponse('app_ estudiante funcionando.')
 
 
-
-
-
 @login_required
+@grupo_usuario('Estudiantes')
 def principal_estudiante(request):
     return render(request, 'estudiante/base_estudiante.html')
 
@@ -22,6 +22,7 @@ def principal_estudiante(request):
 
 #!funcionando
 @login_required
+@grupo_usuario('Estudiantes')
 def solicitud(request):
     if request.method == 'POST':
         form = FormPrimeraSolicitud(request.POST)

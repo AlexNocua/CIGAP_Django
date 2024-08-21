@@ -19,6 +19,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# configuracion del logout de las cuentas
+from django.contrib.auth import views as auth_views
+from .views import logout_user
+
 
 
 urlpatterns = [
@@ -30,4 +34,7 @@ urlpatterns = [
     path('director/', include('director.urls')),
     path('correspondencia/', include('correspondencia.urls')),
     path('', include('login.urls')),
+    # vista y url del logout
+    path('logout/',views.logout_user, name= 'logout_user'),
+    
 ]

@@ -264,6 +264,55 @@
         "documentation": {}
     },
     {
+        "label": "django.contrib.auth",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "views",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -320,6 +369,38 @@
         "documentation": {}
     },
     {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponsePermanentRedirect",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
         "label": "HttpResponse",
         "importPath": "django.http",
         "description": "django.http",
@@ -360,7 +441,7 @@
         "documentation": {}
     },
     {
-        "label": "HttpResponsePermanentRedirect",
+        "label": "HttpResponse",
         "importPath": "django.http",
         "description": "django.http",
         "isExtraImport": true,
@@ -368,11 +449,59 @@
         "documentation": {}
     },
     {
-        "label": "HttpResponse",
-        "importPath": "django.http",
-        "description": "django.http",
+        "label": "logout_user",
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
         "isExtraImport": true,
-        "detail": "django.http",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "grupo_usuario",
+        "importPath": "plataform_CIGAP.decoradores",
+        "description": "plataform_CIGAP.decoradores",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.decoradores",
+        "documentation": {}
+    },
+    {
+        "label": "grupo_usuario",
+        "importPath": "plataform_CIGAP.decoradores",
+        "description": "plataform_CIGAP.decoradores",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.decoradores",
+        "documentation": {}
+    },
+    {
+        "label": "grupo_usuario",
+        "importPath": "plataform_CIGAP.decoradores",
+        "description": "plataform_CIGAP.decoradores",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.decoradores",
         "documentation": {}
     },
     {
@@ -462,22 +591,6 @@
         "description": "django.conf",
         "isExtraImport": true,
         "detail": "django.conf",
-        "documentation": {}
-    },
-    {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
-        "documentation": {}
-    },
-    {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
         "documentation": {}
     },
     {
@@ -631,30 +744,6 @@
         "documentation": {}
     },
     {
-        "label": "login",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "authenticate",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "login",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
         "label": "get_asgi_application",
         "importPath": "django.core.asgi",
         "description": "django.core.asgi",
@@ -692,7 +781,7 @@
         "kind": 5,
         "importPath": "correspondencia.urls",
         "description": "correspondencia.urls",
-        "peekOfCode": "app_name = 'correspondencia'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando')\n]",
+        "peekOfCode": "app_name = 'correspondencia'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando')\n    path('', views.principal_correspondencia, name='principal_correspondencia'),\n]",
         "detail": "correspondencia.urls",
         "documentation": {}
     },
@@ -701,16 +790,16 @@
         "kind": 5,
         "importPath": "correspondencia.urls",
         "description": "correspondencia.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    path('', views.funcionando, name='funcionando')\n]",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando')\n    path('', views.principal_correspondencia, name='principal_correspondencia'),\n]",
         "detail": "correspondencia.urls",
         "documentation": {}
     },
     {
-        "label": "funcionand",
+        "label": "principal_correspondencia",
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def funcionando (request):\n    return HttpResponse('app_ correspondencia funcionando.')",
+        "peekOfCode": "def principal_correspondencia(request):\n    return render(request, 'correspondencia/base_correspondencia.html')",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -926,7 +1015,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def principal_estudiante(request):\n    return render(request, 'estudiante/base_estudiante.html')\n# vista del template para la solicitud\n#!funcionando\n@login_required\ndef solicitud(request):\n    if request.method == 'POST':\n        form = FormPrimeraSolicitud(request.POST)\n        if form.is_valid():\n            form.save()",
+        "peekOfCode": "def principal_estudiante(request):\n    return render(request, 'estudiante/base_estudiante.html')\n# vista del template para la solicitud\n#!funcionando\n@login_required\n@grupo_usuario('Estudiantes')\ndef solicitud(request):\n    if request.method == 'POST':\n        form = FormPrimeraSolicitud(request.POST)\n        if form.is_valid():",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1066,6 +1155,15 @@
         "documentation": {}
     },
     {
+        "label": "grupo_usuario",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.decoradores",
+        "description": "plataform_CIGAP.decoradores",
+        "peekOfCode": "def grupo_usuario(nombre_grupo):\n    def decorador(view):\n        def view_envuelta(request, *args, **kwargs):\n            if request.user.is_authenticated:\n                if request.user.groups.filter(name=nombre_grupo).exists():\n                    return view(request, *args, **kwargs)\n                else:\n                    # en este decorador puedo manejar una vista de permisos\n                    return HttpResponse('Error')\n            else:",
+        "detail": "plataform_CIGAP.decoradores",
+        "documentation": {}
+    },
+    {
         "label": "BASE_DIR",
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
@@ -1165,15 +1263,6 @@
         "documentation": {}
     },
     {
-        "label": "LANGUAGE_CODE",
-        "kind": 5,
-        "importPath": "plataform_CIGAP.settings",
-        "description": "plataform_CIGAP.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    os.path.join(BASE_DIR, 'plataform_CIGAP', 'static'),\n]",
-        "detail": "plataform_CIGAP.settings",
-        "documentation": {}
-    },
-    {
         "label": "TIME_ZONE",
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
@@ -1223,7 +1312,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'",
+        "peekOfCode": "STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = '/'",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1232,7 +1321,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# Apartado de autenticaciones\nAUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = '/'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# LOGOUT_REDIRECT_URL = '/'\n# autenticaciones de contraseña",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1241,7 +1330,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "AUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "peekOfCode": "AUTH_USER_MODEL = 'login.Usuarios'\n# cambiar el lenguaje del codigo a español en el navegador\nLANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = '/'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# LOGOUT_REDIRECT_URL = '/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1250,7 +1339,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = 'loginapps'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "peekOfCode": "LANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = '/'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# LOGOUT_REDIRECT_URL = '/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1268,8 +1357,17 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.urls",
         "description": "plataform_CIGAP.urls",
-        "peekOfCode": "urlpatterns = [\n    #  ruta de registro para el patterns de la app\n    # path('registro/', views.registro, name='registro'),\n    # path('', views.loginapps, name='loginapps'),\n    path('admin/', admin.site.urls),\n    path('estudiante/', include('estudiante.urls')),\n    path('director/', include('director.urls')),\n    path('correspondencia/', include('correspondencia.urls')),\n    path('', include('login.urls')),\n]",
+        "peekOfCode": "urlpatterns = [\n    #  ruta de registro para el patterns de la app\n    # path('registro/', views.registro, name='registro'),\n    # path('', views.loginapps, name='loginapps'),\n    path('admin/', admin.site.urls),\n    path('estudiante/', include('estudiante.urls')),\n    path('director/', include('director.urls')),\n    path('correspondencia/', include('correspondencia.urls')),\n    path('', include('login.urls')),\n    # vista y url del logout",
         "detail": "plataform_CIGAP.urls",
+        "documentation": {}
+    },
+    {
+        "label": "logout_user",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def logout_user(request):\n    logout(request)\n    return redirect('login:loginapps')",
+        "detail": "plataform_CIGAP.views",
         "documentation": {}
     },
     {

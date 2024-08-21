@@ -36,7 +36,7 @@ def loginapps(request):
             elif 'Directores' in user_groups:
                 return redirect('director:base_director')
             elif 'Correspondencia' in user_groups:
-                return redirect('correspondencia_home')
+                return redirect('correspondencia:principal_correspondencia')
             else:
                 return HttpResponse("No tienes acceso a ninguna sección.")
         else:

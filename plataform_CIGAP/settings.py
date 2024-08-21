@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -145,9 +145,9 @@ LANGUAGE_CODE = 'es'
 
 # reajustes del direcciones depues del login
 
-# LOGIN_URL = 'loginapps'
+# LOGIN_URL = '/'
 # LOGIN_REDIRECT_URL = '/estudiante/'
-
+# LOGOUT_REDIRECT_URL = '/'
 
 # autenticaciones de contraseña
 AUTHENTICATION_BACKENDS = [
