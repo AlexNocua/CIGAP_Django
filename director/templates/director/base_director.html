@@ -10,7 +10,47 @@
   {% include 'components/header.html' %}
 
   <style>
- 
+    html,
+    body {
+      height: 100%;
+    }
+    
+    /* estilos de la vista principal de director */
+    
+    .cards {
+      /*distancia entre componentes dentro del Grid*/
+      grid-gap: 20px;
+      /*Alineacion de componentes del grid
+            justify-self: center;
+            align-self: center;
+            */
+    }
+    
+    .cards img {
+      border-radius: 50%;
+      max-height: 250px;
+      max-width: 250px;
+      min-height: 250px;
+      min-width: 250px;
+      padding: 12px;
+    
+      /*                    esta configuracion es para recortar la imagen sin que pierda sus proporciones iniciales
+        */
+      object-fit: cover;
+    }
+    
+    .imagen-fondo {
+      opacity: 0.5;
+      z-index: 0;
+    }
+    
+    .card,
+    ul,
+    li,
+    .list-group-item {
+      background: rgba(255, 255, 255, 0.7) !important;
+      z-index: 100;
+    }
   </style>
 
   <section class="container position-relative cards d-flex justify-content-center align-items-center flex-column flex-md-row mt-5">

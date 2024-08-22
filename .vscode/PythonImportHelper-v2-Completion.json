@@ -160,6 +160,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -378,6 +394,14 @@
     },
     {
         "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -744,6 +768,15 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "get_asgi_application",
         "importPath": "django.core.asgi",
         "description": "django.core.asgi",
@@ -757,6 +790,22 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "csrf_failure",
+        "importPath": "django.views.csrf",
+        "description": "django.views.csrf",
+        "isExtraImport": true,
+        "detail": "django.views.csrf",
+        "documentation": {}
+    },
+    {
+        "label": "ModelError",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
         "documentation": {}
     },
     {
@@ -1065,11 +1114,29 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0005_modelerror",
+        "description": "login.migrations.0005_modelerror",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0004_alter_usuarios_email'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='ModelError',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('estado', models.IntegerField()),",
+        "detail": "login.migrations.0005_modelerror",
+        "documentation": {}
+    },
+    {
         "label": "CustomUserAdmin",
         "kind": 6,
         "importPath": "login.admin",
         "description": "login.admin",
         "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    form = CustomUserCreationForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),\n        ('Personal info', {'fields': ('nombres', 'apellidos')}),\n        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups')}),",
+        "detail": "login.admin",
+        "documentation": {}
+    },
+    {
+        "label": "ModelErrorAdmin",
+        "kind": 6,
+        "importPath": "login.admin",
+        "description": "login.admin",
+        "peekOfCode": "class ModelErrorAdmin(admin.ModelAdmin):\n    list_display = ('estado', 'fecha_hora_error')\nadmin.site.register(ModelError, ModelErrorAdmin)",
         "detail": "login.admin",
         "documentation": {}
     },
@@ -1098,6 +1165,15 @@
         "description": "login.forms",
         "peekOfCode": "class FormRegistro(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n        widgets = {\n            'nombres': forms.TextInput(attrs={'placeholder': 'Digita tus nombres', 'class': 'form-control'}),\n            'apellidos': forms.TextInput(attrs={'placeholder': 'Digita tus apellidos', 'class': 'form-control'}),\n            'email': forms.EmailInput(attrs={'placeholder': 'example@correo.com', 'class': 'form-control'}),\n            'password1': forms.PasswordInput(attrs={\n                'placeholder': 'Contraseña mayor a 8 caracteres',",
         "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "ModelError",
+        "kind": 6,
+        "importPath": "login.models",
+        "description": "login.models",
+        "peekOfCode": "class ModelError(models.Model):\n    estado = models.IntegerField()\n    fecha_hora_error = models.DateTimeField()\nclass Usuarios(AbstractUser):\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    email = models.EmailField(unique=True)  # Cambiado a EmailField para validación adicional\n    username = None  # Eliminamos el campo username de AbstractUser\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = ['nombres', 'apellidos']",
+        "detail": "login.models",
         "documentation": {}
     },
     {
@@ -1159,7 +1235,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.decoradores",
         "description": "plataform_CIGAP.decoradores",
-        "peekOfCode": "def grupo_usuario(nombre_grupo):\n    def decorador(view):\n        def view_envuelta(request, *args, **kwargs):\n            if request.user.is_authenticated:\n                if request.user.groups.filter(name=nombre_grupo).exists():\n                    return view(request, *args, **kwargs)\n                else:\n                    # en este decorador puedo manejar una vista de permisos\n                    return HttpResponse('Error')\n            else:",
+        "peekOfCode": "def grupo_usuario(nombre_grupo):\n    def decorador(view):\n        def view_envuelta(request, *args, **kwargs):\n            if request.user.is_authenticated:\n                if request.user.groups.filter(name=nombre_grupo).exists():\n                    return view(request, *args, **kwargs)\n                else:\n                    # en este decorador puedo manejar una vista de permisos\n                    return handler404\n            else:",
         "detail": "plataform_CIGAP.decoradores",
         "documentation": {}
     },
@@ -1168,7 +1244,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = False\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1177,7 +1253,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "SECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
+        "peekOfCode": "SECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = False\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1186,7 +1262,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
+        "peekOfCode": "DEBUG = False\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1195,7 +1271,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia',",
+        "peekOfCode": "ALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'correspondencia',",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1339,7 +1415,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = '/'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# LOGOUT_REDIRECT_URL = '/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "peekOfCode": "LANGUAGE_CODE = 'es'\n# reajustes del direcciones depues del login\n# LOGIN_URL = '/'\n# LOGIN_REDIRECT_URL = '/estudiante/'\n# LOGOUT_REDIRECT_URL = '/'\n# autenticaciones de contraseña\nAUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]\n# manejo de errores",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1348,7 +1424,16 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "AUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]",
+        "peekOfCode": "AUTHENTICATION_BACKENDS = [\n    'django.contrib.auth.backends.ModelBackend',\n]\n# manejo de errores\nCSRF_FAILURE_VIEW = 'plataform_CIGAP.views.csrf_failure'",
+        "detail": "plataform_CIGAP.settings",
+        "documentation": {}
+    },
+    {
+        "label": "CSRF_FAILURE_VIEW",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.settings",
+        "description": "plataform_CIGAP.settings",
+        "peekOfCode": "CSRF_FAILURE_VIEW = 'plataform_CIGAP.views.csrf_failure'",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1362,11 +1447,92 @@
         "documentation": {}
     },
     {
+        "label": "handler400",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.urls",
+        "description": "plataform_CIGAP.urls",
+        "peekOfCode": "handler400 = 'plataform_CIGAP.views.handler400'\nhandler500 = 'plataform_CIGAP.views.handler500'\n# handler401 = 'plataform_CIGAP.views.handler401'\n# handler403 = 'plataform_CIGAP.views.handler403'\nhandler404 = 'plataform_CIGAP.views.handler404'",
+        "detail": "plataform_CIGAP.urls",
+        "documentation": {}
+    },
+    {
+        "label": "handler500",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.urls",
+        "description": "plataform_CIGAP.urls",
+        "peekOfCode": "handler500 = 'plataform_CIGAP.views.handler500'\n# handler401 = 'plataform_CIGAP.views.handler401'\n# handler403 = 'plataform_CIGAP.views.handler403'\nhandler404 = 'plataform_CIGAP.views.handler404'",
+        "detail": "plataform_CIGAP.urls",
+        "documentation": {}
+    },
+    {
+        "label": "handler404",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.urls",
+        "description": "plataform_CIGAP.urls",
+        "peekOfCode": "handler404 = 'plataform_CIGAP.views.handler404'",
+        "detail": "plataform_CIGAP.urls",
+        "documentation": {}
+    },
+    {
         "label": "logout_user",
         "kind": 2,
         "importPath": "plataform_CIGAP.views",
         "description": "plataform_CIGAP.views",
-        "peekOfCode": "def logout_user(request):\n    logout(request)\n    return redirect('login:loginapps')",
+        "peekOfCode": "def logout_user(request):\n    logout(request)\n    return redirect('login:loginapps')\n# def errors(request):\n#     return render(request, 'errors.html')\nerrores = {\n    '404': {\n        'num_error': '404',\n        'mensaje': 'La página solicitada <b>no fue encontrada</b>. Esto puede suceder si la <b>URL está mal escrita</b>, si la página <b>ha sido eliminada o si se esta intentando <b>acceder sin sesión</b> tomando una nueva redirección de URL.</b>'\n    },",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "handler404",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def handler404(request, exception):\n    return render(request, 'errors.html', errores['404'])\ndef handler400(request, exception):\n    return render(request, 'errors.html', errores['400'])\n# manejo del token\n# recordar que como este es personalizado respecto al error del token, se instancion en el settings\ndef csrf_failure(request, reason=\"\"):\n    return render(request, 'errors.html', errores['403'], status=403)\n# def handler403(request, exception=None):\n#     return render(request, 'errors.html', errores['403'], status=403)",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "handler400",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def handler400(request, exception):\n    return render(request, 'errors.html', errores['400'])\n# manejo del token\n# recordar que como este es personalizado respecto al error del token, se instancion en el settings\ndef csrf_failure(request, reason=\"\"):\n    return render(request, 'errors.html', errores['403'], status=403)\n# def handler403(request, exception=None):\n#     return render(request, 'errors.html', errores['403'], status=403)\n# esta no maneja excepcion\ndef handler500(request):",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "csrf_failure",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def csrf_failure(request, reason=\"\"):\n    return render(request, 'errors.html', errores['403'], status=403)\n# def handler403(request, exception=None):\n#     return render(request, 'errors.html', errores['403'], status=403)\n# esta no maneja excepcion\ndef handler500(request):\n    return render(request, 'errors.html', errores['500'])\n# def handler401(request,exception):\n#     return render(request, 'errors.html', errores['401'])\ndef submit_error(request):",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "handler500",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def handler500(request):\n    return render(request, 'errors.html', errores['500'])\n# def handler401(request,exception):\n#     return render(request, 'errors.html', errores['401'])\ndef submit_error(request):\n    if request.method == 'POST':\n        codigo = request.POST.get('estado')\n        print(f'Estado recibido: {codigo}')\n        model = ModelError(\n            estado=int(codigo),",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "submit_error",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def submit_error(request):\n    if request.method == 'POST':\n        codigo = request.POST.get('estado')\n        print(f'Estado recibido: {codigo}')\n        model = ModelError(\n            estado=int(codigo),\n            fecha_hora_error=datetime.datetime.now()\n        )\n        model.save()\n        logout(request)",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "errores",
+        "kind": 5,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "errores = {\n    '404': {\n        'num_error': '404',\n        'mensaje': 'La página solicitada <b>no fue encontrada</b>. Esto puede suceder si la <b>URL está mal escrita</b>, si la página <b>ha sido eliminada o si se esta intentando <b>acceder sin sesión</b> tomando una nueva redirección de URL.</b>'\n    },\n    '401': {\n        'num_error': '401',\n        'mensaje': '<b>Es necesario autenticarse</b> para acceder a esta página. Por favor, <b>inicia sesión</b> e inténtalo de nuevo.'\n    },\n    '400': {",
         "detail": "plataform_CIGAP.views",
         "documentation": {}
     },
@@ -1377,6 +1543,15 @@
         "description": "plataform_CIGAP.wsgi",
         "peekOfCode": "application = get_wsgi_application()",
         "detail": "plataform_CIGAP.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "date",
+        "kind": 5,
+        "importPath": "date",
+        "description": "date",
+        "peekOfCode": "date = datetime.datetime.now().strftime('%d-%m-%Y %H+4:%M:%S')",
+        "detail": "date",
         "documentation": {}
     },
     {

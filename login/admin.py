@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Usuarios
+from .models import Usuarios, ModelError
 from .forms import CustomUserCreationForm
 
 
 # Register your models here.
+
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -21,10 +22,17 @@ class CustomUserAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'nombres', 'apellidos', 'password1', 'password2', 'is_active', 'is_staff', 'groups')}
-        ),
+         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
 
+
 admin.site.register(Usuarios, CustomUserAdmin)
 
+
+class ModelErrorAdmin(admin.ModelAdmin):
+    list_display = ('estado', 'fecha_hora_error')
+
+
+admin.site.register(ModelError, ModelErrorAdmin)

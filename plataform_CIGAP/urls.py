@@ -21,8 +21,8 @@ from django.urls import path, include
 
 # configuracion del logout de las cuentas
 from django.contrib.auth import views as auth_views
-from .views import logout_user
-
+from .views import handler400, logout_user, errores
+from django.views.csrf import csrf_failure
 
 
 urlpatterns = [
@@ -35,6 +35,16 @@ urlpatterns = [
     path('correspondencia/', include('correspondencia.urls')),
     path('', include('login.urls')),
     # vista y url del logout
-    path('logout/',views.logout_user, name= 'logout_user'),
-    
+    path('logout/', views.logout_user, name='logout_user'),
+    # ruta de errores
+    # path('errors/', views.errors, name='errors'),
+    path('submit_error/', views.submit_error, name='submit_error'),
+
 ]
+
+# vistas de manejo de errores
+handler400 = 'plataform_CIGAP.views.handler400'
+handler500 = 'plataform_CIGAP.views.handler500'
+# handler401 = 'plataform_CIGAP.views.handler401'
+# handler403 = 'plataform_CIGAP.views.handler403'
+handler404 = 'plataform_CIGAP.views.handler404'

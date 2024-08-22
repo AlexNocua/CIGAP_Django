@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -153,3 +153,7 @@ LANGUAGE_CODE = 'es'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+# manejo de errores
+CSRF_FAILURE_VIEW = 'plataform_CIGAP.views.csrf_failure'

@@ -1,6 +1,26 @@
 {% load static %}
 
 <header>
+  <style>
+    .cuenta a {
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.2s;
+    }
+    
+    .cuenta a:nth-child(2):hover {
+      transform: scale(1.1);
+      transition: all 0.2s;
+      color: red;
+    }
+    
+    .cuenta a:hover {
+      transform: scale(1.1);
+      transition: all 0.2s;
+      color: #fff;
+    }
+  </style>
+
   <nav class="nav_sup d-flex justify-content-around align-items-center position-relative">
     <div class="cubes">
       <div class="cube"></div>
