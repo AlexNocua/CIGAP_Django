@@ -13,12 +13,20 @@
 {% endblock %}
 
 {% block principal_estudiante %}
+  <style>
+    html,
+    body {
+      background: none;
+    }
+  </style>
   {% include 'components/header.html' %}
   {% include 'estudiante/components/nav_modulos.html' %}
 
-  {{ request.nombres }}
-
-  <main class="container">
+  <main class="container position-relative d-flex justify-content-center align-items-center">
+    {% comment %}incluir el componente de usuario{% endcomment %}
+    <div class="inf_user">
+      {% include 'components/view_estudiante.html' %}
+    </div>
     {% block solicitud %}
 
     {% endblock %}
@@ -31,5 +39,21 @@
     {% block doc_cargados %}
 
     {% endblock %}
+    {% comment %}seccion de la configuracion de cuenta{% endcomment %}
+
+    {% comment %}recordar el manejo de mediaquerys{% endcomment %}
+    <style>
+      #panel_config {
+        top: -150px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f9f9f9;
+        border: 1px solid #d0d0d0;
+      }
+    </style>
+    <div id="panel_config" class="position-absolute" style="z-index: 0;opacity: 0; ">
+      {% include 'components/config_user.html' %}
+    </div>
   </main>
 {% endblock %}

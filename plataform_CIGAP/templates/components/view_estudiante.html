@@ -1,0 +1,45 @@
+{% load static %}
+<section class="container position-relative cards d-flex justify-content-center align-items-center flex-column flex-md-row mt-5">
+  {% include 'components/cardinf_user.html' %}
+  <div class="card d-flex justify-content-center align-items-center" style="width: 30rem;">
+    <div class="card-body d-flex justify-content-center align-items-center">
+      <div class="col text-center">
+        <p class="m-0 p-0">Proyecto actual</p>
+        <h5 class="card-title">
+          {{ nombreProyecto }}
+          SDI, Sistema digitalizado para invidentes
+        </h5>
+      </div>
+
+      {% comment %}recordar traer los datos{% endcomment %}
+      <div class="col">
+        <p class="p-0 m-0">
+          <b>Anteproyecto:</b> Aprovado.
+        </p>
+        <p class="p-0 m-0">
+          <b>Proyecto final:</b> En curso.
+        </p>
+        <p class="p-0 m-0">
+          <b>Avance:</b> 10%
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <img src="{% static 'icons/icons_nav/logoUDEC.png' %}" alt="LogoUDEC" class="position-absolute imagen-fondo" />
+
+  {% comment %}seccion de la configuracion de cuenta{% endcomment %}
+
+  {% comment %}recordar el manejo de mediaquerys{% endcomment %}
+  <style>
+    #panel_config {
+      top: -20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f9f9f9;
+      border: 1px solid #d0d0d0;
+    }
+  </style>
+  
+</section>

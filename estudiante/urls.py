@@ -13,4 +13,5 @@ urlpatterns = [
     # path('estudiante', views.estudiante, name='estudiante'),
     #!funcionando
     path('solicitud', views.solicitud, name='solicitud'),
+    path('info_proyect', views.info_proyect, name='info_proyect'),
 ]

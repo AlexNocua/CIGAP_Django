@@ -96,6 +96,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -176,7 +208,87 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -313,6 +425,22 @@
         "documentation": {}
     },
     {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
         "label": "views",
         "importPath": "django.contrib.auth",
         "description": "django.contrib.auth",
@@ -345,6 +473,14 @@
         "documentation": {}
     },
     {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -354,6 +490,14 @@
     },
     {
         "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -578,7 +722,7 @@
         "documentation": {}
     },
     {
-        "label": "AbstractUser",
+        "label": "BaseUserManager",
         "importPath": "django.contrib.auth.models",
         "description": "django.contrib.auth.models",
         "isExtraImport": true,
@@ -587,14 +731,6 @@
     },
     {
         "label": "AbstractUser",
-        "importPath": "django.contrib.auth.models",
-        "description": "django.contrib.auth.models",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
         "importPath": "django.contrib.auth.models",
         "description": "django.contrib.auth.models",
         "isExtraImport": true,
@@ -615,6 +751,79 @@
         "description": "django.conf",
         "isExtraImport": true,
         "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "FormEditarUsuario",
+        "importPath": "login.forms",
+        "description": "login.forms",
+        "isExtraImport": true,
+        "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "FormEditarUsuario",
+        "importPath": "login.forms",
+        "description": "login.forms",
+        "isExtraImport": true,
+        "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Usuarios",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "Usuarios",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "ModelError",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "base64",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "base64",
+        "description": "base64",
+        "detail": "base64",
+        "documentation": {}
+    },
+    {
+        "label": "editar_usuario",
+        "importPath": "login.views",
+        "description": "login.views",
+        "isExtraImport": true,
+        "detail": "login.views",
+        "documentation": {}
+    },
+    {
+        "label": "editar_usuario",
+        "importPath": "login.views",
+        "description": "login.views",
+        "isExtraImport": true,
+        "detail": "login.views",
         "documentation": {}
     },
     {
@@ -659,6 +868,23 @@
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "format_html",
+        "importPath": "django.utils.html",
+        "description": "django.utils.html",
+        "isExtraImport": true,
+        "detail": "django.utils.html",
         "documentation": {}
     },
     {
@@ -768,6 +994,14 @@
         "documentation": {}
     },
     {
+        "label": "ValidationError",
+        "importPath": "django.core.exceptions",
+        "description": "django.core.exceptions",
+        "isExtraImport": true,
+        "detail": "django.core.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "kind": 6,
         "isExtraImport": true,
@@ -798,14 +1032,6 @@
         "description": "django.views.csrf",
         "isExtraImport": true,
         "detail": "django.views.csrf",
-        "documentation": {}
-    },
-    {
-        "label": "ModelError",
-        "importPath": "login.models",
-        "description": "login.models",
-        "isExtraImport": true,
-        "detail": "login.models",
         "documentation": {}
     },
     {
@@ -866,7 +1092,7 @@
         "kind": 5,
         "importPath": "director.urls",
         "description": "director.urls",
-        "peekOfCode": "app_name = 'director'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.base_director, name='base_director')\n]",
+        "peekOfCode": "app_name = 'director'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_director, name='principal_director'),\n]",
         "detail": "director.urls",
         "documentation": {}
     },
@@ -875,98 +1101,125 @@
         "kind": 5,
         "importPath": "director.urls",
         "description": "director.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.base_director, name='base_director')\n]",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_director, name='principal_director'),\n]",
         "detail": "director.urls",
         "documentation": {}
     },
     {
-        "label": "base_director",
+        "label": "principal_director",
         "kind": 2,
         "importPath": "director.views",
         "description": "director.views",
-        "peekOfCode": "def base_director(request):\n    return render(request, 'director/base_director.html')",
+        "peekOfCode": "def principal_director(request):\n    usuario = request.user\n    # recuperacion de la imagen propia del usuaario en formato binario\n    # print(imagen, 'esta es la imagen')\n    imagen = usuario.imagen\n    imagen_convertida = base64.b64encode(\n        imagen).decode('utf-8') if imagen else ''\n    if request.method == 'POST':\n        editar_usuario(request)\n    else:",
         "detail": "director.views",
         "documentation": {}
     },
     {
         "label": "bin_dir",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "base",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "base = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "os.environ[\"PATH\"]",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "os.environ[\"VIRTUAL_ENV\"]",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = \"\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "prev_length",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "prev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "sys.path[:]",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "sys.real_prefix",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
         "documentation": {}
     },
     {
         "label": "sys.prefix",
         "kind": 5,
-        "importPath": "env.Scripts.activate_this",
-        "description": "env.Scripts.activate_this",
+        "importPath": "djenv.Scripts.activate_this",
+        "description": "djenv.Scripts.activate_this",
         "peekOfCode": "sys.prefix = base",
-        "detail": "env.Scripts.activate_this",
+        "detail": "djenv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0001_initial",
+        "description": "estudiante.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Estudiante',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "detail": "estudiante.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0002_alter_modelanteproyecto_rev_dadas",
+        "description": "estudiante.migrations.0002_alter_modelanteproyecto_rev_dadas",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelanteproyecto',\n            name='rev_dadas',\n            field=models.IntegerField(default=0),\n        ),",
+        "detail": "estudiante.migrations.0002_alter_modelanteproyecto_rev_dadas",
+        "documentation": {}
+    },
+    {
+        "label": "ModelAnteproyectoAdmin",
+        "kind": 6,
+        "importPath": "estudiante.admin",
+        "description": "estudiante.admin",
+        "peekOfCode": "class ModelAnteproyectoAdmin(admin.ModelAdmin):\n    list_display = (\n        'nombre_proyecto',\n        'nombre_integrante1',\n        'nombre_integrante2',\n        'director',\n        'coodirector',\n        'carta_presentacion_link',\n        'anteproyecto_link'\n    )",
+        "detail": "estudiante.admin",
         "documentation": {}
     },
     {
@@ -979,11 +1232,11 @@
         "documentation": {}
     },
     {
-        "label": "FormPrimeraSolicitud",
+        "label": "FormAnteproyecto",
         "kind": 6,
         "importPath": "estudiante.forms",
         "description": "estudiante.forms",
-        "peekOfCode": "class FormPrimeraSolicitud(forms.ModelForm):\n    class Meta:\n        model = ModelPrimeraSolicitud\n        fields = '__all__'",
+        "peekOfCode": "class FormAnteproyecto(forms.ModelForm):\n    carta_presentacion_convert= forms.FileField(required=True)\n    anteproyecto_convert= forms.FileField(required=True)\n    class Meta:\n        model = ModelAnteproyecto\n        fields = ('nombre_proyecto', 'nombre_integrante1', 'nombre_integrante2',\n                  'carta_presentacion_convert', 'anteproyecto_convert', 'director', 'coodirector')\n        widgets = {\n            'nombre_integrante2': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),\n            'coodirector': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),",
         "detail": "estudiante.forms",
         "documentation": {}
     },
@@ -1006,11 +1259,11 @@
         "documentation": {}
     },
     {
-        "label": "Anteproyect",
+        "label": "ModelAnteproyect",
         "kind": 6,
         "importPath": "estudiante.models",
         "description": "estudiante.models",
-        "peekOfCode": "class Anteproyecto (models.Model):\n    nombre_proyecto = models.CharField(max_length=200)\n    num_integrantes = models.IntegerField(\n        validators=[MaxValueValidator(2), MinValueValidator(2)])\n    carta_presentacion = models.FileField()\n    anteproyecto = models.FileField()\n    num_solicitud_anteproyecto = models.IntegerField()\n    estado_solicitud_anteproyecto = models.BooleanField()\n    director = models.CharField(max_length=200)\n    coodirector = models.CharField(max_length=200)",
+        "peekOfCode": "class ModelAnteproyecto (models.Model):\n    nombre_proyecto = models.CharField(max_length=200)\n    nombre_integrante1 = models.CharField(max_length=200)\n    nombre_integrante2 = models.CharField(max_length=200)\n    carta_presentacion = models.BinaryField(\n        null=True, blank=True)  # Cambio aquí\n    anteproyecto = models.BinaryField(null=True, blank=True)  # Cambio aquí\n    director = models.CharField(max_length=200)\n    coodirector = models.CharField(max_length=200)\n    solicitud_enviada = models.BooleanField()",
         "detail": "estudiante.models",
         "documentation": {}
     },
@@ -1046,7 +1299,7 @@
         "kind": 5,
         "importPath": "estudiante.urls",
         "description": "estudiante.urls",
-        "peekOfCode": "app_name = 'estudiante'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n]",
+        "peekOfCode": "app_name = 'estudiante'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n    path('info_proyect', views.info_proyect, name='info_proyect'),",
         "detail": "estudiante.urls",
         "documentation": {}
     },
@@ -1055,8 +1308,26 @@
         "kind": 5,
         "importPath": "estudiante.urls",
         "description": "estudiante.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n]",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n    path('info_proyect', views.info_proyect, name='info_proyect'),\n]",
         "detail": "estudiante.urls",
+        "documentation": {}
+    },
+    {
+        "label": "datosusuario",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def datosusuario(request):\n    usuario = request.user\n    imagen = usuario.imagen\n    imagen_convertida = base64.b64encode(\n        imagen).decode('utf-8') if imagen else ''\n    form_editar_usuario = FormEditarUsuario(instance=usuario)\n    form_solicitud = FormAnteproyecto\n    context = {'form_anteproyecto': form_solicitud,\n               'form_config': form_editar_usuario, 'usuario': usuario, 'user_img': imagen_convertida\n               }",
+        "detail": "estudiante.views",
+        "documentation": {}
+    },
+    {
+        "label": "contenido_anteproyecto",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def contenido_anteproyecto(request):\n    content_anteproyecto = get_object_or_404(\n        ModelAnteproyecto, user=request.user)\n    context = {\n        'nombre_proyecto': content_anteproyecto.nombre_proyecto,\n        'integrante1': content_anteproyecto.nombre_integrante1,\n        'integrante2': content_anteproyecto.nombre_integrante2,\n        'director': content_anteproyecto.director,\n        'codirector': content_anteproyecto.coodirector,\n        'retroalimentacion': content_anteproyecto.estado_solicitud_anteproyecto,",
+        "detail": "estudiante.views",
         "documentation": {}
     },
     {
@@ -1064,7 +1335,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def principal_estudiante(request):\n    return render(request, 'estudiante/base_estudiante.html')\n# vista del template para la solicitud\n#!funcionando\n@login_required\n@grupo_usuario('Estudiantes')\ndef solicitud(request):\n    if request.method == 'POST':\n        form = FormPrimeraSolicitud(request.POST)\n        if form.is_valid():",
+        "peekOfCode": "def principal_estudiante(request):\n    if request.method == 'POST':\n        editar_usuario(request)\n    else:\n        context = datosusuario(request)\n        return render(request, 'estudiante/base_estudiante.html', context)\n# vista del template para la solicitud\n#!funcionando\n@login_required\n@grupo_usuario('Estudiantes')",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1073,7 +1344,16 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormPrimeraSolicitud(request.POST)\n        if form.is_valid():\n            form.save()\n        return redirect('estudiante:solicitud')\n    else:\n        form = FormPrimeraSolicitud\n        context = {'form': form}\n        return render(request, 'estudiante/template_solicitud.html', context)",
+        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormAnteproyecto(request.POST, request.FILES)\n        if form.is_valid():\n            # Crea una instancia del modelo sin guardarla en la base de datos aún\n            anteproyecto = form.save(commit=False)\n            anteproyecto.user = request.user  # Asigna el usuario actual al campo user\n            anteproyecto.save()  # Guarda la instancia del modelo en la base de datos\n            return redirect('estudiante:solicitud')\n        else:",
+        "detail": "estudiante.views",
+        "documentation": {}
+    },
+    {
+        "label": "info_proyect",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def info_proyect(request):\n    if request.method == 'POST':\n        context = contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html',context)\n    else:\n        contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html')",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1123,11 +1403,74 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0006_usuarios_imagen",
+        "description": "login.migrations.0006_usuarios_imagen",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0005_modelerror'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='imagen',\n            field=models.ImageField(blank=True, null=True, upload_to='profiles/'),\n        ),",
+        "detail": "login.migrations.0006_usuarios_imagen",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0007_alter_usuarios_imagen",
+        "description": "login.migrations.0007_alter_usuarios_imagen",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0006_usuarios_imagen'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='usuarios',\n            name='imagen',\n            field=models.BinaryField(blank=True, null=True),\n        ),",
+        "detail": "login.migrations.0007_alter_usuarios_imagen",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0008_usuarios_username",
+        "description": "login.migrations.0008_usuarios_username",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0007_alter_usuarios_imagen'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='username',\n            field=models.CharField(default='default', error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),\n            preserve_default=False,",
+        "detail": "login.migrations.0008_usuarios_username",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0009_remove_usuarios_username",
+        "description": "login.migrations.0009_remove_usuarios_username",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0008_usuarios_username'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='usuarios',\n            name='username',\n        ),\n    ]",
+        "detail": "login.migrations.0009_remove_usuarios_username",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0010_usuarios_username",
+        "description": "login.migrations.0010_usuarios_username",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0009_remove_usuarios_username'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='username',\n            field=models.CharField(default='default', error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),\n            preserve_default=False,",
+        "detail": "login.migrations.0010_usuarios_username",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0011_remove_usuarios_username",
+        "description": "login.migrations.0011_remove_usuarios_username",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0010_usuarios_username'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='usuarios',\n            name='username',\n        ),\n    ]",
+        "detail": "login.migrations.0011_remove_usuarios_username",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0012_alter_usuarios_managers",
+        "description": "login.migrations.0012_alter_usuarios_managers",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0011_remove_usuarios_username'),\n    ]\n    operations = [\n        migrations.AlterModelManagers(\n            name='usuarios',\n            managers=[\n            ],\n        ),",
+        "detail": "login.migrations.0012_alter_usuarios_managers",
+        "documentation": {}
+    },
+    {
         "label": "CustomUserAdmin",
         "kind": 6,
         "importPath": "login.admin",
         "description": "login.admin",
-        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    form = CustomUserCreationForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),\n        ('Personal info', {'fields': ('nombres', 'apellidos')}),\n        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups')}),",
+        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    form = CustomUserCreationForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos','imagen', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),\n        ('Personal info', {'fields': ('nombres', 'apellidos')}),\n        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups')}),",
         "detail": "login.admin",
         "documentation": {}
     },
@@ -1163,8 +1506,26 @@
         "kind": 6,
         "importPath": "login.forms",
         "description": "login.forms",
-        "peekOfCode": "class FormRegistro(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n        widgets = {\n            'nombres': forms.TextInput(attrs={'placeholder': 'Digita tus nombres', 'class': 'form-control'}),\n            'apellidos': forms.TextInput(attrs={'placeholder': 'Digita tus apellidos', 'class': 'form-control'}),\n            'email': forms.EmailInput(attrs={'placeholder': 'example@correo.com', 'class': 'form-control'}),\n            'password1': forms.PasswordInput(attrs={\n                'placeholder': 'Contraseña mayor a 8 caracteres',",
+        "peekOfCode": "class FormRegistro(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos',\n                  'email', 'password1', 'password2')\n        widgets = {\n            'nombres': forms.TextInput(attrs={'placeholder': 'Digita tus nombres', 'class': 'form-control'}),\n            'apellidos': forms.TextInput(attrs={'placeholder': 'Digita tus apellidos', 'class': 'form-control'}),\n            'email': forms.EmailInput(attrs={'placeholder': 'example@correo.com', 'class': 'form-control'}),\n            'password1': forms.PasswordInput(attrs={",
         "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "FormEditarUsuario",
+        "kind": 6,
+        "importPath": "login.forms",
+        "description": "login.forms",
+        "peekOfCode": "class FormEditarUsuario(forms.ModelForm):\n    imagen_file = forms.ImageField(required=False)\n    current_password = forms.CharField(\n        label='Contraseña actual',\n        widget=forms.PasswordInput(attrs={'class': 'form-control'}),\n        required=False\n    )\n    password1 = forms.CharField(\n        label='Nueva contraseña',\n        widget=forms.PasswordInput(attrs={'class': 'form-control'}),",
+        "detail": "login.forms",
+        "documentation": {}
+    },
+    {
+        "label": "UserManager",
+        "kind": 6,
+        "importPath": "login.managers",
+        "description": "login.managers",
+        "peekOfCode": "class UserManager(BaseUserManager):\n    def create_user(self, email, nombres, apellidos, password=None, **extra_fields):\n        if not email:\n            raise ValueError('El email es obligatorio')\n        email = self.normalize_email(email)\n        user = self.model(email=email, nombres=nombres, apellidos=apellidos, **extra_fields)\n        user.set_password(password)\n        user.save(using=self._db)\n        return user\n    def create_superuser(self, email, nombres, apellidos, password=None, **extra_fields):",
+        "detail": "login.managers",
         "documentation": {}
     },
     {
@@ -1172,7 +1533,7 @@
         "kind": 6,
         "importPath": "login.models",
         "description": "login.models",
-        "peekOfCode": "class ModelError(models.Model):\n    estado = models.IntegerField()\n    fecha_hora_error = models.DateTimeField()\nclass Usuarios(AbstractUser):\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    email = models.EmailField(unique=True)  # Cambiado a EmailField para validación adicional\n    username = None  # Eliminamos el campo username de AbstractUser\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = ['nombres', 'apellidos']",
+        "peekOfCode": "class ModelError(models.Model):\n    estado = models.IntegerField()\n    fecha_hora_error = models.DateTimeField()\nclass Usuarios(AbstractUser):\n    ROLES_CHOICES = (\n        ('estudiante', 'Estudiante'),\n        ('director', 'Director'),\n        ('correspondencia', 'Correspondencia'),\n    )\n    nombres = models.CharField(max_length=100)",
         "detail": "login.models",
         "documentation": {}
     },
@@ -1181,7 +1542,7 @@
         "kind": 6,
         "importPath": "login.models",
         "description": "login.models",
-        "peekOfCode": "class Usuarios(AbstractUser):\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    email = models.EmailField(unique=True)  # Cambiado a EmailField para validación adicional\n    username = None  # Eliminamos el campo username de AbstractUser\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = ['nombres', 'apellidos']\n    def __str__(self):\n        return self.email",
+        "peekOfCode": "class Usuarios(AbstractUser):\n    ROLES_CHOICES = (\n        ('estudiante', 'Estudiante'),\n        ('director', 'Director'),\n        ('correspondencia', 'Correspondencia'),\n    )\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    # CambiadFo a EmailField para validación adicional\n    email = models.EmailField(unique=True)",
         "detail": "login.models",
         "documentation": {}
     },
@@ -1190,7 +1551,7 @@
         "kind": 5,
         "importPath": "login.urls",
         "description": "login.urls",
-        "peekOfCode": "app_name = 'login'\nurlpatterns = [\n    #  ruta de registro para el patterns de la app\n    path('', views.loginapps, name='loginapps'),\n    path('registro', views.registro, name='registro'),\n]",
+        "peekOfCode": "app_name = 'login'\nurlpatterns = [\n    #  ruta de registro para el patterns de la app\n    path('', views.loginapps, name='loginapps'),\n    path('registro', views.registro, name='registro'),\n    path('editar_usuario', views.editar_usuario, name='editar_usuario'),\n]",
         "detail": "login.urls",
         "documentation": {}
     },
@@ -1199,7 +1560,7 @@
         "kind": 5,
         "importPath": "login.urls",
         "description": "login.urls",
-        "peekOfCode": "urlpatterns = [\n    #  ruta de registro para el patterns de la app\n    path('', views.loginapps, name='loginapps'),\n    path('registro', views.registro, name='registro'),\n]",
+        "peekOfCode": "urlpatterns = [\n    #  ruta de registro para el patterns de la app\n    path('', views.loginapps, name='loginapps'),\n    path('registro', views.registro, name='registro'),\n    path('editar_usuario', views.editar_usuario, name='editar_usuario'),\n]",
         "detail": "login.urls",
         "documentation": {}
     },
@@ -1218,6 +1579,15 @@
         "importPath": "login.views",
         "description": "login.views",
         "peekOfCode": "def registro(request):\n    # # ejemplo de uso de mensajes\n    # messages.success(request, 'Operación exitosa.')\n    # # Agregar un mensaje de error\n    # messages.error(request, 'Hubo un error en la operación.')\n    # # Agregar un mensaje de advertencia\n    # messages.warning(request, 'Advertencia: Verifica los detalles.')\n    # # Agregar un mensaje informativo\n    # messages.info(request, 'Información: Revisa la sección de ayuda.')\n    if request.method == 'POST':",
+        "detail": "login.views",
+        "documentation": {}
+    },
+    {
+        "label": "editar_usuario",
+        "kind": 2,
+        "importPath": "login.views",
+        "description": "login.views",
+        "peekOfCode": "def editar_usuario(request):\n    usuario = request.user\n    # recuperacion de la imagen propia del usuaario en formato binario\n    # print(imagen, 'esta es la imagen')\n    imagen = usuario.imagen\n    imagen_convertida = base64.b64encode(\n        imagen).decode('utf-8') if imagen else ''\n    if request.method == 'POST':\n        form = FormEditarUsuario(request.POST, request.FILES, instance=usuario)\n        if form.is_valid():",
         "detail": "login.views",
         "documentation": {}
     },
@@ -1244,7 +1614,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = False\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1253,7 +1623,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "SECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = False\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
+        "peekOfCode": "SECRET_KEY = 'django-insecure-fk&953!oxm!!jd)td-gspnj!(gem1*-&bk&hrvizjw&$u^9q$^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1262,7 +1632,7 @@
         "kind": 5,
         "importPath": "plataform_CIGAP.settings",
         "description": "plataform_CIGAP.settings",
-        "peekOfCode": "DEBUG = False\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
+        "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = ['*']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
         "detail": "plataform_CIGAP.settings",
         "documentation": {}
     },
@@ -1505,7 +1875,16 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.views",
         "description": "plataform_CIGAP.views",
-        "peekOfCode": "def csrf_failure(request, reason=\"\"):\n    return render(request, 'errors.html', errores['403'], status=403)\n# def handler403(request, exception=None):\n#     return render(request, 'errors.html', errores['403'], status=403)\n# esta no maneja excepcion\ndef handler500(request):\n    return render(request, 'errors.html', errores['500'])\n# def handler401(request,exception):\n#     return render(request, 'errors.html', errores['401'])\ndef submit_error(request):",
+        "peekOfCode": "def csrf_failure(request, reason=\"\"):\n    return render(request, 'errors.html', errores['403'], status=403)\n# def handler403(request, exception=None):\n#     return render(request, 'errors.html', errores['403'], status=403)\n# esta no maneja excepcion\ndef handler500(request):\n    return render(request, 'errors.html', errores['500'])\n# def handler401(request,exception):\n#     return render(request, 'errors.html', errores['401'])\ndef handler500(request):",
+        "detail": "plataform_CIGAP.views",
+        "documentation": {}
+    },
+    {
+        "label": "handler500",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.views",
+        "description": "plataform_CIGAP.views",
+        "peekOfCode": "def handler500(request):\n    return render(request, 'errors.html', errores['500'])\n# def handler401(request,exception):\n#     return render(request, 'errors.html', errores['401'])\ndef handler500(request):\n    return render(request, 'errors.html', errores['500'])\n# def handler401(request,exception):\n#     return render(request, 'errors.html', errores['401'])\ndef submit_error(request):\n    if request.method == 'POST':",
         "detail": "plataform_CIGAP.views",
         "documentation": {}
     },
@@ -1543,15 +1922,6 @@
         "description": "plataform_CIGAP.wsgi",
         "peekOfCode": "application = get_wsgi_application()",
         "detail": "plataform_CIGAP.wsgi",
-        "documentation": {}
-    },
-    {
-        "label": "date",
-        "kind": 5,
-        "importPath": "date",
-        "description": "date",
-        "peekOfCode": "date = datetime.datetime.now().strftime('%d-%m-%Y %H+4:%M:%S')",
-        "detail": "date",
         "documentation": {}
     },
     {

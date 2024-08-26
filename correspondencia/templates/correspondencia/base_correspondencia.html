@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block title %}
   Correspondencia
 {% endblock %}
@@ -9,5 +8,72 @@
 {% endblock %}
 
 {% block principal_correspondencia %}
+  {% load static %}
   {% include 'components/header.html' %}
+
+  <style>
+    html,
+    body {
+      min-height: 100%;
+    }
+    
+    .cards_correspondencia {
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-auto-rows: minmax(100px, auto);
+      grid-gap: 24px;
+    }
+    
+    .card_item {
+      display: flex;
+      padding: 12px;
+    }
+  </style>
+
+  <main class="container w-100 mt-5 justify-content-center">
+    <div class="cards_correspondencia w-100">
+      <div class="card_item">
+        <div class="col w-75">
+          <h1>Solicituddes</h1>
+          <p>Conoce la ssolicitudes de los estudiantes</p>
+        </div>
+        <div class="">
+          <img src="" alt="icon" />
+          <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+        </div>
+      </div>
+      <div class="card_item">
+        <div class="col w-75">
+          <h1>Respuestas</h1>
+          <p>Conoce la ssolicitudes de los estudiantes</p>
+        </div>
+        <div class="">
+          <img src="" alt="icon" />
+          <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+        </div>
+      </div>
+      <div class="card_item">
+        <div class="col w-75">
+          <h1>Documentos cargados</h1>
+          <p>Conoce la ssolicitudes de los estudiantes</p>
+        </div>
+        <div class="">
+          <img src="" alt="icon" />
+          <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card_item">
+      <div class="col w-75">
+        <h1>Formatos de documentos</h1>
+        <p>Conoce la ssolicitudes de los estudiantes</p>
+      </div>
+      <div class="">
+        <img src="" alt="icon" />
+        <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+      </div>
+    </div>
+  </main>
 {% endblock %}

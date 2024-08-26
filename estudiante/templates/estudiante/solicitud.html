@@ -1,0 +1,85 @@
+{% extends 'estudiante/base_estudiante.html' %}
+
+{% block solicitud %}
+  {% comment %}este estilo es para ocultar los cards del usuario ya que estan estaplecidos en la base{% endcomment %}
+  <style>
+    .inf_user {
+      display: none;
+    }
+    
+    .solicitud {
+      z-index: 1001;
+    }
+    
+    #id_nombre_proyecto,
+    #id_nombre_integrante1,
+    #id_nombre_integrante2,
+    #id_carta_presentacion,
+    #id_anteproyecto,
+    #id_director,
+    #id_coodirector {
+      padding: 4px;
+      margin: 0;
+      border-radius: 8px;
+      border: 1px solid #cacaca;
+    }
+  </style>
+
+  <main class="container solicitud">
+    <h2 class="m-3">Crea tu solicitud</h2>
+    <form action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Nombre del Proyecto -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
+        <p class="m-0 p-0">Ingresa el nombre del proyecto.</p>
+        {{ form_anteproyecto.nombre_proyecto }}
+      </div>
+
+      <!-- Nombre del Primer Integrante -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
+        <p class="m-0 p-0">Escribe el nombre completo del primer integrante.</p>
+        {{ form_anteproyecto.nombre_integrante1 }}
+      </div>
+
+      <!-- Nombre del Segundo Integrante -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
+        <p class="m-0 p-0">Escribe el nombre completo del segundo integrante.</p>
+        {{ form_anteproyecto.nombre_integrante2 }}
+      </div>
+
+      <!-- Carta de Presentación -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_carta_presentacion"><b>Carta de Presentación</b></label>
+        <p class="m-0 p-0">Sube la carta de presentación en formato PDF.</p>
+        {{ form_anteproyecto.carta_presentacion_convert }}
+      </div>
+
+      <!-- Anteproyecto -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
+        <p class="m-0 p-0">Adjunta el anteproyecto en formato PDF.</p>
+        {{ form_anteproyecto.anteproyecto_convert }}
+      </div>
+
+      <!-- Director -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_director"><b>Director</b></label>
+        <p class="m-0 p-0">Selecciona el director del proyecto.</p>
+        {{ form_anteproyecto.director }}
+      </div>
+
+      <!-- Codirector -->
+      <div class="form-group">
+        <label class="m-0 p-0" for="id_coodirector"><b>Codirector</b></label>
+        <p class="m-0 p-0">Selecciona el codirector del proyecto (opcional).</p>
+        {{ form_anteproyecto.coodirector }}
+      </div>
+
+      <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
+    </form>
+  </main>
+{% endblock %}

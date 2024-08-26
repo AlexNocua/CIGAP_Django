@@ -10,4 +10,5 @@ urlpatterns = [
     #  ruta de registro para el patterns de la app
     path('', views.loginapps, name='loginapps'),
     path('registro', views.registro, name='registro'),
+    path('editar_usuario', views.editar_usuario, name='editar_usuario'),
 ]

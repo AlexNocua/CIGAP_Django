@@ -14,7 +14,11 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.http import HttpResponse
 
-from .forms import FormRegistro
+from .forms import FormRegistro, FormEditarUsuario
+
+
+# importacion para la codificacion de las imagenes
+import base64
 
 
 # Creacion de la vista global del login
@@ -34,7 +38,7 @@ def loginapps(request):
             if 'Estudiantes' in user_groups:
                 return redirect('estudiante:principal_estudiante')
             elif 'Directores' in user_groups:
-                return redirect('director:base_director')
+                return redirect('director:principal_director')
             elif 'Correspondencia' in user_groups:
                 return redirect('correspondencia:principal_correspondencia')
             else:
@@ -73,3 +77,35 @@ def registro(request):
             return redirect('login:loginapps')
     else:
         return redirect('login:loginapps')
+
+
+# esta es la funcion que permite cambiar los datos de cada uno de los estudiantes
+def editar_usuario(request):
+    usuario = request.user
+    # recuperacion de la imagen propia del usuaario en formato binario
+    # print(imagen, 'esta es la imagen')
+    imagen = usuario.imagen
+    imagen_convertida = base64.b64encode(
+        imagen).decode('utf-8') if imagen else ''
+
+    if request.method == 'POST':
+        form = FormEditarUsuario(request.POST, request.FILES, instance=usuario)
+        if form.is_valid():
+            user = form.save()
+
+            # revizar esta logica
+            # Autenticar de nuevo al usuario si el correo electrónico ha cambiado
+            if user.email != request.user.email:
+                auth_login(request, user)
+            user_groups = user.groups.values_list('name', flat=True)
+            if 'Estudiantes' in user_groups:
+                return redirect('estudiante:principal_estudiante')
+            elif 'Directores' in user_groups:
+                return redirect('director:principal_director')
+            elif 'Correspondencia' in user_groups:
+                return redirect( 'correspondencia:principal_correspondencia')
+            else:
+                return HttpResponse("No tienes acceso a ninguna seción")
+            return redirect('director:base_director')
+        else:
+            return render(request, 'director/base_director.html', {'form_config': form, 'usuario': usuario, 'user_img': imagen_convertida})

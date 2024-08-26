@@ -70,6 +70,14 @@ def handler500(request):
 #     return render(request, 'errors.html', errores['401'])
 
 
+def handler500(request):
+    return render(request, 'errors.html', errores['500'])
+
+
+# def handler401(request,exception):
+#     return render(request, 'errors.html', errores['401'])
+
+
 def submit_error(request):
 
     if request.method == 'POST':
@@ -89,3 +97,4 @@ def submit_error(request):
     else:
         logout(request)
         return redirect('login:loginapps')
+

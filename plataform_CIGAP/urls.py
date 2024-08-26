@@ -39,6 +39,7 @@ urlpatterns = [
     # ruta de errores
     # path('errors/', views.errors, name='errors'),
     path('submit_error/', views.submit_error, name='submit_error'),
+   
 
 ]
 

@@ -10,5 +10,6 @@ app_name = 'director'
 urlpatterns = [
     # verificacion del funcionamiento de las rutas de las aplicaciones
     # path('', views.funcionando, name='funcionando'),
-    path('', views.base_director, name='base_director')
+    path('', views.principal_director, name='principal_director'),
+   
 ]

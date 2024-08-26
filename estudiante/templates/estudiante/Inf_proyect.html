@@ -1,0 +1,50 @@
+{% extends 'estudiante/base_estudiante.html' %}
+{% load static %}
+
+{% block informacion_proyecto %}
+  <style>
+    .inf_user {
+      display: none;
+    }
+    
+    .solicitud {
+      z-index: 1001;
+    }
+    .container p {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <main class="container">
+    <h2>Información del Proyecto</h2>
+    <main class="mt-2">
+      <section class="col">
+        <p>
+          <strong>Nombre del proyecto:</strong> {{nombre_proyecto}}
+        </p>
+        <div>
+          <strong>Integrantes:</strong>
+          <ol>
+            {%if integrante2%}
+            
+            {%endif%}
+            
+            {%else%}
+            
+
+          </ol>
+        </div>
+        <p>
+          <strong>Director:</strong>
+        </p>
+        <p>
+          <strong>Estado de solicitud:</strong>
+        </p>
+        <p>
+          <strong>Revisiones por parte del comité:</strong>
+        </p>
+      </section>
+      <table class="col"></table>
+    </main>
+  </main>
+{% endblock %}

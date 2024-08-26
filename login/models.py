@@ -10,6 +10,9 @@ from django.contrib.auth.models import AbstractUser
 # manejo de errores
 import datetime
 
+# importacion de managers con el fin de gestionar la creacion de supeusuarios de manera correcta
+from .managers import UserManager
+
 
 class ModelError(models.Model):
     estado = models.IntegerField()
@@ -17,13 +20,26 @@ class ModelError(models.Model):
 
 
 class Usuarios(AbstractUser):
+    ROLES_CHOICES = (
+        ('estudiante', 'Estudiante'),
+        ('director', 'Director'),
+        ('correspondencia', 'Correspondencia'),
+    )
+
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)  # Cambiado a EmailField para validación adicional
+    # CambiadFo a EmailField para validación adicional
+    email = models.EmailField(unique=True)
     username = None  # Eliminamos el campo username de AbstractUser
+
+    # declaracion de imagen
+    imagen = models.BinaryField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nombres', 'apellidos']
+    
+    objects = UserManager()
+    
 
     def __str__(self):
         return self.email

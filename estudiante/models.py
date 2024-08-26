@@ -13,8 +13,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 from django.contrib.auth.models import Group
+from login.models import Usuarios
 
-
+# revisar este modelo error.
 
 
 class Estudiante(models.Model):
@@ -22,7 +23,6 @@ class Estudiante(models.Model):
     apellidos = models.CharField(max_length=100, verbose_name='Apellidos')
     email = models.EmailField(
         max_length=100, unique=True, verbose_name='Correo')
-
 
     # Otros campos y métodos que necesites
 
@@ -75,19 +75,27 @@ class ModelPrimeraSolicitud(models.Model):
 # creacion del modelo para guardar los datos del anteproyecto
 
 
-class Anteproyecto (models.Model):
+class ModelAnteproyecto (models.Model):
     nombre_proyecto = models.CharField(max_length=200)
-    num_integrantes = models.IntegerField(
-        validators=[MaxValueValidator(2), MinValueValidator(2)])
-    carta_presentacion = models.FileField()
-    anteproyecto = models.FileField()
-    num_solicitud_anteproyecto = models.IntegerField()
-    estado_solicitud_anteproyecto = models.BooleanField()
+    nombre_integrante1 = models.CharField(max_length=200)
+    nombre_integrante2 = models.CharField(max_length=200)
+    carta_presentacion = models.BinaryField(
+        null=True, blank=True)  # Cambio aquí
+    anteproyecto = models.BinaryField(null=True, blank=True)  # Cambio aquí
     director = models.CharField(max_length=200)
     coodirector = models.CharField(max_length=200)
-
+    solicitud_enviada = models.BooleanField()
+    # estos valores van a ser manejados por correspondencia
+    estado_solicitud_anteproyecto = models.BooleanField()
+    retroalimentacion = models.TextField()
+    rev_dadas = models.IntegerField(default=0)
+    # llaves foraneas y relacionamientos
+    user = models.OneToOneField(Usuarios, on_delete=models.PROTECT,
+                                   related_name='Anteproyecto')
 
 # creacion del modelo de monografia o proyecto de grado
+
+
 class ProyectoGrado (models.Model):
     pass
 
