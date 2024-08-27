@@ -4,26 +4,33 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 
 from django.contrib.auth.decorators import login_required
-from plataform_CIGAP.decoradores import grupo_usuario
-
 # formulario de anteproyecto
+
 from .forms import FormAnteproyecto
-
-
 # modelos
 from .models import ModelAnteproyecto
 import base64
-
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario
 # importacion del formulario para editar el usuario
 from login.forms import FormEditarUsuario
+# importacion de las funcionalidaes
+from plataform_CIGAP.utils.decoradores import grupo_usuario
+from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
+
 
 # Create your views here.
 
 # vista de funcionamiento respecto a la url de la aplicacion
 # def funcionando(request):
 #     return HttpResponse('app_ estudiante funcionando.')
+
+
+# funcion para devolver documentos o imagenes
+def devolver_documento_imagen(documento_binario):
+    documento = base64.b64encode(documento_binario).decode(
+        'utf-8') if documento_binario else ''
+    return documento
 
 
 @login_required
@@ -43,24 +50,40 @@ def datosusuario(request):
 
 # funcion para devolver un diccionario con los datos del proyecto
 def contenido_anteproyecto(request):
-    content_anteproyecto = get_object_or_404(
-        ModelAnteproyecto, user=request.user)
-    context = {
-        'nombre_proyecto': content_anteproyecto.nombre_proyecto,
-        'integrante1': content_anteproyecto.nombre_integrante1,
-        'integrante2': content_anteproyecto.nombre_integrante2,
-        'director': content_anteproyecto.director,
-        'codirector': content_anteproyecto.coodirector,
-        'retroalimentacion': content_anteproyecto.estado_solicitud_anteproyecto,
-        'estado': content_anteproyecto.estado_solicitud_anteproyecto,
-        'rev_dadas': content_anteproyecto.rev_dadas,
-    }
-    # print(context)
-    return context
+    try:
+
+        content_anteproyecto = get_object_or_404(ModelAnteproyecto, user=request.user)
+        carta_presentacion_binario = content_anteproyecto.carta_presentacion
+        anteproyecto_binario = content_anteproyecto.anteproyecto
+        carta_presentacion = devolver_documento_imagen(
+            carta_presentacion_binario)
+        anteproyecto = devolver_documento_imagen(anteproyecto_binario)
+        context_anteproyecto = {
+            'nombre_proyecto': content_anteproyecto.nombre_proyecto,
+            'integrante1': content_anteproyecto.nombre_integrante1,
+            'integrante2': content_anteproyecto.nombre_integrante2,
+            'director': content_anteproyecto.director,
+            'carta': carta_presentacion,
+            'anteproyecto': anteproyecto,
+            'codirector': content_anteproyecto.coodirector,
+            'retroalimentacion': content_anteproyecto.estado_solicitud_anteproyecto,
+            'estado': content_anteproyecto.estado_solicitud_anteproyecto,
+            'rev_dadas': content_anteproyecto.rev_dadas,
+            'retroalimentacion': content_anteproyecto.retroalimentacion,
+            'existe_solicitud': True,
+           
+        }
+       
+    except:
+        context_anteproyecto = {
+            'existe_solicitud': False,
+        }
+        # print(context)
+    return context_anteproyecto
 
 
-@login_required
-@grupo_usuario('Estudiantes')
+@ login_required
+@ grupo_usuario('Estudiantes')
 def principal_estudiante(request):
 
     if request.method == 'POST':
@@ -73,14 +96,15 @@ def principal_estudiante(request):
 
 
 #!funcionando
-@login_required
-@grupo_usuario('Estudiantes')
+@ login_required
+@ grupo_usuario('Estudiantes')
 def solicitud(request):
     if request.method == 'POST':
         form = FormAnteproyecto(request.POST, request.FILES)
         if form.is_valid():
             # Crea una instancia del modelo sin guardarla en la base de datos aún
             anteproyecto = form.save(commit=False)
+            anteproyecto.fecha_envio = fecha_actual
             anteproyecto.user = request.user  # Asigna el usuario actual al campo user
             anteproyecto.save()  # Guarda la instancia del modelo en la base de datos
             return redirect('estudiante:solicitud')
@@ -95,8 +119,7 @@ def solicitud(request):
 def info_proyect(request):
     if request.method == 'POST':
         context = contenido_anteproyecto(request)
-        return render(request, 'estudiante/Inf_proyect.html',context)
-        
+        return render(request, 'estudiante/Inf_proyect.html', context)
     else:
-        contenido_anteproyecto(request)
-        return render(request, 'estudiante/Inf_proyect.html')
+        context = contenido_anteproyecto(request)
+        return render(request, 'estudiante/Inf_proyect.html', context)

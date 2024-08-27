@@ -24,8 +24,7 @@
       border: 1px solid #cacaca;
     }
   </style>
-
-  <main class="container solicitud">
+  <div class="solicitud">
     <h2 class="m-3">Crea tu solicitud</h2>
     <form action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
@@ -81,5 +80,5 @@
 
       <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
     </form>
-  </main>
+  </div>
 {% endblock %}

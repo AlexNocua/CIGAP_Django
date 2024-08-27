@@ -152,150 +152,6 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -537,14 +393,6 @@
         "documentation": {}
     },
     {
-        "label": "redirect",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.shortcuts",
-        "documentation": {}
-    },
-    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -609,14 +457,6 @@
         "documentation": {}
     },
     {
-        "label": "HttpResponse",
-        "importPath": "django.http",
-        "description": "django.http",
-        "isExtraImport": true,
-        "detail": "django.http",
-        "documentation": {}
-    },
-    {
         "label": "logout_user",
         "importPath": "plataform_CIGAP.views",
         "description": "plataform_CIGAP.views",
@@ -650,35 +490,50 @@
     },
     {
         "label": "grupo_usuario",
-        "importPath": "plataform_CIGAP.decoradores",
-        "description": "plataform_CIGAP.decoradores",
+        "importPath": "plataform_CIGAP.utils.decoradores",
+        "description": "plataform_CIGAP.utils.decoradores",
         "isExtraImport": true,
-        "detail": "plataform_CIGAP.decoradores",
+        "detail": "plataform_CIGAP.utils.decoradores",
         "documentation": {}
     },
     {
         "label": "grupo_usuario",
-        "importPath": "plataform_CIGAP.decoradores",
-        "description": "plataform_CIGAP.decoradores",
+        "importPath": "plataform_CIGAP.utils.decoradores",
+        "description": "plataform_CIGAP.utils.decoradores",
         "isExtraImport": true,
-        "detail": "plataform_CIGAP.decoradores",
+        "detail": "plataform_CIGAP.utils.decoradores",
         "documentation": {}
     },
     {
         "label": "grupo_usuario",
-        "importPath": "plataform_CIGAP.decoradores",
-        "description": "plataform_CIGAP.decoradores",
+        "importPath": "plataform_CIGAP.utils.decoradores",
+        "description": "plataform_CIGAP.utils.decoradores",
         "isExtraImport": true,
-        "detail": "plataform_CIGAP.decoradores",
+        "detail": "plataform_CIGAP.utils.decoradores",
         "documentation": {}
     },
     {
-        "label": "django.contrib.auth.models",
-        "kind": 6,
+        "label": "fecha_actual",
+        "importPath": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "description": "plataform_CIGAP.utils.funcionalidades_fechas",
         "isExtraImport": true,
-        "importPath": "django.contrib.auth.models",
-        "description": "django.contrib.auth.models",
-        "detail": "django.contrib.auth.models",
+        "detail": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "documentation": {}
+    },
+    {
+        "label": "fecha_actual",
+        "importPath": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "description": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "documentation": {}
+    },
+    {
+        "label": "fecha_actual",
+        "importPath": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "description": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.utils.funcionalidades_fechas",
         "documentation": {}
     },
     {
@@ -928,15 +783,6 @@
         "documentation": {}
     },
     {
-        "label": "django.contrib.auth.validators",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "django.contrib.auth.validators",
-        "description": "django.contrib.auth.validators",
-        "detail": "django.contrib.auth.validators",
-        "documentation": {}
-    },
-    {
         "label": "django.utils.timezone",
         "kind": 6,
         "isExtraImport": true,
@@ -1008,6 +854,15 @@
         "importPath": "datetime",
         "description": "datetime",
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "pytz",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytz",
+        "description": "pytz",
+        "detail": "pytz",
         "documentation": {}
     },
     {
@@ -1207,10 +1062,10 @@
     {
         "label": "Migration",
         "kind": 6,
-        "importPath": "estudiante.migrations.0002_alter_modelanteproyecto_rev_dadas",
-        "description": "estudiante.migrations.0002_alter_modelanteproyecto_rev_dadas",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelanteproyecto',\n            name='rev_dadas',\n            field=models.IntegerField(default=0),\n        ),",
-        "detail": "estudiante.migrations.0002_alter_modelanteproyecto_rev_dadas",
+        "importPath": "estudiante.migrations.0002_modelanteproyecto_enviado",
+        "description": "estudiante.migrations.0002_modelanteproyecto_enviado",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0001_initial'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='modelanteproyecto',\n            name='enviado',\n            field=models.BooleanField(default=False),\n            preserve_default=False,",
+        "detail": "estudiante.migrations.0002_modelanteproyecto_enviado",
         "documentation": {}
     },
     {
@@ -1313,6 +1168,15 @@
         "documentation": {}
     },
     {
+        "label": "devolver_documento_imagen",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def devolver_documento_imagen(documento_binario):\n    documento = base64.b64encode(documento_binario).decode(\n        'utf-8') if documento_binario else ''\n    return documento\n@login_required\n@grupo_usuario('Estudiantes')\ndef datosusuario(request):\n    usuario = request.user\n    imagen = usuario.imagen\n    imagen_convertida = base64.b64encode(",
+        "detail": "estudiante.views",
+        "documentation": {}
+    },
+    {
         "label": "datosusuario",
         "kind": 2,
         "importPath": "estudiante.views",
@@ -1326,7 +1190,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def contenido_anteproyecto(request):\n    content_anteproyecto = get_object_or_404(\n        ModelAnteproyecto, user=request.user)\n    context = {\n        'nombre_proyecto': content_anteproyecto.nombre_proyecto,\n        'integrante1': content_anteproyecto.nombre_integrante1,\n        'integrante2': content_anteproyecto.nombre_integrante2,\n        'director': content_anteproyecto.director,\n        'codirector': content_anteproyecto.coodirector,\n        'retroalimentacion': content_anteproyecto.estado_solicitud_anteproyecto,",
+        "peekOfCode": "def contenido_anteproyecto(request):\n    try:\n        content_anteproyecto = get_object_or_404(ModelAnteproyecto, user=request.user)\n        carta_presentacion_binario = content_anteproyecto.carta_presentacion\n        anteproyecto_binario = content_anteproyecto.anteproyecto\n        carta_presentacion = devolver_documento_imagen(\n            carta_presentacion_binario)\n        anteproyecto = devolver_documento_imagen(anteproyecto_binario)\n        context_anteproyecto = {\n            'nombre_proyecto': content_anteproyecto.nombre_proyecto,",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1335,7 +1199,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def principal_estudiante(request):\n    if request.method == 'POST':\n        editar_usuario(request)\n    else:\n        context = datosusuario(request)\n        return render(request, 'estudiante/base_estudiante.html', context)\n# vista del template para la solicitud\n#!funcionando\n@login_required\n@grupo_usuario('Estudiantes')",
+        "peekOfCode": "def principal_estudiante(request):\n    if request.method == 'POST':\n        editar_usuario(request)\n    else:\n        context = datosusuario(request)\n        return render(request, 'estudiante/base_estudiante.html', context)\n# vista del template para la solicitud\n#!funcionando\n@ login_required\n@ grupo_usuario('Estudiantes')",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1344,7 +1208,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormAnteproyecto(request.POST, request.FILES)\n        if form.is_valid():\n            # Crea una instancia del modelo sin guardarla en la base de datos aún\n            anteproyecto = form.save(commit=False)\n            anteproyecto.user = request.user  # Asigna el usuario actual al campo user\n            anteproyecto.save()  # Guarda la instancia del modelo en la base de datos\n            return redirect('estudiante:solicitud')\n        else:",
+        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormAnteproyecto(request.POST, request.FILES)\n        if form.is_valid():\n            # Crea una instancia del modelo sin guardarla en la base de datos aún\n            anteproyecto = form.save(commit=False)\n            anteproyecto.fecha_envio = fecha_actual\n            anteproyecto.user = request.user  # Asigna el usuario actual al campo user\n            anteproyecto.save()  # Guarda la instancia del modelo en la base de datos\n            return redirect('estudiante:solicitud')",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1353,7 +1217,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def info_proyect(request):\n    if request.method == 'POST':\n        context = contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html',context)\n    else:\n        contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html')",
+        "peekOfCode": "def info_proyect(request):\n    if request.method == 'POST':\n        context = contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html', context)\n    else:\n        context = contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html', context)",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1362,107 +1226,8 @@
         "kind": 6,
         "importPath": "login.migrations.0001_initial",
         "description": "login.migrations.0001_initial",
-        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Usuarios',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('password', models.CharField(max_length=128, verbose_name='password')),",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('auth', '0012_alter_user_first_name_max_length'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='ModelError',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
         "detail": "login.migrations.0001_initial",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0002_alter_usuarios_options_alter_usuarios_managers_and_more",
-        "description": "login.migrations.0002_alter_usuarios_options_alter_usuarios_managers_and_more",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('auth', '0012_alter_user_first_name_max_length'),\n        ('login', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name='usuarios',\n            options={'verbose_name': 'user', 'verbose_name_plural': 'users'},\n        ),",
-        "detail": "login.migrations.0002_alter_usuarios_options_alter_usuarios_managers_and_more",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0003_remove_usuarios_username",
-        "description": "login.migrations.0003_remove_usuarios_username",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0002_alter_usuarios_options_alter_usuarios_managers_and_more'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='usuarios',\n            name='username',\n        ),\n    ]",
-        "detail": "login.migrations.0003_remove_usuarios_username",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0004_alter_usuarios_email",
-        "description": "login.migrations.0004_alter_usuarios_email",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0003_remove_usuarios_username'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='usuarios',\n            name='email',\n            field=models.EmailField(max_length=254, unique=True),\n        ),",
-        "detail": "login.migrations.0004_alter_usuarios_email",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0005_modelerror",
-        "description": "login.migrations.0005_modelerror",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0004_alter_usuarios_email'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='ModelError',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('estado', models.IntegerField()),",
-        "detail": "login.migrations.0005_modelerror",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0006_usuarios_imagen",
-        "description": "login.migrations.0006_usuarios_imagen",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0005_modelerror'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='imagen',\n            field=models.ImageField(blank=True, null=True, upload_to='profiles/'),\n        ),",
-        "detail": "login.migrations.0006_usuarios_imagen",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0007_alter_usuarios_imagen",
-        "description": "login.migrations.0007_alter_usuarios_imagen",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0006_usuarios_imagen'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='usuarios',\n            name='imagen',\n            field=models.BinaryField(blank=True, null=True),\n        ),",
-        "detail": "login.migrations.0007_alter_usuarios_imagen",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0008_usuarios_username",
-        "description": "login.migrations.0008_usuarios_username",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0007_alter_usuarios_imagen'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='username',\n            field=models.CharField(default='default', error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),\n            preserve_default=False,",
-        "detail": "login.migrations.0008_usuarios_username",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0009_remove_usuarios_username",
-        "description": "login.migrations.0009_remove_usuarios_username",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0008_usuarios_username'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='usuarios',\n            name='username',\n        ),\n    ]",
-        "detail": "login.migrations.0009_remove_usuarios_username",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0010_usuarios_username",
-        "description": "login.migrations.0010_usuarios_username",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0009_remove_usuarios_username'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='username',\n            field=models.CharField(default='default', error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),\n            preserve_default=False,",
-        "detail": "login.migrations.0010_usuarios_username",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0011_remove_usuarios_username",
-        "description": "login.migrations.0011_remove_usuarios_username",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0010_usuarios_username'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='usuarios',\n            name='username',\n        ),\n    ]",
-        "detail": "login.migrations.0011_remove_usuarios_username",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "login.migrations.0012_alter_usuarios_managers",
-        "description": "login.migrations.0012_alter_usuarios_managers",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0011_remove_usuarios_username'),\n    ]\n    operations = [\n        migrations.AlterModelManagers(\n            name='usuarios',\n            managers=[\n            ],\n        ),",
-        "detail": "login.migrations.0012_alter_usuarios_managers",
         "documentation": {}
     },
     {
@@ -1592,21 +1357,30 @@
         "documentation": {}
     },
     {
+        "label": "grupo_usuario",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.utils.decoradores",
+        "description": "plataform_CIGAP.utils.decoradores",
+        "peekOfCode": "def grupo_usuario(nombre_grupo):\n    def decorador(view):\n        def view_envuelta(request, *args, **kwargs):\n            if request.user.is_authenticated:\n                if request.user.groups.filter(name=nombre_grupo).exists():\n                    return view(request, *args, **kwargs)\n                else:\n                    # en este decorador puedo manejar una vista de permisos\n                    return handler404\n            else:",
+        "detail": "plataform_CIGAP.utils.decoradores",
+        "documentation": {}
+    },
+    {
+        "label": "fecha_actual",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "description": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "peekOfCode": "def fecha_actual():\n    bogota_time = pytz.timezone('America/Bogota')\n    bogota_time = datetime.datetime.now(bogota_time)\n    bogota_time = bogota_time.strftime('%Y-%m-%d %H:%M:%S')\n    fecha_actual = bogota_time\n    return fecha_actual",
+        "detail": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "documentation": {}
+    },
+    {
         "label": "application",
         "kind": 5,
         "importPath": "plataform_CIGAP.asgi",
         "description": "plataform_CIGAP.asgi",
         "peekOfCode": "application = get_asgi_application()",
         "detail": "plataform_CIGAP.asgi",
-        "documentation": {}
-    },
-    {
-        "label": "grupo_usuario",
-        "kind": 2,
-        "importPath": "plataform_CIGAP.decoradores",
-        "description": "plataform_CIGAP.decoradores",
-        "peekOfCode": "def grupo_usuario(nombre_grupo):\n    def decorador(view):\n        def view_envuelta(request, *args, **kwargs):\n            if request.user.is_authenticated:\n                if request.user.groups.filter(name=nombre_grupo).exists():\n                    return view(request, *args, **kwargs)\n                else:\n                    # en este decorador puedo manejar una vista de permisos\n                    return handler404\n            else:",
-        "detail": "plataform_CIGAP.decoradores",
         "documentation": {}
     },
     {

@@ -2,49 +2,81 @@
 {% load static %}
 
 {% block informacion_proyecto %}
+  <meta charset="UTF-8" />
   <style>
     .inf_user {
       display: none;
     }
     
-    .solicitud {
-      z-index: 1001;
-    }
     .container p {
       padding: 0;
       margin: 0;
     }
+    
+    .info_proyect {
+      z-index: 1001;
+    }
   </style>
-  <main class="container">
-    <h2>Información del Proyecto</h2>
-    <main class="mt-2">
+
+  {% if existe_solicitud %}
+    <main class="info_proyect d-flex">
       <section class="col">
+        <h3 class="m-3">Información del Proyecto</h3>
         <p>
-          <strong>Nombre del proyecto:</strong> {{nombre_proyecto}}
+          <strong>Nombre del proyecto:</strong> {{ nombre_proyecto }}
         </p>
         <div>
           <strong>Integrantes:</strong>
-          <ol>
-            {%if integrante2%}
-            
-            {%endif%}
-            
-            {%else%}
-            
-
-          </ol>
+          <ul>
+            {% if integrante2 == Null %}
+              <li>{{ integrante1 }}</li>
+              <li>{{ integrante2 }}</li>
+            {% else %}
+              <li>{{ integrante1 }}</li>
+            {% endif %}
+          </ul>
         </div>
         <p>
-          <strong>Director:</strong>
+          <strong>Director:</strong> {{ director }}
+        </p>
+        <p>
+          <strong>Fecha de envio de la solicitud:</strong>
+          {{ fecha_envio }}
         </p>
         <p>
           <strong>Estado de solicitud:</strong>
+          {% if estado %}
+            Aprovado
+          {% else %}
+            No aprovado
+          {% endif %}
         </p>
         <p>
-          <strong>Revisiones por parte del comité:</strong>
+          <strong>Revisiones por parte del comité:</strong> {{ rev_dadas }}
+        </p>
+        <br />
+        <p class="content-respuesta">
+          <strong>Retroalimentación:</strong><br />
+          {{ retroalimentacion }}
         </p>
       </section>
-      <table class="col"></table>
+      <section class="col">
+        <h3 class="m-3">Documentos cargados</h3>
+        <div class="documents d-flex flex-column">
+          <a class="mt-2" href="data:application/octet-stream;base64,{{ carta }}" download="CartaPresentacion_{{ nombre_proyecto }}.pdf">Carta de solicitud</a>
+          <a class="mt-2" href="{{ anteproyecto }}" download="Anteproyecto_{{ nombre_proyecto }}.pdf">Anteproyecto</a>
+
+          <a class="mt-2" href="{{ doc_proyect }}" download="CartaPresentacion{{ nombre_proyecto }}.pdf">Retroalimentación del comite</a>
+        </div>
+      </section>
     </main>
-  </main>
+  {% else %}
+    <div class="info_proyect">
+      <h1 class="m-3">Aun no has enviado una solicitud.</h1>
+      <p>
+        ¿Quieres enviar tu primera solicitud de anteproyecto al comité?
+        <a href="{% url 'estudiante:solicitud' %}">Click aquí.</a>
+      </p>
+    </div>
+  {% endif %}
 {% endblock %}

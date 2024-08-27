@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-
+import base64
 
 # importacion de maximos y minimos validadores en el campo de integerfield
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -85,13 +85,15 @@ class ModelAnteproyecto (models.Model):
     director = models.CharField(max_length=200)
     coodirector = models.CharField(max_length=200)
     solicitud_enviada = models.BooleanField()
+    enviado = models.BooleanField()
+    fecha_envio = models.CharField(max_length =200)
     # estos valores van a ser manejados por correspondencia
     estado_solicitud_anteproyecto = models.BooleanField()
     retroalimentacion = models.TextField()
     rev_dadas = models.IntegerField(default=0)
     # llaves foraneas y relacionamientos
     user = models.OneToOneField(Usuarios, on_delete=models.PROTECT,
-                                   related_name='Anteproyecto')
+                                related_name='Anteproyecto')
 
 # creacion del modelo de monografia o proyecto de grado
 

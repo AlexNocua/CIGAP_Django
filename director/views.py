@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.contrib.auth.decorators import login_required
-from plataform_CIGAP.decoradores import grupo_usuario
 from login.forms import FormEditarUsuario
 from login.models import Usuarios
 from django.contrib.auth import login as auth_login
 import base64
+#importacion de las funcionalidaes
+from plataform_CIGAP.utils.decoradores import grupo_usuario
+from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario

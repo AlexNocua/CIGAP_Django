@@ -18,10 +18,14 @@
     body {
       background: none;
     }
+    
+    .header {
+    }
   </style>
-  {% include 'components/header.html' %}
-  {% include 'estudiante/components/nav_modulos.html' %}
-
+  <div class="header">
+    {% include 'components/header.html' %}
+    {% include 'estudiante/components/nav_modulos.html' %}
+  </div>
   <main class="container position-relative d-flex justify-content-center align-items-center">
     {% comment %}incluir el componente de usuario{% endcomment %}
     <div class="inf_user">

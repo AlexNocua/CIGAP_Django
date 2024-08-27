@@ -1,7 +1,4 @@
-import django.contrib.auth
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from .views import *
+
 
 # Es este script vamos a crear un decroador el cual va a poner un filtro de usuarios que inician secion.
 # esto con el fin de controlar el acceso a otras aplicaciones por medio de las url, estas solo por permiciones de grupos
