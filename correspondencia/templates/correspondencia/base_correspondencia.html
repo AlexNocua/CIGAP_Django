@@ -32,47 +32,62 @@
     }
   </style>
 
-  <main class="container w-100 mt-5 justify-content-center">
-    <div class="cards_correspondencia w-100">
-      <div class="card_item">
-        <div class="col w-75">
-          <h1>Solicituddes</h1>
-          <p>Conoce la ssolicitudes de los estudiantes</p>
-        </div>
-        <div class="">
-          <img src="" alt="icon" />
-          <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
-        </div>
-      </div>
-      <div class="card_item">
-        <div class="col w-75">
-          <h1>Respuestas</h1>
-          <p>Conoce la ssolicitudes de los estudiantes</p>
-        </div>
-        <div class="">
-          <img src="" alt="icon" />
-          <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+  <main class="container mt-5">
+    <div class="row justify-content-center">
+      <!-- Card 1 -->
+      <div class="col-md-3 mb-4">
+        <div class="d-flex card h-100 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Solicitudes</h2>
+            <p class="card-text">Conoce las solicitudes de los estudiantes</p>
+          </div>
+          <div class="card-footer">
+            <img src="{% static 'correspondencia/icons/image_documentos.png' %}" alt="icon" class="img-fluid mb-2" />
+            <p class="card-text">Número de solicitudes: {{ Num_solicitudes }}</p>
+          </div>
         </div>
       </div>
-      <div class="card_item">
-        <div class="col w-75">
-          <h1>Documentos cargados</h1>
-          <p>Conoce la ssolicitudes de los estudiantes</p>
-        </div>
-        <div class="">
-          <img src="" alt="icon" />
-          <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+
+      <!-- Card 2 -->
+      <div class="col-md-3 mb-4">
+        <div class="d-flex card h-100 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Respuestas</h2>
+            <p class="card-text">Conoce las respuestas a las solicitudes</p>
+          </div>
+          <div class="card-footer">
+            <img src="{% static 'correspondencia/icons/image_formatos.png' %}" alt="icon" class="img-fluid mb-2" />
+            <p class="card-text">Número de respuestas: {{ Num_respuestas }}</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card_item">
-      <div class="col w-75">
-        <h1>Formatos de documentos</h1>
-        <p>Conoce la ssolicitudes de los estudiantes</p>
+
+      <!-- Card 3 -->
+      <div class="col-md-3 mb-4">
+        <div class="d-flex card h-100 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Documentos cargados</h2>
+            <p class="card-text">Revisa los documentos cargados por los estudiantes</p>
+          </div>
+          <div class="card-footer">
+            <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
+            <p class="card-text">Número de documentos: {{ Num_documentos }}</p>
+          </div>
+        </div>
       </div>
-      <div class="">
-        <img src="" alt="icon" />
-        <p>Numero de solicitudes: {{ Num_solicitudes }}</p>
+
+      <!-- Card 4 -->
+      <div class="col-md-3 mb-4">
+        <div class="d-flex card h-100 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Formatos de documentos</h2>
+            <p class="card-text">Descarga y revisa los formatos de documentos</p>
+          </div>
+          <div class="card-footer">
+            <img src="{% static 'correspondencia/icons/image_solicitud.png' %}" alt="icon" class="img-fluid mb-2" />
+            <p class="card-text">Número de formatos: {{ Num_formatos }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </main>

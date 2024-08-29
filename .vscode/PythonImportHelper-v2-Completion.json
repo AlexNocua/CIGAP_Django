@@ -128,6 +128,62 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -617,6 +673,14 @@
         "documentation": {}
     },
     {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
         "label": "FormEditarUsuario",
         "importPath": "login.forms",
         "description": "login.forms",
@@ -1069,6 +1133,42 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0003_alter_modelanteproyecto_director_and_more",
+        "description": "estudiante.migrations.0003_alter_modelanteproyecto_director_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0002_modelanteproyecto_enviado'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelanteproyecto',\n            name='director',\n            field=models.CharField(blank=True, max_length=200, null=True),\n        ),",
+        "detail": "estudiante.migrations.0003_alter_modelanteproyecto_director_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0004_alter_modelanteproyecto_coodirector_and_more",
+        "description": "estudiante.migrations.0004_alter_modelanteproyecto_coodirector_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0003_alter_modelanteproyecto_director_and_more'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelanteproyecto',\n            name='coodirector',\n            field=models.CharField(blank=True, max_length=200, null=True),\n        ),",
+        "detail": "estudiante.migrations.0004_alter_modelanteproyecto_coodirector_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0005_remove_modelanteproyecto_enviado",
+        "description": "estudiante.migrations.0005_remove_modelanteproyecto_enviado",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0004_alter_modelanteproyecto_coodirector_and_more'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='modelanteproyecto',\n            name='enviado',\n        ),\n    ]",
+        "detail": "estudiante.migrations.0005_remove_modelanteproyecto_enviado",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0006_alter_modelanteproyecto_user",
+        "description": "estudiante.migrations.0006_alter_modelanteproyecto_user",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0005_remove_modelanteproyecto_enviado'),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelanteproyecto',\n            name='user',\n            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='Anteproyecto', to=settings.AUTH_USER_MODEL),",
+        "detail": "estudiante.migrations.0006_alter_modelanteproyecto_user",
+        "documentation": {}
+    },
+    {
         "label": "ModelAnteproyectoAdmin",
         "kind": 6,
         "importPath": "estudiante.admin",
@@ -1114,11 +1214,11 @@
         "documentation": {}
     },
     {
-        "label": "ModelAnteproyect",
+        "label": "ModelAnteproyecto",
         "kind": 6,
         "importPath": "estudiante.models",
         "description": "estudiante.models",
-        "peekOfCode": "class ModelAnteproyecto (models.Model):\n    nombre_proyecto = models.CharField(max_length=200)\n    nombre_integrante1 = models.CharField(max_length=200)\n    nombre_integrante2 = models.CharField(max_length=200)\n    carta_presentacion = models.BinaryField(\n        null=True, blank=True)  # Cambio aquí\n    anteproyecto = models.BinaryField(null=True, blank=True)  # Cambio aquí\n    director = models.CharField(max_length=200)\n    coodirector = models.CharField(max_length=200)\n    solicitud_enviada = models.BooleanField()",
+        "peekOfCode": "class ModelAnteproyecto(models.Model):\n    nombre_proyecto = models.CharField(max_length=200)\n    nombre_integrante1 = models.CharField(max_length=200)\n    nombre_integrante2 = models.CharField(\n        max_length=200, null=True, blank=True)  # Cambio aquí\n    carta_presentacion = models.BinaryField(null=True, blank=True)\n    anteproyecto = models.BinaryField(null=True, blank=True)\n    director = models.CharField(max_length=200, null=True)\n    coodirector = models.CharField(\n        max_length=200, null=True, blank=True)  # Cambio aquí",
         "detail": "estudiante.models",
         "documentation": {}
     },
@@ -1163,8 +1263,17 @@
         "kind": 5,
         "importPath": "estudiante.urls",
         "description": "estudiante.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n    path('info_proyect', views.info_proyect, name='info_proyect'),\n]",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando'),\n    path('', views.principal_estudiante, name='principal_estudiante'),\n    # path('estudiante', views.estudiante, name='estudiante'),\n    #!funcionando\n    path('solicitud', views.solicitud, name='solicitud'),\n    path('info_proyect', views.info_proyect, name='info_proyect'),\n    path('test_solicitud', views.test_solicitud, name='test_solicitud'),\n]",
         "detail": "estudiante.urls",
+        "documentation": {}
+    },
+    {
+        "label": "test_solicitud",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def test_solicitud(request):\n    context = datosusuario(request)\n    # Si el método es POST, procesamos el formulario.\n    if request.method == 'POST':\n        form = FormAnteproyecto(request.POST, request.FILES)\n        if form.is_valid():\n            anteproyecto = form.save(commit=False)\n            anteproyecto.fecha_envio = fecha_actual()\n            anteproyecto.solicitud_enviada = True\n            anteproyecto.user = request.user  # Asigna el usuario actual al campo user",
+        "detail": "estudiante.views",
         "documentation": {}
     },
     {
@@ -1190,7 +1299,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def contenido_anteproyecto(request):\n    try:\n        content_anteproyecto = get_object_or_404(ModelAnteproyecto, user=request.user)\n        carta_presentacion_binario = content_anteproyecto.carta_presentacion\n        anteproyecto_binario = content_anteproyecto.anteproyecto\n        carta_presentacion = devolver_documento_imagen(\n            carta_presentacion_binario)\n        anteproyecto = devolver_documento_imagen(anteproyecto_binario)\n        context_anteproyecto = {\n            'nombre_proyecto': content_anteproyecto.nombre_proyecto,",
+        "peekOfCode": "def contenido_anteproyecto(request):\n    try:\n        content_anteproyecto = get_object_or_404(\n            ModelAnteproyecto, user=request.user)\n        carta_presentacion_binario = content_anteproyecto.carta_presentacion\n        anteproyecto_binario = content_anteproyecto.anteproyecto\n        carta_presentacion = devolver_documento_imagen(\n            carta_presentacion_binario)\n        anteproyecto = devolver_documento_imagen(anteproyecto_binario)\n        context_anteproyecto = {",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1208,7 +1317,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormAnteproyecto(request.POST, request.FILES)\n        if form.is_valid():\n            # Crea una instancia del modelo sin guardarla en la base de datos aún\n            anteproyecto = form.save(commit=False)\n            anteproyecto.fecha_envio = fecha_actual\n            anteproyecto.user = request.user  # Asigna el usuario actual al campo user\n            anteproyecto.save()  # Guarda la instancia del modelo en la base de datos\n            return redirect('estudiante:solicitud')",
+        "peekOfCode": "def solicitud(request):\n    if request.method == 'POST':\n        form = FormAnteproyecto(request.POST, request.FILES)\n        if form.is_valid():\n            # Crea una instancia del modelo sin guardarla en la base de datos aún\n            anteproyecto = form.save(commit=False)\n            anteproyecto.fecha_envio = fecha_actual()\n            anteproyecto.solicitud_enviada = True\n            anteproyecto.user = request.user  # Asigna el usuario actual al campo user\n            anteproyecto.save()  # Guarda la instancia del modelo en la base de datos",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -1370,7 +1479,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.funcionalidades_fechas",
         "description": "plataform_CIGAP.utils.funcionalidades_fechas",
-        "peekOfCode": "def fecha_actual():\n    bogota_time = pytz.timezone('America/Bogota')\n    bogota_time = datetime.datetime.now(bogota_time)\n    bogota_time = bogota_time.strftime('%Y-%m-%d %H:%M:%S')\n    fecha_actual = bogota_time\n    return fecha_actual",
+        "peekOfCode": "def fecha_actual():\n    bogota_zone = pytz.timezone('America/Bogota')\n    bogota_time = datetime.datetime.now(bogota_zone)\n    bogota_timestr = bogota_time.strftime('%Y-%m-%d %H:%M:%S')\n    fecha_actual = bogota_timestr\n    return fecha_actual\nprint(fecha_actual())",
         "detail": "plataform_CIGAP.utils.funcionalidades_fechas",
         "documentation": {}
     },

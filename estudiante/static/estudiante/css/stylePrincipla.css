@@ -230,15 +230,12 @@ h5 {
 }
 
 .modulo:hover {
-    padding: 12px !important;
+    
     font-weight: 500;
     border-radius: 12px;
     color: var(--bg-arrow-color);
     background: var(--colores_institucionalesfondo4);
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    -ms-border-radius: 12px;
-    -o-border-radius: 12px;
+    
 }
 
 .fondo {

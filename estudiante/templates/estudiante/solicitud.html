@@ -8,7 +8,8 @@
     }
     
     .solicitud {
-      z-index: 1001;
+      position: relative;
+      z-index: 3001;
     }
     
     #id_nombre_proyecto,
@@ -23,62 +24,108 @@
       border-radius: 8px;
       border: 1px solid #cacaca;
     }
+    
+    form {
+      background: #f0f0f09c;
+      box-shadow: inset 0px 0px 20px -10px #ababab;
+      border: 1px solid #cacaca;
+      padding: 18px;
+    }
   </style>
-  <div class="solicitud">
-    <h2 class="m-3">Crea tu solicitud</h2>
-    <form action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
+  <h2 class="m-3">Crea tu solicitud</h2>
+  <div class="solicitud d-flex">
+    {% if not existe_solicitud %}
+      <div class="col w-100">
+        <div class="acuerdos">
+          <h4>Antes de enviar tu anteproyecto, ten en cuenta lo siguiente:</h4>
+          <p>Una vez que envíes tu anteproyecto, este será revisado por el comité correspondiente. Es crucial que estés pendiente de la retroalimentación del comité, ya que su respuesta puede ser una de las siguientes:</p>
+          <ul>
+            <li>
+              <strong>Aprobado:</strong> Tu anteproyecto cumple con los requisitos establecidos y puedes continuar con el siguiente paso del proceso.
+            </li>
+            <li>
+              <strong>Aplazado:</strong> El comité ha identificado algunos aspectos que necesitan ser corregidos o mejorados antes de poder aprobar el anteproyecto. Se te brindarán indicaciones sobre los cambios necesarios.
+            </li>
+            <li>
+              <strong>Rechazado:</strong> El anteproyecto no cumple con los criterios necesarios para continuar. En este caso, deberás realizar una revisión profunda y volver a presentarlo en una nueva convocatoria.
+            </li>
+          </ul>
+          <p>Además, es fundamental que verifiques los documentos que estás enviando. Asegúrate de que todos los archivos sean los correctos y que cumplan con las especificaciones solicitadas. Un error en esta etapa podría retrasar el proceso de revisión.</p>
+          <p>Mantente atento a las notificaciones y responde oportunamente a cualquier solicitud del comité para garantizar un proceso fluido y eficiente.</p>
+        </div>
 
-      <!-- Nombre del Proyecto -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
-        <p class="m-0 p-0">Ingresa el nombre del proyecto.</p>
-        {{ form_anteproyecto.nombre_proyecto }}
+        <form class="" action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <h4>Ingresa los siguientes datos</h4>
+          <div class="row">
+            <!-- Nombre del Proyecto -->
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
+              <p class="m-0 p-0">Ingresa el nombre del proyecto.</p>
+              {{ form_anteproyecto.nombre_proyecto }}
+            </div>
+
+            <!-- Nombre del Primer Integrante -->
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
+              <p class="m-0 p-0">Escribe el nombre completo del primer integrante.</p>
+              {{ form_anteproyecto.nombre_integrante1 }}
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Nombre del Segundo Integrante -->
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
+              <p class="m-0 p-0">Escribe el nombre completo del segundo integrante.</p>
+              {{ form_anteproyecto.nombre_integrante2 }}
+            </div>
+
+            <!-- Carta de Presentación -->
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_carta_presentacion"><b>Carta de Presentación</b></label>
+              <p class="m-0 p-0">Sube la carta de presentación en formato PDF.</p>
+              {{ form_anteproyecto.carta_presentacion_convert }}
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Anteproyecto -->
+            <div class="form-group w-100">
+              <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
+              <p class="m-0 p-0">Adjunta el anteproyecto en formato PDF.</p>
+              {{ form_anteproyecto.anteproyecto_convert }}
+            </div>
+
+            <!-- Director -->
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_director"><b>Director</b></label>
+              <p class="m-0 p-0">Selecciona el director del proyecto.</p>
+              {{ form_anteproyecto.director }}
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Codirector -->
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_coodirector"><b>Codirector</b></label>
+              <p class="m-0 p-0">Selecciona el codirector del proyecto (opcional).</p>
+              {{ form_anteproyecto.coodirector }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
+            </div>
+          </div>
+        </form>
       </div>
-
-      <!-- Nombre del Primer Integrante -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
-        <p class="m-0 p-0">Escribe el nombre completo del primer integrante.</p>
-        {{ form_anteproyecto.nombre_integrante1 }}
-      </div>
-
-      <!-- Nombre del Segundo Integrante -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
-        <p class="m-0 p-0">Escribe el nombre completo del segundo integrante.</p>
-        {{ form_anteproyecto.nombre_integrante2 }}
-      </div>
-
-      <!-- Carta de Presentación -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_carta_presentacion"><b>Carta de Presentación</b></label>
-        <p class="m-0 p-0">Sube la carta de presentación en formato PDF.</p>
-        {{ form_anteproyecto.carta_presentacion_convert }}
-      </div>
-
-      <!-- Anteproyecto -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
-        <p class="m-0 p-0">Adjunta el anteproyecto en formato PDF.</p>
-        {{ form_anteproyecto.anteproyecto_convert }}
-      </div>
-
-      <!-- Director -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_director"><b>Director</b></label>
-        <p class="m-0 p-0">Selecciona el director del proyecto.</p>
-        {{ form_anteproyecto.director }}
-      </div>
-
-      <!-- Codirector -->
-      <div class="form-group">
-        <label class="m-0 p-0" for="id_coodirector"><b>Codirector</b></label>
-        <p class="m-0 p-0">Selecciona el codirector del proyecto (opcional).</p>
-        {{ form_anteproyecto.coodirector }}
-      </div>
-
-      <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
-    </form>
+    {% else %}
+      <p>
+        <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+        <strong>Estado:</strong> En revisión
+      </p>
+    {% endif %}
   </div>
 {% endblock %}

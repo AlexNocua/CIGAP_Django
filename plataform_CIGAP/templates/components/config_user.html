@@ -6,7 +6,6 @@
     align-items: center;
     position: relative;
     flex-direction: column;
-    padding: 20px;
     color: #fff;
     background: var(--colores_institucionalesfondoDegradado1);
     overflow: hidden;
@@ -89,8 +88,8 @@
         <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" class="mt-3 mb-0" />
       {% endif %}
 
-      <div class="m-2 d-flex justify-content-center flex-column">
-        <div class="m-2 d-flex justify-content-center flex-column m-3">
+      <div class="m-2 d-flex justify-content-center">
+        <div class="m-2 d-flex justify-content-center flex-column flex-row flex-md-column">
           <label class="text-start" for=""><b>Agrega o cambia tu imagen</b></label>
           {{ form_config.imagen_file }}
         </div>

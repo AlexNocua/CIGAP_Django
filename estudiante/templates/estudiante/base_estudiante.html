@@ -26,14 +26,14 @@
     {% include 'components/header.html' %}
     {% include 'estudiante/components/nav_modulos.html' %}
   </div>
-  <main class="container position-relative d-flex justify-content-center align-items-center">
+  <main class="container position-relative justify-content-center align-items-center">
+    {% block solicitud %}
+
+    {% endblock %}
     {% comment %}incluir el componente de usuario{% endcomment %}
     <div class="inf_user">
       {% include 'components/view_estudiante.html' %}
     </div>
-    {% block solicitud %}
-
-    {% endblock %}
     {% block informacion_proyecto %}
 
     {% endblock %}
@@ -48,15 +48,19 @@
     {% comment %}recordar el manejo de mediaquerys{% endcomment %}
     <style>
       #panel_config {
+        width: 100%;
+        left: 0;
         top: -150px;
         margin-bottom: 30px;
         border-radius: 8px;
         overflow: hidden;
         background: #f9f9f9;
         border: 1px solid #d0d0d0;
+        /*Revisar este*/
+        overflow: scroll;
       }
     </style>
-    <div id="panel_config" class="position-absolute" style="z-index: 0;opacity: 0; ">
+    <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
       {% include 'components/config_user.html' %}
     </div>
   </main>

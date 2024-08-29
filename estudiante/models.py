@@ -75,25 +75,23 @@ class ModelPrimeraSolicitud(models.Model):
 # creacion del modelo para guardar los datos del anteproyecto
 
 
-class ModelAnteproyecto (models.Model):
+class ModelAnteproyecto(models.Model):
     nombre_proyecto = models.CharField(max_length=200)
     nombre_integrante1 = models.CharField(max_length=200)
-    nombre_integrante2 = models.CharField(max_length=200)
-    carta_presentacion = models.BinaryField(
-        null=True, blank=True)  # Cambio aquí
-    anteproyecto = models.BinaryField(null=True, blank=True)  # Cambio aquí
-    director = models.CharField(max_length=200)
-    coodirector = models.CharField(max_length=200)
+    nombre_integrante2 = models.CharField(
+        max_length=200, null=True, blank=True)  # Cambio aquí
+    carta_presentacion = models.BinaryField(null=True, blank=True)
+    anteproyecto = models.BinaryField(null=True, blank=True)
+    director = models.CharField(max_length=200, null=True)
+    coodirector = models.CharField(
+        max_length=200, null=True, blank=True)  # Cambio aquí
     solicitud_enviada = models.BooleanField()
-    enviado = models.BooleanField()
-    fecha_envio = models.CharField(max_length =200)
-    # estos valores van a ser manejados por correspondencia
+    fecha_envio = models.CharField(max_length=200)
     estado_solicitud_anteproyecto = models.BooleanField()
     retroalimentacion = models.TextField()
     rev_dadas = models.IntegerField(default=0)
-    # llaves foraneas y relacionamientos
-    user = models.OneToOneField(Usuarios, on_delete=models.PROTECT,
-                                related_name='Anteproyecto')
+    user = models.OneToOneField(
+        Usuarios, on_delete=models.CASCADE, related_name='Anteproyecto')
 
 # creacion del modelo de monografia o proyecto de grado
 

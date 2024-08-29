@@ -18,23 +18,22 @@
     }
   </style>
 
-  {% if existe_solicitud %}
-    <main class="info_proyect d-flex">
-      <section class="col">
+  {% if solicitud_enviada %}
+    <section class="d-flex">
+      <div class="col">
         <h3 class="m-3">Información del Proyecto</h3>
         <p>
           <strong>Nombre del proyecto:</strong> {{ nombre_proyecto }}
         </p>
         <div>
           <strong>Integrantes:</strong>
-          <ul>
-            {% if integrante2 == Null %}
-              <li>{{ integrante1 }}</li>
-              <li>{{ integrante2 }}</li>
-            {% else %}
-              <li>{{ integrante1 }}</li>
-            {% endif %}
-          </ul>
+
+          {% if integrante2 == Null %}
+            {{ integrante1 }}
+          {% else %}
+            {{ integrante1 }} y
+            {{ integrante2 }}
+          {% endif %}
         </div>
         <p>
           <strong>Director:</strong> {{ director }}
@@ -48,7 +47,7 @@
           {% if estado %}
             Aprovado
           {% else %}
-            No aprovado
+            En revisión
           {% endif %}
         </p>
         <p>
@@ -59,8 +58,8 @@
           <strong>Retroalimentación:</strong><br />
           {{ retroalimentacion }}
         </p>
-      </section>
-      <section class="col">
+      </div>
+      <div class="col">
         <h3 class="m-3">Documentos cargados</h3>
         <div class="documents d-flex flex-column">
           <a class="mt-2" href="data:application/octet-stream;base64,{{ carta }}" download="CartaPresentacion_{{ nombre_proyecto }}.pdf">Carta de solicitud</a>
@@ -68,14 +67,14 @@
 
           <a class="mt-2" href="{{ doc_proyect }}" download="CartaPresentacion{{ nombre_proyecto }}.pdf">Retroalimentación del comite</a>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
   {% else %}
     <div class="info_proyect">
       <h1 class="m-3">Aun no has enviado una solicitud.</h1>
       <p>
         ¿Quieres enviar tu primera solicitud de anteproyecto al comité?
-        <a href="{% url 'estudiante:solicitud' %}">Click aquí.</a>
+        <a href="{% url 'estudiante:test_solicitud' %}">Click aquí.</a>
       </p>
     </div>
   {% endif %}
