@@ -5,7 +5,7 @@ from .models import Usuarios
 from estudiante.models import Estudiante
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 # validacion del formulario
 from django.core.exceptions import ValidationError
@@ -14,19 +14,26 @@ from django import forms
 # importaciones para la creaciones de datos
 # importacion de los models
 
+# importante para editar los datos del usuario en el panel de administracio
+
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = Usuarios
+        fields = ('nombres', 'apellidos', 'email', 'nombre_completo',
+                  'password', 'is_active', 'is_staff', 'groups')
+
 
 class CustomUserCreationForm(UserCreationForm):
-
     class Meta:
         model = Usuarios
         fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-
         user = super().save(commit=False)
         user.is_active = True
-        # Asegura que la contraseña se encripte correctamente
         user.set_password(self.cleaned_data["password1"])
+        user.nombre_completo = f"{user.nombres} {user.apellidos}"
         if commit:
             user.save()
         return user
@@ -63,6 +70,8 @@ class FormRegistro(UserCreationForm):
         user.email = self.cleaned_data["email"]
         user.nombres = self.cleaned_data["nombres"]
         user.apellidos = self.cleaned_data["apellidos"]
+        user.nombre_completo = self.cleaned_data["nombres"] + \
+            ' '+self.cleaned_data["apellidos"]
 
         if commit:
             user.save()

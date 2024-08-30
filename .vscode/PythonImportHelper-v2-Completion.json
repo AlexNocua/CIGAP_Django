@@ -208,6 +208,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -545,6 +577,15 @@
         "documentation": {}
     },
     {
+        "label": "base64",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "base64",
+        "description": "base64",
+        "detail": "base64",
+        "documentation": {}
+    },
+    {
         "label": "grupo_usuario",
         "importPath": "plataform_CIGAP.utils.decoradores",
         "description": "plataform_CIGAP.utils.decoradores",
@@ -590,6 +631,70 @@
         "description": "plataform_CIGAP.utils.funcionalidades_fechas",
         "isExtraImport": true,
         "detail": "plataform_CIGAP.utils.funcionalidades_fechas",
+        "documentation": {}
+    },
+    {
+        "label": "ModelAnteproyecto",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "isExtraImport": true,
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "Estudiante",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "isExtraImport": true,
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "Estudiante",
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "isExtraImport": true,
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "Usuarios",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "Usuarios",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "Usuarios",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "ModelError",
+        "importPath": "login.models",
+        "description": "login.models",
+        "isExtraImport": true,
+        "detail": "login.models",
+        "documentation": {}
+    },
+    {
+        "label": "nombre_completo",
+        "importPath": "nombres",
+        "description": "nombres",
+        "isExtraImport": true,
+        "detail": "nombres",
         "documentation": {}
     },
     {
@@ -694,39 +799,6 @@
         "description": "login.forms",
         "isExtraImport": true,
         "detail": "login.forms",
-        "documentation": {}
-    },
-    {
-        "label": "Usuarios",
-        "importPath": "login.models",
-        "description": "login.models",
-        "isExtraImport": true,
-        "detail": "login.models",
-        "documentation": {}
-    },
-    {
-        "label": "Usuarios",
-        "importPath": "login.models",
-        "description": "login.models",
-        "isExtraImport": true,
-        "detail": "login.models",
-        "documentation": {}
-    },
-    {
-        "label": "ModelError",
-        "importPath": "login.models",
-        "description": "login.models",
-        "isExtraImport": true,
-        "detail": "login.models",
-        "documentation": {}
-    },
-    {
-        "label": "base64",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "base64",
-        "description": "base64",
-        "detail": "base64",
         "documentation": {}
     },
     {
@@ -864,22 +936,6 @@
         "documentation": {}
     },
     {
-        "label": "Estudiante",
-        "importPath": "estudiante.models",
-        "description": "estudiante.models",
-        "isExtraImport": true,
-        "detail": "estudiante.models",
-        "documentation": {}
-    },
-    {
-        "label": "Estudiante",
-        "importPath": "estudiante.models",
-        "description": "estudiante.models",
-        "isExtraImport": true,
-        "detail": "estudiante.models",
-        "documentation": {}
-    },
-    {
         "label": "AuthenticationForm",
         "importPath": "django.contrib.auth.forms",
         "description": "django.contrib.auth.forms",
@@ -889,6 +945,14 @@
     },
     {
         "label": "UserCreationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
+        "label": "UserChangeForm",
         "importPath": "django.contrib.auth.forms",
         "description": "django.contrib.auth.forms",
         "isExtraImport": true,
@@ -975,7 +1039,7 @@
         "kind": 5,
         "importPath": "correspondencia.urls",
         "description": "correspondencia.urls",
-        "peekOfCode": "app_name = 'correspondencia'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando')\n    path('', views.principal_correspondencia, name='principal_correspondencia'),\n]",
+        "peekOfCode": "app_name = 'correspondencia'\n# Definicion de las rutas de la aplicacion\nurlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando')\n    path('', views.principal_correspondencia,\n         name='principal_correspondencia'),\n    path('view_list_proyects', views.view_list_proyects, name='view_list_proyects'),\n    path('ver_proyecto/<str:nombre_anteproyecto>',\n         views.ver_anteproyecto, name='ver_anteproyecto'),",
         "detail": "correspondencia.urls",
         "documentation": {}
     },
@@ -984,8 +1048,35 @@
         "kind": 5,
         "importPath": "correspondencia.urls",
         "description": "correspondencia.urls",
-        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando')\n    path('', views.principal_correspondencia, name='principal_correspondencia'),\n]",
+        "peekOfCode": "urlpatterns = [\n    # verificacion del funcionamiento de las rutas de las aplicaciones\n    # path('', views.funcionando, name='funcionando')\n    path('', views.principal_correspondencia,\n         name='principal_correspondencia'),\n    path('view_list_proyects', views.view_list_proyects, name='view_list_proyects'),\n    path('ver_proyecto/<str:nombre_anteproyecto>',\n         views.ver_anteproyecto, name='ver_anteproyecto'),\n]",
         "detail": "correspondencia.urls",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_anteproyectos",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_anteproyectos():\n    anteproyectos = ModelAnteproyecto.objects.all()\n    return anteproyectos\n# funcion para traer un anteproyecto en especifico\ndef recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        nombre_proyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_proyecto=nombre).exists() else False\n    return anteproyecto\n# funcion para recuperar las imagenes de los estudiantes\ndef recuperar_datos_integrantes(nombre):",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_anteproyecto",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        nombre_proyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_proyecto=nombre).exists() else False\n    return anteproyecto\n# funcion para recuperar las imagenes de los estudiantes\ndef recuperar_datos_integrantes(nombre):\n    usuario = Usuarios.objects.get(nombre_completo=nombre) if Usuarios.objects.filter(\n        nombre_completo=nombre).exists() else False\n    if usuario:\n        imagen_binaria = usuario.imagen",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_datos_integrantes",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_datos_integrantes(nombre):\n    usuario = Usuarios.objects.get(nombre_completo=nombre) if Usuarios.objects.filter(\n        nombre_completo=nombre).exists() else False\n    if usuario:\n        imagen_binaria = usuario.imagen\n        imagen = base64.b64encode(imagen_binaria).decode(\n            'utf8') if imagen_binaria else False\n        return {'nombre': nombre, 'imagen': imagen}\n    else:\n        return {'nombre': nombre}",
+        "detail": "correspondencia.views",
         "documentation": {}
     },
     {
@@ -993,7 +1084,25 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def principal_correspondencia(request):\n    return render(request, 'correspondencia/base_correspondencia.html')",
+        "peekOfCode": "def principal_correspondencia(request):\n    return render(request, 'correspondencia/base_correspondencia.html')\n@login_required\n@grupo_usuario('Correspondencia')\ndef view_list_proyects(request):\n    anteproyectos = recuperar_anteproyectos()\n    context = {'anteproyectos': anteproyectos}\n    return render(request, 'correspondencia/list_proyectos.html', context)\n# vista para conocer la informacion del proyecto\ndef ver_anteproyecto(request, nombre_anteproyecto):",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "view_list_proyects",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def view_list_proyects(request):\n    anteproyectos = recuperar_anteproyectos()\n    context = {'anteproyectos': anteproyectos}\n    return render(request, 'correspondencia/list_proyectos.html', context)\n# vista para conocer la informacion del proyecto\ndef ver_anteproyecto(request, nombre_anteproyecto):\n    anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)\n    if anteproyecto:\n        integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2)\n        datos_integrantes = {    }",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "ver_anteproyecto",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def ver_anteproyecto(request, nombre_anteproyecto):\n    anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)\n    if anteproyecto:\n        integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2)\n        datos_integrantes = {    }\n        for i,integrante in enumerate(integrantes):\n            if integrante:\n                datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(integrante)\n        return render(request, 'correspondencia/anteproyecto.html', datos_integrantes)\n    else:",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1340,11 +1449,29 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0002_usuarios_nombre_completo",
+        "description": "login.migrations.0002_usuarios_nombre_completo",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0001_initial'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='usuarios',\n            name='nombre_completo',\n            field=models.CharField(default='default', max_length=100),\n            preserve_default=False,",
+        "detail": "login.migrations.0002_usuarios_nombre_completo",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "login.migrations.0003_alter_usuarios_nombre_completo",
+        "description": "login.migrations.0003_alter_usuarios_nombre_completo",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('login', '0002_usuarios_nombre_completo'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='usuarios',\n            name='nombre_completo',\n            field=models.CharField(blank=True, max_length=200),\n        ),",
+        "detail": "login.migrations.0003_alter_usuarios_nombre_completo",
+        "documentation": {}
+    },
+    {
         "label": "CustomUserAdmin",
         "kind": 6,
         "importPath": "login.admin",
         "description": "login.admin",
-        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    form = CustomUserCreationForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos','imagen', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),\n        ('Personal info', {'fields': ('nombres', 'apellidos')}),\n        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups')}),",
+        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    # formulario para cambiar los datos del usuario desde el panel admin\n    form = CustomUserChangeForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos',\n                    'nombre_completo', 'imagen', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),",
         "detail": "login.admin",
         "documentation": {}
     },
@@ -1367,11 +1494,20 @@
         "documentation": {}
     },
     {
+        "label": "CustomUserChangeForm",
+        "kind": 6,
+        "importPath": "login.forms",
+        "description": "login.forms",
+        "peekOfCode": "class CustomUserChangeForm(UserChangeForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'nombre_completo',\n                  'password', 'is_active', 'is_staff', 'groups')\nclass CustomUserCreationForm(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n    def save(self, commit=True):",
+        "detail": "login.forms",
+        "documentation": {}
+    },
+    {
         "label": "CustomUserCreationForm",
         "kind": 6,
         "importPath": "login.forms",
         "description": "login.forms",
-        "peekOfCode": "class CustomUserCreationForm(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n    def save(self, commit=True):\n        user = super().save(commit=False)\n        user.is_active = True\n        # Asegura que la contraseña se encripte correctamente\n        user.set_password(self.cleaned_data[\"password1\"])\n        if commit:",
+        "peekOfCode": "class CustomUserCreationForm(UserCreationForm):\n    class Meta:\n        model = Usuarios\n        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')\n    def save(self, commit=True):\n        user = super().save(commit=False)\n        user.is_active = True\n        user.set_password(self.cleaned_data[\"password1\"])\n        user.nombre_completo = f\"{user.nombres} {user.apellidos}\"\n        if commit:",
         "detail": "login.forms",
         "documentation": {}
     },
@@ -1416,7 +1552,7 @@
         "kind": 6,
         "importPath": "login.models",
         "description": "login.models",
-        "peekOfCode": "class Usuarios(AbstractUser):\n    ROLES_CHOICES = (\n        ('estudiante', 'Estudiante'),\n        ('director', 'Director'),\n        ('correspondencia', 'Correspondencia'),\n    )\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    # CambiadFo a EmailField para validación adicional\n    email = models.EmailField(unique=True)",
+        "peekOfCode": "class Usuarios(AbstractUser):\n    ROLES_CHOICES = (\n        ('estudiante', 'Estudiante'),\n        ('director', 'Director'),\n        ('correspondencia', 'Correspondencia'),\n    )\n    nombres = models.CharField(max_length=100)\n    apellidos = models.CharField(max_length=100)\n    nombre_completo = models.CharField(max_length=200, blank=True)\n    email = models.EmailField(unique=True)",
         "detail": "login.models",
         "documentation": {}
     },
@@ -1814,6 +1950,15 @@
         "description": "manage",
         "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'plataform_CIGAP.settings')\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
         "detail": "manage",
+        "documentation": {}
+    },
+    {
+        "label": "nombre_completo",
+        "kind": 5,
+        "importPath": "nombres",
+        "description": "nombres",
+        "peekOfCode": "nombre_completo = nombres+' '+apellidos\nprint(nombre_completo)",
+        "detail": "nombres",
         "documentation": {}
     }
 ]

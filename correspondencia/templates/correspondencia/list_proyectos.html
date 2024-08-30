@@ -1,0 +1,55 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+
+{% block list_proyect %}
+  <style>
+    .contet_correspondecia {
+      display: none;
+    }
+  </style>
+
+  <section class="container">
+    <h3 class="mt-3">Lista de proyectos</h3>{{ anteproyecto.id }}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre del proyecto</th>
+          <th scope="col">Integrantes</th>
+          <th scope="col">Director y Codirector</th>
+          <th scope="col">Fecha de radicación - Fecha estimada de finalización</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for anteproyecto in anteproyectos %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ anteproyecto.nombre_proyecto }}</td>
+            <td>
+              {% if anteproyecto.nombre_integrante2 %}
+                {{ anteproyecto.nombre_integrante1 }}<br />
+                {{ anteproyecto.nombre_integrante2 }}
+              {% else %}
+                {{ anteproyecto.nombre_integrante1 }}
+              {% endif %}
+            </td>
+            <td>
+              {% if anteproyecto.coodorector %}
+                <strong>Director:</strong>{{ anteproyecto.director }}<br />
+                <strong>Codirector:</strong>{{ anteproyecto.coodorector }}
+              {% else %}
+                <strong>Director:</strong>{{ anteproyecto.director }}<br />
+              {% endif %}
+            </td>
+            <td>{{ anteproyecto.fecha_envio }}</td>
+            <td>
+              {% comment %}tener en cuneta el envio de parametros de busqueda{% endcomment %}
+              <a href="{% url 'correspondencia:ver_anteproyecto' anteproyecto.nombre_proyecto %}" type="button" class="m-2 btn btn-primary">Mas info</a>
+              <a href="" type="button" class="m-2 btn btn-success">Enviar retroalimentación</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

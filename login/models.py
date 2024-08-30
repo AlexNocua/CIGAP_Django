@@ -28,18 +28,19 @@ class Usuarios(AbstractUser):
 
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
-    # CambiadFo a EmailField para validación adicional
+    nombre_completo = models.CharField(max_length=200, blank=True)
     email = models.EmailField(unique=True)
     username = None  # Eliminamos el campo username de AbstractUser
-
-    # declaracion de imagen
     imagen = models.BinaryField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nombres', 'apellidos']
-    
+
     objects = UserManager()
-    
+
+    def save(self, *args, **kwargs):
+        self.nombre_completo = f"{self.nombres} {self.apellidos}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.email
