@@ -31,7 +31,12 @@
       border: 1px solid #cacaca;
       padding: 18px;
     }
+    .form-group input {
+      border-radius: 4px;
+      border: 1px solid #cacaca;
+    }
   </style>
+
   <h2 class="m-3">Crea tu solicitud</h2>
   <div class="solicitud d-flex">
     {% if not existe_solicitud %}
@@ -62,7 +67,12 @@
             <div class="form-group col-md-6">
               <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
               <p class="m-0 p-0">Ingresa el nombre del proyecto.</p>
-              {{ form_anteproyecto.nombre_proyecto }}
+              {{ form_anteproyecto.nombre_anteproyecto }}
+            </div>
+            <div class="form-group col-md-6">
+              <label class="m-0 p-0" for="id_descripcion"><b>Descripción</b></label>
+              <p class="m-0 p-0">Ingresa una breve descripción del proyecto. (No mayor a 400 palabras.)</p>
+              {{ form_anteproyecto.descripcion }}
             </div>
 
             <!-- Nombre del Primer Integrante -->

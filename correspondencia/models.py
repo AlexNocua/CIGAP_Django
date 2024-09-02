@@ -12,7 +12,7 @@ class ModelRetroalimentacionesAnteproyecto(models.Model):
 
     anteproyecto = models.ForeignKey(
         ModelAnteproyecto, on_delete=models.CASCADE, related_name='retroalimentaciones')
-    retroalimentacion = models.TextField(max_length=1000)
+    retroalimentacion = models.TextField(max_length=10000)
     fecha_retroalimentacion = models.CharField(max_length=50)
     doc_retroalimentacion = models.BinaryField(null=True, blank=True)
     estado = models.CharField(max_length=25, choices=ESTADOS_CHOICES, default='aprobado')

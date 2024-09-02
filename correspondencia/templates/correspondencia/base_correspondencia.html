@@ -61,10 +61,30 @@
     .link-card a {
       text-decoration: none;
     }
+    #panel_config {
+      top: 10%;
+    }
+    
+    .contenido_correspondencia {
+      z-index: 1000;
+    }
+    .contenido_correspondencia .views {
+      border: 1px solid #cacaca;
+      border-radius: 12px;
+      box-shadow: inset 0px 0px 20px -5px #d8d8d8;
+      padding: 16px;
+    }
+    
+    .contenido_correspondencia .fondo {
+      position: fixed;
+      width: 50%;
+      opacity: 0.07;
+      z-index: 0;
+    }
   </style>
 
-  <main class="container content_correspondecia mt-5">
-    <div class="row justify-content-center">
+  <main class="contenido_correspondencia container mt-5 d-flex position-relative justify-content-center align-items-center">
+    <div class="row content_correspondecia justify-content-center">
       <!-- Card 1 -->
       <div class="card-content col-md-3 mb-4">
         <div class="d-flex card h-100 text-center">
@@ -129,30 +149,35 @@
         </div>
       </div>
     </div>
+
+    <div class="views position-relative d-flex justify-content-center align-items-center">
+      {% comment %}plantilla de la lista de los proyectos{% endcomment %}
+      {% block list_proyect %}
+
+      {% endblock %}
+
+      {% comment %}vista de el anteproyecto{% endcomment %}
+      {% block view_anteproyecto %}
+
+      {% endblock %}
+
+      {% comment %}plantilla de vista de solicitudes{% endcomment %}
+      {% block view_solicitudes %}
+
+      {% endblock %}
+
+      {% comment %}vista de la plantilla de documentos cargados por los estudiantes{% endcomment %}
+      {% block view_documentos_cargados %}
+
+      {% endblock %}
+
+      {% comment %}vista de la plantilla de documentos del comite{% endcomment %}
+      {% block view_documentos_correspondencia %}
+
+      {% endblock %}
+    </div>
   </main>
-
-  {% comment %}plantilla de la lista de los proyectos{% endcomment %}
-  {% block list_proyect %}
-
-  {% endblock %}
-
-  {% comment %}vista de el anteproyecto{% endcomment %}
-  {% block view_anteproyecto %}
-
-  {% endblock %}
-
-  {% comment %}plantilla de vista de solicitudes{% endcomment %}
-  {% block view_solicitudes %}
-
-  {% endblock %}
-
-  {% comment %}vista de la plantilla de documentos cargados por los estudiantes{% endcomment %}
-  {% block view_documentos_cargados %}
-
-  {% endblock %}
-
-  {% comment %}vista de la plantilla de documentos del comite{% endcomment %}
-  {% block view_documentos_correspondencia %}
-
-  {% endblock %}
+  {% comment %} <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
+    {% include 'components/config_user.html' %}
+  </div> {% endcomment %}
 {% endblock %}

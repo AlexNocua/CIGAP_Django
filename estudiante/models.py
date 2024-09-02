@@ -82,6 +82,8 @@ class ModelAnteproyecto(models.Model):
     nombre_integrante1 = models.CharField(max_length=200)
     nombre_integrante2 = models.CharField(
         max_length=200, null=True, blank=True)  # Cambio aquí
+    descripcion = models.TextField(
+        max_length=500, null=True, blank=True)  # Cambio aquí
     carta_presentacion = models.BinaryField(null=True, blank=True)
     anteproyecto = models.BinaryField(null=True, blank=True)
     director = models.CharField(max_length=200, null=True)

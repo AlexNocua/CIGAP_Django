@@ -9,11 +9,12 @@ from .models import ModelAnteproyecto
 
 
 class FormAnteproyecto(forms.ModelForm):
-    carta_presentacion_convert= forms.FileField(required=True)
-    anteproyecto_convert= forms.FileField(required=True)
+    carta_presentacion_convert = forms.FileField(required=True)
+    anteproyecto_convert = forms.FileField(required=True)
+
     class Meta:
         model = ModelAnteproyecto
-        fields = ('nombre_anteproyecto', 'nombre_integrante1', 'nombre_integrante2',
+        fields = ('nombre_anteproyecto', 'descripcion', 'nombre_integrante1', 'nombre_integrante2',
                   'carta_presentacion_convert', 'anteproyecto_convert', 'director', 'coodirector')
         widgets = {
             'nombre_integrante2': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
@@ -25,18 +26,17 @@ class FormAnteproyecto(forms.ModelForm):
         solicitud.nombre_anteproyecto = self.cleaned_data['nombre_anteproyecto']
         solicitud.nombre_integrante1 = self.cleaned_data['nombre_integrante1']
         solicitud.nombre_integrante2 = self.cleaned_data['nombre_integrante2']
-        
+        solicitud.descripcion = self.cleaned_data['descripcion']
+
         # Convierte los archivos en datos binarios y los asigna a los campos BinaryField
-        solicitud.carta_presentacion = self.cleaned_data['carta_presentacion_convert'].read()
-        solicitud.anteproyecto = self.cleaned_data['anteproyecto_convert'].read()
+        solicitud.carta_presentacion = self.cleaned_data['carta_presentacion_convert'].read(
+        )
+        solicitud.anteproyecto = self.cleaned_data['anteproyecto_convert'].read(
+        )
 
         solicitud.director = self.cleaned_data['director']
         solicitud.coodirector = self.cleaned_data['coodirector']
 
-        # Campos manejados por correspondencia
-        solicitud.solicitud_enviada = True
-        solicitud.estado_solicitud_anteproyecto = False
-        solicitud.retroalimentacion = 'No hay respuesta'
         
 
         if commit:

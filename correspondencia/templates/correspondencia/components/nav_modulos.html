@@ -1,7 +1,9 @@
 <style>
   /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7 */
   /* estilos de la barra de navegacion de los modulos */
-  
+  .barra_nav {
+    z-index: 1001;
+  }
   .titulo_modulos {
     color: var(--colores_institucionalestitulo1);
     font-weight: 450;
@@ -52,28 +54,30 @@
   /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7 */
 </style>
 
-<h1 class="titulo_modulos m-2">Modulos</h1>
-<nav class="navbar navbar-expand-lg navbar-light bg-light nav navMenu modulos position-relative">
-  <div class="container-fluid p-1 d-flex justify-content-center align-content-center">
-    <h5>Servicios</h5>
-    <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <svg style="color:white;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-      </svg>
-    </button>
-    <div class="collapse container-fluid navbar-collapse" id="navbarSupportedContent">
-      <div class="d-flex w-100 flex-column flex-md-row justify-content-around align-items-center">
-        <a class="modulo w-100" href="{% url 'correspondencia:principal_correspondencia' %}">Correspondencia</a>
+<div class="position-relative barra_nav">
+  <h1 class="titulo_modulos m-2">Modulos</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light nav navMenu modulos position-relative">
+    <div class="container-fluid p-1 d-flex justify-content-center align-content-center">
+      <h5>Servicios</h5>
+      <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <svg style="color:white;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+        </svg>
+      </button>
+      <div class="collapse container-fluid navbar-collapse" id="navbarSupportedContent">
+        <div class="d-flex w-100 flex-column flex-md-row justify-content-around align-items-center">
+          <a class="modulo w-100" href="{% url 'correspondencia:principal_correspondencia' %}">Correspondencia</a>
 
-        <a class="modulo w-100" href="{% url 'correspondencia:view_list_proyects' %}">Solicitudes</a>
+          <a class="modulo w-100" href="{% url 'correspondencia:view_list_proyects' %}">Solicitudes</a>
 
-        <a class="modulo w-100" href="{% url 'correspondencia:solicitudes_respondidas' %}">Respuestas</a>
+          <a class="modulo w-100" href="{% url 'correspondencia:solicitudes_respondidas' %}">Respuestas</a>
 
-        <a class="modulo w-100" href="{% url 'correspondencia:documentos_cargados' %}">Documentos cargados</a>
+          <a class="modulo w-100" href="{% url 'correspondencia:documentos_cargados' %}">Documentos cargados</a>
 
-        <a class="modulo w-100" href="{% url 'correspondencia:formatos_documentos' %}">Formatos de documentos</a>
+          <a class="modulo w-100" href="{% url 'correspondencia:formatos_documentos' %}">Formatos de documentos</a>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
-<nav class="position-relative d-flex justify-content-around align-items-center text-center"></nav>
+  </nav>
+  <nav class="position-relative d-flex justify-content-around align-items-center text-center"></nav>
+</div>

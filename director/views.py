@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.contrib.auth.decorators import login_required
-from login.forms import FormEditarUsuario
 from login.models import Usuarios
 from django.contrib.auth import login as auth_login
 import base64
-#importacion de las funcionalidaes
+# importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario
+from login.forms import FormEditarUsuario
 # Create your views here.
 
 
@@ -55,5 +55,3 @@ def principal_director(request):
 #     else:
 #         form = FormEditarUsuario(instance=usuario)
 #         return render(request, 'director/base_director.html', {'form_config': form, 'usuario': usuario, 'user_img':imagen_convertida })
-
-

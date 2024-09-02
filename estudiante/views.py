@@ -2,6 +2,8 @@
 # get_object_or_404 para el manejo de errores si no se encuentra un modelo con los siguientes datos
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponsePermanentRedirect
+from django.core.exceptions import ObjectDoesNotExist
+
 
 from django.contrib.auth.decorators import login_required
 # formulario de anteproyecto
@@ -22,7 +24,7 @@ from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 def test_solicitud(request):
     context = datosusuario(request)
-    
+
     # Si el método es POST, procesamos el formulario.
     if request.method == 'POST':
         form = FormAnteproyecto(request.POST, request.FILES)
@@ -37,7 +39,8 @@ def test_solicitud(request):
     # Si el método es GET, buscamos el anteproyecto del usuario actual.
     else:
         try:
-            content_anteproyecto = ModelAnteproyecto.objects.get(user=request.user)
+            content_anteproyecto = ModelAnteproyecto.objects.get(
+                user=request.user)
         except ModelAnteproyecto.DoesNotExist:
             content_anteproyecto = None
 
@@ -49,7 +52,7 @@ def test_solicitud(request):
             if existe_solicitud:
                 context['existe_solicitud'] = existe_solicitud
                 context['fecha_envio'] = content_anteproyecto.fecha_envio
-        
+
         # Renderizamos la plantilla en cualquier caso.
         return render(request, 'estudiante/solicitud.html', context)
 # Create your views here.
@@ -67,7 +70,6 @@ def devolver_documento_imagen(documento_binario):
 
 
 @login_required
-@grupo_usuario('Estudiantes')
 def datosusuario(request):
     usuario = request.user
     imagen = usuario.imagen
@@ -84,14 +86,13 @@ def datosusuario(request):
 # funcion para devolver un diccionario con los datos del proyecto
 def contenido_anteproyecto(request):
     try:
-
-        content_anteproyecto = get_object_or_404(
-            ModelAnteproyecto, user=request.user)
+        content_anteproyecto = ModelAnteproyecto.objects.get(user=request.user)
         carta_presentacion_binario = content_anteproyecto.carta_presentacion
         anteproyecto_binario = content_anteproyecto.anteproyecto
         carta_presentacion = devolver_documento_imagen(
             carta_presentacion_binario)
         anteproyecto = devolver_documento_imagen(anteproyecto_binario)
+
         context_anteproyecto = {
             'nombre_anteproyecto': content_anteproyecto.nombre_anteproyecto,
             'integrante1': content_anteproyecto.nombre_integrante1,
@@ -102,20 +103,19 @@ def contenido_anteproyecto(request):
             'anteproyecto': anteproyecto,
             'solicitud_enviada': content_anteproyecto.solicitud_enviada,
             'codirector': content_anteproyecto.coodirector,
-            'retroalimentacion': content_anteproyecto.retroalimentacion,
-            'estado_solicitud_anteproyecto': content_anteproyecto.estado_solicitud_anteproyecto,
-            'rev_dadas': content_anteproyecto.rev_dadas,
-            'retroalimentacion': content_anteproyecto.retroalimentacion,
-
-
+        
         }
 
-    except:
-        print('error')
+    except ObjectDoesNotExist:
         context_anteproyecto = {
             'solicitud_enviada': False,
         }
-        # print(context)
+    except Exception as e:
+        print(f'Error: {e}')
+        context_anteproyecto = {
+            'solicitud_enviada': False,
+        }
+
     return context_anteproyecto
 
 
@@ -149,17 +149,20 @@ def solicitud(request):
         else:
             return HttpResponse('Algo pasó', form.errors)
     else:
-        content_anteproyecto = get_object_or_404(
-            ModelAnteproyecto, user=request.user)
+        try:
+            content_anteproyecto = ModelAnteproyecto.objects.get(
+                user=request.user)
+        except ObjectDoesNotExist:
+            content_anteproyecto = None
+
         context = datosusuario(request)
-        existe_solicitud = content_anteproyecto.solicitud_enviada
-        if existe_solicitud:
+        if content_anteproyecto:
+            existe_solicitud = content_anteproyecto.solicitud_enviada
             context['existe_solicitud'] = existe_solicitud
             fecha_envio = content_anteproyecto.fecha_envio
             context['fecha_envio'] = fecha_envio
-            return render(request, 'estudiante/solicitud.html', context)
-        else:
-            return render(request, 'estudiante/solicitud.html', context)
+
+        return render(request, 'estudiante/solicitud.html', context)
 # vista de la informacion del proyecto
 
 

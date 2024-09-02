@@ -4,6 +4,9 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect
 from plataform_CIGAP.views import logout_user
 from django.contrib.auth.decorators import login_required
 import base64
+# importacion de la vista del login que permite cambiar la informacion de ususario
+from login.views import editar_usuario
+from login.forms import FormEditarUsuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
@@ -82,7 +85,9 @@ def recuperar_documento(documento):
 @login_required
 @grupo_usuario('Correspondencia')
 def principal_correspondencia(request):
-    return render(request, 'correspondencia/base_correspondencia.html')
+    form_config = FormEditarUsuario(instance=request.user)
+    context = {'form_config': form_config}
+    return render(request, 'correspondencia/base_correspondencia.html', context)
 
 ########################################################################################################################
 # vista de listado de proyectos
@@ -102,8 +107,12 @@ def view_list_proyects(request):
 
 def ver_anteproyecto(request, nombre_anteproyecto):
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
+    doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)
+    doc_carta = recuperar_documento(anteproyecto.carta_presentacion)
     context = {'anteproyecto': anteproyecto,
-               'form_retroalimentacion': FormRetroalimentacionAnteproyecto}
+               'form_retroalimentacion': FormRetroalimentacionAnteproyecto,
+               'doc_anteproyecto': doc_anteproyecto,
+               'doc_carta': doc_carta}
 
     if anteproyecto:
         integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2,
