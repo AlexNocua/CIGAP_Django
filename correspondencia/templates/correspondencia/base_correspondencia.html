@@ -10,6 +10,7 @@
 {% block principal_correspondencia %}
   {% load static %}
   {% include 'components/header.html' %}
+  {% include 'correspondencia/components/nav_modulos.html' %}
 
   <style>
     html,
@@ -88,7 +89,7 @@
             <p class="card-text">Conoce las respuestas a las solicitudes</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
-            <a href="" class="w-100 h-100">
+            <a href="{% url 'correspondencia:solicitudes_respondidas' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_formatos.png' %}" alt="icon" class="img-fluid mb-2" />
               <p class="card-text">Número de respuestas: {{ Num_respuestas }}</p>
             </a>
@@ -104,7 +105,7 @@
             <p class="card-text">Revisa los documentos cargados por los estudiantes</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
-            <a href="" class="w-100 h-100">
+            <a href="{% url 'correspondencia:documentos_cargados' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
               <p class="card-text">Número de documentos: {{ Num_documentos }}</p>
             </a>
@@ -137,5 +138,21 @@
 
   {% comment %}vista de el anteproyecto{% endcomment %}
   {% block view_anteproyecto %}
+
+  {% endblock %}
+
+  {% comment %}plantilla de vista de solicitudes{% endcomment %}
+  {% block view_solicitudes %}
+
+  {% endblock %}
+
+  {% comment %}vista de la plantilla de documentos cargados por los estudiantes{% endcomment %}
+  {% block view_documentos_cargados %}
+
+  {% endblock %}
+
+  {% comment %}vista de la plantilla de documentos del comite{% endcomment %}
+  {% block view_documentos_correspondencia %}
+
   {% endblock %}
 {% endblock %}

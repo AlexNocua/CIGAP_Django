@@ -13,7 +13,7 @@ class FormAnteproyecto(forms.ModelForm):
     anteproyecto_convert= forms.FileField(required=True)
     class Meta:
         model = ModelAnteproyecto
-        fields = ('nombre_proyecto', 'nombre_integrante1', 'nombre_integrante2',
+        fields = ('nombre_anteproyecto', 'nombre_integrante1', 'nombre_integrante2',
                   'carta_presentacion_convert', 'anteproyecto_convert', 'director', 'coodirector')
         widgets = {
             'nombre_integrante2': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
@@ -22,7 +22,7 @@ class FormAnteproyecto(forms.ModelForm):
 
     def save(self, commit=True):
         solicitud = super().save(commit=False)
-        solicitud.nombre_proyecto = self.cleaned_data['nombre_proyecto']
+        solicitud.nombre_anteproyecto = self.cleaned_data['nombre_anteproyecto']
         solicitud.nombre_integrante1 = self.cleaned_data['nombre_integrante1']
         solicitud.nombre_integrante2 = self.cleaned_data['nombre_integrante2']
         
@@ -32,9 +32,9 @@ class FormAnteproyecto(forms.ModelForm):
 
         solicitud.director = self.cleaned_data['director']
         solicitud.coodirector = self.cleaned_data['coodirector']
-        solicitud.solicitud_enviada = True
 
         # Campos manejados por correspondencia
+        solicitud.solicitud_enviada = True
         solicitud.estado_solicitud_anteproyecto = False
         solicitud.retroalimentacion = 'No hay respuesta'
         

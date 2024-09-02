@@ -13,7 +13,7 @@ admin.site.register(Estudiante)
 # Revisar esto con el fin de descargar los documentos desde el admin
 class ModelAnteproyectoAdmin(admin.ModelAdmin):
     list_display = (
-        'nombre_proyecto',
+        'nombre_anteproyecto',
         'nombre_integrante1',
         'nombre_integrante2',
         'director',

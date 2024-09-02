@@ -93,7 +93,7 @@ def contenido_anteproyecto(request):
             carta_presentacion_binario)
         anteproyecto = devolver_documento_imagen(anteproyecto_binario)
         context_anteproyecto = {
-            'nombre_proyecto': content_anteproyecto.nombre_proyecto,
+            'nombre_anteproyecto': content_anteproyecto.nombre_anteproyecto,
             'integrante1': content_anteproyecto.nombre_integrante1,
             'integrante2': content_anteproyecto.nombre_integrante2,
             'director': content_anteproyecto.director,

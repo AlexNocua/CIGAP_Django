@@ -2,7 +2,7 @@
 
 {% block list_proyect %}
   <style>
-    .contet_correspondecia {
+    .content_correspondecia {
       display: none;
     }
   </style>
@@ -16,7 +16,7 @@
           <th scope="col">Nombre del proyecto</th>
           <th scope="col">Integrantes</th>
           <th scope="col">Director y Codirector</th>
-          <th scope="col">Fecha de radicación - Fecha estimada de finalización</th>
+          <th scope="col">Fecha de radicación</th>
           <th scope="col">Opciones</th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
         {% for anteproyecto in anteproyectos %}
           <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ anteproyecto.nombre_proyecto }}</td>
+            <td>{{ anteproyecto.nombre_anteproyecto }}</td>
             <td>
               {% if anteproyecto.nombre_integrante2 %}
                 {{ anteproyecto.nombre_integrante1 }}<br />
@@ -44,8 +44,7 @@
             <td>{{ anteproyecto.fecha_envio }}</td>
             <td>
               {% comment %}tener en cuneta el envio de parametros de busqueda{% endcomment %}
-              <a href="{% url 'correspondencia:ver_anteproyecto' anteproyecto.nombre_proyecto %}" type="button" class="m-2 btn btn-primary">Mas info</a>
-              <a href="" type="button" class="m-2 btn btn-success">Enviar retroalimentación</a>
+              <a href="{% url 'correspondencia:ver_anteproyecto' anteproyecto.nombre_anteproyecto %}" type="button" class="m-2 btn btn-primary">Responder solicitud</a>
             </td>
           </tr>
         {% endfor %}

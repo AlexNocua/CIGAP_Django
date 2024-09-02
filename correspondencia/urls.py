@@ -11,7 +11,12 @@ urlpatterns = [
     path('', views.principal_correspondencia,
          name='principal_correspondencia'),
     path('view_list_proyects', views.view_list_proyects, name='view_list_proyects'),
+    path('solicitudes_respondidas', views.solicitudes_respondidas, name='solicitudes_respondidas'),
+    path('documentos_cargados', views.documentos_cargados, name='documentos_cargados'),
+    path('formatos_documentos', views.formatos_documentos, name='formatos_documentos'),
     path('ver_proyecto/<str:nombre_anteproyecto>',
          views.ver_anteproyecto, name='ver_anteproyecto'),
+    path('enviar_retroalimentacion/<str:nombre_anteproyecto>',
+         views.enviar_retroalimentacion, name='enviar_retroalimentacion'),
 
 ]

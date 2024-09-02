@@ -1,38 +1,45 @@
 {% extends 'correspondencia/base_correspondencia.html' %}
-
+{% load static %}
 {% block view_anteproyecto %}
   <style>
     .content_correspondecia {
       display: none;
     }
+    .info_anteproyecto {
+      display: grid;
+      grid-gap: 12px;
+    }
   </style>
-  <section class="container row">
-    {% if integrante_0 %}
-      <h1>{{ integrante_0.nombre }}</h1>
-      <h1>{{ integrante_1.nombre }}</h1>
-      <img src="data:image/jpeg;base64,{{ integrante_0.imagen }}" alt="Imagen de usuario" />
+  <section class="container mt-3">
+    <div class="row info_anteproyecto d-flex">
+      {% comment %}tener en cuneta el acceso a las llaves e items{% endcomment %}
+      <h2>Proyecto: {{ anteproyecto.nombre_anteproyecto }}</h2>
+      <div class="col container-fluid">
+        <h3>Miembros del anteproyecto</h3>
+        {% for key, integrante in datos_integrantes.items %}
+          <div class="mx-auto d-flex justify-content-center align-items-center" style="width: 18rem;">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              {% if integrante.imagen %}
+                <img src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
+              {% else %}
+                <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
+              {% endif %}
+              <h4>{{ integrante.nombre }}</h4>
+              <h6>{{ integrante.grupo }}</h6>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
 
-      <img src="data:image/jpeg;base64,{{ integrante_1.imagen }}" alt="Imagen de usuario" />
-    {% else %}
-      <h1>{{ integrante_0.nombre }}</h1>
-      <img src="data:image/jpeg;base64,{{ integrante_0.imagen }}" alt="Imagen de usuario" />
-
-      <h1>algo paso</h1>
-    {% endif %}
-
-    <div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
-      {% comment %} {% if user_img %}
-        <img src="data:image/jpeg;base64,{{ user_img }}" alt="Imagen de usuario" />
-      {% else %}
-        <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
-      {% endif %}
-      {% endcomment %}
-      <div class="card-body d-flex flex-column justify-content-center align-items-center">
-        <p class="m-0 p-0">
-          <b>Bienvenido</b>
-        </p>
-        {% comment %} <h5 class="card-title">{{ usuario.nombres }}<data value=""></data></h5> {% endcomment %}
-        <a id="configcard" style="cursor: pointer;">Edita tu usuario</a>
+      {% comment %}apartado de retroalimentacione{% endcomment %}
+      <div class="col container-fluid mt-4">
+        <h3>Enviar Retroalimentación</h3>
+        <form action="{% url 'correspondencia:enviar_retroalimentacion' anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form_retroalimentacion.as_p }}
+          {% comment %}buenas{% endcomment %}
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
       </div>
     </div>
   </section>

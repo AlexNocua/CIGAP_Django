@@ -76,7 +76,9 @@ class ModelPrimeraSolicitud(models.Model):
 
 
 class ModelAnteproyecto(models.Model):
-    nombre_proyecto = models.CharField(max_length=200)
+    user = models.OneToOneField(
+        Usuarios, on_delete=models.CASCADE, related_name='Anteproyecto')
+    nombre_anteproyecto = models.CharField(max_length=200)
     nombre_integrante1 = models.CharField(max_length=200)
     nombre_integrante2 = models.CharField(
         max_length=200, null=True, blank=True)  # Cambio aquí
@@ -85,13 +87,11 @@ class ModelAnteproyecto(models.Model):
     director = models.CharField(max_length=200, null=True)
     coodirector = models.CharField(
         max_length=200, null=True, blank=True)  # Cambio aquí
-    solicitud_enviada = models.BooleanField()
     fecha_envio = models.CharField(max_length=200)
-    estado_solicitud_anteproyecto = models.BooleanField()
-    retroalimentacion = models.TextField()
-    rev_dadas = models.IntegerField(default=0)
-    user = models.OneToOneField(
-        Usuarios, on_delete=models.CASCADE, related_name='Anteproyecto')
+
+    # estas son modificadas por correspondencia
+    solicitud_enviada = models.BooleanField()
+
 
 # creacion del modelo de monografia o proyecto de grado
 
