@@ -37,8 +37,8 @@
     }
   </style>
 
-  <h2 class="m-3">Crea tu solicitud</h2>
-  <div class="solicitud d-flex">
+  <h2 class="m-3">Crea tu solicitud de anteproyecto</h2>
+  <div class="solicitud d-flex flex-column contenido_estudiante_view">
     {% if not existe_solicitud %}
       <div class="col w-100">
         <div class="acuerdos">
@@ -132,10 +132,53 @@
         </form>
       </div>
     {% else %}
-      <p>
-        <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-        <strong>Estado:</strong> En revisión
-      </p>
+      {% if respuestas.respuesta %}
+        {% if respuestas.respuesta.estado == 'aprobado' or respuestas.respuesta.estado == 'Aprobado_con_correcciones' %}
+          <p>
+            <strong>El comite a respondido a tu solicitud de anteproyecto, la respuesta es:</strong> {{ respuestas.respuesta.estado }}
+            <br />
+            <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+            <strong>Fecha de respuesta por parte del cómite:</strong> {{ respuestas.respuesta.fecha_retroalimentacion }}
+            <br />
+            <strong>Documento retroalimentado:</strong> <a class="mt-2" href="data:application/octet-stream;base64,{{ respuestas.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
+            <br /><br />
+            <strong>Respuesta del cómite:</strong> {{ respuestas.respuesta.retroalimentacion }}
+          </p>
+
+          <h2>Solicitud de proyecto final</h2>
+          <form class="container-fluid d-flex flex-column p-3" action="{% url 'estudiante:enviar_solicitud_proyecto' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Carta de Presentación Final</label>
+                  <div style="cursor: pointer;">{{ form_proyecto_final.carta_presentacion_final_form }}</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Documento del Proyecto Final</label>
+                  <div style="cursor: pointer;">{{ form_proyecto_final.doc_proyecto_final_form }}</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+              <div class="col-md-6">
+                <h3 class="text-center">Cosas a tener en cuenta:</h3>
+                <p class="">
+                  <strong>Recuerde subir los documentos correctos</strong> y asegurarse de que estén completos y en el formato adecuado.(pdf) <br />
+                  <strong>Verifique toda la información antes de enviarla.</strong> <br />
+                  <strong>Esté pendiente a las respuestas del comité</strong>, ya que podrían ser necesarios ajustes adicionales. <br />
+                  <strong>Considere las posibles fechas de sustentación</strong> y planifique en consecuencia. <br />
+                </p>
+              </div>
+            </div>
+          </form>
+        {% endif %}
+      {% else %}
+        <p>
+          <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+          <strong>Estado:</strong> En revisión
+        </p>
+      {% endif %}
     {% endif %}
   </div>
 {% endblock %}

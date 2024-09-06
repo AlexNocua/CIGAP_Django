@@ -26,7 +26,16 @@
     {% include 'components/header.html' %}
     {% include 'estudiante/components/nav_modulos.html' %}
   </div>
-  <main class="container position-relative justify-content-center align-items-center">
+
+  <style>
+    .contenido_estudiante_view {
+      border: 1px solid #cacaca;
+      border-radius: 12px;
+      box-shadow: inset 0px 0px 20px -5px #d8d8d8;
+      padding: 16px;
+    }
+  </style>
+  <main class="container  position-relative justify-content-center align-items-center">
     {% block solicitud %}
 
     {% endblock %}
@@ -64,4 +73,34 @@
       {% include 'components/config_user.html' %}
     </div>
   </main>
+
+  <script>
+    console.log('manipulacion del config funcionando')
+    
+    const config = document.getElementById('config')
+    const configcard = document.getElementById('configcard')
+    const panelconf = document.getElementById('panel_config')
+    const btncerrar = document.getElementById('cerrar')
+    
+    console.log(btncerrar)
+    config.onclick = () => {
+      // console.log('funcionando');
+      panelconf.style.transition = 'all 0.5s'
+      panelconf.style.opacity = '1'
+      panelconf.style.zIndex = '2000'
+    }
+    console.log(configcard)
+    configcard.onclick = () => {
+      // console.log('funcionando');
+      panelconf.style.transition = 'all 0.5s'
+      panelconf.style.opacity = '1'
+      panelconf.style.zIndex = '2000'
+    }
+    btncerrar.onclick = () => {
+      console.log('funcionando btncerrar ')
+      panelconf.style.transition = 'all 0.5s'
+      panelconf.style.opacity = '0'
+      panelconf.style.zIndex = '0'
+    }
+  </script>
 {% endblock %}

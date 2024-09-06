@@ -14,7 +14,7 @@ from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 # importacion de los modelos
 from estudiante.models import ModelAnteproyecto
 from login.models import Usuarios
-from correspondencia.models import ModelRetroalimentacionesAnteproyecto
+from correspondencia.models import ModelRetroalimentaciones
 
 
 # importacion de los formularios
@@ -61,7 +61,7 @@ def recuperar_datos_integrantes(nombre):
 
 # funcion para traer la lista de solicitudes
 def recuperar_solicitudes():
-    solicitudes = ModelRetroalimentacionesAnteproyecto.objects.all()
+    solicitudes = ModelRetroalimentaciones.objects.all()
     # context = {
     #     # 'nombre_anteproyecto': solicitudes.anteproyecto.nombre_anteproyecto,
     #     'retroalimentacion': solicitudes.retroalimentacion,
@@ -83,10 +83,23 @@ def recuperar_documento(documento):
 
 
 @login_required
+def datosusuario(request):
+
+    usuario = request.user
+    imagen = usuario.imagen
+    imagen_convertida = base64.b64encode(
+        imagen).decode('utf-8') if imagen else ''
+    form_editar_usuario = FormEditarUsuario(instance=usuario)
+    form_solicitud = FormAnteproyecto
+    context = {'form_config': form_editar_usuario, 'usuario': usuario,
+               'user_img': imagen_convertida}
+    return context
+
+
+@login_required
 @grupo_usuario('Correspondencia')
 def principal_correspondencia(request):
-    form_config = FormEditarUsuario(instance=request.user)
-    context = {'form_config': form_config}
+    context = datosusuario(request)
     return render(request, 'correspondencia/base_correspondencia.html', context)
 
 ########################################################################################################################
@@ -96,8 +109,10 @@ def principal_correspondencia(request):
 @login_required
 @grupo_usuario('Correspondencia')
 def view_list_proyects(request):
+    context = datosusuario(request)
+
     anteproyectos = recuperar_anteproyectos()
-    context = {'anteproyectos': anteproyectos}
+    context['anteproyectos'] = anteproyectos
     return render(request, 'correspondencia/list_proyectos.html', context)
 
 
@@ -106,13 +121,14 @@ def view_list_proyects(request):
 
 
 def ver_anteproyecto(request, nombre_anteproyecto):
+    context = datosusuario(request)
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
     doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)
     doc_carta = recuperar_documento(anteproyecto.carta_presentacion)
-    context = {'anteproyecto': anteproyecto,
-               'form_retroalimentacion': FormRetroalimentacionAnteproyecto,
-               'doc_anteproyecto': doc_anteproyecto,
-               'doc_carta': doc_carta}
+    context['inf_anteproyecto'] = {'anteproyecto': anteproyecto,
+                                   'form_retroalimentacion': FormRetroalimentacionAnteproyecto,
+                                   'doc_anteproyecto': doc_anteproyecto,
+                                   'doc_carta': doc_carta}
 
     if anteproyecto:
         integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2,
@@ -159,14 +175,15 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
 
 def solicitudes_respondidas(request):
     respuestas = recuperar_solicitudes()
-
-    context = {}
+    print(respuestas)
+    context = datosusuario(request)
+    respuestas_dict = {}
     for i, respuesta in enumerate(respuestas):
         doc_binario = recuperar_documento(respuesta.doc_retroalimentacion)
-        context[f'respuesta_{i}'] = {
+        respuestas_dict[f'respuesta_{i}'] = {
             'respuesta': respuesta, 'doc_binario': doc_binario}
-        print(respuesta.doc_retroalimentacion)
-    return render(request, 'correspondencia/list_solicitudes.html', {'respuestas': context})
+    context['respuestas'] = respuestas_dict
+    return render(request, 'correspondencia/list_solicitudes.html', context)
 
 
 ########################################################################################################################

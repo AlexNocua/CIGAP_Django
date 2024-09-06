@@ -1,12 +1,12 @@
 from django import forms
-from .models import ModelRetroalimentacionesAnteproyecto
+from .models import ModelRetroalimentaciones
 
 
 class FormRetroalimentacionAnteproyecto(forms.ModelForm):
     doc_retroalimentacion_convert = forms.FileField(required=True)
 
     class Meta:
-        model = ModelRetroalimentacionesAnteproyecto
+        model = ModelRetroalimentaciones
         fields = ('retroalimentacion','doc_retroalimentacion_convert', 'estado')
 
     def save(self, commit=True):

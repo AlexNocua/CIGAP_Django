@@ -16,58 +16,108 @@
     .info_proyect {
       z-index: 1001;
     }
+    
+    .info-block {
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      /* Tener el texto ajustado dentro del bloque */
+      word-wrap: break-word;
+      position: relative;
+    }
+    
+    .header-cards {
+      border-bottom: 1px solid #cacaca;
+      margin: 8px 0;
+    }
+    .icons-informacion {
+      padding: 4px;
+      margin: 4px;
+      width: 50px;
+      height: 50px;
+    }
   </style>
 
   {% if solicitud_enviada %}
-    <section class="d-flex row">
-      <div class="col">
-        <h3 class="m-3">Información del Proyecto</h3>
-        <p>
-          <strong>Nombre del proyecto:</strong> {{ nombre_proyecto }}
-        </p>
-        <div>
-          <strong>Integrantes:</strong>
-
-          {% if integrante2 == Null %}
-            {{ integrante1 }}
-          {% else %}
-            {{ integrante1 }} y
-            {{ integrante2 }}
-          {% endif %}
+    <h3 class="m-3">Información del Proyecto</h3>
+    <section class="row contenido_estudiante_view">
+      <div class="col-md-6">
+        <div class="info-block p-3 mb-3 border rounded">
+          <div class="d-flex justify-content-between header-cards">
+            <h4>Proyecto</h4>
+            <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_proyect.png' %}" alt="" />
+          </div>
+          <p>
+            <strong>Nombre del proyecto:</strong> {{ nombre_anteproyecto }}
+          </p>
+          <p>
+            <strong>Descripción del proyecto:</strong> {{ descripcion }}
+          </p>
+          <p>
+            <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }}
+          </p>
         </div>
-        <p>
-          <strong>Director:</strong> {{ director }}
-        </p>
-        <p>
-          <strong>Fecha de envio de la solicitud:</strong>
-          {{ fecha_envio }}
-        </p>
-        <p>
-          <strong>Estado de solicitud:</strong>
-          {% if estado %}
-            Aprovado
-          {% else %}
-            En revisión
-          {% endif %}
-        </p>
-        <p>
-          <strong>Revisiones por parte del comité:</strong> {{ rev_dadas }}
-        </p>
-        <br />
-        <p class="content-respuesta">
-          <strong>Retroalimentación:</strong><br />
-          {{ retroalimentacion }}
-        </p>
-      </div>
-      <div class="col">
-        <h3 class="m-3">Documentos cargados</h3>
-        <div class="documents d-flex flex-column">
-          <a class="mt-2" href="data:application/octet-stream;base64,{{ carta }}" download="CartaPresentacion_{{ nombre_proyecto }}.pdf">Carta de solicitud</a>
-          <a class="mt-2" href="{{ anteproyecto }}" download="Anteproyecto_{{ nombre_proyecto }}.pdf">Anteproyecto</a>
+        <div class="info-block p-3 mb-3 border rounded">
+          <div class="d-flex justify-content-between header-cards">
+            <h4>Miembros</h4>
+            <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_integrantes.png' %}" alt="" />
+          </div>
+          <p>
+            <strong>Integrantes:</strong>
+            {% if integrante2 == Null %}
+              {{ integrante1 }}
+            {% else %}
+              {{ integrante1 }} y {{ integrante2 }}
+            {% endif %}
+          </p>
+          <p>
+            <strong>Director:</strong> {{ director }}
+          </p>
 
-          <a class="mt-2" href="{{ doc_proyect }}" download="CartaPresentacion{{ nombre_proyecto }}.pdf">Retroalimentación del comite</a>
+          <p>
+            <strong>Estado de solicitud:</strong>
+            {% if content_retroalimentacion.respuesta.estado == 'aprobado' or content_retroalimentacion.respuesta.estado == 'Aprobado_con_correcciones' %}
+              Aprobado
+            {% else %}
+              En revisión
+            {% endif %}
+          </p>
+        </div>
+        <div class="info-block p-3 mb-3 border rounded">
+          <div class="d-flex justify-content-between header-cards">
+            <h4>Archivos del proyecto</h4>
+            <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_doc.png' %}" alt="" />
+          </div>
+          <p>
+            <strong>Documentos cargados:</strong><br />
+            <a href="data:application/octet-stream;base64,{{ carta }}" download="Carta_presentación_{{ nombre_anteproyecto }}.pdf">Carta de presentación</a><br />
+            <a href="data:application/octet-stream;base64,{{ anteproyecto }}" download="Anteproyecto_{{ nombre_anteproyecto }}.pdf">Anteproyecto</a>
+          </p>
         </div>
       </div>
+
+      {% if content_retroalimentacion %}
+        <div class="col-md-6">
+          <div class="info-block p-3 mb-3 border rounded">
+            <div class="d-flex justify-content-between header-cards">
+              <h4>Respuesta</h4>
+              <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_respuesta.png' %}" alt="" />
+            </div>
+            <p>
+              <strong>Fecha y hora de respuesta:</strong><br />{{ content_retroalimentacion.respuesta.fecha_retroalimentacion }}
+            </p>
+            <p>
+              <strong>Documento retroalimentado:</strong>
+              <a class="mt-2" href="data:application/octet-stream;base64,{{ content_retroalimentacion.doc_retroalimentacion }}" download="Retroalimentación_{{ nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+            </p>
+            <p>
+              <strong>Retroalimentación:</strong><br />{{ content_retroalimentacion.respuesta.retroalimentacion }}
+            </p>
+          </div>
+        </div>
+      {% endif %}
     </section>
   {% else %}
     <div class="info_proyect">

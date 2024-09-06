@@ -1,5 +1,5 @@
 from django import forms
-from .models import ModelAnteproyecto
+from .models import ModelAnteproyecto, ModelProyectoFinal
 
 #!funcionando
 # class FormPrimeraSolicitud(forms.ModelForm):
@@ -15,10 +15,10 @@ class FormAnteproyecto(forms.ModelForm):
     class Meta:
         model = ModelAnteproyecto
         fields = ('nombre_anteproyecto', 'descripcion', 'nombre_integrante1', 'nombre_integrante2',
-                  'carta_presentacion_convert', 'anteproyecto_convert', 'director', 'coodirector')
+                  'carta_presentacion_convert', 'anteproyecto_convert', 'director', 'codirector')
         widgets = {
             'nombre_integrante2': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
-            'coodirector': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
+            'codirector': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
         }
 
     def save(self, commit=True):
@@ -35,10 +35,29 @@ class FormAnteproyecto(forms.ModelForm):
         )
 
         solicitud.director = self.cleaned_data['director']
-        solicitud.coodirector = self.cleaned_data['coodirector']
-
-        
+        solicitud.codirector = self.cleaned_data['codirector']
 
         if commit:
             solicitud.save()
         return solicitud
+
+# formulario de proyecto final
+
+
+class FormProyectoFinal(forms.ModelForm):
+    doc_proyecto_final_form = forms.FileField(required=True)
+    carta_presentacion_final_form = forms.FileField(required=True)
+
+    class Meta:
+        model = ModelProyectoFinal
+        fields = ('doc_proyecto_final_form', 'carta_presentacion_final_form')
+
+    def save(self, commit=True):
+        form_proyecto_final = super().save(commit=False)
+        form_proyecto_final.proyecto_final = self.cleaned_data['doc_proyecto_final_form'].read(
+        )
+        form_proyecto_final.carta_presentacion_final = self.cleaned_data[
+            'carta_presentacion_final_form'].read()
+        if commit:
+            form_proyecto_final.save()
+        return form_proyecto_final

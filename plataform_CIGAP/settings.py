@@ -156,3 +156,5 @@ AUTHENTICATION_BACKENDS = [
 
 # manejo de errores
 CSRF_FAILURE_VIEW = 'plataform_CIGAP.views.csrf_failure'
+
+

@@ -5,17 +5,15 @@
     <div class="card-body d-flex justify-content-center align-items-center">
       <div class="col text-center">
         <p class="m-0 p-0">Proyecto actual</p>
-        <h5 class="card-title">
-          {{ nombreProyecto }}
-          SDI, Sistema digitalizado para invidentes
-        </h5>
+        <h5 class="card-title">{{ nombre_anteproyecto }}</h5>
       </div>
 
-      {% comment %}recordar traer los datos{% endcomment %}
+      {% comment %}datos de la retroalimentacion{% endcomment %}
       <div class="col">
         <p class="p-0 m-0">
-          <b>Anteproyecto:</b> Aprovado.
+          <b>Anteproyecto:</b> {{ retroalimentacion.estado }}.
         </p>
+        {% comment %} datos del proyecto final {% endcomment %}
         <p class="p-0 m-0">
           <b>Proyecto final:</b> En curso.
         </p>
@@ -41,5 +39,4 @@
       border: 1px solid #d0d0d0;
     }
   </style>
-  
 </section>

@@ -2,7 +2,7 @@
 
 from django.contrib.auth import authenticate
 from .models import Usuarios
-from estudiante.models import Estudiante
+
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm

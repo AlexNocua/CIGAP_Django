@@ -31,7 +31,7 @@
             <td>{{ value.respuesta.estado }}</td>
             <td>{{ value.respuesta.revs_dadas }}</td>
             <td>
-              <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="CartaPresentacion{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+              <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
             </td>
             <td>
               {% comment %}tener en cuenta el envío de parámetros de búsqueda{% endcomment %}

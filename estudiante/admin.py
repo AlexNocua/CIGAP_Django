@@ -5,10 +5,9 @@ from django.contrib import admin
 # Para conseguir renderizar componentes en el admin
 from django.utils.html import format_html
 
-from .models import Estudiante, ModelAnteproyecto
+from .models import ModelAnteproyecto,ModelProyectoFinal
 # Register your models here.
 
-admin.site.register(Estudiante)
 
 # Revisar esto con el fin de descargar los documentos desde el admin
 class ModelAnteproyectoAdmin(admin.ModelAdmin):
@@ -17,15 +16,17 @@ class ModelAnteproyectoAdmin(admin.ModelAdmin):
         'nombre_integrante1',
         'nombre_integrante2',
         'director',
-        'coodirector',
+        'codirector',
         'carta_presentacion_link',
         'anteproyecto_link'
+        
     )
-
+    
     def carta_presentacion_link(self, obj):
         if obj.carta_presentacion:
             if isinstance(obj.carta_presentacion, bytes):  # Asegúrate de que es de tipo bytes
-                base64_data = base64.b64encode(obj.carta_presentacion).decode('utf-8')
+                base64_data = base64.b64encode(
+                    obj.carta_presentacion).decode('utf-8')
                 url = f'data:application/octet-stream;base64,{base64_data}'
                 return format_html(
                     '<a href="{url}" download="{filename}">Descargar Carta de Presentación</a>',
@@ -38,7 +39,8 @@ class ModelAnteproyectoAdmin(admin.ModelAdmin):
     def anteproyecto_link(self, obj):
         if obj.anteproyecto:
             if isinstance(obj.anteproyecto, bytes):  # Asegúrate de que es de tipo bytes
-                base64_data = base64.b64encode(obj.anteproyecto).decode('utf-8')
+                base64_data = base64.b64encode(
+                    obj.anteproyecto).decode('utf-8')
                 url = f'data:application/octet-stream;base64,{base64_data}'
                 return format_html(
                     '<a href="{url}" download="{filename}">Descargar Anteproyecto</a>',
@@ -50,3 +52,7 @@ class ModelAnteproyectoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ModelAnteproyecto, ModelAnteproyectoAdmin)
+
+
+
+admin.site.register(ModelProyectoFinal)

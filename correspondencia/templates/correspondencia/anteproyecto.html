@@ -25,7 +25,7 @@
   <section class="container mt-3">
     <div class="row info_anteproyecto d-flex">
       {% comment %}tener en cuneta el acceso a las llaves e items{% endcomment %}
-      <h2>Proyecto: {{ anteproyecto.nombre_anteproyecto }}</h2>
+      <h2>Proyecto: {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</h2>
       <div class="container-fluid row">
         <h4>Información de la solicitud</h4>
 
@@ -35,18 +35,18 @@
           </p>
           <p class="m-0 p-0">
             <br />
-            <strong>Nombre del proyecto:</strong> {{ anteproyecto.nombre_anteproyecto }}
+            <strong>Nombre del proyecto:</strong> {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}
             <br />
-            <strong>Descripción:</strong> {{ anteproyecto.descripcion }}
+            <strong>Descripción:</strong> {{ inf_anteproyecto.anteproyecto.descripcion }}
           </p>
           <strong>Documentos cargados:</strong>
           <br />
           <ol>
             <li>
-              <a class="" href="data:application/pdf;base64,{{ doc_carta }}" download="CartaPresentacion {{ anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ anteproyecto.nombre_anteproyecto }}</a>
+              <a class="" href="data:application/pdf;base64,{{ doc_carta }}" download="CartaPresentacion {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
             <li>
-              <a class="" href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto {{ anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ anteproyecto.nombre_anteproyecto }}</a>
+              <a class="" href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
           </ol>
         </div>
@@ -74,20 +74,20 @@
       {% comment %}apartado de retroalimentacione{% endcomment %}
       <div class="col container-fluid mt-4">
         <h3>Enviar Retroalimentación</h3>
-        <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion' anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
+        <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion' inf_anteproyecto.anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group row m-3">
             <label class="p-0 m-0" for="id_retroalimentacion"><strong>Retroalimentación:</strong></label>
-            {{ form_retroalimentacion.retroalimentacion }}
+            {{ inf_anteproyecto.form_retroalimentacion.retroalimentacion }}
           </div>
           <div class="row container-fluid mt-2">
             <div class="form-group col m-2">
               <label class="p-0 m-0" for="id_doc_retroalimentacion"><strong>Documento de Retroalimentación:</strong></label>
-              {{ form_retroalimentacion.doc_retroalimentacion_convert }}
+              {{ inf_anteproyecto.form_retroalimentacion.doc_retroalimentacion_convert }}
             </div>
             <div class="form-group col m-2">
               <label class="p-0 m-0" for="id_estado"><strong>Estado:</strong></label>
-              {{ form_retroalimentacion.estado }}
+              {{ inf_anteproyecto.form_retroalimentacion.estado }}
             </div>
           </div>
           {% comment %}buenas{% endcomment %}
