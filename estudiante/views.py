@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import FormAnteproyecto, FormProyectoFinal
 # modelos
-from .models import ModelAnteproyecto
+from .models import ModelAnteproyecto, ModelProyectoFinal
 import base64
 # modelo de correspondencia
 from correspondencia.models import ModelRetroalimentaciones
@@ -106,10 +106,34 @@ def recuperar_retroalimentacion(anteproyecto_):
             'doc_retroalimentacion': doc_convert}
 
 
+def recuperar_retroalimentaciones(anteproyecto_):
+    retroalimentaciones = ModelRetroalimentaciones.objects.all(
+    ) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None
+    respuestas = {}
+    # print(retroalimentaciones)
+    for i, retroalimentacion in enumerate(retroalimentaciones):
+        doc_convert = devolver_documento_imagen(
+            retroalimentacion.doc_retroalimentacion)
+        respuestas[f'retroalimentacion_{i}'] = {
+            'respuesta': retroalimentacion,
+            'doc_retroalimentacion': doc_convert
+        }
+    return respuestas
+# funcion parea recuperar el anteproyecto
+
+
 def recuperar_anteproyecto(request):
     anteproyecto = ModelAnteproyecto.objects.get(
         user=request.user) if ModelAnteproyecto.objects.filter(user=request.user).exists() else None
     return anteproyecto
+
+# funcion para recuperar el proyecto final
+
+
+def recuperar_proyecto_final(anteproyecto):
+    proyecto_final = ModelProyectoFinal.objects.get(
+        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None
+    return proyecto_final
 
 
 @ login_required
@@ -117,20 +141,20 @@ def recuperar_anteproyecto(request):
 def principal_estudiante(request):
     context = {}
     anteproyecto = recuperar_anteproyecto(request)
-    retroalimentacion = recuperar_retroalimentacion(anteproyecto)
+    retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)
+
     if request.method == 'POST':
         editar_usuario(request)
     else:
-
         context = datosusuario(request)
-        context['retroalimentacion'] = retroalimentacion
+        context['nombre_anteproyecto'] = anteproyecto.nombre_anteproyecto if anteproyecto else "No hay anteproyecto"
+        context['retroalimentacion'] = retroalimentaciones
 
-        return render(request, 'estudiante/base_estudiante.html', context)
-
+    return render(request, 'estudiante/base_estudiante.html', context)
 # vista del template para la solicitud
-
-
 #!funcionando
+
+
 @ login_required
 @ grupo_usuario('Estudiantes')
 def solicitud(request):
@@ -150,6 +174,8 @@ def solicitud(request):
     else:
 
         try:
+            anteproyecto = recuperar_anteproyecto(request)
+            proyecto_final = recuperar_proyecto_final(anteproyecto)
             content_anteproyecto = ModelAnteproyecto.objects.get(
                 user=request.user)
         except ModelAnteproyecto.DoesNotExist:
@@ -165,10 +191,12 @@ def solicitud(request):
                 context['existe_solicitud'] = existe_solicitud
                 context['nombre_anteproyecto'] = nombre_anteproyecto
                 context['fecha_envio'] = content_anteproyecto.fecha_envio
-        context['respuestas'] = recuperar_retroalimentacion(
+        context['respuestas'] = recuperar_retroalimentaciones(
             content_anteproyecto)
         form_proyecto_final = FormProyectoFinal
         context['form_proyecto_final'] = form_proyecto_final
+        if proyecto_final:
+            context['proyecto_final'] = proyecto_final
         # Renderizamos la plantilla en cualquier caso.
         return render(request, 'estudiante/solicitud.html', context)
 # vista de la informacion del proyecto
@@ -182,16 +210,19 @@ def info_proyect(request):
     else:
         context = contenido_anteproyecto(request)
         anteproyecto = ModelAnteproyecto.objects.get(user=request.user)
-        retroalimentacion = recuperar_retroalimentacion(anteproyecto)
-
-        if retroalimentacion:
+        proyecto_final = recuperar_proyecto_final(anteproyecto)
+        retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)
+        print(retroalimentaciones)
+        if proyecto_final:
+            context['proyecto_final'] = proyecto_final
+        if retroalimentaciones:
             # recordar que este recibe el documento y la respuesta general en un diccionario
-            context['content_retroalimentacion'] = retroalimentacion
+            context['content_retroalimentacion'] = retroalimentaciones
 
             return render(request, 'estudiante/Inf_proyect.html', context)
         else:
             doc_revisado = None
-            context['content_retroalimentacion'] = retroalimentacion
+            context['content_retroalimentacion'] = retroalimentaciones
 
             return render(request, 'estudiante/Inf_proyect.html', context)
 

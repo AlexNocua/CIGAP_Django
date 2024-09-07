@@ -132,7 +132,7 @@ def ver_anteproyecto(request, nombre_anteproyecto):
 
     if anteproyecto:
         integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2,
-                       anteproyecto.director, anteproyecto.coodirector)
+                       anteproyecto.director, anteproyecto.codirector)
         datos_integrantes = {}
         for i, integrante in enumerate(integrantes, start=1):
             if integrante:

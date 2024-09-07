@@ -1994,7 +1994,16 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def recuperar_retroalimentacion(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.get(\n        anteproyecto=anteproyecto_) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    doc_convert = devolver_documento_imagen(\n        retroalimentaciones.doc_retroalimentacion)\n    return {'respuesta': retroalimentaciones,\n            'doc_retroalimentacion': doc_convert}\ndef recuperar_anteproyecto(request):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        user=request.user) if ModelAnteproyecto.objects.filter(user=request.user).exists() else None",
+        "peekOfCode": "def recuperar_retroalimentacion(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.get(\n        anteproyecto=anteproyecto_) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    doc_convert = devolver_documento_imagen(\n        retroalimentaciones.doc_retroalimentacion)\n    return {'respuesta': retroalimentaciones,\n            'doc_retroalimentacion': doc_convert}\ndef recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.all(\n    ) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None",
+        "detail": "estudiante.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_retroalimentaciones",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.all(\n    ) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    respuestas = {}\n    # print(retroalimentaciones)\n    for i, retroalimentacion in enumerate(retroalimentaciones):\n        doc_convert = devolver_documento_imagen(\n            retroalimentacion.doc_retroalimentacion)\n        respuestas[f'retroalimentacion_{i}'] = {\n            'respuesta': retroalimentacion,",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -2003,7 +2012,16 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def recuperar_anteproyecto(request):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        user=request.user) if ModelAnteproyecto.objects.filter(user=request.user).exists() else None\n    return anteproyecto\n@ login_required\n@ grupo_usuario('Estudiantes')\ndef principal_estudiante(request):\n    context = {}\n    anteproyecto = recuperar_anteproyecto(request)\n    retroalimentacion = recuperar_retroalimentacion(anteproyecto)",
+        "peekOfCode": "def recuperar_anteproyecto(request):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        user=request.user) if ModelAnteproyecto.objects.filter(user=request.user).exists() else None\n    return anteproyecto\n# funcion para recuperar el proyecto final\ndef recuperar_proyecto_final(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None\n    return proyecto_final\n@ login_required",
+        "detail": "estudiante.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_proyecto_final",
+        "kind": 2,
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "peekOfCode": "def recuperar_proyecto_final(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None\n    return proyecto_final\n@ login_required\n@ grupo_usuario('Estudiantes')\ndef principal_estudiante(request):\n    context = {}\n    anteproyecto = recuperar_anteproyecto(request)\n    retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -2012,7 +2030,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def principal_estudiante(request):\n    context = {}\n    anteproyecto = recuperar_anteproyecto(request)\n    retroalimentacion = recuperar_retroalimentacion(anteproyecto)\n    if request.method == 'POST':\n        editar_usuario(request)\n    else:\n        context = datosusuario(request)\n        context['retroalimentacion'] = retroalimentacion\n        return render(request, 'estudiante/base_estudiante.html', context)",
+        "peekOfCode": "def principal_estudiante(request):\n    context = {}\n    anteproyecto = recuperar_anteproyecto(request)\n    retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)\n    if request.method == 'POST':\n        editar_usuario(request)\n    else:\n        context = datosusuario(request)\n        context['nombre_anteproyecto'] = anteproyecto.nombre_anteproyecto if anteproyecto else \"No hay anteproyecto\"\n        context['retroalimentacion'] = retroalimentaciones",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -2030,7 +2048,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def info_proyect(request):\n    if request.method == 'POST':\n        context = contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html', context)\n    else:\n        context = contenido_anteproyecto(request)\n        anteproyecto = ModelAnteproyecto.objects.get(user=request.user)\n        retroalimentacion = recuperar_retroalimentacion(anteproyecto)\n        if retroalimentacion:\n            # recordar que este recibe el documento y la respuesta general en un diccionario",
+        "peekOfCode": "def info_proyect(request):\n    if request.method == 'POST':\n        context = contenido_anteproyecto(request)\n        return render(request, 'estudiante/Inf_proyect.html', context)\n    else:\n        context = contenido_anteproyecto(request)\n        anteproyecto = ModelAnteproyecto.objects.get(user=request.user)\n        proyecto_final = recuperar_proyecto_final(anteproyecto)\n        retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)\n        print(retroalimentaciones)",
         "detail": "estudiante.views",
         "documentation": {}
     },

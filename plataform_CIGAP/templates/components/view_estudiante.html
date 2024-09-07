@@ -10,10 +10,20 @@
 
       {% comment %}datos de la retroalimentacion{% endcomment %}
       <div class="col">
-        <p class="p-0 m-0">
-          <b>Anteproyecto:</b> {{ retroalimentacion.estado }}.
-        </p>
-        {% comment %} datos del proyecto final {% endcomment %}
+        {% if retroalimentacion %}
+          {% for key, value in retroalimentacion.items %}
+            {% if forloop.first %}
+              <p class="p-0 m-0">
+                <b>Anteproyecto:</b> {{ value.respuesta.estado }}.
+              </p>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p class="p-0 m-0">
+            <b>Anteproyecto:</b> No hay retroalimentaciones disponibles.
+          </p>
+        {% endif %}
+        {% comment %}datos del proyecto final{% endcomment %}
         <p class="p-0 m-0">
           <b>Proyecto final:</b> En curso.
         </p>

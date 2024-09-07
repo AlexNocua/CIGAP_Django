@@ -144,8 +144,29 @@
             <br /><br />
             <strong>Respuesta del cómite:</strong> {{ respuestas.respuesta.retroalimentacion }}
           </p>
+        {% endif %}
+      {% else %}
+        <p>
+          <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+          <strong>Estado:</strong> En revisión
+        </p>
+      {% endif %}
+    {% endif %}
+  </div>
 
-          <h2>Solicitud de proyecto final</h2>
+  {% comment %}tener en cuenta que este cambia segun la respuesta del comite{% endcomment %}
+  {% if respuestas %}
+    <h2 class="mt-4">Crea tu solicitud de proyecto final</h2>
+    {% if respuestas.retroalimentacion_0.respuesta.estado == 'aprobado' or respuestas.retroalimentacion_0.respuesta.estado == 'Aprobado_con_correcciones' %}
+      <div class="container solicitud contenido_estudiante_view">
+        {% if proyecto_final %}
+          <p>
+            <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br />
+            <strong>Nombre del proyecto:</strong> {{ proyecto_final.anteproyecto.nombre_anteproyecto }} <br />
+            <strong>Fecha de envío de la solicitud:</strong> {{ proyecto_final.fecha_envio }} <br />
+            <strong>Estado:</strong> En revisión <br />
+          </p>
+        {% else %}
           <form class="container-fluid d-flex flex-column p-3" action="{% url 'estudiante:enviar_solicitud_proyecto' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
@@ -158,13 +179,12 @@
                   <label class="form-label fw-bold">Documento del Proyecto Final</label>
                   <div style="cursor: pointer;">{{ form_proyecto_final.doc_proyecto_final_form }}</div>
                 </div>
-
                 <button type="submit" class="btn btn-primary">Enviar</button>
               </div>
               <div class="col-md-6">
                 <h3 class="text-center">Cosas a tener en cuenta:</h3>
                 <p class="">
-                  <strong>Recuerde subir los documentos correctos</strong> y asegurarse de que estén completos y en el formato adecuado.(pdf) <br />
+                  <strong>Recuerde subir los documentos correctos</strong> y asegurarse de que estén completos y en el formato adecuado (pdf). <br />
                   <strong>Verifique toda la información antes de enviarla.</strong> <br />
                   <strong>Esté pendiente a las respuestas del comité</strong>, ya que podrían ser necesarios ajustes adicionales. <br />
                   <strong>Considere las posibles fechas de sustentación</strong> y planifique en consecuencia. <br />
@@ -173,12 +193,7 @@
             </div>
           </form>
         {% endif %}
-      {% else %}
-        <p>
-          <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-          <strong>Estado:</strong> En revisión
-        </p>
-      {% endif %}
+      </div>
     {% endif %}
-  </div>
+  {% endif %}
 {% endblock %}
