@@ -13,8 +13,11 @@ urlpatterns = [
     # path('estudiante', views.estudiante, name='estudiante'),
     #!funcionando
     path('solicitud', views.solicitud, name='solicitud'),
-    path('info_proyect/',views.info_proyect, name='info_proyect'),
-    path('enviar_solicitud_proyecto/',views.enviar_solicitud_proyecto, name='enviar_solicitud_proyecto'),
-    
-    
+    path('info_proyect/', views.info_proyect, name='info_proyect'),
+    path('enviar_solicitud_proyecto/', views.enviar_solicitud_proyecto,
+         name='enviar_solicitud_proyecto'),
+    path('solicitudes_especificas/', views.solicitudes_especificas,
+         name='solicitudes_especificas'),
+
+
 ]

@@ -26,8 +26,6 @@
     }
     
     form {
-      background: #f0f0f09c;
-      box-shadow: inset 0px 0px 20px -10px #ababab;
       border: 1px solid #cacaca;
       padding: 18px;
     }
@@ -196,4 +194,41 @@
       </div>
     {% endif %}
   {% endif %}
+  <h2 class="mt-4">¿Tienes alguna otra solicitud?</h2>
+  <div class="container solicitud contenido_estudiante_view">
+    <form action="{% url 'estudiante:solicitudes_especificas' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Relacionado con</label>
+            <div style="cursor: pointer;">{{ form_solicitudes.relacionado_con }}</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Tipo de Solicitud</label>
+            <div style="cursor: pointer;">{{ form_solicitudes.tipo_solicitud }}</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Motivo de la Solicitud</label>
+            <div style="cursor: pointer;">{{ form_solicitudes.motivo_solicitud }}</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Documento de Soporte</label>
+            <div style="cursor: pointer;">{{ form_solicitudes.documento_soporte_convert }}</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+        <div class="col-md-6">
+          <h3 class="text-center">Cosas a tener en cuenta:</h3>
+          <p class="">
+            <strong>Documentos:</strong> Asegúrate de subir los documentos correctos y en el formato adecuado. <br />
+            <strong>Información:</strong> Verifica toda la información antes de enviarla. <br />
+            <strong>Respuestas:</strong> Esté pendiente a las respuestas del comité, ya que podrían ser necesarios ajustes adicionales. <br />
+            <strong>Fechas:</strong> Considera las posibles fechas y planifica en consecuencia. <br />
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
 {% endblock %}

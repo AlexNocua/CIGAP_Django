@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import ModelRetroalimentaciones, ModelAsignacionJurados, ModelInformacionEntregaFinal
+from .models import ModelRetroalimentaciones, ModelAsignacionJurados, ModelInformacionEntregaFinal, ModelSolicitudes
 import base64
 # Register your models here.
 
@@ -31,3 +31,5 @@ admin.site.register(ModelRetroalimentaciones,
 admin.site.register(ModelAsignacionJurados)
 # Registro del modelo de Informacion de entrega Final de jurados en el panel admin
 admin.site.register(ModelInformacionEntregaFinal)
+# registro del modelo de solicitudes especificas
+admin.site.register(ModelSolicitudes)

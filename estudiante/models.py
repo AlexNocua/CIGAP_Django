@@ -16,12 +16,11 @@ from django.contrib.auth.models import Group
 from login.models import Usuarios
 
 
-
 # creacion del modelo para guardar los datos del anteproyecto
 class ModelAnteproyecto(models.Model):
-    
+
     user = models.ForeignKey(
-        Usuarios, on_delete=models.CASCADE, related_name='Anteproyecto', blank = True,null = True)
+        Usuarios, on_delete=models.CASCADE, related_name='Anteproyecto', blank=True, null=True)
     nombre_anteproyecto = models.CharField(max_length=200)
     nombre_integrante1 = models.CharField(max_length=200)
     nombre_integrante2 = models.CharField(
@@ -42,9 +41,9 @@ class ModelAnteproyecto(models.Model):
 # creacion del modelo de monografia o proyecto de grado
 class ModelProyectoFinal(models.Model):
     user = models.OneToOneField(
-        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank = True,null = True)
+        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     anteproyecto = models.OneToOneField(
-        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank = True,null = True)
+        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     descripcion = models.TextField(
         max_length=10000, null=True, blank=True)  # Cambio aquí
     carta_presentacion_final = models.BinaryField(null=True, blank=True)
@@ -53,3 +52,7 @@ class ModelProyectoFinal(models.Model):
     codirector = models.CharField(max_length=200, null=True)
     fecha_envio = models.CharField(max_length=200)
     solicitud_enviada = models.BooleanField()
+
+
+# creacion del modelo de solicitudes
+

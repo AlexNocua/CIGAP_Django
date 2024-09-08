@@ -57,3 +57,36 @@ class ModelInformacionEntregaFinal(models.Model):
         ModelAsignacionJurados, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
     retroalimentaciones = models.ForeignKey(
         ModelRetroalimentaciones, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
+
+# creacion del modelo de solicitudes para el cambio de infromacion respecto al proyecto
+
+
+class ModelSolicitudes(models.Model):
+    TIPO_SOLICITUD = [
+        ('cambio_nombre', 'Cambio de nombre del proyecto'),
+        ('ajuste_integrantes', 'Ajuste de integrantes del proyecto'),
+        ('seccion_derechos', 'Sección de derechos del proyecto'),
+        ('otro', 'Otro'),
+    ]
+
+    RELACIONADO_CON_CHOICES = [
+        ('anteproyecto', 'Anteproyecto'),
+        ('proyecto_final', 'Proyecto Final'),
+    ]
+
+    user = models.ForeignKey(Usuarios, on_delete=models.CASCADE,
+                             related_name='Solicitudes', blank=True, null=True)
+    anteproyecto = models.ForeignKey(
+        ModelAnteproyecto, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
+    proyecto_final = models.ForeignKey(
+        ModelProyectoFinal, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
+    relacionado_con = models.CharField(
+        max_length=255,
+        choices=RELACIONADO_CON_CHOICES)
+    retroalimentaciones = models.ForeignKey(
+        ModelRetroalimentaciones, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
+    tipo_solicitud = models.CharField(
+        max_length=200, choices=TIPO_SOLICITUD, default='otro',)
+    motivo_solicitud = models.TextField(max_length=10000)
+    documento_soporte = models.BinaryField(blank=True, null=True)
+    fecha_envio = models.CharField(max_length=50)

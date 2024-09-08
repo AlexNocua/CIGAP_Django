@@ -6,9 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 from django.contrib.auth.decorators import login_required
-# formulario de anteproyecto
-
-
+# formularios
+from correspondencia.forms import FormSolicitudes
 from .forms import FormAnteproyecto, FormProyectoFinal
 # modelos
 from .models import ModelAnteproyecto, ModelProyectoFinal
@@ -193,12 +192,38 @@ def solicitud(request):
                 context['fecha_envio'] = content_anteproyecto.fecha_envio
         context['respuestas'] = recuperar_retroalimentaciones(
             content_anteproyecto)
+
         form_proyecto_final = FormProyectoFinal
         context['form_proyecto_final'] = form_proyecto_final
+        form_solicitudes = FormSolicitudes
+        context['form_solicitudes'] = form_solicitudes
         if proyecto_final:
             context['proyecto_final'] = proyecto_final
-        # Renderizamos la plantilla en cualquier caso.
+
         return render(request, 'estudiante/solicitud.html', context)
+
+
+# funcion de solicitudes especificas
+def solicitudes_especificas(request):
+    if request.method == 'POST':
+        form = FormSolicitudes(request.POST, request.FILES)
+        if form.is_valid():
+            solicitud = form.save(commit=False)
+            solicitud.user = request.user
+            if solicitud.relacionado_con == 'anteproyecto':
+                solicitud.anteproyecto = recuperar_anteproyecto(request)
+            elif solicitud.relacionado_con == 'proyecto_final':
+                anteproyecto = recuperar_anteproyecto(request)
+                solicitud.retroalimentaiciones = recuperar_retroalimentaciones(
+                    anteproyecto)
+                solicitud.proyecto_final = recuperar_proyecto_final(
+                    anteproyecto)
+            solicitud.fecha_envio = fecha_actual()
+            solicitud.save()
+        return redirect('estudiante:solicitud')
+    else:
+        return HttpResponse('Algo ocurrio.')
+
 # vista de la informacion del proyecto
 
 
