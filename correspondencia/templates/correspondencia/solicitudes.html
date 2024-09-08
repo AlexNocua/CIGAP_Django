@@ -1,0 +1,138 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+{% load static %}
+
+{% block content_solicitudes %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .notif_pendientes {
+      width: 30px;
+      font-weight: 800;
+      color: #fff;
+      background: var(--colores_institucionalesfondoDegradado1);
+      border: none;
+      height: 30px;
+      border-radius: 50%;
+    }
+    
+    .card-text {
+      min-height: 50px;
+    }
+  </style>
+  <div class="container content_solicitudes mt-4">
+    <h3 class="mt-3">Solicitudes</h3>
+    {% if proyectos_finales or solicitudes_especiales or anteproyectos %}
+      <p class="text-center">Actualmente tienes {{ solicitudes_pendientes }} solicitudes pendientes.</p>
+    {% endif %}
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-around">
+            <h5 class="card-title">Anteproyecto</h5>
+            <button class="notif_pendientes"
+              style="background: {% if anteproyectos %}
+                
+                
+                #ffa000
+
+
+              {% else %}
+                
+                
+                var(--colores_institucionalesfondoDegradado1)
+
+
+              {% endif %};">
+              {{ anteproyectos }}
+            </button>
+          </div>
+          <p class="card-text">Accede a la lista de anteproyectos.</p>
+          <a href="{%url 'correspondencia:solicitudes_anteproyectos'%}" class="btn btn-primary">Ver Anteproyectos</a>
+        </div>
+      </div>
+      <!-- Card for Proyecto Final -->
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-around">
+            <h5 class="card-title">Proyecto Final</h5>
+            <button class="notif_pendientes"
+              style="background: {% if proyectos_finales %}
+                
+                
+                #ffa000
+
+
+              {% else %}
+                
+                
+                var(--colores_institucionalesfondoDegradado1)
+
+
+              {% endif %};">
+              {{ proyectos_finales }}
+            </button>
+          </div>
+          <p class="card-text">Accede a la lista de proyectos finales.</p>
+          <a href="{%url 'correspondencia:solicitudes_proyectos_finales'%}" class="btn btn-primary">Ver Proyectos Finales</a>
+        </div>
+      </div>
+      <!-- Card for Solicitudes Especiales -->
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-around">
+            <h5 class="card-title">Solicitudes Especiales</h5>
+            <button class="notif_pendientes"
+              style="background: {% if solicitudes_especiales %}
+                
+                
+                #ffa000
+
+
+              {% else %}
+                
+                
+                var(--colores_institucionalesfondoDegradado1)
+
+
+              {% endif %};">
+              {{ solicitudes_especiales }}
+            </button>
+          </div>
+          <p class="card-text">Accede a la lista de solicitudes especiales.</p>
+          <a href="{%url 'correspondencia:solicitudes_especiales'%}" class="btn btn-primary">Ver Solicitudes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  {% block content_list_anteproyecto %}
+
+  {% endblock %}
+  {% block content_list_proyecto_final %}
+
+  {% endblock %}
+  {% block content_list_solicitudes_especiales %}
+
+  {% endblock %}
+{% endblock %}

@@ -4,6 +4,9 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect
 from plataform_CIGAP.views import logout_user
 from django.contrib.auth.decorators import login_required
 import base64
+# importacion de operadores para consultas de django
+from django.db.models import Q
+
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario
 from login.forms import FormEditarUsuario
@@ -12,13 +15,13 @@ from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de los modelos
-from estudiante.models import ModelAnteproyecto
+from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
 from login.models import Usuarios
-from correspondencia.models import ModelRetroalimentaciones
+from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes
 
 
 # importacion de los formularios
-from estudiante.views import solicitud
+
 from .forms import FormRetroalimentacionAnteproyecto
 from estudiante.forms import FormAnteproyecto
 
@@ -29,7 +32,27 @@ from estudiante.forms import FormAnteproyecto
 ########################################################################################################################
 # Recuperar informaciones y funciones especificas para las vistas
 
+def recuperar_anteproyectos_pendientes():
+    anteproyectos_pendientes = ModelAnteproyecto.objects.filter(estado=False)
+    return anteproyectos_pendientes
+
+
+def recuperar_proyectos_finales_pendientes():
+    proyectos_finales_pendientes = ModelProyectoFinal.objects.filter(
+        estado=False)
+    return proyectos_finales_pendientes
+
+
+def recuperar_solicitudes_especiales_pendientes():
+    solicitudes_pendientes = ModelSolicitudes.objects.filter(
+        Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(
+            tipo_solicitud='ajuste_integrantes') | Q(tipo_solicitud='seccion_derechos') | Q(tipo_solicitud='otro'))
+    )
+    print(solicitudes_pendientes.count())
+    return solicitudes_pendientes
 # funcion para traer los anteproyectos
+
+
 def recuperar_anteproyectos():
     anteproyectos = ModelAnteproyecto.objects.all()
     return anteproyectos
@@ -42,6 +65,33 @@ def recuperar_anteproyecto(nombre):
         nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_anteproyecto=nombre).exists() else None
     return anteproyecto
 
+
+# funcion para recuperar un proyecto Final
+def recuperar_proyecto_final(anteproyecto):
+    proyecto_final = ModelProyectoFinal.objects.get(
+        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None
+    return proyecto_final
+
+# funcion para recuperar proyectos finales
+
+
+def recuperar_proyectos_finales():
+    proyectos_finales = ModelProyectoFinal.objects.all()
+    return proyectos_finales
+
+# funcion para recuperar una solicitud espeial
+
+
+def recuperar_solicitud_especial():
+    solicitud_especial = ModelSolitudes.objects.get()
+    return solicitud_especial
+
+# funcion para recuperar solicitudes espeiales
+
+
+def recuperar_solicitudes_especiales():
+    solicitudes_especiales = ModelSolicitudes.objects.all()
+    return solicitudes_especiales
 # funcion para recuperar las imagenes de los usuarios
 
 
@@ -103,18 +153,58 @@ def principal_correspondencia(request):
     return render(request, 'correspondencia/base_correspondencia.html', context)
 
 ########################################################################################################################
-# vista de listado de proyectos
+# vista de solicitudes
 
 
-@login_required
 @grupo_usuario('Correspondencia')
-def view_list_proyects(request):
+def solicitudes(request):
     context = datosusuario(request)
+    proyectos_finales_pendientes = recuperar_proyectos_finales_pendientes()
+    solicitudes_especiales_pendientes = recuperar_solicitudes_especiales_pendientes()
+    anteproyectos_pendientes = recuperar_anteproyectos_pendientes()
 
-    anteproyectos = recuperar_anteproyectos()
-    context['anteproyectos'] = anteproyectos
-    return render(request, 'correspondencia/list_proyectos.html', context)
+    context['proyectos_finales'] = proyectos_finales_pendientes.count()
+    context['solicitudes_especiales'] = solicitudes_especiales_pendientes.count()
+    context['anteproyectos'] = anteproyectos_pendientes.count()
 
+    total_pendientes = proyectos_finales_pendientes.count(
+    ) + solicitudes_especiales_pendientes.count() + anteproyectos_pendientes.count()
+    context['solicitudes_pendientes'] = total_pendientes
+
+    return render(request, 'correspondencia/solicitudes.html', context)
+
+
+def solicitudes_anteproyectos(request):
+    context = {}
+    if request.method == 'POST':
+        pass
+    else:
+        anteproyectos = recuperar_anteproyectos()
+        context['anteproyectos'] = anteproyectos
+        print(anteproyectos)
+        return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)
+
+
+def solicitudes_proyectos_finales(request):
+    context = {}
+
+    if request.method == 'POST':
+        pass
+    else:
+        proyectos_finales = recuperar_proyectos_finales()
+        context['proyectos_finales']= proyectos_finales
+        return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)
+
+
+def solicitudes_especiales(request):
+    context = {}
+
+    if request.method == 'POST':
+        pass
+    else:
+        var_solicitudes_especiales = recuperar_solicitudes_especiales()
+        context["solicitudes_especiales"]=var_solicitudes_especiales
+        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html',context)
 
 ########################################################################################################################
 # vista para conocer la informacion del proyecto
@@ -163,11 +253,11 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 print("Documento subido correctamente")
             else:
                 print("Error al subir el documento")
-            return redirect('correspondencia:view_list_proyects')
+            return redirect('correspondencia:solicitudes')
         else:
             print(form_retro.errors)  # Para depuración
 
-    return redirect('correspondencia:view_list_proyects')
+    return redirect('correspondencia:solicitudes')
 ########################################################################################################################
 
 # listado de solicitudes
@@ -183,7 +273,7 @@ def solicitudes_respondidas(request):
         respuestas_dict[f'respuesta_{i}'] = {
             'respuesta': respuesta, 'doc_binario': doc_binario}
     context['respuestas'] = respuestas_dict
-    return render(request, 'correspondencia/list_solicitudes.html', context)
+    return render(request, 'correspondencia/list_solicitudes_anteproyecto.html', context)
 
 
 ########################################################################################################################

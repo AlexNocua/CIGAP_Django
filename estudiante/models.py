@@ -36,9 +36,11 @@ class ModelAnteproyecto(models.Model):
 
     # estas son modificadas por correspondencia
     solicitud_enviada = models.BooleanField()
-
+    estado = models.BooleanField(default=False)
 
 # creacion del modelo de monografia o proyecto de grado
+
+
 class ModelProyectoFinal(models.Model):
     user = models.OneToOneField(
         Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
@@ -49,10 +51,9 @@ class ModelProyectoFinal(models.Model):
     carta_presentacion_final = models.BinaryField(null=True, blank=True)
     proyecto_final = models.BinaryField(null=True, blank=True)
     director = models.CharField(max_length=200, null=True)
-    codirector = models.CharField(max_length=200, null=True)
+    codirector = models.CharField(max_length=200, null=True, blank=True)
     fecha_envio = models.CharField(max_length=200)
     solicitud_enviada = models.BooleanField()
-
+    estado = models.BooleanField(default=False)
 
 # creacion del modelo de solicitudes
-

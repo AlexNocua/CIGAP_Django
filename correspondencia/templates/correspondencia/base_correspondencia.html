@@ -93,7 +93,7 @@
             <p class="card-text">Conoce las solicitudes de los estudiantes</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
-            <a href="{% url 'correspondencia:view_list_proyects' %}" class="w-100 h-100">
+            <a href="{% url 'correspondencia:solicitudes' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_documentos.png' %}" alt="icon" class="img-fluid mb-2" />
               <p class="card-text">Número de solicitudes: {{ Num_solicitudes }}</p>
             </a>
@@ -151,6 +151,8 @@
     </div>
 
     <div class="views position-relative d-flex justify-content-center align-items-center">
+      {% block content_solicitudes %}
+      {% endblock %}
       {% comment %}plantilla de la lista de los proyectos{% endcomment %}
       {% block list_proyect %}
 

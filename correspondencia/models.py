@@ -90,3 +90,4 @@ class ModelSolicitudes(models.Model):
     motivo_solicitud = models.TextField(max_length=10000)
     documento_soporte = models.BinaryField(blank=True, null=True)
     fecha_envio = models.CharField(max_length=50)
+    estado = models.BooleanField(default=False)

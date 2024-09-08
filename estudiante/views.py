@@ -165,6 +165,7 @@ def solicitud(request):
             anteproyecto = form.save(commit=False)
             anteproyecto.fecha_envio = fecha_actual()
             anteproyecto.solicitud_enviada = True
+            anteproyecto.estado = False
             anteproyecto.user = request.user  # Asigna el usuario actual al campo user
             anteproyecto.save()
             return redirect('estudiante:info_proyect')
@@ -219,6 +220,7 @@ def solicitudes_especificas(request):
                 solicitud.proyecto_final = recuperar_proyecto_final(
                     anteproyecto)
             solicitud.fecha_envio = fecha_actual()
+            solicitud.estado = False
             solicitud.save()
         return redirect('estudiante:solicitud')
     else:
@@ -265,6 +267,7 @@ def enviar_solicitud_proyecto(request):
             proyecto_final.anteproyecto = anteproyecto
             proyecto_final.descripcion = anteproyecto.descripcion
             proyecto_final.director = anteproyecto.director
+            proyecto_final.estado = False
             proyecto_final.codirector = anteproyecto.codirector
             proyecto_final.solicitud_enviada = True
             proyecto_final.fecha_envio = fecha_actual()
