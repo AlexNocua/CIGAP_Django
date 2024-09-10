@@ -61,26 +61,31 @@ def datosusuario(request):
 # funcion para devolver un diccionario con los datos del proyecto
 def contenido_anteproyecto(request):
     try:
-        content_anteproyecto = ModelAnteproyecto.objects.get(user=request.user)
-        carta_presentacion_binario = content_anteproyecto.carta_presentacion
-        anteproyecto_binario = content_anteproyecto.anteproyecto
-        carta_presentacion = devolver_documento_imagen(
-            carta_presentacion_binario)
-        anteproyecto = devolver_documento_imagen(anteproyecto_binario)
+        content_anteproyecto = ModelAnteproyecto.objects.get(
+            user=request.user) if ModelAnteproyecto.objects.filter(user=request.user).exists() else None
+        if content_anteproyecto == None:
+            return None
+        else:
+            carta_presentacion_binario = content_anteproyecto.carta_presentacion
+            anteproyecto_binario = content_anteproyecto.anteproyecto
+            carta_presentacion = devolver_documento_imagen(
+                carta_presentacion_binario)
+            anteproyecto = devolver_documento_imagen(anteproyecto_binario)
 
-        context_anteproyecto = {
-            'nombre_anteproyecto': content_anteproyecto.nombre_anteproyecto,
-            'integrante1': content_anteproyecto.nombre_integrante1,
-            'integrante2': content_anteproyecto.nombre_integrante2,
-            'director': content_anteproyecto.director,
-            'descripcion': content_anteproyecto.descripcion,
-            'carta': carta_presentacion,
-            'fecha_envio': content_anteproyecto.fecha_envio,
-            'anteproyecto': anteproyecto,
-            'solicitud_enviada': content_anteproyecto.solicitud_enviada,
-            'codirector': content_anteproyecto.codirector,
+            context_anteproyecto = {
+                'nombre_anteproyecto': content_anteproyecto.nombre_anteproyecto,
+                'integrante1': content_anteproyecto.nombre_integrante1,
+                'integrante2': content_anteproyecto.nombre_integrante2,
+                'director': content_anteproyecto.director,
+                'descripcion': content_anteproyecto.descripcion,
+                'carta': carta_presentacion,
+                'fecha_envio': content_anteproyecto.fecha_envio,
+                'anteproyecto': anteproyecto,
+                'solicitud_enviada': content_anteproyecto.solicitud_enviada,
+                'codirector': content_anteproyecto.codirector,
 
-        }
+
+            }
 
     except ObjectDoesNotExist:
         context_anteproyecto = {
@@ -106,18 +111,18 @@ def recuperar_retroalimentacion(anteproyecto_):
 
 
 def recuperar_retroalimentaciones(anteproyecto_):
-    retroalimentaciones = ModelRetroalimentaciones.objects.all(
-    ) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None
+    
+    retroalimentaciones = ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_)
     respuestas = {}
-    # print(retroalimentaciones)
-    for i, retroalimentacion in enumerate(retroalimentaciones):
-        doc_convert = devolver_documento_imagen(
-            retroalimentacion.doc_retroalimentacion)
-        respuestas[f'retroalimentacion_{i}'] = {
-            'respuesta': retroalimentacion,
-            'doc_retroalimentacion': doc_convert
-        }
-    return respuestas
+    if retroalimentaciones.exists():
+        for i, retroalimentacion in enumerate(retroalimentaciones):
+            doc_convert = devolver_documento_imagen(retroalimentacion.doc_retroalimentacion)
+            respuestas[f'retroalimentacion_{i}'] = {
+                'respuesta': retroalimentacion,
+                'doc_retroalimentacion': doc_convert
+            }
+    return respuestas if respuestas else None
+
 # funcion parea recuperar el anteproyecto
 
 
@@ -131,7 +136,7 @@ def recuperar_anteproyecto(request):
 
 def recuperar_proyecto_final(anteproyecto):
     proyecto_final = ModelProyectoFinal.objects.get(
-        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None
+        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None
     return proyecto_final
 
 
@@ -183,11 +188,13 @@ def solicitud(request):
 
         if content_anteproyecto:
             existe_solicitud = content_anteproyecto.solicitud_enviada
+            estado = content_anteproyecto.solicitud_enviada
             nombre_anteproyecto = content_anteproyecto.nombre_anteproyecto
             form_anteproyecto = FormAnteproyecto(instance=content_anteproyecto)
             context['form_anteproyecto'] = form_anteproyecto
 
             if existe_solicitud:
+                context['estado'] = estado
                 context['existe_solicitud'] = existe_solicitud
                 context['nombre_anteproyecto'] = nombre_anteproyecto
                 context['fecha_envio'] = content_anteproyecto.fecha_envio
@@ -230,16 +237,20 @@ def solicitudes_especificas(request):
 
 
 @login_required
+@ grupo_usuario('Estudiantes')
 def info_proyect(request):
     if request.method == 'POST':
         context = contenido_anteproyecto(request)
+
         return render(request, 'estudiante/Inf_proyect.html', context)
     else:
         context = contenido_anteproyecto(request)
-        anteproyecto = ModelAnteproyecto.objects.get(user=request.user)
+        if context is None:
+            context = {}
+        anteproyecto = recuperar_anteproyecto(request)
         proyecto_final = recuperar_proyecto_final(anteproyecto)
         retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)
-        print(retroalimentaciones)
+
         if proyecto_final:
             context['proyecto_final'] = proyecto_final
         if retroalimentaciones:

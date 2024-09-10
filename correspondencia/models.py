@@ -12,9 +12,9 @@ from login.models import Usuarios
 # creacion del modelo de jurados
 class ModelAsignacionJurados(models.Model):
     usuario = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Asignacion_Jurados', blank=True, null=True)
+        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)
     proyecto_final = models.ForeignKey(
-        ModelProyectoFinal, on_delete=models.CASCADE, related_name='Asignacion_Jurados', blank=True, null=True)
+        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)
     nombre_jurado = models.CharField(max_length=50)
     fecha_sustentacion = models.CharField(max_length=50)
 
@@ -29,11 +29,11 @@ class ModelRetroalimentaciones(models.Model):
     ]
 
     anteproyecto = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Retroalimentaciones', blank=True, null=True)
+        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
     proyecto_final = models.ForeignKey(
-        ModelProyectoFinal, on_delete=models.CASCADE, related_name='Retroalimentaciones', blank=True, null=True)
+        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
     jurado = models.ForeignKey(
-        ModelAsignacionJurados, on_delete=models.CASCADE, related_name='Retroalimentaciones', blank=True, null=True)
+        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
 
     retroalimentacion = models.TextField(
         max_length=10000)
@@ -44,19 +44,21 @@ class ModelRetroalimentaciones(models.Model):
     revs_dadas = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.anteproyecto.nombre_anteproyecto} - {self.estado}"
-
+        if self.anteproyecto:
+            return f"{self.anteproyecto.nombre_anteproyecto} - {self.estado}"
+        else:
+            return f"Solicitud eliminada - {self.estado}"
 
 # creacion del modelo de informacion de entrega final
 class ModelInformacionEntregaFinal(models.Model):
     anteproyecto = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
+        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)
     proyecto_final = models.ForeignKey(
-        ModelProyectoFinal, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
+        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)
     jurado = models.ForeignKey(
-        ModelAsignacionJurados, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
+        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)
     retroalimentaciones = models.ForeignKey(
-        ModelRetroalimentaciones, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
+        ModelRetroalimentaciones, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)
 
 # creacion del modelo de solicitudes para el cambio de infromacion respecto al proyecto
 
@@ -74,7 +76,7 @@ class ModelSolicitudes(models.Model):
         ('proyecto_final', 'Proyecto Final'),
     ]
 
-    user = models.ForeignKey(Usuarios, on_delete=models.CASCADE,
+    user = models.ForeignKey(Usuarios, on_delete=models.SET_NULL,
                              related_name='Solicitudes', blank=True, null=True)
     anteproyecto = models.ForeignKey(
         ModelAnteproyecto, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')

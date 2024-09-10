@@ -192,7 +192,7 @@ def solicitudes_proyectos_finales(request):
         pass
     else:
         proyectos_finales = recuperar_proyectos_finales()
-        context['proyectos_finales']= proyectos_finales
+        context['proyectos_finales'] = proyectos_finales
         return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)
 
 
@@ -203,8 +203,8 @@ def solicitudes_especiales(request):
         pass
     else:
         var_solicitudes_especiales = recuperar_solicitudes_especiales()
-        context["solicitudes_especiales"]=var_solicitudes_especiales
-        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html',context)
+        context["solicitudes_especiales"] = var_solicitudes_especiales
+        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)
 
 ########################################################################################################################
 # vista para conocer la informacion del proyecto
@@ -229,7 +229,7 @@ def ver_anteproyecto(request, nombre_anteproyecto):
                 datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(
                     integrante)
         context['datos_integrantes'] = datos_integrantes
-        return render(request, 'correspondencia/anteproyecto.html', context)
+        return render(request, 'correspondencia/views_solicitud/anteproyecto.html', context)
     else:
         return HttpResponse('Gestiona los proyectos existentes, algo pasó con este.')
 
@@ -237,7 +237,7 @@ def ver_anteproyecto(request, nombre_anteproyecto):
 def enviar_retroalimentacion(request, nombre_anteproyecto):
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
     if anteproyecto is None:
-        return HttpResponse('Error: Anteproyecto no encontrado')
+        return redirect('correspondencia:solicitudes')
 
     if request.method == 'POST':
         form_retro = FormRetroalimentacionAnteproyecto(
@@ -248,6 +248,13 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (
                 retroalimentacion.revs_dadas or 0) + 1
+            if retroalimentacion.estado not in ['Aprobado', 'Aprobado_con_correcciones']:
+                anteproyecto.delete()
+
+            else:
+                anteproyecto.estado = True
+                # salvar las informaciones
+                anteproyecto.save(update_fields=['estado',])
             retroalimentacion.save()
             if retroalimentacion.doc_retroalimentacion:
                 print("Documento subido correctamente")
