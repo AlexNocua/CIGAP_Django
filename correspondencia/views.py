@@ -331,7 +331,7 @@ def asignar_jurados(request, nombre_proyecto):
         fecha_sustentacion_str = request.POST.get('fecha_sustentacion')
         fecha_sustentacion = datetime.fromisoformat(
             str(fecha_sustentacion_str)).date()
-
+ 
         asignacion_jurados = ModelAsignacionJurados()
         anteproyecto = recuperar_anteproyecto(nombre_proyecto)
         proyecto_final = recuperar_proyecto_final(anteproyecto)
