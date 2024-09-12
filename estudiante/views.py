@@ -102,8 +102,8 @@ def contenido_anteproyecto(request):
 
 # funcion para recuperar las retroalimentaciones de correspondencia
 def recuperar_retroalimentacion(anteproyecto_):
-    retroalimentaciones = ModelRetroalimentaciones.objects.get(
-        anteproyecto=anteproyecto_) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None
+    retroalimentaciones = ModelRetroalimentaciones.objects.filter(
+        anteproyecto=anteproyecto_, estado__in=['Aprobado', 'Aprobado_con_correciones']).first() if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None
     doc_convert = devolver_documento_imagen(
         retroalimentaciones.doc_retroalimentacion)
     return {'respuesta': retroalimentaciones,
@@ -111,12 +111,14 @@ def recuperar_retroalimentacion(anteproyecto_):
 
 
 def recuperar_retroalimentaciones(anteproyecto_):
-    
-    retroalimentaciones = ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_)
+
+    retroalimentaciones = ModelRetroalimentaciones.objects.filter(
+        anteproyecto=anteproyecto_)
     respuestas = {}
     if retroalimentaciones.exists():
         for i, retroalimentacion in enumerate(retroalimentaciones):
-            doc_convert = devolver_documento_imagen(retroalimentacion.doc_retroalimentacion)
+            doc_convert = devolver_documento_imagen(
+                retroalimentacion.doc_retroalimentacion)
             respuestas[f'retroalimentacion_{i}'] = {
                 'respuesta': retroalimentacion,
                 'doc_retroalimentacion': doc_convert
@@ -187,20 +189,22 @@ def solicitud(request):
             content_anteproyecto = None
 
         if content_anteproyecto:
-            existe_solicitud = content_anteproyecto.solicitud_enviada
             estado = content_anteproyecto.solicitud_enviada
+            existe_solicitud = content_anteproyecto.solicitud_enviada
             nombre_anteproyecto = content_anteproyecto.nombre_anteproyecto
             form_anteproyecto = FormAnteproyecto(instance=content_anteproyecto)
             context['form_anteproyecto'] = form_anteproyecto
+            context['estado'] = estado
 
             if existe_solicitud:
-                context['estado'] = estado
                 context['existe_solicitud'] = existe_solicitud
                 context['nombre_anteproyecto'] = nombre_anteproyecto
                 context['fecha_envio'] = content_anteproyecto.fecha_envio
-        context['respuestas'] = recuperar_retroalimentaciones(
-            content_anteproyecto)
 
+        # logica para saber si el proyecto fue aceptado
+        context['respuesta'] = recuperar_retroalimentacion(
+            content_anteproyecto)
+        
         form_proyecto_final = FormProyectoFinal
         context['form_proyecto_final'] = form_proyecto_final
         form_solicitudes = FormSolicitudes
@@ -270,7 +274,7 @@ def enviar_solicitud_proyecto(request):
     print(f"Usuario autenticado: {request.user}")
     if request.method == 'POST':
         anteproyecto = recuperar_anteproyecto(request)
-        print(f"Anteproyecto: {anteproyecto}")
+    
         form = FormProyectoFinal(request.POST, request.FILES)
         if form.is_valid():
             proyecto_final = form.save(commit=False)
@@ -283,6 +287,8 @@ def enviar_solicitud_proyecto(request):
             proyecto_final.solicitud_enviada = True
             proyecto_final.fecha_envio = fecha_actual()
             form.save()
+
+            print(proyecto_final.codirector)
             print('datos enviados')
             return redirect('estudiante:solicitud')
     return redirect('estudiante:solicitud')

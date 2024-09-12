@@ -25,9 +25,15 @@ urlpatterns = [
          name='documentos_cargados'),
     path('formatos_documentos', views.formatos_documentos,
          name='formatos_documentos'),
-    path('ver_proyecto/<str:nombre_anteproyecto>',
+    path('ver_anteproyecto/<str:nombre_anteproyecto>',
          views.ver_anteproyecto, name='ver_anteproyecto'),
+    path('ver_proyecto_final/<str:nombre>/',
+         views.ver_proyecto_final, name='ver_proyecto_final'),
     path('enviar_retroalimentacion/<str:nombre_anteproyecto>',
          views.enviar_retroalimentacion, name='enviar_retroalimentacion'),
+    path('asignar_jurados/<str:nombre_proyecto>',
+         views.asignar_jurados, name='asignar_jurados'),
+
+
 
 ]

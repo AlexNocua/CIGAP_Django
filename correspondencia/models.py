@@ -16,8 +16,10 @@ class ModelAsignacionJurados(models.Model):
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)
     nombre_jurado = models.CharField(max_length=50)
-    fecha_sustentacion = models.CharField(max_length=50)
+    fecha_sustentacion = models.DateField(max_length=50)
 
+    def save(self,*args, **kwargs):
+        super().save(*args,**kwargs)
 # creacion del modelo de retroalimentaciones
 
 
@@ -50,6 +52,8 @@ class ModelRetroalimentaciones(models.Model):
             return f"Solicitud eliminada - {self.estado}"
 
 # creacion del modelo de informacion de entrega final
+
+
 class ModelInformacionEntregaFinal(models.Model):
     anteproyecto = models.ForeignKey(
         ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)

@@ -69,7 +69,7 @@
               <strong>Anteproyecto:</strong> Aprobado<br />
               <strong>Proyecto final:</strong> En desarrollo<br />
             {% else %}
-              <strong>Anteproyecto: Aprobado</strong>Aprobado<br />
+              <strong>Anteproyecto:</strong> Aprobado<br />
               <strong>Proyecto final:</strong> No enviado<br />
             {% endif %}
           </p>
@@ -88,7 +88,10 @@
             {% endif %}
           </p>
           <p>
-            <strong>Director:</strong> {{ director }}
+            <strong>Director:</strong> {{ director }}<br />
+            {% if codirector %}
+              <strong>Codirector:</strong> {{ codirector }}
+            {% endif %}
           </p>
 
           <p>

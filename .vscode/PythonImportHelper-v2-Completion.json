@@ -169,6 +169,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -882,71 +914,6 @@
         "documentation": {}
     },
     {
-        "label": "django.contrib.auth",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "login",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "authenticate",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "login",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "authenticate",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "login",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "views",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "logout",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -1131,6 +1098,23 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "Q",
         "importPath": "django.db.models",
         "description": "django.db.models",
@@ -1251,6 +1235,14 @@
         "documentation": {}
     },
     {
+        "label": "ModelAsignacionJurados",
+        "importPath": "correspondencia.models",
+        "description": "correspondencia.models",
+        "isExtraImport": true,
+        "detail": "correspondencia.models",
+        "documentation": {}
+    },
+    {
         "label": "ModelRetroalimentaciones",
         "importPath": "correspondencia.models",
         "description": "correspondencia.models",
@@ -1264,6 +1256,14 @@
         "description": "estudiante.forms",
         "isExtraImport": true,
         "detail": "estudiante.forms",
+        "documentation": {}
+    },
+    {
+        "label": "CreateView",
+        "importPath": "django.views.generic.edit",
+        "description": "django.views.generic.edit",
+        "isExtraImport": true,
+        "detail": "django.views.generic.edit",
         "documentation": {}
     },
     {
@@ -1328,6 +1328,62 @@
         "description": "django.contrib.auth.models",
         "isExtraImport": true,
         "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "views",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
         "documentation": {}
     },
     {
@@ -1464,15 +1520,6 @@
         "documentation": {}
     },
     {
-        "label": "datetime",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "datetime",
-        "description": "datetime",
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
         "label": "pytz",
         "kind": 6,
         "isExtraImport": true,
@@ -1604,6 +1651,33 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "correspondencia.migrations.0011_rename_fecha_sustentacion_modelasignacionjurados_echa_sustentacion",
+        "description": "correspondencia.migrations.0011_rename_fecha_sustentacion_modelasignacionjurados_echa_sustentacion",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('correspondencia', '0010_alter_modelasignacionjurados_proyecto_final_and_more'),\n    ]\n    operations = [\n        migrations.RenameField(\n            model_name='modelasignacionjurados',\n            old_name='fecha_sustentacion',\n            new_name='echa_sustentacion',\n        ),",
+        "detail": "correspondencia.migrations.0011_rename_fecha_sustentacion_modelasignacionjurados_echa_sustentacion",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "correspondencia.migrations.0012_rename_echa_sustentacion_modelasignacionjurados_fecha_sustentacion",
+        "description": "correspondencia.migrations.0012_rename_echa_sustentacion_modelasignacionjurados_fecha_sustentacion",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('correspondencia', '0011_rename_fecha_sustentacion_modelasignacionjurados_echa_sustentacion'),\n    ]\n    operations = [\n        migrations.RenameField(\n            model_name='modelasignacionjurados',\n            old_name='echa_sustentacion',\n            new_name='fecha_sustentacion',\n        ),",
+        "detail": "correspondencia.migrations.0012_rename_echa_sustentacion_modelasignacionjurados_fecha_sustentacion",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "correspondencia.migrations.0013_alter_modelasignacionjurados_fecha_sustentacion",
+        "description": "correspondencia.migrations.0013_alter_modelasignacionjurados_fecha_sustentacion",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('correspondencia', '0012_rename_echa_sustentacion_modelasignacionjurados_fecha_sustentacion'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelasignacionjurados',\n            name='fecha_sustentacion',\n            field=models.DateField(max_length=50),\n        ),",
+        "detail": "correspondencia.migrations.0013_alter_modelasignacionjurados_fecha_sustentacion",
+        "documentation": {}
+    },
+    {
         "label": "ModelRetroalimentacionesAdmin",
         "kind": 6,
         "importPath": "correspondencia.admin",
@@ -1631,6 +1705,15 @@
         "documentation": {}
     },
     {
+        "label": "FormRetroalimentacionProyecto",
+        "kind": 6,
+        "importPath": "correspondencia.forms",
+        "description": "correspondencia.forms",
+        "peekOfCode": "class FormRetroalimentacionProyecto(forms.ModelForm):\n    doc_retroalimentacion_convert = forms.FileField(required=True)\n    class Meta:\n        model = ModelRetroalimentaciones\n        fields = ('retroalimentacion',\n                  'doc_retroalimentacion_convert', 'estado')\n    def save(self, commit=True):\n        retroalimentacion = super().save(commit=False)\n        retroalimentacion.retroalimentacion = self.cleaned_data['retroalimentacion']\n        retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(",
+        "detail": "correspondencia.forms",
+        "documentation": {}
+    },
+    {
         "label": "FormSolicitudes",
         "kind": 6,
         "importPath": "correspondencia.forms",
@@ -1640,11 +1723,20 @@
         "documentation": {}
     },
     {
+        "label": "FormJurados",
+        "kind": 6,
+        "importPath": "correspondencia.forms",
+        "description": "correspondencia.forms",
+        "peekOfCode": "class FormJurados(forms.ModelForm):\n    nombre_jurado = forms.CharField(widget=forms.Textarea)\n    class Meta:\n        model = ModelAsignacionJurados\n        fields = [\n            'nombre_jurado',\n        ]\n    def save(self, commit=False):\n        jurados = super().save(commit=True)\n        if commit:",
+        "detail": "correspondencia.forms",
+        "documentation": {}
+    },
+    {
         "label": "ModelAsignacionJurados",
         "kind": 6,
         "importPath": "correspondencia.models",
         "description": "correspondencia.models",
-        "peekOfCode": "class ModelAsignacionJurados(models.Model):\n    usuario = models.ForeignKey(\n        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)\n    proyecto_final = models.ForeignKey(\n        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)\n    nombre_jurado = models.CharField(max_length=50)\n    fecha_sustentacion = models.CharField(max_length=50)\n# creacion del modelo de retroalimentaciones\nclass ModelRetroalimentaciones(models.Model):\n    ESTADOS_CHOICES = [",
+        "peekOfCode": "class ModelAsignacionJurados(models.Model):\n    usuario = models.ForeignKey(\n        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)\n    proyecto_final = models.ForeignKey(\n        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)\n    nombre_jurado = models.CharField(max_length=50)\n    fecha_sustentacion = models.DateField(max_length=50)\n    def save(self,*args, **kwargs):\n        super().save(*args,**kwargs)\n# creacion del modelo de retroalimentaciones",
         "detail": "correspondencia.models",
         "documentation": {}
     },
@@ -1725,7 +1817,16 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_anteproyectos():\n    anteproyectos = ModelAnteproyecto.objects.all()\n    return anteproyectos\n# funcion para traer un anteproyecto en especifico\ndef recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_anteproyecto=nombre).exists() else None\n    return anteproyecto\n# funcion para recuperar un proyecto Final\ndef recuperar_proyecto_final(anteproyecto):",
+        "peekOfCode": "def recuperar_anteproyectos():\n    anteproyectos = ModelAnteproyecto.objects.all()\n    return anteproyectos\n# funcion para recuperar los anteproyectos que aun no estan aprovados\ndef recuperar_anteproyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(estado=False)\n    return anteproyectos\n# funcion para traer un anteproyecto en especifico\ndef recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_anteproyectos_pendientes",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_anteproyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(estado=False)\n    return anteproyectos\n# funcion para traer un anteproyecto en especifico\ndef recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_anteproyecto=nombre).exists() else None\n    return anteproyecto\n# funcion para recuperar un proyecto Final\ndef recuperar_proyecto_final(anteproyecto):",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1734,7 +1835,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_anteproyecto=nombre).exists() else None\n    return anteproyecto\n# funcion para recuperar un proyecto Final\ndef recuperar_proyecto_final(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None\n    return proyecto_final\n# funcion para recuperar proyectos finales",
+        "peekOfCode": "def recuperar_anteproyecto(nombre):\n    anteproyecto = ModelAnteproyecto.objects.get(\n        nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_anteproyecto=nombre).exists() else None\n    return anteproyecto\n# funcion para recuperar un proyecto Final\ndef recuperar_proyecto_final(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None\n    return proyecto_final\n# funcion para recuperar proyectos finales",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1743,7 +1844,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_proyecto_final(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None\n    return proyecto_final\n# funcion para recuperar proyectos finales\ndef recuperar_proyectos_finales():\n    proyectos_finales = ModelProyectoFinal.objects.all()\n    return proyectos_finales\n# funcion para recuperar una solicitud espeial\ndef recuperar_solicitud_especial():",
+        "peekOfCode": "def recuperar_proyecto_final(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None\n    return proyecto_final\n# funcion para recuperar proyectos finales\ndef recuperar_proyectos_finales():\n    proyectos_finales = ModelProyectoFinal.objects.all()\n    return proyectos_finales\n# funcion para recuperar una solicitud espeial\ndef recuperar_solicitud_especial():",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1797,7 +1898,16 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_documento(documento):\n    documento = base64.b64encode(documento).decode(\n        'utf-8') if documento else None\n    return documento\n@login_required\ndef datosusuario(request):\n    usuario = request.user\n    imagen = usuario.imagen\n    imagen_convertida = base64.b64encode(\n        imagen).decode('utf-8') if imagen else ''",
+        "peekOfCode": "def recuperar_documento(documento):\n    documento = base64.b64encode(documento).decode(\n        'utf-8') if documento else None\n    return documento\n# funcion para recuperar datos de los directores\ndef recuperar_directores():\n    directores = Usuarios.objects.filter(\n        groups__name=\"Directores\").values('nombre_completo', 'email')\n    if directores:\n        return directores",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_directores",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_directores():\n    directores = Usuarios.objects.filter(\n        groups__name=\"Directores\").values('nombre_completo', 'email')\n    if directores:\n        return directores\n    else:\n        directores = None\n        return directores\n@login_required\ndef datosusuario(request):",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1833,7 +1943,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def solicitudes_anteproyectos(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        anteproyectos = recuperar_anteproyectos()\n        context['anteproyectos'] = anteproyectos\n        print(anteproyectos)\n        return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)\ndef solicitudes_proyectos_finales(request):",
+        "peekOfCode": "def solicitudes_anteproyectos(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        anteproyectos = recuperar_anteproyectos_pendientes()\n        context['anteproyectos'] = anteproyectos\n        print(anteproyectos)\n        return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)\ndef solicitudes_proyectos_finales(request):",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1851,7 +1961,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def solicitudes_especiales(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        var_solicitudes_especiales = recuperar_solicitudes_especiales()\n        context[\"solicitudes_especiales\"] = var_solicitudes_especiales\n        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)\n########################################################################################################################\n# vista para conocer la informacion del proyecto",
+        "peekOfCode": "def solicitudes_especiales(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        var_solicitudes_especiales = recuperar_solicitudes_especiales()\n        context[\"solicitudes_especiales\"] = var_solicitudes_especiales\n        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)\n########################################################################################################################\n# vista para conocer la informacion del anteproyecto",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1870,6 +1980,24 @@
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
         "peekOfCode": "def enviar_retroalimentacion(request, nombre_anteproyecto):\n    anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)\n    if anteproyecto is None:\n        return redirect('correspondencia:solicitudes')\n    if request.method == 'POST':\n        form_retro = FormRetroalimentacionAnteproyecto(\n            request.POST, request.FILES)\n        if form_retro.is_valid():\n            retroalimentacion = form_retro.save(commit=False)\n            retroalimentacion.anteproyecto = anteproyecto",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "ver_proyecto_final",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def ver_proyecto_final(request, nombre):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        anteproyecto = recuperar_anteproyecto(nombre)\n        if anteproyecto:\n            print(anteproyecto)\n            proyecto_final = recuperar_proyecto_final(anteproyecto)\n            if proyecto_final:",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "asignar_jurados",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def asignar_jurados(request, nombre_proyecto):\n    if request.method == 'POST':\n        directores_seleccionados = request.POST.getlist('directores')\n        fecha_sustentacion_str = request.POST.get('fecha_sustentacion')\n        fecha_sustentacion = datetime.fromisoformat(\n            str(fecha_sustentacion_str)).date()\n        asignacion_jurados = ModelAsignacionJurados()\n        anteproyecto = recuperar_anteproyecto(nombre_proyecto)\n        proyecto_final = recuperar_proyecto_final(anteproyecto)\n        # ajustes en el modelo especifico de proyecto",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2292,7 +2420,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def recuperar_retroalimentacion(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.get(\n        anteproyecto=anteproyecto_) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    doc_convert = devolver_documento_imagen(\n        retroalimentaciones.doc_retroalimentacion)\n    return {'respuesta': retroalimentaciones,\n            'doc_retroalimentacion': doc_convert}\ndef recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_)\n    respuestas = {}",
+        "peekOfCode": "def recuperar_retroalimentacion(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(\n        anteproyecto=anteproyecto_, estado__in=['Aprobado', 'Aprobado_con_correciones']).first() if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    doc_convert = devolver_documento_imagen(\n        retroalimentaciones.doc_retroalimentacion)\n    return {'respuesta': retroalimentaciones,\n            'doc_retroalimentacion': doc_convert}\ndef recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(\n        anteproyecto=anteproyecto_)",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -2301,7 +2429,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_)\n    respuestas = {}\n    if retroalimentaciones.exists():\n        for i, retroalimentacion in enumerate(retroalimentaciones):\n            doc_convert = devolver_documento_imagen(retroalimentacion.doc_retroalimentacion)\n            respuestas[f'retroalimentacion_{i}'] = {\n                'respuesta': retroalimentacion,\n                'doc_retroalimentacion': doc_convert\n            }",
+        "peekOfCode": "def recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(\n        anteproyecto=anteproyecto_)\n    respuestas = {}\n    if retroalimentaciones.exists():\n        for i, retroalimentacion in enumerate(retroalimentaciones):\n            doc_convert = devolver_documento_imagen(\n                retroalimentacion.doc_retroalimentacion)\n            respuestas[f'retroalimentacion_{i}'] = {\n                'respuesta': retroalimentacion,",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -2364,7 +2492,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def enviar_solicitud_proyecto(request):\n    print(f\"Usuario autenticado: {request.user}\")\n    if request.method == 'POST':\n        anteproyecto = recuperar_anteproyecto(request)\n        print(f\"Anteproyecto: {anteproyecto}\")\n        form = FormProyectoFinal(request.POST, request.FILES)\n        if form.is_valid():\n            proyecto_final = form.save(commit=False)\n            proyecto_final.user = request.user\n            proyecto_final.anteproyecto = anteproyecto",
+        "peekOfCode": "def enviar_solicitud_proyecto(request):\n    print(f\"Usuario autenticado: {request.user}\")\n    if request.method == 'POST':\n        anteproyecto = recuperar_anteproyecto(request)\n        form = FormProyectoFinal(request.POST, request.FILES)\n        if form.is_valid():\n            proyecto_final = form.save(commit=False)\n            proyecto_final.user = request.user\n            proyecto_final.anteproyecto = anteproyecto\n            proyecto_final.descripcion = anteproyecto.descripcion",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -2400,7 +2528,7 @@
         "kind": 6,
         "importPath": "login.admin",
         "description": "login.admin",
-        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    # formulario para cambiar los datos del usuario desde el panel admin\n    form = CustomUserChangeForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos',\n                    'nombre_completo', 'imagen', 'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),",
+        "peekOfCode": "class CustomUserAdmin(UserAdmin):\n    add_form = CustomUserCreationForm\n    # formulario para cambiar los datos del usuario desde el panel admin\n    form = CustomUserChangeForm\n    model = Usuarios\n    list_display = ('email', 'nombres', 'apellidos',\n                    'nombre_completo',  'is_staff', 'is_active')\n    list_filter = ('is_staff', 'is_active', 'groups')\n    fieldsets = (\n        (None, {'fields': ('email', 'password')}),",
         "detail": "login.admin",
         "documentation": {}
     },

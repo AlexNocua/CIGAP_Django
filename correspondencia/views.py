@@ -1,9 +1,9 @@
-import django.contrib.auth
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from plataform_CIGAP.views import logout_user
 from django.contrib.auth.decorators import login_required
 import base64
+from datetime import datetime
 # importacion de operadores para consultas de django
 from django.db.models import Q
 
@@ -17,13 +17,22 @@ from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 # importacion de los modelos
 from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
 from login.models import Usuarios
-from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes
+from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados
 
 
 # importacion de los formularios
 
-from .forms import FormRetroalimentacionAnteproyecto
+from .forms import FormRetroalimentacionAnteproyecto, FormRetroalimentacionProyecto, FormJurados
 from estudiante.forms import FormAnteproyecto
+
+# importacion del manejo de clases de vistas
+# tener en cuenta para el manejo de clases de vista con cada uno de los metodos y la asignacion de las urls de las mismas con asView
+from django.views.generic.edit import CreateView
+# from django.views.generic.list import ListView
+# from django.urls import reverse_lazy
+
+
+# realizar el filtro por ususarios de la plataforma, designando solo los que pertenezcan a directro
 
 
 # Create your views here.
@@ -31,6 +40,7 @@ from estudiante.forms import FormAnteproyecto
 #     return HttpResponse('app_ correspondencia funcionando.')
 ########################################################################################################################
 # Recuperar informaciones y funciones especificas para las vistas
+
 
 def recuperar_anteproyectos_pendientes():
     anteproyectos_pendientes = ModelAnteproyecto.objects.filter(estado=False)
@@ -57,6 +67,12 @@ def recuperar_anteproyectos():
     anteproyectos = ModelAnteproyecto.objects.all()
     return anteproyectos
 
+# funcion para recuperar los anteproyectos que aun no estan aprovados
+
+
+def recuperar_anteproyectos_pendientes():
+    anteproyectos = ModelAnteproyecto.objects.filter(estado=False)
+    return anteproyectos
 # funcion para traer un anteproyecto en especifico
 
 
@@ -69,7 +85,7 @@ def recuperar_anteproyecto(nombre):
 # funcion para recuperar un proyecto Final
 def recuperar_proyecto_final(anteproyecto):
     proyecto_final = ModelProyectoFinal.objects.get(
-        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists else None
+        anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None
     return proyecto_final
 
 # funcion para recuperar proyectos finales
@@ -131,6 +147,18 @@ def recuperar_documento(documento):
         'utf-8') if documento else None
     return documento
 
+# funcion para recuperar datos de los directores
+
+
+def recuperar_directores():
+    directores = Usuarios.objects.filter(
+        groups__name="Directores").values('nombre_completo', 'email')
+    if directores:
+        return directores
+    else:
+        directores = None
+        return directores
+
 
 @login_required
 def datosusuario(request):
@@ -179,7 +207,7 @@ def solicitudes_anteproyectos(request):
     if request.method == 'POST':
         pass
     else:
-        anteproyectos = recuperar_anteproyectos()
+        anteproyectos = recuperar_anteproyectos_pendientes()
         context['anteproyectos'] = anteproyectos
         print(anteproyectos)
         return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)
@@ -207,7 +235,7 @@ def solicitudes_especiales(request):
         return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)
 
 ########################################################################################################################
-# vista para conocer la informacion del proyecto
+# vista para conocer la informacion del anteproyecto
 
 
 def ver_anteproyecto(request, nombre_anteproyecto):
@@ -255,7 +283,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 anteproyecto.estado = True
                 # salvar las informaciones
                 anteproyecto.save(update_fields=['estado',])
-            retroalimentacion.save()
+                retroalimentacion.save()
             if retroalimentacion.doc_retroalimentacion:
                 print("Documento subido correctamente")
             else:
@@ -265,6 +293,62 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
             print(form_retro.errors)  # Para depuración
 
     return redirect('correspondencia:solicitudes')
+
+
+# vista de informacion de proyecto
+
+
+def ver_proyecto_final(request, nombre):
+    context = {}
+    if request.method == 'POST':
+        pass
+    else:
+
+        anteproyecto = recuperar_anteproyecto(nombre)
+        if anteproyecto:
+            print(anteproyecto)
+            proyecto_final = recuperar_proyecto_final(anteproyecto)
+            if proyecto_final:
+                print(proyecto_final)
+                context['inf_proyecto'] = proyecto_final
+
+        directores = recuperar_directores()
+        print(directores)
+        context['directores'] = directores
+        form_retroalimentaciones_proyecto = FormRetroalimentacionProyecto
+        form_jurados = FormJurados
+        context['form_jurados'] = form_jurados
+        context['form_retroalimentacion'] = form_retroalimentaciones_proyecto
+        return render(request, 'correspondencia/views_solicitud/proyecto.html', context)
+
+# tener en cuenta la lgoca de javaScript con el fin de que si es aprovado, muestre el formurio de la asignacion de jurados
+# asi mismo crear la vista de enviar retroalimentaicon de proyecto
+
+
+def asignar_jurados(request, nombre_proyecto):
+    if request.method == 'POST':
+        directores_seleccionados = request.POST.getlist('directores')
+        fecha_sustentacion_str = request.POST.get('fecha_sustentacion')
+        fecha_sustentacion = datetime.fromisoformat(
+            str(fecha_sustentacion_str)).date()
+
+        asignacion_jurados = ModelAsignacionJurados()
+        anteproyecto = recuperar_anteproyecto(nombre_proyecto)
+        proyecto_final = recuperar_proyecto_final(anteproyecto)
+
+        # ajustes en el modelo especifico de proyecto
+        proyecto_final.solicitud_enviada
+
+        asignacion_jurados.proyecto_final = proyecto_final
+        asignacion_jurados.nombre_jurado = ', '.join(directores_seleccionados)
+        asignacion_jurados.fecha_sustentacion = fecha_sustentacion
+        asignacion_jurados.save()
+
+        return redirect('correspondencia:solicitudes')
+
+    return redirect('correspondencia:solicitudes')
+
+
 ########################################################################################################################
 
 # listado de solicitudes

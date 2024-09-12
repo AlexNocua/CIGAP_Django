@@ -7,14 +7,14 @@
         {% for proyecto in proyectos_finales %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{ proyecto.nombre_proyecto }}</h5>
+              <h5 class="card-title">{{ proyecto.anteproyecto.nombre_proyecto }}</h5>
               <p class="card-text">
                 <strong>Integrantes:</strong><br />
-                {% if proyecto.nombre_integrante2 %}
-                  {{ proyecto.nombre_integrante1 }}<br />
-                  {{ proyecto.nombre_integrante2 }}
+                {% if proyecto.anteproyecto.nombre_integrante2 %}
+                  {{ proyecto.anteproyecto.nombre_integrante1 }}<br />
+                  {{ proyecto.anteproyecto.nombre_integrante2 }}
                 {% else %}
-                  {{ proyecto.nombre_integrante1 }}
+                  {{ proyecto.anteproyecto.nombre_integrante1 }}
                 {% endif %}
               </p>
               <p class="card-text">
@@ -29,13 +29,16 @@
               <p class="card-text">
                 <strong>Fecha de radicación:</strong> {{ proyecto.fecha_envio }}
               </p>
-              <a href="{% url 'correspondencia:ver_proyecto_final' proyecto.nombre_proyecto %}" class="btn btn-primary">Responder solicitud</a>
+              <a href="{% url 'correspondencia:ver_proyecto_final' proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-primary">Responder solicitud</a>
             </div>
           </div>
         {% endfor %}
       </div>
     {% else %}
-    <p class=" text-center"><strong>No hay solicitudes</strong> pendientes o por responder.</p>    {% endif %}
+      <p class="text-center">
+        <strong>No hay solicitudes</strong> pendientes o por responder.
+      </p>
+    {% endif %}
   </section>
 
   <style>

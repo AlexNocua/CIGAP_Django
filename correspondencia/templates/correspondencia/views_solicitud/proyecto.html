@@ -1,0 +1,109 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+{% load static %}
+{% block view_anteproyecto %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .info_anteproyecto {
+      display: grid;
+      grid-gap: 12px;
+    }
+    
+    .img-users {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <section class="container mt-3">
+    <div class="row info_anteproyecto d-flex">
+      {% comment %}tener en cuneta el acceso a las llaves e items{% endcomment %}
+      <h2>Proyecto: {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</h2>
+      <div class="container-fluid row">
+        <h4>Información de la solicitud</h4>
+
+        <div class="col mt-2 p-2">
+          <p class="m-0 p-0 text-center">
+            <strong class="text-center">Información del proyecto</strong>
+          </p>
+          <p class="m-0 p-0">
+            <br />
+            <strong>Nombre del proyecto:</strong> {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}
+            <br />
+            <strong>Descripción:</strong> {{ inf_proyecto.anteproyecto.descripcion }}
+          </p>
+          <strong>Documentos cargados:</strong>
+          <br />
+          <ol>
+            <li>
+              <a class="" href="data:application/pdf;base64,{{ doc_carta }}" download="CartaPresentacion {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+            </li>
+            <li>
+              <a class="" href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+            </li>
+          </ol>
+        </div>
+        <div class="col mt-2 p-2">
+          <p class="text-center">
+            <strong>Miembros</strong>
+          </p>
+          {% for key, integrante in datos_integrantes.items %}
+            <div class="d-flex mb-1">
+              {% if integrante.imagen %}
+                <img class="img-users" src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
+              {% else %}
+                <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
+              {% endif %}
+
+              <p class="m-1">
+                {{ integrante.nombre }}<br />
+                <strong>{{ integrante.grupo }}</strong>
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% comment %}apartado de retroalimentacione{% endcomment %}
+      <div class="col container-fluid mt-4">
+        <h3>Enviar Retroalimentación</h3>
+        <form class="container-fluid p-2" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group row m-3">
+            <label class="p-0 m-0" for="id_retroalimentacion"><strong>Retroalimentación:</strong></label>
+            {{ form_retroalimentacion.retroalimentacion }}
+          </div>
+          <div class="row container-fluid mt-2">
+            <div class="form-group col m-2">
+              <label class="p-0 m-0" for="id_doc_retroalimentacion"><strong>Documento de Retroalimentación:</strong></label>
+              {{ form_retroalimentacion.doc_retroalimentacion_convert }}
+            </div>
+            <div class="form-group col m-2">
+              <label class="p-0 m-0" for="id_estado"><strong>Estado:</strong></label>
+              {{ form_retroalimentacion.estado }}
+            </div>
+          </div>
+          {% comment %}buenas{% endcomment %}
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+        <form action="{% url 'correspondencia:asignar_jurados' inf_proyecto.anteproyecto.nombre_anteproyecto %}" method="post">
+          {% csrf_token %}
+          <div class="d-flex flex-column">
+            {% for director in directores %}
+              <label for="{{ director.nombre_completo }}"><input type="checkbox" name="directores" id="{{ director.nombre_completo }} " value="{{ director.nombre_completo }}" /><label for="{{ director.nombre_completo }}">{{ director.nombre_completo }}</label></label>
+            {% endfor %}
+          </div>
+          <input class="" type="date" name="fecha_sustentacion" />
+          <input class="btn btn-primary" type="submit" value="Enviar" />
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

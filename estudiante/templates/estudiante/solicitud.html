@@ -130,19 +130,17 @@
         </form>
       </div>
     {% else %}
-      {% if respuestas.respuesta %}
-        {% if respuestas.respuesta.estado == 'aprobado' or respuestas.respuesta.estado == 'Aprobado_con_correcciones' %}
-          <p>
-            <strong>El comite a respondido a tu solicitud de anteproyecto, la respuesta es:</strong> {{ respuestas.respuesta.estado }}
-            <br />
-            <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-            <strong>Fecha de respuesta por parte del cómite:</strong> {{ respuestas.respuesta.fecha_retroalimentacion }}
-            <br />
-            <strong>Documento retroalimentado:</strong> <a class="mt-2" href="data:application/octet-stream;base64,{{ respuestas.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
-            <br /><br />
-            <strong>Respuesta del cómite:</strong> {{ respuestas.respuesta.retroalimentacion }}
-          </p>
-        {% endif %}
+      {% if respuesta %}
+        <p>
+          <strong>El comite a respondido a tu solicitud de anteproyecto, la respuesta es:</strong> {{ respuesta.respuesta.estado }}
+          <br />
+          <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+          <strong>Fecha de respuesta por parte del cómite:</strong> {{ respuesta.respuesta.fecha_retroalimentacion }}
+          <br />
+          <strong>Documento retroalimentado:</strong> <a class="mt-2" href="data:application/octet-stream;base64,{{ respuesta.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
+          <br /><br />
+          <strong>Respuesta del cómite:</strong> {{ respuesta.respuesta.retroalimentacion }}
+        </p>
       {% else %}
         <p>
           <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
@@ -153,9 +151,9 @@
   </div>
 
   {% comment %}tener en cuenta que este cambia segun la respuesta del comite{% endcomment %}
-  {% if respuestas %}
+  {% if respuesta %}
     <h2 class="mt-4">Crea tu solicitud de proyecto final</h2>
-    {% if respuestas.retroalimentacion_0.respuesta.estado == 'aprobado' or respuestas.retroalimentacion_0.respuesta.estado == 'Aprobado_con_correcciones' %}
+    {% if respuesta.respuesta.estado == 'Aprobado' or respuesta.respuesta.estado == 'Aprobado_con_correcciones' %}
       <div class="container solicitud contenido_estudiante_view">
         {% if proyecto_final %}
           <p>
@@ -192,6 +190,8 @@
           </form>
         {% endif %}
       </div>
+    {% else %}
+      <h1>errorc</h1>
     {% endif %}
   {% endif %}
   <h2 class="mt-4">¿Tienes alguna otra solicitud?</h2>
