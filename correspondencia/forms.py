@@ -28,6 +28,10 @@ class FormRetroalimentacionProyecto(forms.ModelForm):
         model = ModelRetroalimentaciones
         fields = ('retroalimentacion',
                   'doc_retroalimentacion_convert', 'estado')
+        
+        estado = forms.ChoiceField(
+            widget=forms.CheckboxSelectMultiple(attrs={'id': 'element_estado'})
+        )
 
     def save(self, commit=True):
         retroalimentacion = super().save(commit=False)

@@ -1,7 +1,7 @@
 from django.db import models
 ######################################################################################
 # importacion de los modelos de los estudiantes
-from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
+from estudiante.models import ModelAnteproyecto, ModelProyectoFinal, ModelAsignacionJurados
 ######################################################################################
 ######################################################################################
 # importacion de los modelos de los estudiantes
@@ -9,24 +9,12 @@ from login.models import Usuarios
 ######################################################################################
 
 
-# creacion del modelo de jurados
-class ModelAsignacionJurados(models.Model):
-    usuario = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)
-    proyecto_final = models.ForeignKey(
-        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Asignacion_Jurados', blank=True, null=True)
-    nombre_jurado = models.CharField(max_length=50)
-    fecha_sustentacion = models.DateField(max_length=50)
-
-    def save(self,*args, **kwargs):
-        super().save(*args,**kwargs)
 # creacion del modelo de retroalimentaciones
 
 
 class ModelRetroalimentaciones(models.Model):
     ESTADOS_CHOICES = [
         ('Aprobado', 'Aprobado'),
-        ('Aprobado_con_correcciones', 'Aprobado con correcciones'),
         ('Rechazado', 'Rechazado'),
     ]
 
@@ -34,9 +22,6 @@ class ModelRetroalimentaciones(models.Model):
         ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
-    jurado = models.ForeignKey(
-        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
-
     retroalimentacion = models.TextField(
         max_length=10000)
     fecha_retroalimentacion = models.CharField(max_length=50)

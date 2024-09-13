@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from plataform_CIGAP.views import logout_user
@@ -53,6 +54,16 @@ def recuperar_proyectos_finales_pendientes():
     return proyectos_finales_pendientes
 
 
+def recuperar_proyectos_finales_finalizados():
+    proyectos_finales_finalizados = ModelProyectoFinal.objects.filter(
+        estado=True)
+    return proyectos_finales_finalizados
+
+
+def recuperar_asignaciones_jurados():
+    pass
+
+
 def recuperar_solicitudes_especiales_pendientes():
     solicitudes_pendientes = ModelSolicitudes.objects.filter(
         Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(
@@ -77,18 +88,25 @@ def recuperar_anteproyectos_pendientes():
 
 
 def recuperar_anteproyecto(nombre):
-    anteproyecto = ModelAnteproyecto.objects.get(
-        nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(nombre_anteproyecto=nombre).exists() else None
+    anteproyecto = ModelAnteproyecto.objects.get(nombre_anteproyecto=nombre) if ModelAnteproyecto.objects.filter(
+        nombre_anteproyecto=nombre).exists() else None
     return anteproyecto
 
-
 # funcion para recuperar un proyecto Final
+
+
 def recuperar_proyecto_final(anteproyecto):
     proyecto_final = ModelProyectoFinal.objects.get(
         anteproyecto=anteproyecto) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None
     return proyecto_final
 
 # funcion para recuperar proyectos finales
+
+
+def recuperar_proyecto_aceptado(anteproyecto):
+    proyecto_final = ModelProyectoFinal.objects.get(
+        anteproyecto=anteproyecto, estado=True) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None
+    return proyecto_final
 
 
 def recuperar_proyectos_finales():
@@ -128,16 +146,10 @@ def recuperar_datos_integrantes(nombre):
 # funcion para traer la lista de solicitudes
 def recuperar_solicitudes():
     solicitudes = ModelRetroalimentaciones.objects.all()
-    # context = {
-    #     # 'nombre_anteproyecto': solicitudes.anteproyecto.nombre_anteproyecto,
-    #     'retroalimentacion': solicitudes.retroalimentacion,
-    #     'fecha_retroalimentacion': solicitudes.fecha_retroalimentacion,
-    #     'doc_retroalimentacion': solicitudes.doc_retroalimentacion,
-    #     'estado': solicitudes.estado,
-    #     'revs_dadas': solicitudes.revs_dadas,
-
-    # }
     return solicitudes
+# def recuperar_solicitudes_():
+#     solicitudes = ModelRetroalimentaciones.objects.filter(anteproyecto=True)
+#     return solicitudes
 
 # funcion de recuperar documento binario
 
@@ -300,8 +312,49 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
 
 def ver_proyecto_final(request, nombre):
     context = {}
+    anteproyecto = recuperar_anteproyecto(nombre)
+    proyecto_final = recuperar_proyecto_final(anteproyecto)
+    if anteproyecto is None or proyecto_final is None:
+        return redirect('correspondencia:solicitudes')
+    else:
+        integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2,
+                       anteproyecto.director, anteproyecto.codirector)
+        datos_integrantes = {}
+        for i, integrante in enumerate(integrantes, start=1):
+            if integrante:
+                datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(
+                    integrante)
+        context['datos_integrantes'] = datos_integrantes
     if request.method == 'POST':
-        pass
+        form_retro = FormRetroalimentacionAnteproyecto(
+            request.POST, request.FILES)
+
+        if form_retro.is_valid():
+            retroalimentacion = form_retro.save(commit=False)
+            retroalimentacion.proyecto_final = proyecto_final
+            retroalimentacion.fecha_retroalimentacion = fecha_actual()
+            retroalimentacion.revs_dadas = (
+                retroalimentacion.revs_dadas or 0) + 1
+            if retroalimentacion.estado not in ['Aprobado', 'Aprobado_con_correcciones']:
+                proyecto_final.delete()
+                return render('correspondenicia:solicitudesF')
+
+            else:
+                proyecto_final.estado = True
+                proyecto_final.save(update_fields=['estado',])
+                retroalimentacion.save()
+                # revisar esta direccion para el envio de datos de retroalimentacones
+
+            if retroalimentacion.doc_retroalimentacion:
+                print("Documento subido correctamente")
+            else:
+                print("Error al subir el documento")
+            # tener en cuenta el envio de datos desde url
+            url = reverse('correspondencia:asignar_jurados')
+            return redirect(f"{url}?nombre_proyecto={nombre}")
+
+        else:
+            print(form_retro.errors)  # Para depuración
     else:
 
         anteproyecto = recuperar_anteproyecto(nombre)
@@ -325,28 +378,46 @@ def ver_proyecto_final(request, nombre):
 # asi mismo crear la vista de enviar retroalimentaicon de proyecto
 
 
-def asignar_jurados(request, nombre_proyecto):
+def asignar_jurados(request):
+    context = {}
+    nombre_proyecto = request.GET.get('nombre_proyecto')
+    print(nombre_proyecto)
     if request.method == 'POST':
         directores_seleccionados = request.POST.getlist('directores')
         fecha_sustentacion_str = request.POST.get('fecha_sustentacion')
         fecha_sustentacion = datetime.fromisoformat(
             str(fecha_sustentacion_str)).date()
- 
+
         asignacion_jurados = ModelAsignacionJurados()
         anteproyecto = recuperar_anteproyecto(nombre_proyecto)
-        proyecto_final = recuperar_proyecto_final(anteproyecto)
-
+        proyecto_final = recuperar_proyecto_aceptado(anteproyecto)
+        print(proyecto_final)
         # ajustes en el modelo especifico de proyecto
-        proyecto_final.solicitud_enviada
 
         asignacion_jurados.proyecto_final = proyecto_final
         asignacion_jurados.nombre_jurado = ', '.join(directores_seleccionados)
         asignacion_jurados.fecha_sustentacion = fecha_sustentacion
         asignacion_jurados.save()
+        proyecto_final.jurado = asignacion_jurados
 
+        proyecto_final.save(update_fields=['jurado'])
         return redirect('correspondencia:solicitudes')
+    else:
+        anteproyecto = recuperar_anteproyecto(nombre_proyecto)
+        if anteproyecto:
+            print(anteproyecto)
+            proyecto_final = recuperar_proyecto_final(anteproyecto)
+            if proyecto_final:
+                print(proyecto_final)
+                context['inf_proyecto'] = proyecto_final
 
-    return redirect('correspondencia:solicitudes')
+        directores = recuperar_directores()
+
+        context['directores'] = directores
+        form_jurados = FormJurados
+        context['form_jurados'] = form_jurados
+
+        return render(request, 'correspondencia/views_solicitud/asignacion_jurados.html', context)
 
 
 ########################################################################################################################
@@ -356,15 +427,21 @@ def asignar_jurados(request, nombre_proyecto):
 
 def solicitudes_respondidas(request):
     respuestas = recuperar_solicitudes()
-    print(respuestas)
     context = datosusuario(request)
     respuestas_dict = {}
     for i, respuesta in enumerate(respuestas):
         doc_binario = recuperar_documento(respuesta.doc_retroalimentacion)
-        respuestas_dict[f'respuesta_{i}'] = {
-            'respuesta': respuesta, 'doc_binario': doc_binario}
+        if respuesta.proyecto_final:
+            print('aqui esta el proyecto')
+            respuestas_dict[f'respuesta_{i}'] = {
+                'respuesta_proyecto_final': respuesta, 'doc_binario': doc_binario}
+        elif respuesta.anteproyecto:
+            print('aqui esta el anteproyecto')
+            respuestas_dict[f'respuesta_{i}'] = {
+                'respuesta_anteproyecto': respuesta, 'doc_binario': doc_binario}
     context['respuestas'] = respuestas_dict
-    return render(request, 'correspondencia/list_solicitudes_anteproyecto.html', context)
+
+    return render(request, 'correspondencia/views_solicitud/list_solicitudes_respondidas.html', context)
 
 
 ########################################################################################################################

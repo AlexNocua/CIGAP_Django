@@ -1,0 +1,72 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+{% load static %}
+{% block asignacion_jurados %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .info_anteproyecto {
+      display: grid;
+      grid-gap: 12px;
+    }
+    
+    .img-users {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <section class="container">
+    <div class="d-flex flex-column justify-content-center align-content-center">
+      <p class="text-center">
+        <strong>Recuerda asignar los jurados</strong> correspondientes <strong>y la fecha de sustentación</strong> si el proyecto fue aprobado.
+      </p>
+      <button class="btn btn-primary m-0" id="btn_asignar_jurados">Asignar Jurados</button>
+      <form id="form_jurados" method="post" style="display: none;">
+        {% csrf_token %}
+        <div class="d-flex container-flex">
+          <div class="col d-flex flex-column justify-content-center align-items-center">
+            <h5>Estos son los actuales profesores disponibles como jurados:</h5>
+            <p>Selecciona los jurados según creas que son convenientes según el proyecto de grado.</p>
+          </div>
+          <div class="col">
+            <div class="d-flex p-3 flex-column justify-content-center">
+              {% for director in directores %}
+
+                <label class="mt-1" for="{{ director.nombre_completo }}"><input type="checkbox" name="directores" id="{{ director.nombre_completo }} " value="{{ director.nombre_completo }}" /><label for="{{ director.nombre_completo }}">{{ director.nombre_completo }}</label></label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <input class="" type="date" name="fecha_sustentacion" />
+        <input class="btn btn-primary" type="submit" value="Enviar" />
+      </form>
+    </div>
+  </section>
+  <script>
+    const form_jurados = document.getElementById('form_jurados')
+    const btn_asignar_jurados = document.getElementById('btn_asignar_jurados')
+    let estado = true
+    console.log(form_jurados)
+    console.log(btn_asignar_jurados)
+    btn_asignar_jurados.onclick = () => {
+      console.log('esta funcionando')
+      if (estado == true) {
+        btn_asignar_jurados.style.background = 'red'
+        btn_asignar_jurados.innerText = 'Cancelar'
+        form_jurados.style.display = 'block'
+      } else {
+        btn_asignar_jurados.style.background = 'green'
+        btn_asignar_jurados.innerText = 'Asignar Jurados'
+        form_jurados.style.display = 'none'
+      }
+      estado = !estado
+    }
+  </script>
+{% endblock %}

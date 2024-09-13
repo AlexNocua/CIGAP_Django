@@ -5,41 +5,134 @@
     .content_correspondecia {
       display: none;
     }
+    
+    button {
+      border: 1px solid #cacaca;
+      color: #fff;
+      background: #1f5819;
+      border-radius: 4px;
+      padding: 4px 12px;
+      margin: 4px;
+    }
+    .container_table {
+      overflow: scroll;
+    }
+    .table {
+      padding: 4px;
+      border-radius: 8px;
+    }
+    /*estilos de la tabla del plugin*/
+    .dt-layout-row {
+      justify-content: space-around;
+      align-items: center;
+      display: flex;
+      margin-bottom: 12px;
+    }
+    .dt-input {
+      margin: 0 8px;
+      border: 1px solid #cacaca;
+    }
+    .dt-layout-row:nth-child(2) {
+      justify-content: space-around;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+    }
+    
+    /*estilos personalizados para la tabla*/
+    
+    #tabla_resultados th,
+    #tabla_resultados td {
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #cacaca;
+    }
+    
+    #tabla_resultados thead th {
+      background: #00532c;
+      color: white;
+    }
+    
+    /* Estilo para las filas alternas */
+    #tabla_resultados tbody tr:nth-child(even) {
+      background-color: #fff;
+    }
   </style>
 
   <section class="container">
     <h3 class="mt-3">Lista de solicitudes respondidas</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre del proyecto</th>
-          <th scope="col">Respuesta</th>
-          <th scope="col">Fecha de respuesta</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Numero de revisiones</th>
-          <th scope="col">Documento con correcciones</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        {% for key, value in respuestas.items %}
+    <div class="container_table">
+      <table class="table table-striped border" id="tabla_resultados">
+        <thead>
           <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ value.respuesta.anteproyecto.nombre_anteproyecto }}</td>
-            <td>{{ value.respuesta.retroalimentacion }}</td>
-            <td>{{ value.respuesta.fecha_retroalimentacion }}</td>
-            <td>{{ value.respuesta.estado }}</td>
-            <td>{{ value.respuesta.revs_dadas }}</td>
-            <td>
-              <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
-            </td>
-            <td>
-              {% comment %}tener en cuenta el envío de parámetros de búsqueda{% endcomment %}
-              {% comment %} <a href="{% url 'correspondencia:ver_anteproyecto' value.respuesta.anteproyecto.nombre_anteproyecto %}" type="button" class="m-2 btn btn-primary">Responder solicitud</a> {% endcomment %}
-            </td>
+            <th scope="col">#</th>
+            <th scope="col">Nombre del proyecto</th>
+            <th scope="col">Anteproyecto o Proyecto Final</th>
+            <th scope="col">Respuesta</th>
+            <th scope="col">Fecha de respuesta</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Numero de revisiones</th>
+            <th scope="col">Documento con correcciones</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for key, value in respuestas.items %}
+            <tr>
+              {% if value.respuesta_anteproyecto %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}</td>
+                <td>Anteproyecto</td>
+                <td>{{ value.respuesta_anteproyecto.retroalimentacion }}</td>
+                <td>{{ value.respuesta_anteproyecto.fecha_retroalimentacion }}</td>
+                <td>{{ value.respuesta_anteproyecto.estado }}</td>
+                <td>{{ value.respuesta_anteproyecto.revs_dadas }}</td>
+                <td>
+                  <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+                </td>
+              {% endif %}
+              {% if value.respuesta_proyecto_final %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</td>
+                <td>Proyecto Final</td>
+                <td>{{ value.respuesta_proyecto_final.retroalimentacion }}</td>
+                <td>{{ value.respuesta_proyecto_final.fecha_retroalimentacion }}</td>
+                <td>{{ value.respuesta_proyecto_final.estado }}</td>
+                <td>{{ value.respuesta_proyecto_final.revs_dadas }}</td>
+                <td>
+                  <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </section>
+  <script>
+    $(document).ready(function () {
+      $('#tabla_resultados').DataTable({
+        aLengthMenu: [
+          [3, 5, 10, 25, -1],
+          [3, 5, 10, 25, 'ALL']
+        ],
+        iDisplayLength: 7,
+        language: {
+          lengthMenu: 'Mostrar _MENU_ registros por página',
+          search: 'Buscar',
+          zeroRecords: 'Ningún Registro Encontrado',
+          info: 'Página _PAGE_ de _PAGES_',
+          infoEmpty: 'Ningún Registro Disponible',
+          infoFiltered: '(Filtrado de _MAX_ registro(s) totales)',
+          paginate: {
+            first: 'Primero',
+            last: 'Último',
+            next: 'Siguiente',
+            previous: 'Anterior'
+          }
+        }
+      })
+    })
+  </script>
 {% endblock %}

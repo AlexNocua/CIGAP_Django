@@ -8,13 +8,14 @@ import base64
 
 
 class ModelRetroalimentacionesAdmin(admin.ModelAdmin):
-    list_display = ('anteproyecto', 'retroalimentacion', 'fecha_retroalimentacion',
+    list_display = ('anteproyecto', 'proyecto_final', 'retroalimentacion', 'fecha_retroalimentacion',
                     'estado', 'revs_dadas', 'doc_retroalimentacion_link')
 
     def doc_retroalimentacion_link(self, obj):
         if obj.doc_retroalimentacion:
             if isinstance(obj.doc_retroalimentacion, bytes):
-                base64_data = base64.b64encode(obj.doc_retroalimentacion).decode('utf8')
+                base64_data = base64.b64encode(
+                    obj.doc_retroalimentacion).decode('utf8')
                 url = f'data:application/octet-stream;base64,{base64_data}'
                 if obj.anteproyecto:
                     nombre_anteproyecto = obj.anteproyecto.nombre_anteproyecto

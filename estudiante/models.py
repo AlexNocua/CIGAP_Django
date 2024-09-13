@@ -41,11 +41,23 @@ class ModelAnteproyecto(models.Model):
 # creacion del modelo de monografia o proyecto de grado
 
 
+# creacion del modelo de jurados
+class ModelAsignacionJurados(models.Model):
+    nombre_jurado = models.CharField(max_length=50)
+    fecha_sustentacion = models.DateField(max_length=50)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+
 class ModelProyectoFinal(models.Model):
+
     user = models.OneToOneField(
         Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     anteproyecto = models.OneToOneField(
         ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
+    jurado = models.ForeignKey(
+        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
     descripcion = models.TextField(
         max_length=10000, null=True, blank=True)  # Cambio aquí
     carta_presentacion_final = models.BinaryField(null=True, blank=True)
@@ -56,4 +68,6 @@ class ModelProyectoFinal(models.Model):
     solicitud_enviada = models.BooleanField()
     estado = models.BooleanField(default=False)
 
+    def save(self, *args,**kwargs):
+        super().save(*args,**kwargs)
 # creacion del modelo de solicitudes

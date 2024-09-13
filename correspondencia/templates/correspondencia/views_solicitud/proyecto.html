@@ -1,6 +1,6 @@
 {% extends 'correspondencia/base_correspondencia.html' %}
 {% load static %}
-{% block view_anteproyecto %}
+{% block view_proyecto %}
   <style>
     .content_correspondecia {
       display: none;
@@ -74,7 +74,7 @@
       {% comment %}apartado de retroalimentacione{% endcomment %}
       <div class="col container-fluid mt-4">
         <h3>Enviar Retroalimentación</h3>
-        <form class="container-fluid p-2" method="post" enctype="multipart/form-data">
+        <form class="container-fluid p-2" action="{%url "correspondencia:ver_proyecto_final" inf_proyecto.anteproyecto.nombre_anteproyecto%}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group row m-3">
             <label class="p-0 m-0" for="id_retroalimentacion"><strong>Retroalimentación:</strong></label>
@@ -90,18 +90,7 @@
               {{ form_retroalimentacion.estado }}
             </div>
           </div>
-          {% comment %}buenas{% endcomment %}
           <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-        <form action="{% url 'correspondencia:asignar_jurados' inf_proyecto.anteproyecto.nombre_anteproyecto %}" method="post">
-          {% csrf_token %}
-          <div class="d-flex flex-column">
-            {% for director in directores %}
-              <label for="{{ director.nombre_completo }}"><input type="checkbox" name="directores" id="{{ director.nombre_completo }} " value="{{ director.nombre_completo }}" /><label for="{{ director.nombre_completo }}">{{ director.nombre_completo }}</label></label>
-            {% endfor %}
-          </div>
-          <input class="" type="date" name="fecha_sustentacion" />
-          <input class="btn btn-primary" type="submit" value="Enviar" />
         </form>
       </div>
     </div>
