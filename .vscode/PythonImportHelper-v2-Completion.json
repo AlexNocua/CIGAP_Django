@@ -1331,6 +1331,14 @@
         "documentation": {}
     },
     {
+        "label": "FormProyectoFinal",
+        "importPath": "estudiante.forms",
+        "description": "estudiante.forms",
+        "isExtraImport": true,
+        "detail": "estudiante.forms",
+        "documentation": {}
+    },
+    {
         "label": "CreateView",
         "importPath": "django.views.generic.edit",
         "description": "django.views.generic.edit",
@@ -1853,7 +1861,7 @@
         "kind": 6,
         "importPath": "correspondencia.models",
         "description": "correspondencia.models",
-        "peekOfCode": "class ModelSolicitudes(models.Model):\n    TIPO_SOLICITUD = [\n        ('cambio_nombre', 'Cambio de nombre del proyecto'),\n        ('ajuste_integrantes', 'Ajuste de integrantes del proyecto'),\n        ('seccion_derechos', 'Sección de derechos del proyecto'),\n        ('otro', 'Otro'),\n    ]\n    RELACIONADO_CON_CHOICES = [\n        ('anteproyecto', 'Anteproyecto'),\n        ('proyecto_final', 'Proyecto Final'),",
+        "peekOfCode": "class ModelSolicitudes(models.Model):\n    TIPO_SOLICITUD = [\n        ('cambio_nombre', 'Cambio de nombre del proyecto'),\n        ('ajuste_integrantes', 'Ajuste de integrantes del proyecto'),\n        ('seccion_derechos', 'Sección de derechos del proyecto'),\n        ('otro', 'Otro'),\n    ]\n    RELACIONADO_CON_CHOICES = [\n        ('Anteproyecto', 'Anteproyecto'),\n        ('Proyecto_final', 'Proyecto Final'),",
         "detail": "correspondencia.models",
         "documentation": {}
     },
@@ -1907,7 +1915,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_asignaciones_jurados():\n    pass\ndef recuperar_solicitudes_especiales_pendientes():\n    solicitudes_pendientes = ModelSolicitudes.objects.filter(\n        Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(\n            tipo_solicitud='ajuste_integrantes') | Q(tipo_solicitud='seccion_derechos') | Q(tipo_solicitud='otro'))\n    )\n    print(solicitudes_pendientes.count())\n    return solicitudes_pendientes\n# funcion para traer los anteproyectos",
+        "peekOfCode": "def recuperar_asignaciones_jurados():\n    pass\ndef recuperar_solicitudes_especiales_pendientes():\n    solicitudes_pendientes = ModelSolicitudes.objects.filter(\n        Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(\n            tipo_solicitud='ajuste_integrantes') | Q(tipo_solicitud='seccion_derechos') | Q(tipo_solicitud='otro'))\n    )\n    return solicitudes_pendientes\ndef recuperar_solicitud_especial_pendiente(id):\n    solicitud_pendiente = ModelSolicitudes.objects.get(",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1916,7 +1924,16 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_solicitudes_especiales_pendientes():\n    solicitudes_pendientes = ModelSolicitudes.objects.filter(\n        Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(\n            tipo_solicitud='ajuste_integrantes') | Q(tipo_solicitud='seccion_derechos') | Q(tipo_solicitud='otro'))\n    )\n    print(solicitudes_pendientes.count())\n    return solicitudes_pendientes\n# funcion para traer los anteproyectos\ndef recuperar_anteproyectos():\n    anteproyectos = ModelAnteproyecto.objects.all()",
+        "peekOfCode": "def recuperar_solicitudes_especiales_pendientes():\n    solicitudes_pendientes = ModelSolicitudes.objects.filter(\n        Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(\n            tipo_solicitud='ajuste_integrantes') | Q(tipo_solicitud='seccion_derechos') | Q(tipo_solicitud='otro'))\n    )\n    return solicitudes_pendientes\ndef recuperar_solicitud_especial_pendiente(id):\n    solicitud_pendiente = ModelSolicitudes.objects.get(\n        id=id) if ModelSolicitudes.objects.filter(id=id).exists() else None\n    return solicitud_pendiente",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_solicitud_especial_pendiente",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_solicitud_especial_pendiente(id):\n    solicitud_pendiente = ModelSolicitudes.objects.get(\n        id=id) if ModelSolicitudes.objects.filter(id=id).exists() else None\n    return solicitud_pendiente\n# funcion para traer los anteproyectos\ndef recuperar_anteproyectos():\n    anteproyectos = ModelAnteproyecto.objects.all()\n    return anteproyectos\n# funcion para recuperar los anteproyectos que aun no estan aprovados\ndef recuperar_anteproyectos_pendientes():",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1961,7 +1978,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_proyecto_aceptado(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto, estado=True) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None\n    return proyecto_final\ndef recuperar_proyectos_finales():\n    proyectos_finales = ModelProyectoFinal.objects.all()\n    return proyectos_finales\n# funcion para recuperar una solicitud espeial\ndef recuperar_solicitud_especial():\n    solicitud_especial = ModelSolitudes.objects.get()",
+        "peekOfCode": "def recuperar_proyecto_aceptado(anteproyecto):\n    proyecto_final = ModelProyectoFinal.objects.get(\n        anteproyecto=anteproyecto, estado=True) if ModelProyectoFinal.objects.filter(anteproyecto=anteproyecto).exists() else None\n    return proyecto_final\ndef recuperar_proyectos_finales():\n    proyectos_finales = ModelProyectoFinal.objects.all()\n    return proyectos_finales\n# funcion para recuperar una solicitud espeial\ndef recuperar_solicitud_especial(id):\n    solicitud_especial = ModelSolicitudes.objects.get(",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1970,7 +1987,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_proyectos_finales():\n    proyectos_finales = ModelProyectoFinal.objects.all()\n    return proyectos_finales\n# funcion para recuperar una solicitud espeial\ndef recuperar_solicitud_especial():\n    solicitud_especial = ModelSolitudes.objects.get()\n    return solicitud_especial\n# funcion para recuperar solicitudes espeiales\ndef recuperar_solicitudes_especiales():\n    solicitudes_especiales = ModelSolicitudes.objects.all()",
+        "peekOfCode": "def recuperar_proyectos_finales():\n    proyectos_finales = ModelProyectoFinal.objects.all()\n    return proyectos_finales\n# funcion para recuperar una solicitud espeial\ndef recuperar_solicitud_especial(id):\n    solicitud_especial = ModelSolicitudes.objects.get(\n        id=id) if ModelSolicitudes.objects.filter(id=id).exists() else None\n    return solicitud_especial\n# funcion para recuperar solicitudes espeiales\ndef recuperar_solicitudes_especiales():",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -1979,7 +1996,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_solicitud_especial():\n    solicitud_especial = ModelSolitudes.objects.get()\n    return solicitud_especial\n# funcion para recuperar solicitudes espeiales\ndef recuperar_solicitudes_especiales():\n    solicitudes_especiales = ModelSolicitudes.objects.all()\n    return solicitudes_especiales\n# funcion para recuperar las imagenes de los usuarios\ndef recuperar_datos_integrantes(nombre):\n    usuario = Usuarios.objects.get(nombre_completo=nombre) if Usuarios.objects.filter(",
+        "peekOfCode": "def recuperar_solicitud_especial(id):\n    solicitud_especial = ModelSolicitudes.objects.get(\n        id=id) if ModelSolicitudes.objects.filter(id=id).exists() else None\n    return solicitud_especial\n# funcion para recuperar solicitudes espeiales\ndef recuperar_solicitudes_especiales():\n    solicitudes_especiales = ModelSolicitudes.objects.all()\n    return solicitudes_especiales\n# funcion para recuperar las imagenes de los usuarios\ndef recuperar_datos_integrantes(nombre):",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2069,7 +2086,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def solicitudes_proyectos_finales(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        proyectos_finales = recuperar_proyectos_finales()\n        context['proyectos_finales'] = proyectos_finales\n        return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)\ndef solicitudes_especiales(request):\n    context = {}",
+        "peekOfCode": "def solicitudes_proyectos_finales(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        proyectos_finales = recuperar_proyectos_finales()\n        context['proyectos_finales'] = proyectos_finales\n        return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)\n# funcion de la vista de lista de solicitudes especiales\ndef solicitudes_especiales(request):",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2078,7 +2095,34 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def solicitudes_especiales(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        var_solicitudes_especiales = recuperar_solicitudes_especiales()\n        context[\"solicitudes_especiales\"] = var_solicitudes_especiales\n        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)\n########################################################################################################################\n# vista para conocer la informacion del anteproyecto",
+        "peekOfCode": "def solicitudes_especiales(request):\n    context = {}\n    if request.method == 'POST':\n        pass\n    else:\n        solicitudes_especiales = recuperar_solicitudes_especiales_pendientes()\n        context[\"solicitudes_especiales\"] = solicitudes_especiales\n        return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)\ndef view_solicitud_especial(request, id):\n    context = {",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "view_solicitud_especial",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def view_solicitud_especial(request, id):\n    context = {\n    }\n    solicitud_especial = recuperar_solicitud_especial(id)\n    if solicitud_especial.anteproyecto:\n        form_anteproyecto = FormAnteproyecto\n        context['form_proyecto'] = FormAnteproyecto\n        context ['form_retroalimentacion'] = FormRetroalimentacionAnteproyecto\n        form_retroalimentacion_ante = FormRetroalimentacionAnteproyecto\n    else:",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "actualizar_datos_solicitud",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def actualizar_datos_solicitud():\n    pass\ndef enviar_retroalimentacion_solicitud():\n    pass\n########################################################################################################################\n# vista para conocer la informacion del anteproyecto\ndef ver_anteproyecto(request, nombre_anteproyecto):\n    context = datosusuario(request)\n    anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)\n    doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "enviar_retroalimentacion_solicitud",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def enviar_retroalimentacion_solicitud():\n    pass\n########################################################################################################################\n# vista para conocer la informacion del anteproyecto\ndef ver_anteproyecto(request, nombre_anteproyecto):\n    context = datosusuario(request)\n    anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)\n    doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)\n    doc_carta = recuperar_documento(anteproyecto.carta_presentacion)\n    context['inf_anteproyecto'] = {'anteproyecto': anteproyecto,",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2124,6 +2168,15 @@
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
         "peekOfCode": "def solicitudes_respondidas(request):\n    respuestas = recuperar_solicitudes()\n    context = datosusuario(request)\n    respuestas_dict = {}\n    for i, respuesta in enumerate(respuestas):\n        doc_binario = recuperar_documento(respuesta.doc_retroalimentacion)\n        if respuesta.proyecto_final:\n            print('aqui esta el proyecto')\n            respuestas_dict[f'respuesta_{i}'] = {\n                'respuesta_proyecto_final': respuesta, 'doc_binario': doc_binario}",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "ver_respuesta",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def ver_respuesta(request, id):\n    context = {}\n    if id:\n        respuesta = ModelRetroalimentaciones.objects.get(\n            id=id) if ModelRetroalimentaciones.objects.filter(id=id).exists() else 'None'\n        if respuesta.anteproyecto:\n            integrantes = (respuesta.anteproyecto.nombre_integrante1, respuesta.anteproyecto.nombre_integrante2,\n                           respuesta.anteproyecto.director, respuesta.anteproyecto.codirector)\n        elif respuesta.proyecto_final:\n            integrantes = (respuesta.proyecto_final.anteproyecto.nombre_integrante1, respuesta.proyecto_final.anteproyecto.nombre_integrante2,",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2609,7 +2662,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def solicitudes_especificas(request):\n    if request.method == 'POST':\n        form = FormSolicitudes(request.POST, request.FILES)\n        if form.is_valid():\n            solicitud = form.save(commit=False)\n            solicitud.user = request.user\n            if solicitud.relacionado_con == 'anteproyecto':\n                solicitud.anteproyecto = recuperar_anteproyecto(request)\n            elif solicitud.relacionado_con == 'proyecto_final':\n                anteproyecto = recuperar_anteproyecto(request)",
+        "peekOfCode": "def solicitudes_especificas(request):\n    if request.method == 'POST':\n        form = FormSolicitudes(request.POST, request.FILES)\n        if form.is_valid():\n            solicitud = form.save(commit=False)\n            solicitud.user = request.user\n            if solicitud.relacionado_con == 'Anteproyecto':\n                solicitud.anteproyecto = recuperar_anteproyecto(request)\n            elif solicitud.relacionado_con == 'Proyecto_final':\n                anteproyecto = recuperar_anteproyecto(request)",
         "detail": "estudiante.views",
         "documentation": {}
     },

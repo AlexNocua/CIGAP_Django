@@ -61,8 +61,8 @@ class ModelSolicitudes(models.Model):
     ]
 
     RELACIONADO_CON_CHOICES = [
-        ('anteproyecto', 'Anteproyecto'),
-        ('proyecto_final', 'Proyecto Final'),
+        ('Anteproyecto', 'Anteproyecto'),
+        ('Proyecto_final', 'Proyecto Final'),
     ]
 
     user = models.ForeignKey(Usuarios, on_delete=models.SET_NULL,

@@ -1,0 +1,86 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+{% load static %}
+{% block view_retroalimentacion %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .views{
+        display: flex;
+      }
+    
+    .img-users {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .nombre {
+      word-wrap: break-word;
+      font-size: 14px;
+    }
+    .seccion_documento{
+     border-top:1px solid #cacaca;
+    }
+  </style>
+
+  <main class="d-flex flex-column w-100">
+    <article class="d-flex container-fluid flex-column flex flex-md-row">
+      <div class="col">
+        <h1 class="text-center">
+          {% if respuesta.anteproyecto %}
+            {{ respuesta.anteproyecto.nombre_anteproyecto }}
+          {% else %}
+            {% if respuesta.proyecto_final %}
+              {{ respuesta.proyecto_final.anteproyecto.nombre_anteproyecto }}
+            {% else %}
+              Error.
+            {% endif %}
+          {% endif %}
+        </h1>
+        <h3 class="text-center">
+          {% if respuesta.anteproyecto %}
+            Anteproyecto
+          {% else %}
+            {% if respuesta.proyecto_final %}
+              Proyecto Final
+            {% else %}
+              Error.
+            {% endif %}
+          {% endif %}
+        </h3>
+        <h3 class="text-center">revisiones:</h3>
+        <p>{{ respuesta.retroalimentacion }}</p>
+      </div>
+      <div class="">
+        <p class="text-center">
+          <strong>Integrantes</strong>
+        </p>
+        <div class="col d-flex flex-row justify-content-center align-items-center">
+          {% for key, integrante in datos_integrantes.items %}
+            <div class="d-flex text-center flex-column justify-content-center align-items-center m-2">
+              {% if integrante.imagen %}
+                <img class="img-users" src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
+              {% else %}
+                <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
+              {% endif %}
+
+              <p class="nombre m-1">
+                {{ integrante.nombre }}<br />
+                <strong>{{ integrante.grupo }}</strong>
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+        <p>
+          <strong>Fecha de radicación:</strong> {{ respuesta.fecha_retroalimentacion }}
+        </p>
+      </div>
+    </article>
+    <section class="seccion_documento d-flex justify-content-center flex-column">
+      <h3 class="text-center mt-2">Documento de Retroalimentación</h3>
+      <embed src="data:application/pdf;base64,{{ documento_respuesta }}" style="height: 600px;" />
+    </section>
+  </main>
+{% endblock %}

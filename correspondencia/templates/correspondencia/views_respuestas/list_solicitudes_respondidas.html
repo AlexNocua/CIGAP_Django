@@ -2,6 +2,9 @@
 
 {% block view_solicitudes %}
   <style>
+    .views{
+      display: flex;
+    }
     .content_correspondecia {
       display: none;
     }
@@ -84,24 +87,37 @@
                 <td>{{ forloop.counter }}</td>
                 <td>{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}</td>
                 <td>Anteproyecto</td>
-                <td>{{ value.respuesta_anteproyecto.retroalimentacion }}</td>
+                <td>
+                  <a href="{% url 'correspondencia:ver_respuesta' value.respuesta_anteproyecto.id %}">Ver respuesta</a>
+                </td>
                 <td>{{ value.respuesta_anteproyecto.fecha_retroalimentacion }}</td>
                 <td>{{ value.respuesta_anteproyecto.estado }}</td>
                 <td>{{ value.respuesta_anteproyecto.revs_dadas }}</td>
                 <td>
-                  <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+                  {% if value.doc_binario %}
+
+                  {% else %}
+                    No cargado.
+                  {% endif %}
+                  <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf">{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</a>
                 </td>
               {% endif %}
               {% if value.respuesta_proyecto_final %}
                 <td>{{ forloop.counter }}</td>
                 <td>{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</td>
                 <td>Proyecto Final</td>
-                <td>{{ value.respuesta_proyecto_final.retroalimentacion }}</td>
+                <td>
+                  <a href="{% url 'correspondencia:ver_respuesta' value.respuesta_proyecto_final.id %}">Ver respuesta</a>
+                </td>
                 <td>{{ value.respuesta_proyecto_final.fecha_retroalimentacion }}</td>
                 <td>{{ value.respuesta_proyecto_final.estado }}</td>
                 <td>{{ value.respuesta_proyecto_final.revs_dadas }}</td>
                 <td>
-                  <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+                  {% if value.doc_binario %}
+                    <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf">{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</a>
+                  {% else %}
+                    No cargado.
+                  {% endif %}
                 </td>
               {% endif %}
             </tr>

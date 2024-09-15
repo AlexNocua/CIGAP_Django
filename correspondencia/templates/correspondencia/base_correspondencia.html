@@ -19,7 +19,9 @@
     body {
       min-height: 100%;
     }
-    
+    .views {
+      display: none;
+    }
     .cards_correspondencia {
       display: grid;
       justify-content: center;
@@ -152,7 +154,7 @@
       </div>
     </div>
 
-    <div class="views position-relative d-flex justify-content-center align-items-center">
+    <div class="views position-relative justify-content-center align-items-center w-100">
       {% block content_solicitudes %}
 
       {% endblock %}
@@ -170,6 +172,11 @@
       {% block view_proyecto %}
 
       {% endblock %}
+
+      {% comment %}vista para ver una solicitud especial{% endcomment %}
+      {% block view_solicitud_especial %}
+
+      {% endblock %}
       {% comment %}vista de la asignacion de jurados para el proyecto{% endcomment %}
       {% block asignacion_jurados %}
 
@@ -177,6 +184,10 @@
 
       {% comment %}plantilla de vista de solicitudes{% endcomment %}
       {% block view_solicitudes %}
+
+      {% endblock %}
+
+      {% block view_retroalimentacion %}
 
       {% endblock %}
 

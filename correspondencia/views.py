@@ -24,7 +24,7 @@ from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes, M
 # importacion de los formularios
 
 from .forms import FormRetroalimentacionAnteproyecto, FormRetroalimentacionProyecto, FormJurados
-from estudiante.forms import FormAnteproyecto
+from estudiante.forms import FormAnteproyecto, FormProyectoFinal
 
 # importacion del manejo de clases de vistas
 # tener en cuenta para el manejo de clases de vista con cada uno de los metodos y la asignacion de las urls de las mismas con asView
@@ -69,8 +69,14 @@ def recuperar_solicitudes_especiales_pendientes():
         Q(estado=False) & (Q(tipo_solicitud='cambio_nombre') | Q(
             tipo_solicitud='ajuste_integrantes') | Q(tipo_solicitud='seccion_derechos') | Q(tipo_solicitud='otro'))
     )
-    print(solicitudes_pendientes.count())
+
     return solicitudes_pendientes
+
+
+def recuperar_solicitud_especial_pendiente(id):
+    solicitud_pendiente = ModelSolicitudes.objects.get(
+        id=id) if ModelSolicitudes.objects.filter(id=id).exists() else None
+    return solicitud_pendiente
 # funcion para traer los anteproyectos
 
 
@@ -116,8 +122,9 @@ def recuperar_proyectos_finales():
 # funcion para recuperar una solicitud espeial
 
 
-def recuperar_solicitud_especial():
-    solicitud_especial = ModelSolitudes.objects.get()
+def recuperar_solicitud_especial(id):
+    solicitud_especial = ModelSolicitudes.objects.get(
+        id=id) if ModelSolicitudes.objects.filter(id=id).exists() else None
     return solicitud_especial
 
 # funcion para recuperar solicitudes espeiales
@@ -235,6 +242,8 @@ def solicitudes_proyectos_finales(request):
         context['proyectos_finales'] = proyectos_finales
         return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)
 
+# funcion de la vista de lista de solicitudes especiales
+
 
 def solicitudes_especiales(request):
     context = {}
@@ -242,10 +251,39 @@ def solicitudes_especiales(request):
     if request.method == 'POST':
         pass
     else:
-        var_solicitudes_especiales = recuperar_solicitudes_especiales()
-        context["solicitudes_especiales"] = var_solicitudes_especiales
+        solicitudes_especiales = recuperar_solicitudes_especiales_pendientes()
+        context["solicitudes_especiales"] = solicitudes_especiales
         return render(request, 'correspondencia/views_solicitud/list_solicitud_especiales.html', context)
 
+
+def view_solicitud_especial(request, id):
+    context = {
+    }
+
+    solicitud_especial = recuperar_solicitud_especial(id)
+    if solicitud_especial.anteproyecto:
+        form_anteproyecto = FormAnteproyecto
+        context['form_proyecto'] = FormAnteproyecto
+        context ['form_retroalimentacion'] = FormRetroalimentacionAnteproyecto
+        form_retroalimentacion_ante = FormRetroalimentacionAnteproyecto
+    else:
+        if solicitud_especial.proyecto_final:   
+            form_retroalimentacion_pro = FormRetroalimentacionProyecto
+            form_proyecto_final = FormProyectoFinal
+            context['form_proyecto'] = FormProyectoFinal
+            context['form_retroalimentacion'] = FormRetroalimentacionProyecto
+        else:
+            return HttpResponse('Error')
+        
+    return render(request, 'correspondencia/views_solicitud/solicitud_especial.html', context)
+
+
+def actualizar_datos_solicitud():
+    pass
+
+
+def enviar_retroalimentacion_solicitud():
+    pass
 ########################################################################################################################
 # vista para conocer la informacion del anteproyecto
 
@@ -441,7 +479,41 @@ def solicitudes_respondidas(request):
                 'respuesta_anteproyecto': respuesta, 'doc_binario': doc_binario}
     context['respuestas'] = respuestas_dict
 
-    return render(request, 'correspondencia/views_solicitud/list_solicitudes_respondidas.html', context)
+    return render(request, 'correspondencia/views_respuestas/list_solicitudes_respondidas.html', context)
+
+# vista de la respuesta mas detallada
+
+
+def ver_respuesta(request, id):
+    context = {}
+
+    if id:
+
+        respuesta = ModelRetroalimentaciones.objects.get(
+            id=id) if ModelRetroalimentaciones.objects.filter(id=id).exists() else 'None'
+        if respuesta.anteproyecto:
+            integrantes = (respuesta.anteproyecto.nombre_integrante1, respuesta.anteproyecto.nombre_integrante2,
+                           respuesta.anteproyecto.director, respuesta.anteproyecto.codirector)
+        elif respuesta.proyecto_final:
+            integrantes = (respuesta.proyecto_final.anteproyecto.nombre_integrante1, respuesta.proyecto_final.anteproyecto.nombre_integrante2,
+                           respuesta.proyecto_final.anteproyecto.director, respuesta.proyecto_final.anteproyecto.codirector)
+
+        if respuesta:
+            datos_integrantes = {}
+            for i, integrante in enumerate(integrantes, start=1):
+                if integrante:
+                    datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(
+                        integrante)
+            context['datos_integrantes'] = datos_integrantes
+
+            doc_binario = respuesta.doc_retroalimentacion
+            print(doc_binario)
+            documento_respuesta = recuperar_documento(doc_binario)
+            context['documento_respuesta'] = documento_respuesta
+            context['respuesta'] = respuesta
+
+            return render(request, 'correspondencia/views_respuestas/visualizacion_respuesta.html', context)
+    return render(request, 'correspondencia/views_respuestas/visualizacion_respuesta.html')
 
 
 ########################################################################################################################

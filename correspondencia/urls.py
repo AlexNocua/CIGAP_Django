@@ -21,6 +21,10 @@ urlpatterns = [
     ###################################################################################################
     path('solicitudes_respondidas', views.solicitudes_respondidas,
          name='solicitudes_respondidas'),
+    path('view_solicitud_especial/<int:id>', views.view_solicitud_especial,
+         name='view_solicitud_especial'),
+    path('ver_respuesta/<int:id>', views.ver_respuesta,
+         name='ver_respuesta'),
     path('documentos_cargados', views.documentos_cargados,
          name='documentos_cargados'),
     path('formatos_documentos', views.formatos_documentos,

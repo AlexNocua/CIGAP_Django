@@ -204,7 +204,7 @@ def solicitud(request):
         # logica para saber si el proyecto fue aceptado
         context['respuesta'] = recuperar_retroalimentacion(
             content_anteproyecto)
-        
+
         form_proyecto_final = FormProyectoFinal
         context['form_proyecto_final'] = form_proyecto_final
         form_solicitudes = FormSolicitudes
@@ -222,14 +222,16 @@ def solicitudes_especificas(request):
         if form.is_valid():
             solicitud = form.save(commit=False)
             solicitud.user = request.user
-            if solicitud.relacionado_con == 'anteproyecto':
+
+            if solicitud.relacionado_con == 'Anteproyecto':
                 solicitud.anteproyecto = recuperar_anteproyecto(request)
-            elif solicitud.relacionado_con == 'proyecto_final':
+            elif solicitud.relacionado_con == 'Proyecto_final':
                 anteproyecto = recuperar_anteproyecto(request)
                 solicitud.retroalimentaiciones = recuperar_retroalimentaciones(
                     anteproyecto)
                 solicitud.proyecto_final = recuperar_proyecto_final(
                     anteproyecto)
+
             solicitud.fecha_envio = fecha_actual()
             solicitud.estado = False
             solicitud.save()
@@ -274,7 +276,7 @@ def enviar_solicitud_proyecto(request):
     print(f"Usuario autenticado: {request.user}")
     if request.method == 'POST':
         anteproyecto = recuperar_anteproyecto(request)
-    
+
         form = FormProyectoFinal(request.POST, request.FILES)
         if form.is_valid():
             proyecto_final = form.save(commit=False)

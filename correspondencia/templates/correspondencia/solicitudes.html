@@ -3,6 +3,10 @@
 
 {% block content_solicitudes %}
   <style>
+    .views {
+      display: flex;
+    }
+    
     .content_correspondecia {
       display: none;
     }
@@ -34,13 +38,17 @@
               style="background: {% if anteproyectos %}
                 
                 
+                
                 #ffa000
+
 
 
               {% else %}
                 
                 
+                
                 var(--colores_institucionalesfondoDegradado1)
+
 
 
               {% endif %};">
@@ -48,7 +56,7 @@
             </button>
           </div>
           <p class="card-text">Accede a la lista de anteproyectos.</p>
-          <a href="{%url 'correspondencia:solicitudes_anteproyectos'%}" class="btn btn-primary">Ver Anteproyectos</a>
+          <a href="{% url 'correspondencia:solicitudes_anteproyectos' %}" class="btn btn-primary">Ver Anteproyectos</a>
         </div>
       </div>
       <!-- Card for Proyecto Final -->
@@ -60,13 +68,17 @@
               style="background: {% if proyectos_finales %}
                 
                 
+                
                 #ffa000
+
 
 
               {% else %}
                 
                 
+                
                 var(--colores_institucionalesfondoDegradado1)
+
 
 
               {% endif %};">
@@ -74,7 +86,7 @@
             </button>
           </div>
           <p class="card-text">Accede a la lista de proyectos finales.</p>
-          <a href="{%url 'correspondencia:solicitudes_proyectos_finales'%}" class="btn btn-primary">Ver Proyectos Finales</a>
+          <a href="{% url 'correspondencia:solicitudes_proyectos_finales' %}" class="btn btn-primary">Ver Proyectos Finales</a>
         </div>
       </div>
       <!-- Card for Solicitudes Especiales -->
@@ -86,13 +98,17 @@
               style="background: {% if solicitudes_especiales %}
                 
                 
+                
                 #ffa000
+
 
 
               {% else %}
                 
                 
+                
                 var(--colores_institucionalesfondoDegradado1)
+
 
 
               {% endif %};">
@@ -100,7 +116,7 @@
             </button>
           </div>
           <p class="card-text">Accede a la lista de solicitudes especiales.</p>
-          <a href="{%url 'correspondencia:solicitudes_especiales'%}" class="btn btn-primary">Ver Solicitudes</a>
+          <a href="{% url 'correspondencia:solicitudes_especiales' %}" class="btn btn-primary">Ver Solicitudes</a>
         </div>
       </div>
     </div>

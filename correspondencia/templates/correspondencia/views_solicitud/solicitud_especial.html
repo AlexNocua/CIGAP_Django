@@ -1,0 +1,30 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+
+{% block view_solicitud_especial %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .views {
+      display: flex;
+    }
+  </style>
+  <section class="d-flex flex-column flex-md-row">
+    <div class="col">
+      <h3>Datos a actualizar del anteproyecto, formulario del anteproyecto</h3>
+      <form action="">
+        {% csrf_token %}
+        {{ form_proyecto }}
+        <input type="submit" class="btn btn-primary" />
+      </form>
+    </div>
+    <div class="col">
+      <h3>Retroalimentación</h3>
+      <form action="">
+        {% csrf_token %}
+        {{ form_retroalimentacion }}
+        <input type="submit" class="btn btn-primary" />
+      </form>
+    </div>
+  </section>
+{% endblock %}
