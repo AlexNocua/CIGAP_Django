@@ -18,6 +18,12 @@ urlpatterns = [
          name='solicitudes_proyectos_finales'),
     path('solicitudes_especiales', views.solicitudes_especiales,
          name='solicitudes_especiales'),
+    path('actualizar_datos_solicitud_anteproyecto/<int:id>',
+         views.actualizar_datos_solicitud_anteproyecto, name='actualizar_datos_solicitud_anteproyecto'),
+    path('actualizar_datos_solicitud_proyecto/<int:id>',
+         views.actualizar_datos_solicitud_proyecto, name='actualizar_datos_solicitud_proyecto'),
+    path('enviar_retroalimentacion_solicitud/<int:id>',
+         views.enviar_retroalimentacion_solicitud, name='enviar_retroalimentacion_solicitud'),
     ###################################################################################################
     path('solicitudes_respondidas', views.solicitudes_respondidas,
          name='solicitudes_respondidas'),
@@ -25,10 +31,16 @@ urlpatterns = [
          name='view_solicitud_especial'),
     path('ver_respuesta/<int:id>', views.ver_respuesta,
          name='ver_respuesta'),
-    path('documentos_cargados', views.documentos_cargados,
-         name='documentos_cargados'),
+    #     path('documentos_cargados', views.documentos_cargados,
+    #          name='documentos_cargados'),
+    ##############################################################################################
     path('formatos_documentos', views.formatos_documentos,
          name='formatos_documentos'),
+    path('editar_formato/<int:id>', views.editar_formato,
+         name='editar_formato'),
+    path('eliminar_formato/<int:id>', views.eliminar_formato,
+         name='eliminar_formato'),
+    ##############################################################################################
     path('ver_anteproyecto/<str:nombre_anteproyecto>',
          views.ver_anteproyecto, name='ver_anteproyecto'),
     path('ver_proyecto_final/<str:nombre>/',
@@ -37,6 +49,15 @@ urlpatterns = [
          views.enviar_retroalimentacion, name='enviar_retroalimentacion'),
     path('asignar_jurados',
          views.asignar_jurados, name='asignar_jurados'),
+    ##############################################################################################
+    path('proyectos',
+         views.proyectos, name='proyectos'),
+    path('proyectos_finalizados',
+         views.proyectos_finalizados, name='proyectos_finalizados'),
+    path('proyectos_actuales',
+         views.proyectos_actuales, name='proyectos_actuales'),
+    path('proyecto/<int:id>',
+         views.proyecto, name='proyecto'),
 
 
 

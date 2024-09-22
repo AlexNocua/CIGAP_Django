@@ -51,15 +51,13 @@ class ModelAsignacionJurados(models.Model):
 
 
 class ModelProyectoFinal(models.Model):
-
     user = models.OneToOneField(
         Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     anteproyecto = models.OneToOneField(
         ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
     jurado = models.ForeignKey(
         ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
-    descripcion = models.TextField(
-        max_length=10000, null=True, blank=True)  # Cambio aquí
+    descripcion = models.TextField(max_length=10000, null=True, blank=True)
     carta_presentacion_final = models.BinaryField(null=True, blank=True)
     proyecto_final = models.BinaryField(null=True, blank=True)
     director = models.CharField(max_length=200, null=True)
@@ -68,6 +66,6 @@ class ModelProyectoFinal(models.Model):
     solicitud_enviada = models.BooleanField()
     estado = models.BooleanField(default=False)
 
-    def save(self, *args,**kwargs):
-        super().save(*args,**kwargs)
-# creacion del modelo de solicitudes
+    def save(self, *args, **kwargs):
+        super(ModelProyectoFinal, self).save(*args, **kwargs)
+

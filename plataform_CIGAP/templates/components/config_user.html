@@ -1,6 +1,7 @@
 {% load static %}
 <style>
   .panel-config {
+    padding: 12px 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,30 +15,29 @@
   .panel-config img {
     opacity: 0.6;
     z-index: 1000;
-    max-height: 100px;
-    max-width: 100px;
-    min-height: 100px;
-    min-width: 100px;
+    width: 90px;
   }
+  
   .panel-config h3,
   p {
     z-index: 1001;
+    text-align: center;
   }
   
   .contenido-form {
     background: #fff;
     box-shadow: inset 0px 0px 2px 0px #d0d0d0;
     padding: 12px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
   }
   
   .contenido-form img {
     object-fit: cover;
     border-radius: 50%;
-    max-height: 150px;
-    max-width: 150px;
-    min-height: 150px;
-    min-width: 150px;
-    padding: 0;
+    height: 150px;
+    width: 150px;
     box-shadow: -1px 9px 12px #d5d5d5;
   }
   
@@ -50,10 +50,12 @@
     border-radius: 4px;
     border: none;
   }
+  
   .contenido-form .btn_cerrar {
     background: #ff2626;
     color: #fff;
   }
+  
   .contenido-form .btn_actualizar {
     background: #30a315;
     color: #fff;
@@ -61,6 +63,7 @@
   
   input {
     border: none;
+    width: 100%;
   }
   
   .contenedor {
@@ -69,82 +72,138 @@
     margin: 16px 0;
     border: 1px solid #cacaca;
   }
+  
   .campos_top {
     border-top: 1px solid #cacaca;
   }
+  
+  .content_config {
+    background: #fff;
+    box-shadow: 0px 0px 20px 3px #000000;
+    margin: 12px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 3px solid #205e25;
+    max-width: 1000px;
+    margin: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .contenido-form img {
+      height: 100px;
+      width: 100px;
+    }
+  
+    .d-flex {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .contenido-form button {
+      width: 100%;
+      margin: 8px 0;
+    }
+  
+    .campos {
+      margin: 0 10px;
+    }
+  
+    .contenedor {
+      padding: 8px;
+    }
+  
+    .campos_top {
+      padding: 8px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .contenido-form {
+      padding: 8px;
+    }
+  
+    .campos {
+      margin: 0 5px;
+    }
+  
+    .panel-config img {
+      width: 70px;
+    }
+  }
 </style>
-<div class="panel-config" style="display: flex; flex-direction: column;">
-  <img src="{% static 'icons/icons_nav/logoUDEC.png' %}" alt="LogoUDEC" class="logo-config position-absolute" />
 
-  <h3 class="m-0 p-0">Bienvenido {{ form_config.instance.nombres }}</h3>
-  <p class="m-0 p-0">Configura tus datos</p>
-</div>
-<div class="d-flex flex-column justify-content-center align-items-center contenido-form">
-  <form class="d-flex flex-column justify-content-center align-items-center" action="{% url 'login:editar_usuario' %}" method="post" enctype="multipart/form-data">
-    <div class="d-flex">
-      {% csrf_token %}
-      {% if user_img %}
-        <img src="data:image/jpeg;base64,{{ user_img }}" alt="Imagen de usuario" class="mt-3 mb-0" />
-      {% else %}
-        <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" class="mt-3 mb-0" />
-      {% endif %}
+<main class="content_config">
+  <div class="panel-config">
+    <img src="{% static 'icons/icons_nav/logoUDEC.png' %}" alt="LogoUDEC" class="logo-config position-absolute" />
+    <h3 class="m-0 p-0">Bienvenido {{ form_config.instance.nombres }}</h3>
+    <p class="m-0 p-0">Configura tus datos</p>
+  </div>
 
-      <div class="m-2 d-flex justify-content-center">
-        <div class="m-2 d-flex justify-content-center flex-column flex-row flex-md-column">
-          <label class="text-start" for=""><b>Agrega o cambia tu imagen</b></label>
-          {{ form_config.imagen_file }}
-        </div>
-      </div>
-    </div>
-    <div class="contenedor">
-      <div class="campos p-2">
-        <p class="text-center m-0 p-0">
-          Ajusta tus <b>nombres</b> y el <b>correo</b>.
-        </p>
-        <div class="d-flex flex-column mb-3 flex-md-row">
-          <div class="m-2 col">
-            <label for=""><b>Nombres actuales</b></label>
-            {{ form_config.nombres }}
-          </div>
-          <div class="m-2 col">
-            <label for=""><b>Apellidos actuales</b></label>
-            {{ form_config.apellidos }}
-          </div>
-          <div class="m-2 col">
-            <label for=""><b>Correo actual</b></label>
-            {{ form_config.email }}
+  <div class="d-flex flex-column justify-content-center align-items-center contenido-form">
+    <form class="d-flex flex-column justify-content-center align-items-center" action="{% url 'login:editar_usuario' %}" method="post" enctype="multipart/form-data">
+      <div class="d-flex">
+        {% csrf_token %}
+        {% if user_img %}
+          <img src="data:image/jpeg;base64,{{ user_img }}" alt="Imagen de usuario" class="mt-3 mb-0" />
+        {% else %}
+          <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" class="mt-3 mb-0" />
+        {% endif %}
+
+        <div class="m-2 d-flex justify-content-center">
+          <div class="m-2 d-flex justify-content-center flex-column">
+            <label class="text-start" for=""><b>Agrega o cambia tu imagen</b></label>
+            {{ form_config.imagen_file }}
           </div>
         </div>
       </div>
 
-      <div class="campos campos_top p-3">
-        <!-- Campo para contraseña actual -->
-        <p class="text-center m-0 p-0">
-          Cambia tu <b>contraseña</b>, recuerda que esta no debe tener menos de <b>8 caracteres</b> conteniendo <b>mayúsculas</b>, <b>minúsculas</b>, <b>números</b> y <b>caracteres especiales</b>.
-        </p>
-        <div class="d-flex flex-column mb-3 flex-md-row">
-          <div class="m-2 col">
-            <label for=""><b>Contraseña actual</b></label>
-            {{ form_config.current_password }}
+      <div class="contenedor">
+        <div class="campos p-2">
+          <p class="text-center m-0 p-0">
+            Ajusta tus <b>nombres</b> y el <b>correo</b>.
+          </p>
+          <div class="d-flex flex-column flex-md-row">
+            <div class="m-2 col">
+              <label for=""><b>Nombres actuales</b></label>
+              {{ form_config.nombres }}
+            </div>
+            <div class="m-2 col">
+              <label for=""><b>Apellidos actuales</b></label>
+              {{ form_config.apellidos }}
+            </div>
+            <div class="m-2 col">
+              <label for=""><b>Correo actual</b></label>
+              {{ form_config.email }}
+            </div>
           </div>
+        </div>
 
-          <!-- Campos para cambiar la contraseña -->
-          <div class="m-2 col">
-            <label for=""><b>Nueva contraseña</b></label>
-            {{ form_config.password1 }}
-          </div>
-          <div class="m-2 col">
-            <label for=""><b>Confirma la nueva contraseña</b></label>
-            {{ form_config.password2 }}
+        <div class="campos campos_top p-3">
+          <p class="text-center m-0 p-0">
+            Cambia tu <b>contraseña</b>. Recuerda que debe tener al menos <b>8 caracteres</b> con <b>mayúsculas</b>, <b>minúsculas</b>, <b>números</b>, y <b>caracteres especiales</b>.
+          </p>
+          <div class="d-flex flex-column flex-md-row">
+            <div class="m-2 col">
+              <label for=""><b>Contraseña actual</b></label>
+              {{ form_config.current_password }}
+            </div>
+            <div class="m-2 col">
+              <label for=""><b>Nueva contraseña</b></label>
+              {{ form_config.password1 }}
+            </div>
+            <div class="m-2 col">
+              <label for=""><b>Confirma la nueva contraseña</b></label>
+              {{ form_config.password2 }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div>
-      <button class="btn_cerrar" id="cerrar" type="button">Cerrar</button>
-      <button class="btn_actualizar" type="submit">Actualizar datos</button>
-    </div>
-  </form>
-</div>
-<script src="{% static 'js/Manipulacion_config.js' %}"></script>
+      <div>
+        <button class="btn_cerrar" id="cerrar" type="button">Cerrar</button>
+        <button class="btn_actualizar" type="submit">Actualizar datos</button>
+      </div>
+    </form>
+  </div>
+  <script src="{% static 'js/Manipulacion_config.js' %}"></script>
+</main>

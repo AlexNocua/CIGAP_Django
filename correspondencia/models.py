@@ -82,3 +82,12 @@ class ModelSolicitudes(models.Model):
     documento_soporte = models.BinaryField(blank=True, null=True)
     fecha_envio = models.CharField(max_length=50)
     estado = models.BooleanField(default=False)
+
+
+# creacion del modelo de los documentos
+class ModelDocumentos(models.Model):
+    nombre_documento = models.CharField(max_length=100)
+    version = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=500)
+    documento = models.BinaryField(blank=True, null=True)
+    fecha_cargue = models.CharField(max_length=50)

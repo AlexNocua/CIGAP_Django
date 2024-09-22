@@ -13,28 +13,23 @@ from login.views import editar_usuario
 from login.forms import FormEditarUsuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
+from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de los modelos
 from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
 from login.models import Usuarios
-from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados
-
+from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados, ModelDocumentos
 
 # importacion de los formularios
-
-from .forms import FormRetroalimentacionAnteproyecto, FormRetroalimentacionProyecto, FormJurados
-from estudiante.forms import FormAnteproyecto, FormProyectoFinal
+from .forms import FormRetroalimentacionAnteproyecto, FormRetroalimentacionProyecto, FormJurados, FormDocumentos
+from estudiante.forms import FormAnteproyecto, FormProyectoFinal, FormActualizarProyectoFinal
 
 # importacion del manejo de clases de vistas
 # tener en cuenta para el manejo de clases de vista con cada uno de los metodos y la asignacion de las urls de las mismas con asView
 from django.views.generic.edit import CreateView
 # from django.views.generic.list import ListView
 # from django.urls import reverse_lazy
-
-
-# realizar el filtro por ususarios de la plataforma, designando solo los que pertenezcan a directro
-
 
 # Create your views here.
 # def funcionando (request):
@@ -197,6 +192,15 @@ def datosusuario(request):
 @grupo_usuario('Correspondencia')
 def principal_correspondencia(request):
     context = datosusuario(request)
+    num_solicitudes = recuperar_num_solicitudes()
+    num_formatos = recuperar_num_formatos_comite()
+    num_proyectos = recuperar_num_proyectos_pendientes()
+    num_respuestas = recuperar_num_respuestas()
+
+    context['num_solicitudes'] = num_solicitudes
+    context['num_formatos'] = num_formatos
+    context['num_proyectos'] = num_proyectos
+    context['num_respuestas'] = num_respuestas
     return render(request, 'correspondencia/base_correspondencia.html', context)
 
 ########################################################################################################################
@@ -218,11 +222,11 @@ def solicitudes(request):
     ) + solicitudes_especiales_pendientes.count() + anteproyectos_pendientes.count()
     context['solicitudes_pendientes'] = total_pendientes
 
-    return render(request, 'correspondencia/solicitudes.html', context)
+    return render(request, 'correspondencia/views_solicitud/solicitudes.html', context)
 
 
 def solicitudes_anteproyectos(request):
-    context = {}
+    context = datosusuario(request)
     if request.method == 'POST':
         pass
     else:
@@ -233,7 +237,7 @@ def solicitudes_anteproyectos(request):
 
 
 def solicitudes_proyectos_finales(request):
-    context = {}
+    context = context = datosusuario(request)
 
     if request.method == 'POST':
         pass
@@ -246,7 +250,7 @@ def solicitudes_proyectos_finales(request):
 
 
 def solicitudes_especiales(request):
-    context = {}
+    context = datosusuario(request)
 
     if request.method == 'POST':
         pass
@@ -257,33 +261,122 @@ def solicitudes_especiales(request):
 
 
 def view_solicitud_especial(request, id):
-    context = {
-    }
+    context = datosusuario(request)
 
     solicitud_especial = recuperar_solicitud_especial(id)
+
+    context['solicitud_especial'] = solicitud_especial
+    print(context['solicitud_especial'])
+    documento_binario = solicitud_especial.documento_soporte
+    documento_soporte = recuperar_documento(documento_binario)
+    context['documento_soporte'] = documento_soporte
+    print(documento_soporte)
     if solicitud_especial.anteproyecto:
-        form_anteproyecto = FormAnteproyecto
-        context['form_proyecto'] = FormAnteproyecto
-        context ['form_retroalimentacion'] = FormRetroalimentacionAnteproyecto
-        form_retroalimentacion_ante = FormRetroalimentacionAnteproyecto
+        form_anteproyecto = FormAnteproyecto(
+            instance=solicitud_especial.anteproyecto)
+        form_retroalimentacion_ante = FormRetroalimentacionAnteproyecto(
+            instance=solicitud_especial.anteproyecto)
+        context['form_anteproyecto'] = form_anteproyecto
+        context['form_retroalimentacion'] = form_retroalimentacion_ante
+    elif solicitud_especial.proyecto_final:
+        form_proyecto_final = FormActualizarProyectoFinal(
+            instance=solicitud_especial.proyecto_final)
+        form_retroalimentacion_pro = FormRetroalimentacionProyecto(
+            instance=solicitud_especial.proyecto_final)
+        context['form_proyecto'] = form_proyecto_final
+        context['form_retroalimentacion'] = form_retroalimentacion_pro
     else:
-        if solicitud_especial.proyecto_final:   
-            form_retroalimentacion_pro = FormRetroalimentacionProyecto
-            form_proyecto_final = FormProyectoFinal
-            context['form_proyecto'] = FormProyectoFinal
-            context['form_retroalimentacion'] = FormRetroalimentacionProyecto
-        else:
-            return HttpResponse('Error')
-        
+        return HttpResponse('Error: No se encontró anteproyecto ni proyecto final.')
+
     return render(request, 'correspondencia/views_solicitud/solicitud_especial.html', context)
 
 
-def actualizar_datos_solicitud():
-    pass
+def actualizar_datos_solicitud_anteproyecto(request, id):
+    solicitud_especial = recuperar_solicitud_especial(id)
+    anteproyecto = solicitud_especial.anteproyecto
+
+    if request.method == 'POST':
+        form_anteproyecto = FormAnteproyecto(
+            request.POST, request.FILES, instance=anteproyecto)
+        if form_anteproyecto.is_valid():
+            form_anteproyecto.save()
+            return redirect('correspondencia:view_solicitud_especial', id=id)
+        else:
+            # Mostrar errores del formulario
+            return HttpResponse(f'Algo pasó: {form_anteproyecto.errors}')
+    return HttpResponse('Terminado')
 
 
-def enviar_retroalimentacion_solicitud():
-    pass
+def actualizar_datos_solicitud_proyecto(request, id):
+    context = datosusuario(request)
+    solicitud_especial = recuperar_solicitud_especial(id)
+    proyecto = solicitud_especial.proyecto_final
+    anteproyecto = proyecto.anteproyecto
+    if request.method == 'POST':
+        form_proyecto = FormActualizarProyectoFinal(
+            request.POST, request.FILES, instance=proyecto
+        )
+        director = request.POST.get('director')
+        codirector = request.POST.get('codirector')
+
+        # No se actualizan los archivos si no se envían
+        if form_proyecto.is_valid():
+            if not request.FILES.get('doc_proyecto_final_form'):
+                form_proyecto.cleaned_data.pop('doc_proyecto_final_form', None)
+            if not request.FILES.get('carta_presentacion_final_form'):
+                form_proyecto.cleaned_data.pop(
+                    'carta_presentacion_final_form', None)
+
+            anteproyecto.director = director
+            anteproyecto.codirector = codirector
+            anteproyecto.save(update_fields=['director', 'codirector'])
+            form_proyecto.save()
+            return redirect('correspondencia:view_solicitud_especial', id=id)
+        else:
+            return HttpResponse(f'Error: {form_proyecto.errors}')
+    else:
+        # Inicializar el formulario con la instancia del proyecto existente
+        form_proyecto = FormActualizarProyectoFinal(instance=proyecto)
+        context['form_proyecto'] = form_proyecto
+    return render(request, 'ruta_de_template.html', context)
+
+
+def enviar_retroalimentacion_solicitud(request, id):
+    solicitud_especial = recuperar_solicitud_especial(id)
+    print(solicitud_especial)
+    if solicitud_especial.anteproyecto:
+        form_retro = FormRetroalimentacionAnteproyecto(
+            request.POST, request.FILES)
+        if form_retro.is_valid():
+            solicitud_especial.estado = True
+            solicitud_especial.save()
+            retroalimentacion = form_retro.save(commit=False)
+            retroalimentacion.anteproyecto = solicitud_especial.anteproyecto
+            retroalimentacion.fecha_retroalimentacion = fecha_actual()
+            retroalimentacion.revs_dadas = (
+                retroalimentacion.revs_dadas or 0) + 1
+            retroalimentacion.save()
+            return redirect('correspondencia:solicitudes')
+        else:
+            return HttpResponse(f'Algo paso: {form_retro.errors}')
+    else:
+        if solicitud_especial.proyecto_final:
+            form_retro = FormRetroalimentacionAnteproyecto(
+                request.POST, request.FILES)
+            if form_retro.is_valid():
+                solicitud_especial.estado = True
+                solicitud_especial.save()
+                retroalimentacion = form_retro.save(commit=False)
+                retroalimentacion.proyecto_final = solicitud_especial.proyecto_final
+                retroalimentacion.fecha_retroalimentacion = fecha_actual()
+                retroalimentacion.revs_dadas = (
+                    retroalimentacion.revs_dadas or 0) + 1
+                retroalimentacion.save()
+                return redirect('correspondencia:solicitudes')
+            else:
+                return HttpResponse(f'Algo paso: {form_retro.errros}')
+
+    return HttpResponse(solicitud_especial)
 ########################################################################################################################
 # vista para conocer la informacion del anteproyecto
 
@@ -349,7 +442,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
 
 
 def ver_proyecto_final(request, nombre):
-    context = {}
+    context = datosusuario(request)
     anteproyecto = recuperar_anteproyecto(nombre)
     proyecto_final = recuperar_proyecto_final(anteproyecto)
     if anteproyecto is None or proyecto_final is None:
@@ -375,7 +468,7 @@ def ver_proyecto_final(request, nombre):
                 retroalimentacion.revs_dadas or 0) + 1
             if retroalimentacion.estado not in ['Aprobado', 'Aprobado_con_correcciones']:
                 proyecto_final.delete()
-                return render('correspondenicia:solicitudesF')
+                return render('correspondenicia:solicitudes')
 
             else:
                 proyecto_final.estado = True
@@ -401,9 +494,14 @@ def ver_proyecto_final(request, nombre):
             proyecto_final = recuperar_proyecto_final(anteproyecto)
             if proyecto_final:
                 print(proyecto_final)
+                doc_proyecto_final = recuperar_documento(proyecto_final.proyecto_final)
+                doc_carta_final = recuperar_documento(proyecto_final.carta_presentacion_final)
                 context['inf_proyecto'] = proyecto_final
-
+                context['doc_proyecto_final'] = doc_proyecto_final
+                context['doc_carta_final'] = doc_carta_final
+                
         directores = recuperar_directores()
+
         print(directores)
         context['directores'] = directores
         form_retroalimentaciones_proyecto = FormRetroalimentacionProyecto
@@ -417,9 +515,10 @@ def ver_proyecto_final(request, nombre):
 
 
 def asignar_jurados(request):
-    context = {}
+    context = datosusuario(request)
     nombre_proyecto = request.GET.get('nombre_proyecto')
     print(nombre_proyecto)
+
     if request.method == 'POST':
         directores_seleccionados = request.POST.getlist('directores')
         fecha_sustentacion_str = request.POST.get('fecha_sustentacion')
@@ -430,7 +529,6 @@ def asignar_jurados(request):
         anteproyecto = recuperar_anteproyecto(nombre_proyecto)
         proyecto_final = recuperar_proyecto_aceptado(anteproyecto)
         print(proyecto_final)
-        # ajustes en el modelo especifico de proyecto
 
         asignacion_jurados.proyecto_final = proyecto_final
         asignacion_jurados.nombre_jurado = ', '.join(directores_seleccionados)
@@ -450,9 +548,27 @@ def asignar_jurados(request):
                 context['inf_proyecto'] = proyecto_final
 
         directores = recuperar_directores()
-
         context['directores'] = directores
-        form_jurados = FormJurados
+        context['proyecto'] = anteproyecto
+
+        if anteproyecto.director and anteproyecto.codirector:
+            director = Usuarios.objects.get(nombre_completo=anteproyecto.director) if Usuarios.objects.filter(
+                nombre_completo=anteproyecto.director).exists() else None
+            codirector = Usuarios.objects.get(nombre_completo=anteproyecto.codirector) if Usuarios.objects.filter(
+                nombre_completo=anteproyecto.codirector).exists() else None
+            imagen_director = recuperar_documento(director.imagen)
+            context['img_director'] = imagen_director
+            if codirector:
+                imagen_codirector = recuperar_documento(codirector.imagen)
+                context['img_codirector'] = imagen_codirector
+        else:
+            director = Usuarios.objects.get(nombre_completo=anteproyecto.director) if Usuarios.objects.filter(
+                nombre_completo=anteproyecto.director).exists() else None
+            imagen_director = recuperar_documento(director.imagen)
+            context['img_director'] = imagen_director
+
+        print(context)
+        form_jurados = FormJurados()
         context['form_jurados'] = form_jurados
 
         return render(request, 'correspondencia/views_solicitud/asignacion_jurados.html', context)
@@ -485,7 +601,7 @@ def solicitudes_respondidas(request):
 
 
 def ver_respuesta(request, id):
-    context = {}
+    context = datosusuario(request)
 
     if id:
 
@@ -507,7 +623,7 @@ def ver_respuesta(request, id):
             context['datos_integrantes'] = datos_integrantes
 
             doc_binario = respuesta.doc_retroalimentacion
-            print(doc_binario)
+
             documento_respuesta = recuperar_documento(doc_binario)
             context['documento_respuesta'] = documento_respuesta
             context['respuesta'] = respuesta
@@ -517,11 +633,124 @@ def ver_respuesta(request, id):
 
 
 ########################################################################################################################
-# vista de documentos cargados por los estudinates
-def documentos_cargados(request):
-    return render(request, 'correspondencia/list_documentos_cargados.html')
+# vista de documentos cargados por los estudiantes
+# def documentos_cargados(request):
+#     return render(request, 'correspondencia/list_documentos_cargados.html')
 ########################################################################################################################
 
 
+def recuperar_formatos():
+    documentos_model = ModelDocumentos.objects.all()
+    documentos = {}
+    if documentos_model:
+        for i, documento in enumerate(documentos_model):
+            documento_binario = documento.documento
+            documento_convert = recuperar_documento(documento_binario)
+            documentos[f'documento{i}'] = {
+                'id': documento.id,
+                'nombre_documento': documento.nombre_documento,
+                'descripcion': documento.descripcion,
+                'version': documento.version,
+                'documento': documento_convert,
+                'fecha_cargue': documento.fecha_cargue
+            }
+    else:
+        documentos = None
+
+    return documentos
+
+############################################################################
+
+
 def formatos_documentos(request):
-    return render(request, 'correspondencia/documentos_comite.html')
+    context = datosusuario(request)
+    if request.method == 'POST':
+        form_cargar_docs = FormDocumentos(request.POST, request.FILES)
+        if form_cargar_docs.is_valid():
+            cargar_documentos = form_cargar_docs.save(commit=False)
+            cargar_documentos.fecha_cargue = fecha_actual()
+            cargar_documentos.save()
+        else:
+            return HttpResponse(f'Error: {form_cargar_docs.errors}')
+    else:
+        form_cargar_docs = FormDocumentos
+        context['formatos'] = recuperar_formatos()
+        context['form_cargar_docs'] = form_cargar_docs
+
+    return render(request, 'correspondencia/views_formatos/documentos_comite.html', context)
+
+
+# funcion para eliminar un formato cargado
+def eliminar_formato(request, id):
+    formato_id = id
+    formato = ModelDocumentos.objects.get(id=formato_id)
+    formato.delete()
+    print(f'formato {formato_id} eliminado')
+    return redirect('correspondencia:formatos_documentos')
+
+
+# funcion para editar un formato
+def editar_formato(request, id):
+    formato = ModelDocumentos.objects.get(id=id)
+
+    if request.method == 'POST':
+        form_cargar_docs = FormDocumentos(
+            request.POST, request.FILES, instance=formato)
+        if form_cargar_docs.is_valid():
+            form_cargar_docs.save()
+            return redirect('correspondencia:formatos_documentos')
+
+            # return redirect('nombre_de_tu_vista_de_exito')  # Redirige a una vista de éxito
+    else:
+        form_cargar_docs = FormDocumentos(instance=formato)
+
+    doc_convert = formato.documento
+    documento = recuperar_documento(doc_convert)
+    context = {
+        'form_edit': form_cargar_docs,
+        'documento': documento,
+    }
+    return render(request, 'correspondencia/views_formatos/formato.html', context)
+#####################################################################################################################
+# apartado de la lista de proyectos
+
+
+def proyectos(request):
+    context = datosusuario(request)
+    num_proyectos_terminados = recuperar_num_proyectos_terminados()
+    num_proyectos_actuales = recuperar_num_proyectos_pendientes()
+    context['num_proyectos_actuales'] = num_proyectos_actuales
+    context['num_proyectos_terminados'] = num_proyectos_terminados
+    return render(request, 'correspondencia/views_proyectos/proyectos.html', context)
+
+
+def proyectos_finalizados(request):
+    context = datosusuario(request)
+    proyectos_finalizados = recuperar_proyectos_finalizados()
+    dic_proyectos = {}
+
+    for i, proyecto in enumerate(proyectos_finalizados):
+        documento_convert = proyecto.proyecto_final
+        documento = recuperar_documento(documento_convert)
+        print(documento)
+        dic_proyectos[f'proyecto{i}'] = {
+            'proyecto': proyecto,
+            'documento_convert': documento
+        }
+    context['proyectos'] = dic_proyectos
+    return render(request, 'correspondencia/views_proyectos/list_proyectos_finalizados.html', context)
+
+
+def proyectos_actuales(request):
+    context = datosusuario(request)
+    proyectos_actuales = recuperar_proyectos_pendientes()
+    context['proyectos_finalizados'] = proyectos_finalizados
+    return render(request, 'correspondencia/views_proyectos/list_proyectos_finalizados.html', context)
+
+
+def proyecto(request, id):
+    context = datosusuario(request)
+    proyecto = recuperar_proyecto(id)
+    context['proyecto'] = proyecto
+    return render(request, 'correspondencia/views_proyectos/proyecto.html', context)
+#####################################################################################################################

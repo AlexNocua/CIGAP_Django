@@ -25,13 +25,17 @@
     text-decoration: none;
     color: #fff;
     background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .modulo:hover {
+    border-radius: 8px;
     font-weight: 400;
     background: var(--colores_institucionalesfondo4);
     color: #fff;
-    border-radius: 0px;
+    font-size: 18px;
   }
   
   /*estilos de la nav de modulos*/
@@ -72,9 +76,9 @@
 
           <a class="modulo w-100" href="{% url 'correspondencia:solicitudes_respondidas' %}">Respuestas</a>
 
-          <a class="modulo w-100" href="{% url 'correspondencia:solicitudes' %}">Documentos cargados</a>
+          <a class="modulo w-100" href="{% url 'correspondencia:proyectos' %}">Proyectos</a>
 
-          <a class="modulo w-100" href="{% url 'correspondencia:solicitudes' %}">Formatos de documentos</a>
+          <a class="modulo w-100" href="{% url 'correspondencia:formatos_documentos' %}">Formatos de documentos</a>
         </div>
       </div>
     </div>

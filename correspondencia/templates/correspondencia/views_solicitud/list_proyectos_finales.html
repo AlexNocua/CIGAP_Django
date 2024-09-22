@@ -1,13 +1,13 @@
-{% extends 'correspondencia/solicitudes.html' %}
+{% extends 'correspondencia/views_solicitud/solicitudes.html' %}
 {% block content_list_proyecto_final %}
   <section class="container mt-4">
     <h3 class="mt-3">Lista de proyectos finales</h3>
     {% if proyectos_finales %}
       <div class="grid-container">
         {% for proyecto in proyectos_finales %}
-          <div class="card">
+          <div class="card" style="max-width: 300px;">
             <div class="card-body">
-              <h5 class="card-title">{{ proyecto.anteproyecto.nombre_proyecto }}</h5>
+              <h5 class="card-title">{{ proyecto.anteproyecto.nombre_anteproyecto }}</h5>
               <p class="card-text">
                 <strong>Integrantes:</strong><br />
                 {% if proyecto.anteproyecto.nombre_integrante2 %}

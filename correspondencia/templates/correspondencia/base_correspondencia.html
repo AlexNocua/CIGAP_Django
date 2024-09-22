@@ -85,10 +85,17 @@
       opacity: 0.07;
       z-index: 0;
     }
+    
+    .card-title {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 
   <main class="contenido_correspondencia container mt-5 d-flex position-relative justify-content-center align-items-center">
-    <div class="row content_correspondecia justify-content-center">
+    <div class="row content_correspondecia justify-content-center position-relative">
       <!-- Card 1 -->
       <div class="card-content col-md-3 mb-4">
         <div class="d-flex card h-100 text-center">
@@ -99,7 +106,7 @@
           <div class="card-footer link-card d-flex flex-column">
             <a href="{% url 'correspondencia:solicitudes' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_documentos.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de solicitudes: {{ Num_solicitudes }}</p>
+              <p class="card-text">Número de solicitudes: {{ num_solicitudes }}</p>
             </a>
           </div>
         </div>
@@ -114,8 +121,8 @@
           </div>
           <div class="card-footer link-card d-flex flex-column">
             <a href="{% url 'correspondencia:solicitudes_respondidas' %}" class="w-100 h-100">
-              <img src="{% static 'correspondencia/icons/image_formatos.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de respuestas: {{ Num_respuestas }}</p>
+              <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
+              <p class="card-text">Número de respuestas: {{ num_respuestas }}</p>
             </a>
           </div>
         </div>
@@ -125,13 +132,14 @@
       <div class="card-content col-md-3 mb-4">
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
-            <h2 class="card-title">Documentos cargados</h2>
-            <p class="card-text">Revisa los documentos cargados por los estudiantes</p>
+            <h2 class="card-title">Proyectos</h2>
+            <p class="card-text">Conoce los proyectos en curso y finalizados, así mismo asigna jurados.</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
-            <a href="{% url 'correspondencia:documentos_cargados' %}" class="w-100 h-100">
-              <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de documentos: {{ Num_documentos }}</p>
+            <a href="{% url 'correspondencia:proyectos' %}" class="w-100 h-100">
+              <img src="{% static 'correspondencia/icons/image_proyecto.png' %}" alt="icon" class="img-fluid mb-2" />
+
+              <p class="card-text">Proyectos en curso: {{ num_proyectos }}</p>
             </a>
           </div>
         </div>
@@ -142,12 +150,12 @@
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
             <h2 class="card-title">Formatos de documentos</h2>
-            <p class="card-text">Descarga y revisa los formatos de documentos</p>
+            <p class="card-text">Carga y revisa los formatos de documentos</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
-            <a href="" class="w-100 h-100">
+            <a href="{% url 'correspondencia:formatos_documentos' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_solicitud.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de formatos: {{ Num_formatos }}</p>
+              <p class="card-text">Número de formatos: {{ num_formatos }}</p>
             </a>
           </div>
         </div>
@@ -200,6 +208,34 @@
       {% block view_documentos_correspondencia %}
 
       {% endblock %}
+
+      {% comment %}vista para la edicion o eliminacion de un formato{% endcomment %}
+      {% block formato %}
+
+      {% endblock %}
+
+      {% comment %}###################################################################################################################{% endcomment %}
+
+      {% comment %}vistas para los proyectos{% endcomment %}
+      {% block proyectos %}
+
+      {% endblock %}
+
+      {% comment %}vista de la plantilla de proyectos finalizados{% endcomment %}
+      {% block proyectos_finalizados %}
+
+      {% endblock %}
+      {% comment %}vista de la plantilla de proyectos actuales{% endcomment %}
+      {% block proyectos_actuales %}
+
+      {% endblock %}
+
+      {% comment %}vista para la plantilla especifica del proyecto{% endcomment %}
+      {% block proyecto %}
+
+      {% endblock %}
+
+      {% comment %}###################################################################################################################{% endcomment %}
     </div>
   </main>
   <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">

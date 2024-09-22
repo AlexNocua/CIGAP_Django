@@ -1,5 +1,6 @@
 {% extends 'correspondencia/base_correspondencia.html' %}
 
+{% load static %}
 {% block view_solicitud_especial %}
   <style>
     .content_correspondecia {
@@ -8,23 +9,120 @@
     .views {
       display: flex;
     }
+    
+    /*    estilo de la vista del documento de la solicitud*/
+    .view_documento {
+      overflow: hidden;
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      transition: all 0.5s;
+    }
+    #btn_cerrar {
+      transition: all 0.5s;
+      height: 0px;
+    }
+    embed {
+      transition: all 0.5s;
+      height: 0px;
+      opacity: 0;
+    }
   </style>
-  <section class="d-flex flex-column flex-md-row">
-    <div class="col">
-      <h3>Datos a actualizar del anteproyecto, formulario del anteproyecto</h3>
-      <form action="">
-        {% csrf_token %}
-        {{ form_proyecto }}
-        <input type="submit" class="btn btn-primary" />
-      </form>
-    </div>
-    <div class="col">
-      <h3>Retroalimentación</h3>
-      <form action="">
-        {% csrf_token %}
-        {{ form_retroalimentacion }}
-        <input type="submit" class="btn btn-primary" />
-      </form>
-    </div>
-  </section>
+  <main class="d-flex flex-column">
+    <section class="row d-flex justify-content-center align-items-center position-relative">
+      <h4>Solicitud: {{ solicitud_especial.tipo_solicitud }}</h4>
+      <p>
+        <strong>Solicitud por el estudiante:</strong> {{ solicitud_especial.user.nombre_completo }}<br />
+        <strong>Correo del solicitante:</strong> {{ solicitud_especial.user }}<br />
+        <strong>Motivo de la solicitud:</strong> {{ solicitud_especial.motivo_solicitud }}<br />
+        <strong>Documento de la solicitud:</strong>{{ solicitud_especial.user }}<br />
+        <strong>Fecha de envío de la solicitud:</strong> {{ solicitud_especial.fecha_envio }}
+      </p>
+      <button class="btn btn-success" id="btn_ver">Ver documento anexo</button>
+      <div id="view_documento" class="d-flex flex-column mb-2" style=" transition: all 0.3s;">
+        <embed id="embed" class="mt-2" src="data:application/pdf;base64,{{ documento_soporte }}" style="" />
+      </div>
+    </section>
+    <section class="row">
+      <div class="col">
+        {% if form_proyecto %}
+          <form action="{% url 'correspondencia:actualizar_datos_solicitud_proyecto' solicitud_especial.id %}" class="d-flex flex-column" method="post">
+            {% csrf_token %}
+            <div>
+              <label for="id_director">Director</label>
+              {{ form_proyecto.director }}
+            </div>
+            <div>
+              <label for="id_codirector">Codirector</label>
+              {{ form_proyecto.codirector }}
+            </div>
+            <input type="submit" value="Enviar" class="btn btn-primary" />
+          </form>
+        {% elif form_anteproyecto %}
+          <form action="{% url 'correspondencia:actualizar_datos_solicitud_anteproyecto' solicitud_especial.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+              <label for="id_nombre_integrante1">Nombre del proyecto</label>
+              {{ form_anteproyecto.nombre_anteproyecto }}
+            </div>
+            <div>
+              <label for="id_nombre_integrante1">Nombre integrante 1</label>
+              {{ form_anteproyecto.nombre_integrante1 }}
+            </div>
+            <div>
+              <label for="id_nombre_integrante2">Nombre integrante 2</label>
+              {{ form_anteproyecto.nombre_integrante2 }}
+            </div>
+            <div>
+              <label for="id_descripcion">Descripción</label>
+              {{ form_anteproyecto.descripcion }}
+            </div>
+            <div>
+              <label for="id_director">Director</label>
+              {{ form_anteproyecto.director }}
+            </div>
+            <div>
+              <label for="id_codirector">Codirector</label>
+              {{ form_anteproyecto.codirector }}
+            </div>
+            <input class="btn btn-primary" type="submit" value="Enviar" />
+          </form>
+        {% else %}
+          <p>No se ha encontrado ni anteproyecto ni proyecto final.</p>
+        {% endif %}
+      </div>
+
+      <div class="col">
+        <h3>Retroalimentación</h3>
+        <form action="{% url 'correspondencia:enviar_retroalimentacion_solicitud' solicitud_especial.id %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form_retroalimentacion }}
+          <input type="submit" class="btn btn-primary" />
+        </form>
+      </div>
+    </section>
+  </main>
+  <script>
+    const divembed = document.getElementById('view_documento')
+    const embed = document.getElementById('embed')
+    const btnvisualizardocumento = document.getElementById('btn_ver')
+    estado = false
+    btnvisualizardocumento.onclick = () => {
+      estado = !estado
+      if (estado == true) {
+        divembed.style.height = '600px'
+        embed.style.opacity = '1'
+        embed.style.height = '580px'
+        divembed.style.transition = 'all 0.6s'
+        btnvisualizardocumento.innerHTML = 'Cerrar'
+      } else {
+        embed.style.opacity = '0'
+        divembed.style.height = '0px'
+        embed.style.height = '0px'
+        divembed.style.transition = 'all 0.6s'
+        btnvisualizardocumento.innerHTML = 'Ver documento anexo'
+      }
+    }
+  </script>
+  {% comment %} <script src="{% static 'correspondencia/js/manipulacion_solicitud_especial.js' %}"></script> {% endcomment %}
 {% endblock %}

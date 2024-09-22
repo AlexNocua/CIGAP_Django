@@ -160,7 +160,11 @@
             <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br />
             <strong>Nombre del proyecto:</strong> {{ proyecto_final.anteproyecto.nombre_anteproyecto }} <br />
             <strong>Fecha de envío de la solicitud:</strong> {{ proyecto_final.fecha_envio }} <br />
-            <strong>Estado:</strong> En revisión <br />
+            <strong>Estado:</strong> {% if proyecto_final.estado %}
+              Aprobado
+            {% else %}
+              En revición
+            {% endif %} <br />
           </p>
         {% else %}
           <form class="container-fluid d-flex flex-column p-3" action="{% url 'estudiante:enviar_solicitud_proyecto' %}" method="post" enctype="multipart/form-data">

@@ -277,6 +277,8 @@ def enviar_solicitud_proyecto(request):
     if request.method == 'POST':
         anteproyecto = recuperar_anteproyecto(request)
 
+        print(f"Archivos subidos: {request.FILES}")
+
         form = FormProyectoFinal(request.POST, request.FILES)
         if form.is_valid():
             proyecto_final = form.save(commit=False)
@@ -288,9 +290,18 @@ def enviar_solicitud_proyecto(request):
             proyecto_final.codirector = anteproyecto.codirector
             proyecto_final.solicitud_enviada = True
             proyecto_final.fecha_envio = fecha_actual()
-            form.save()
+
+            # Depuración: Verificar que los archivos aún estén presentes
+            print(f"Archivo proyecto_final (longitud): {len(proyecto_final.proyecto_final) if proyecto_final.proyecto_final else 'No encontrado'}")
+            print(f"Archivo carta_presentacion_final (longitud): {len(proyecto_final.carta_presentacion_final) if proyecto_final.carta_presentacion_final else 'No encontrado'}")
+
+            # Guardar el proyecto final una sola vez
+            proyecto_final.save()
 
             print(proyecto_final.codirector)
-            print('datos enviados')
+            print('Datos enviados correctamente')
             return redirect('estudiante:solicitud')
+        else:
+            print(f"Errores del formulario: {form.errors}")
+
     return redirect('estudiante:solicitud')

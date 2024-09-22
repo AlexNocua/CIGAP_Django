@@ -1,4 +1,4 @@
-{% extends 'correspondencia/solicitudes.html' %}
+{% extends 'correspondencia/views_solicitud/solicitudes.html' %}
 
 {% block content_list_anteproyecto %}
   <style>
@@ -66,9 +66,9 @@
               </p>
               <p class="card-text">
                 <strong>Director y Codirector:</strong><br />
-                {% if anteproyecto.codorector %}
+                {% if anteproyecto.codirector %}
                   <strong>Director:</strong> {{ anteproyecto.director }}<br />
-                  <strong>Codirector:</strong> {{ anteproyecto.codorector }}
+                  <strong>Codirector:</strong> {{ anteproyecto.codirector }}
                 {% else %}
                   <strong>Director:</strong> {{ anteproyecto.director }}
                 {% endif %}

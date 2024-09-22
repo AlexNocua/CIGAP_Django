@@ -5,7 +5,7 @@ from django.contrib import admin
 # Para conseguir renderizar componentes en el admin
 from django.utils.html import format_html
 
-from .models import ModelAnteproyecto,ModelProyectoFinal
+from .models import ModelAnteproyecto, ModelProyectoFinal
 # Register your models here.
 
 
@@ -19,9 +19,9 @@ class ModelAnteproyectoAdmin(admin.ModelAdmin):
         'codirector',
         'carta_presentacion_link',
         'anteproyecto_link'
-        
+
     )
-    
+
     def carta_presentacion_link(self, obj):
         if obj.carta_presentacion:
             if isinstance(obj.carta_presentacion, bytes):  # Asegúrate de que es de tipo bytes
@@ -54,5 +54,46 @@ class ModelAnteproyectoAdmin(admin.ModelAdmin):
 admin.site.register(ModelAnteproyecto, ModelAnteproyectoAdmin)
 
 
+class ModelProyectoFinalAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'anteproyecto',
+        'jurado',
+        'director',
+        'codirector',
+        'fecha_envio',
+        'solicitud_enviada',
+        'estado',
+        'carta_presentacion_final_link',
+        'proyecto_final_link'
+    )
 
-admin.site.register(ModelProyectoFinal)
+    def carta_presentacion_final_link(self, obj):
+        if obj.carta_presentacion_final:
+            # Asegúrate de que es de tipo bytes
+            if isinstance(obj.carta_presentacion_final, bytes):
+                base64_data = base64.b64encode(
+                    obj.carta_presentacion_final).decode('utf-8')
+                url = f'data:application/octet-stream;base64,{base64_data}'
+                return format_html(
+                    '<a href="{url}" download="carta_presentacion_final.pdf">Descargar Carta de Presentación Final</a>',
+                    url=url
+                )
+        return "No cargado"
+    carta_presentacion_final_link.short_description = 'Carta de Presentación Final'
+
+    def proyecto_final_link(self, obj):
+        if obj.proyecto_final:
+            if isinstance(obj.proyecto_final, bytes):  
+                base64_data = base64.b64encode(
+                    obj.proyecto_final).decode('utf-8')
+                url = f'data:application/octet-stream;base64,{base64_data}'
+                return format_html(
+                    '<a href="{url}" download="proyecto_final.pdf">Descargar Proyecto Final</a>',
+                    url=url
+                )
+        return "No cargado"
+    proyecto_final_link.short_description = 'Proyecto Final'
+
+
+admin.site.register(ModelProyectoFinal, ModelProyectoFinalAdmin)

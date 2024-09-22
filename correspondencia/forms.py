@@ -1,5 +1,5 @@
 from django import forms
-from .models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados
+from .models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados, ModelDocumentos
 
 
 class FormRetroalimentacionAnteproyecto(forms.ModelForm):
@@ -28,7 +28,7 @@ class FormRetroalimentacionProyecto(forms.ModelForm):
         model = ModelRetroalimentaciones
         fields = ('retroalimentacion',
                   'doc_retroalimentacion_convert', 'estado')
-        
+
         estado = forms.ChoiceField(
             widget=forms.CheckboxSelectMultiple(attrs={'id': 'element_estado'})
         )
@@ -95,3 +95,28 @@ class FormJurados(forms.ModelForm):
         if commit:
             jurados.save()
         return jurados
+
+# formulario del cargue de documentos
+
+
+class FormDocumentos(forms.ModelForm):
+    documento_convert = forms.FileField(required=False)
+
+    class Meta:
+        model = ModelDocumentos
+        fields = ['nombre_documento', 'descripcion', 'version', 'documento_convert']
+
+    def __init__(self, *args, **kwargs):
+        super(FormDocumentos, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['documento_convert'].required = False
+
+    def save(self, commit=True):
+        documentos = super().save(commit=False)
+        if self.cleaned_data['documento_convert']:
+            documentos.documento = self.cleaned_data['documento_convert'].read()
+        if commit:
+            documentos.save()
+        return documentos
+
+

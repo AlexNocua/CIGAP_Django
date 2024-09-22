@@ -1,0 +1,60 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+{% load static %}
+{% block proyectos %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .views {
+      display: flex;
+    }
+    .main-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .card-content {
+      flex: 1 1 calc(33.333% - 20px);
+      box-sizing: border-box;
+    }
+  </style>
+
+  <main class="d-flex flex-column">
+    <h3 class="text-center m-2 p-0">Proyectos</h3>
+    <p class="text-center m-0 p-0 mb-3">
+      En esta sección, puedes explorar los <strong>proyectos en curso</strong> y los <strong>proyectos finalizados</strong>. Además, puedes <strong>asignar jurados</strong> a cada proyecto según sea necesario.
+    </p>
+
+    <article class="main-grid pt-3" style="border-top: 1px solid #cacaca;">
+      <div class="card-content col-md-3 mb-4">
+        <div class="d-flex card h-100 text-center">
+          <div class="card-body">
+            <h5 class="card-title">Proyectos en Curso</h5>
+            <p class="card-text">Conoce los proyectos que están actualmente en desarrollo y asigna jurados.</p>
+          </div>
+          <div class="card-footer link-card d-flex flex-column">
+            <a href="{% url 'correspondencia:proyectos_actuales' %}" class="w-100 h-100">
+              <img src="{% static 'correspondencia/icons/image_pendiente.png' %}" alt="icon" class="img-fluid mb-2" />
+              <p class="card-text">Proyectos en curso: {{ num_proyectos_actuales }}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-content col-md-3 mb-4">
+        <div class="d-flex card h-100 text-center">
+          <div class="card-body">
+            <h5 class="card-title">Proyectos Finalizados</h5>
+            <p class="card-text">Revisa los proyectos que ya han sido completados y asigna jurados.</p>
+          </div>
+          <div class="card-footer link-card d-flex flex-column">
+            <a href="{% url 'correspondencia:proyectos_finalizados' %}" class="w-100 h-100">
+              <img src="{% static 'correspondencia/icons/image_finalizado.png' %}" alt="icon" class="img-fluid mb-2" />
+              <p class="card-text">Proyectos finalizados: {{ num_proyectos_terminados }}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+{% endblock %}
