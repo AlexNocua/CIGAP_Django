@@ -83,16 +83,26 @@
             <tr>
               <td>{{ forloop.counter }}</td>
               <td>{{ value.proyecto.anteproyecto.nombre_anteproyecto }}</td>
-              <td>{{ value.proyecto.jurado.nombre_jurado }}</td>
+              {% if value.proyecto.jurado %}
+                <td>{{ value.proyecto.jurado.nombre_jurado }}</td>
+              {% else %}
+                <td>
+                  <a class="btn btn-primary" href="{% url 'correspondencia:asignar_jurados' value.proyecto.anteproyecto.nombre_anteproyecto %}" style="text-decoration: none;">Asignar jurado</a>
+                </td>
+              {% endif %}
               <td>{{ value.proyecto.director }}</td>
               {% if value.proyecto.codirector %}
                 <td>{{ value.proyecto.codirector }}</td>
               {% else %}
                 <td>No tiene</td>
               {% endif %}
-              <td>{{ value.proyecto.jurado.fecha_sustentacion }}</td>
+              {% if value.proyecto.jurado.fecha_sustentacion %}
+                <td>{{ value.proyecto.jurado.fecha_sustentacion }}</td>
+              {% else %}
+                <td>No cuenta con fecha de sustentación</td>
+              {% endif %}
               <td>
-                <a class="" href="data:application/pdf;base64,{{ value.documento_convert }}" download="Proyecto_final_{{ value.proyecto.anteproyecto.nombre_anteproyecto }}.pdf">{{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
+                <a class="btn btn-success" href="data:application/pdf;base64,{{ value.documento_convert }}" download="Proyecto_final_{{ value.proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Descargar {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
               </td>
             </tr>
           {% endfor %}

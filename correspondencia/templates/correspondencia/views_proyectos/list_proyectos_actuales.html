@@ -8,8 +8,106 @@
     .views {
       display: flex;
     }
+    .container_table {
+      overflow: scroll;
+    }
+    .table {
+      padding: 4px;
+      border-radius: 8px;
+    }
+    /*estilos de la tabla del plugin*/
+    .dt-layout-row {
+      justify-content: space-around;
+      align-items: center;
+      display: flex;
+      margin-bottom: 12px;
+    }
+    .dt-input {
+      margin: 0 8px;
+      border: 1px solid #cacaca;
+    }
+    .dt-layout-row:nth-child(2) {
+      justify-content: space-around;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+    }
+    
+    button {
+      border: 1px solid #cacaca;
+      color: #fff;
+      background: #1f5819;
+      border-radius: 4px;
+      padding: 4px 12px;
+      margin: 4px;
+    }
+    /*estilos personalizados para la tabla*/
+    
+    #tabla_resultados th,
+    #tabla_resultados td {
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #cacaca;
+    }
+    
+    #tabla_resultados thead th {
+      background: #00532c;
+      color: white;
+    }
+    
+    /* Estilo para las filas alternas */
+    #tabla_resultados tbody tr:nth-child(even) {
+      background-color: #fff;
+    }
   </style>
-
+  <section class="container">
+    <h3 class="mt-3 mb-3">Lista de proyectos actuales</h3>
+    <div class="container_table w-100 pt-2" style="border-top: 1px solid #cacaca;">
+      <table class="table w-100 table-striped border" id="tabla_resultados">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre del proyecto</th>
+            <th scope="col">Estudiantes</th>
+            <th scope="col">Director</th>
+            <th scope="col">Codirector</th>
+            <th scope="col">Fecha de aprovación</th>
+            <th scope="col">Mas Info</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for key, value in proyectos.items %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ value.proyecto.nombre_anteproyecto }}</td>
+              {% if value.proyecto.nombre_integrante2 %}
+                <td>{{ value.proyecto.nombre_integrante1 }} -
+                  {{ value.proyecto.nombre_integrante2 }}</td>
+              {% else %}
+                <td>{{ value.proyecto.nombre_integrante1 }}</td>
+              {% endif %}
+              <td>{{ value.proyecto.director }}</td>
+              {% if value.proyecto.codirector %}
+                <td>{{ value.proyecto.codirector }}</td>
+              {% else %}
+                <td>No tiene</td>
+              {% endif %}
+              {% if value.proyecto.fecha_envio %}
+                <td>{{ value.proyecto.fecha_envio }}</td>
+              {% else %}
+                <td>No cuenta con fecha de envio</td>
+              {% endif %}
+              <td>
+                <a class="btn btn-success" href="{% url 'correspondencia:proyecto_actual' value.proyecto.id %}">Mas info {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
   <script>
     $(document).ready(function () {
       $('#tabla_resultados').DataTable({

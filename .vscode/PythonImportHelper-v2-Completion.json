@@ -1403,7 +1403,15 @@
         "documentation": {}
     },
     {
-        "label": "recuperar_proyecto",
+        "label": "recuperar_proyecto_finalizado",
+        "importPath": "plataform_CIGAP.utils.recuperaciones",
+        "description": "plataform_CIGAP.utils.recuperaciones",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.utils.recuperaciones",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_proyecto_actual",
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
         "isExtraImport": true,
@@ -2268,7 +2276,25 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def recuperar_solicitudes():\n    solicitudes = ModelRetroalimentaciones.objects.all()\n    return solicitudes\n# def recuperar_solicitudes_():\n#     solicitudes = ModelRetroalimentaciones.objects.filter(anteproyecto=True)\n#     return solicitudes\n# funcion de recuperar documento binario\ndef recuperar_documento(documento):\n    documento = base64.b64encode(documento).decode(\n        'utf-8') if documento else None",
+        "peekOfCode": "def recuperar_solicitudes():\n    solicitudes = ModelRetroalimentaciones.objects.all()\n    return solicitudes\ndef recuperar_solicitudes_anteproyecto():\n    solicitudes = ModelRetroalimentaciones.objects.filter(\n        anteproyecto__isnull=False)\n    return solicitudes\ndef recuperar_solicitud(anteproyecto):\n    solicitud = ModelRetroalimentaciones.objects.get(\n        anteproyecto=anteproyecto) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto).exists() else None",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_solicitudes_anteproyecto",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_solicitudes_anteproyecto():\n    solicitudes = ModelRetroalimentaciones.objects.filter(\n        anteproyecto__isnull=False)\n    return solicitudes\ndef recuperar_solicitud(anteproyecto):\n    solicitud = ModelRetroalimentaciones.objects.get(\n        anteproyecto=anteproyecto) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto).exists() else None\n    return solicitud\n# def recuperar_solicitudes_():\n#     solicitudes = ModelRetroalimentaciones.objects.filter(anteproyecto=True)",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_solicitud",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def recuperar_solicitud(anteproyecto):\n    solicitud = ModelRetroalimentaciones.objects.get(\n        anteproyecto=anteproyecto) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto).exists() else None\n    return solicitud\n# def recuperar_solicitudes_():\n#     solicitudes = ModelRetroalimentaciones.objects.filter(anteproyecto=True)\n#     return solicitudes\n# funcion de recuperar documento binario\ndef recuperar_documento(documento):\n    documento = base64.b64encode(documento).decode(",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2493,16 +2519,25 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def proyectos_actuales(request):\n    context = datosusuario(request)\n    proyectos_actuales = recuperar_proyectos_pendientes()\n    context['proyectos_finalizados'] = proyectos_finalizados\n    return render(request, 'correspondencia/views_proyectos/list_proyectos_finalizados.html', context)\ndef proyecto(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto(id)\n    context['proyecto'] = proyecto\n    return render(request, 'correspondencia/views_proyectos/proyecto.html', context)",
+        "peekOfCode": "def proyectos_actuales(request):\n    context = datosusuario(request)\n    proyectos_actuales = recuperar_proyectos_pendientes()\n    dic_proyectos = {}\n    for i, proyecto in enumerate(proyectos_actuales):\n        documento_convert_carta = proyecto.carta_presentacion\n        documento_convert_ante = proyecto.anteproyecto\n        documento_carta = recuperar_documento(documento_convert_carta)\n        documento_ante = recuperar_documento(documento_convert_ante)\n        dic_proyectos[f'proyecto{i}'] = {",
         "detail": "correspondencia.views",
         "documentation": {}
     },
     {
-        "label": "proyecto",
+        "label": "proyecto_final",
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def proyecto(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto(id)\n    context['proyecto'] = proyecto\n    return render(request, 'correspondencia/views_proyectos/proyecto.html', context)\n#####################################################################################################################",
+        "peekOfCode": "def proyecto_final(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto_finalizado(id)\n    context['proyecto'] = proyecto\n    return render(request, 'correspondencia/views_proyectos/proyecto.html', context)\ndef proyecto_actual(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto_actual(id)\n    integrantes = (proyecto.nombre_integrante1, proyecto.nombre_integrante2,\n                   proyecto.director, proyecto.codirector)",
+        "detail": "correspondencia.views",
+        "documentation": {}
+    },
+    {
+        "label": "proyecto_actual",
+        "kind": 2,
+        "importPath": "correspondencia.views",
+        "description": "correspondencia.views",
+        "peekOfCode": "def proyecto_actual(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto_actual(id)\n    integrantes = (proyecto.nombre_integrante1, proyecto.nombre_integrante2,\n                   proyecto.director, proyecto.codirector)\n    datos_integrantes = {}\n    for i, integrante in enumerate(integrantes, start=1):\n        if integrante:\n            datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(\n                integrante)",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -3195,7 +3230,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_num_respuestas():\n    num_respuestas = ModelRetroalimentaciones.objects.all().count()\n    return num_respuestas\ndef recuperar_num_proyectos_terminados():\n    num_proyectos = ModelProyectoFinal.objects.filter(estado=True).count()\n    return num_proyectos\ndef recuperar_num_proyectos_pendientes():\n    num_proyectos_pendientes = ModelProyectoFinal.objects.filter(\n        estado=False).count()\n    return num_proyectos_pendientes",
+        "peekOfCode": "def recuperar_num_respuestas():\n    num_respuestas = ModelRetroalimentaciones.objects.all().count()\n    return num_respuestas\ndef recuperar_num_proyectos_terminados():\n    num_proyectos = ModelProyectoFinal.objects.filter(estado=True).count()\n    return num_proyectos\ndef recuperar_num_proyectos_pendientes():\n    num_proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        estado=True).count()\n    return num_proyectos_pendientes",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3204,7 +3239,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_num_proyectos_terminados():\n    num_proyectos = ModelProyectoFinal.objects.filter(estado=True).count()\n    return num_proyectos\ndef recuperar_num_proyectos_pendientes():\n    num_proyectos_pendientes = ModelProyectoFinal.objects.filter(\n        estado=False).count()\n    return num_proyectos_pendientes\ndef recuperar_num_solicitudes():\n    num_solicitudes = ModelSolicitudes.objects.filter(\n        estado=False).count()",
+        "peekOfCode": "def recuperar_num_proyectos_terminados():\n    num_proyectos = ModelProyectoFinal.objects.filter(estado=True).count()\n    return num_proyectos\ndef recuperar_num_proyectos_pendientes():\n    num_proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        estado=True).count()\n    return num_proyectos_pendientes\ndef recuperar_num_solicitudes():\n    num_solicitudes = ModelSolicitudes.objects.filter(\n        estado=False).count()",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3213,7 +3248,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_num_proyectos_pendientes():\n    num_proyectos_pendientes = ModelProyectoFinal.objects.filter(\n        estado=False).count()\n    return num_proyectos_pendientes\ndef recuperar_num_solicitudes():\n    num_solicitudes = ModelSolicitudes.objects.filter(\n        estado=False).count()\n    num_anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=False)).count()\n    num_proyectos_finales = ModelProyectoFinal.objects.filter(",
+        "peekOfCode": "def recuperar_num_proyectos_pendientes():\n    num_proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        estado=True).count()\n    return num_proyectos_pendientes\ndef recuperar_num_solicitudes():\n    num_solicitudes = ModelSolicitudes.objects.filter(\n        estado=False).count()\n    num_anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=False)).count()\n    num_proyectos_finales = ModelProyectoFinal.objects.filter(",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3231,7 +3266,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_num_formatos_comite():\n    num_formatos = ModelDocumentos.objects.all().count()\n    return num_formatos\n#######################################################################################################\ndef recuperar_proyectos_pendientes():\n    proyectos_pendientes = ModelProyectoFinal.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=False))\n    if not proyectos_pendientes:\n        proyectos_pendientes = None\n    return proyectos_pendientes",
+        "peekOfCode": "def recuperar_num_formatos_comite():\n    num_formatos = ModelDocumentos.objects.all().count()\n    return num_formatos\n#######################################################################################################\ndef recuperar_proyectos_pendientes():\n    proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    print(proyectos_pendientes, 'Desde utilidades')\n    if proyectos_pendientes:\n        return proyectos_pendientes",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3240,7 +3275,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyectos_pendientes():\n    proyectos_pendientes = ModelProyectoFinal.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=False))\n    if not proyectos_pendientes:\n        proyectos_pendientes = None\n    return proyectos_pendientes\ndef recuperar_proyectos_finalizados():\n    proyectos_finalizados = ModelProyectoFinal.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    if not proyectos_finalizados:",
+        "peekOfCode": "def recuperar_proyectos_pendientes():\n    proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    print(proyectos_pendientes, 'Desde utilidades')\n    if proyectos_pendientes:\n        return proyectos_pendientes\n    else:\n        proyectos_pendientes = None\n        return proyectos_pendientes\ndef recuperar_proyectos_finalizados():",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3249,16 +3284,25 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyectos_finalizados():\n    proyectos_finalizados = ModelProyectoFinal.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    if not proyectos_finalizados:\n        proyectos_finalizados = None\n    return proyectos_finalizados\ndef recuperar_proyecto(id):\n    proyecto = ModelProyectoFinal.objects.get(\n        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None\n    return proyecto",
+        "peekOfCode": "def recuperar_proyectos_finalizados():\n    proyectos_finalizados = ModelProyectoFinal.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    if not proyectos_finalizados:\n        proyectos_finalizados = None\n    return proyectos_finalizados\ndef recuperar_proyecto_finalizado(id):\n    proyecto = ModelProyectoFinal.objects.get(\n        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None\n    return proyecto",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
     {
-        "label": "recuperar_proyecto",
+        "label": "recuperar_proyecto_finalizado",
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyecto(id):\n    proyecto = ModelProyectoFinal.objects.get(\n        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None\n    return proyecto\n#######################################################################################################",
+        "peekOfCode": "def recuperar_proyecto_finalizado(id):\n    proyecto = ModelProyectoFinal.objects.get(\n        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None\n    return proyecto\ndef recuperar_proyecto_actual(id):\n    proyecto = ModelAnteproyecto.objects.get(\n        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None\n    return proyecto\n#######################################################################################################",
+        "detail": "plataform_CIGAP.utils.recuperaciones",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_proyecto_actual",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.utils.recuperaciones",
+        "description": "plataform_CIGAP.utils.recuperaciones",
+        "peekOfCode": "def recuperar_proyecto_actual(id):\n    proyecto = ModelAnteproyecto.objects.get(\n        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None\n    return proyecto\n#######################################################################################################",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },

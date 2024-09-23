@@ -1,0 +1,111 @@
+{% extends 'correspondencia/base_correspondencia.html' %}
+{% load static %}
+{% block proyecto %}
+  <style>
+    .content_correspondecia {
+      display: none;
+    }
+    .views {
+      display: flex;
+    }
+    .img-users {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  </style>
+
+  <main class="w-100">
+    <h3>Proyecto {{ proyecto.nombre_anteproyecto }}</h3>
+    <p>Proyecto iniciado en la fecha {{ proyecto.fecha_envio }}</p>
+    <article class="w-100 mt-3 p-2 d-flex flex-column flex-md-row" style="border-top:1px solid #cacaca;">
+      <section class="w-50">
+        <h5>Datos del proyecto</h5>
+        <p class="m-0 p-0 text-center">
+          <strong>Resumen:</strong> {{ proyecto.descripcion }}
+        </p>
+      </section>
+      <section class="w-50">
+        <p class="text-center">
+          <strong>Miembros</strong>
+        </p>
+        <div class="d-flex justify-content-around align-items-center flex-column flex-md-row">
+          {% for key, integrante in datos_integrantes.items %}
+            <div class="d-flex justify-content-center align-items-center flex-column mb-1">
+              {% if integrante.imagen %}
+                <img class="img-users" src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
+              {% else %}
+                <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
+              {% endif %}
+
+              <p class="m-1">{{ integrante.nombre }}</p>
+              <p>
+                <strong>{{ integrante.grupo }}</strong>
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </article>
+    <article class="d-flex flex-column justify-content-around align-items-center" style="    margin: 12px;
+    padding: 12px;
+    border-top: 1px solid #cacaca;">
+      <h5>Documentos cargados</h5>
+      <section class="d-flex justify-content-around align-items-center">
+        {% if formatos %}
+          <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
+            <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.anteproyecto }}" type="application/pdf" />
+            <div class="card-body">
+              <p class="card-text">
+                Anteproyecto cargado de <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+              </p>
+              <p>
+                <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
+              </p>
+              <div class="botones d-flex justify-content-between">
+                <a href="{{ formatos.anteproyecto }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_anteproyecto.pdf">Descargar</a>
+              </div>
+            </div>
+          </div>
+          <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
+            <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
+            <div class="card-body">
+              <p class="card-text">
+                Carta cargada de <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+              </p>
+              <p>
+                <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
+              </p>
+              <div class="botones d-flex justify-content-between">
+                <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+              </div>
+            </div>
+          </div>
+
+          {% comment %} {% if retroalimentaciones %}
+            {% for key, value in retroalimentaciones.items %}
+              
+              <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
+                <embed class="card-img-top" src="data:application/pdf;base64,{{ value.doc_retroalimentacion }}" type="application/pdf" />
+                <div class="card-body">
+                  <p class="card-text">
+                    Retroalimentación por el comité para <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+                  </p>
+                  <p>
+                    <strong>Fecha de retroalimentación:</strong> {{ value.fecha_retroalimentacion }}
+                  </p>
+                  <div class="botones d-flex justify-content-between">
+                    <a href="{{ value.doc_retroalimentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_retroalimentacion.pdf">Descargar</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %} {% endcomment %}
+        {% else %}
+          <p>No se ha cargado ningun documento.</p>
+        {% endif %}
+      </section>
+    </article>
+  </main>
+{% endblock %}

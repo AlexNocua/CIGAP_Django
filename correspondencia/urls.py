@@ -47,7 +47,7 @@ urlpatterns = [
          views.ver_proyecto_final, name='ver_proyecto_final'),
     path('enviar_retroalimentacion/<str:nombre_anteproyecto>',
          views.enviar_retroalimentacion, name='enviar_retroalimentacion'),
-    path('asignar_jurados',
+    path('asignar_jurados/<str:nombre_proyecto>',
          views.asignar_jurados, name='asignar_jurados'),
     ##############################################################################################
     path('proyectos',
@@ -56,8 +56,10 @@ urlpatterns = [
          views.proyectos_finalizados, name='proyectos_finalizados'),
     path('proyectos_actuales',
          views.proyectos_actuales, name='proyectos_actuales'),
-    path('proyecto/<int:id>',
-         views.proyecto, name='proyecto'),
+    path('proyecto_final/<int:id>',
+         views.proyecto_final, name='proyecto_final'),
+    path('proyecto_actual/<int:id>',
+         views.proyecto_actual, name='proyecto_actual'),
 
 
 

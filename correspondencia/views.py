@@ -13,7 +13,7 @@ from login.views import editar_usuario
 from login.forms import FormEditarUsuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
-from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto
+from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto_finalizado, recuperar_proyecto_actual
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de los modelos
@@ -149,6 +149,18 @@ def recuperar_datos_integrantes(nombre):
 def recuperar_solicitudes():
     solicitudes = ModelRetroalimentaciones.objects.all()
     return solicitudes
+
+
+def recuperar_solicitudes_anteproyecto():
+    solicitudes = ModelRetroalimentaciones.objects.filter(
+        anteproyecto__isnull=False)
+    return solicitudes
+
+
+def recuperar_solicitud(anteproyecto):
+    solicitud = ModelRetroalimentaciones.objects.get(
+        anteproyecto=anteproyecto) if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto).exists() else None
+    return solicitud
 # def recuperar_solicitudes_():
 #     solicitudes = ModelRetroalimentaciones.objects.filter(anteproyecto=True)
 #     return solicitudes
@@ -494,12 +506,14 @@ def ver_proyecto_final(request, nombre):
             proyecto_final = recuperar_proyecto_final(anteproyecto)
             if proyecto_final:
                 print(proyecto_final)
-                doc_proyecto_final = recuperar_documento(proyecto_final.proyecto_final)
-                doc_carta_final = recuperar_documento(proyecto_final.carta_presentacion_final)
+                doc_proyecto_final = recuperar_documento(
+                    proyecto_final.proyecto_final)
+                doc_carta_final = recuperar_documento(
+                    proyecto_final.carta_presentacion_final)
                 context['inf_proyecto'] = proyecto_final
                 context['doc_proyecto_final'] = doc_proyecto_final
                 context['doc_carta_final'] = doc_carta_final
-                
+
         directores = recuperar_directores()
 
         print(directores)
@@ -744,13 +758,65 @@ def proyectos_finalizados(request):
 def proyectos_actuales(request):
     context = datosusuario(request)
     proyectos_actuales = recuperar_proyectos_pendientes()
-    context['proyectos_finalizados'] = proyectos_finalizados
-    return render(request, 'correspondencia/views_proyectos/list_proyectos_finalizados.html', context)
+    dic_proyectos = {}
+
+    for i, proyecto in enumerate(proyectos_actuales):
+        documento_convert_carta = proyecto.carta_presentacion
+        documento_convert_ante = proyecto.anteproyecto
+        documento_carta = recuperar_documento(documento_convert_carta)
+        documento_ante = recuperar_documento(documento_convert_ante)
+
+        dic_proyectos[f'proyecto{i}'] = {
+            'proyecto': proyecto,
+            'documento_ante': documento_ante,
+            'documento_carta': documento_carta
+        }
+    context['proyectos'] = dic_proyectos
+    return render(request, 'correspondencia/views_proyectos/list_proyectos_actuales.html', context)
 
 
-def proyecto(request, id):
+def proyecto_final(request, id):
     context = datosusuario(request)
-    proyecto = recuperar_proyecto(id)
+    proyecto = recuperar_proyecto_finalizado(id)
     context['proyecto'] = proyecto
     return render(request, 'correspondencia/views_proyectos/proyecto.html', context)
+
+
+def proyecto_actual(request, id):
+    context = datosusuario(request)
+    proyecto = recuperar_proyecto_actual(id)
+    integrantes = (proyecto.nombre_integrante1, proyecto.nombre_integrante2,
+                   proyecto.director, proyecto.codirector)
+    datos_integrantes = {}
+    for i, integrante in enumerate(integrantes, start=1):
+        if integrante:
+            datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(
+                integrante)
+        context['datos_integrantes'] = datos_integrantes
+    context['proyecto'] = proyecto
+    carta_convert = recuperar_documento(proyecto.carta_presentacion)
+    ante_convert = recuperar_documento(proyecto.anteproyecto)
+
+
+# añadir la logica de solicitudes pesepciales tambien pero para el proyecto finalizado
+
+    retroalimentaciones = recuperar_solicitudes_anteproyecto()
+    print(retroalimentaciones)
+    if retroalimentaciones:
+        dic_retroalimentaciones = {}
+        for i, retroalimentacion in enumerate(retroalimentaciones):
+
+            dic_retroalimentaciones[f'retroalimentacion{i}'] = {
+                'doc_retroalimentacion': recuperar_documento(retroalimentacion.doc_retroalimentacion),
+                'fecha_retroalimentacion': retroalimentacion.fecha_retroalimentacion,
+                'respuesta': retroalimentacion.retroalimentacion,
+            }
+            print(recuperar_documento(retroalimentacion.doc_retroalimentacion))
+            context['retroalimentaciones'] = dic_retroalimentaciones
+
+        context['formatos'] = {
+            'anteproyecto': ante_convert,
+            'carta_presentacion': carta_convert
+        }
+    return render(request, 'correspondencia/views_proyectos/proyecto_actual.html', context)
 #####################################################################################################################
