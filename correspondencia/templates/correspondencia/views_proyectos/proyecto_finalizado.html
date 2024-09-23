@@ -14,6 +14,17 @@
       object-fit: cover;
       border-radius: 50%;
     }
+    
+    /*ajustes de diseño de la seccion de los cards para manejar los grids*/
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 5fr));
+      gap: 1rem;
+    }
+    
+    .card {
+      width: 100%;
+    }
   </style>
 
   <main class="w-100">
@@ -51,42 +62,84 @@
     <article class="d-flex flex-column justify-content-around align-items-center" style="    margin: 12px;
     padding: 12px;
     border-top: 1px solid #cacaca;">
-      <h5>Documentos cargados</h5>
-      <section class="d-flex justify-content-around align-items-center">
-        {% if formatos %}
-          <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
-            <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.anteproyecto }}" type="application/pdf" />
-            <div class="card-body">
-              <p class="card-text">
-                Anteproyecto cargado de <strong>{{ proyecto.nombre_anteproyecto }}</strong>
-              </p>
-              <p>
-                <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
-              </p>
-              <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.anteproyecto }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_anteproyecto.pdf">Descargar</a>
+      <article class="col d-flex flex-column m-2 p-2">
+        <div class="d-flex justify-content-between align-items-center flex-column">
+          <h5>Documentos cargados del proyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong></h5>
+          <p>Descarga los formatos cargados respecto a anteproyecto y proyecto final, así mismo las cartas de solicitud para los mismos.</p>
+        </div>
+        <section class="grid-container w-100">
+          {% if formatos %}
+            <div class="card m-2 d-flex flex-column justify-content-between">
+              <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.anteproyecto }}" type="application/pdf" />
+              <div class="card-body">
+                <p class="card-text">
+                  Anteproyecto cargado de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+                </p>
+                <p>
+                  <strong>Fecha de envio:</strong> {{ proyecto.anteproyecto.fecha_envio }}
+                </p>
+                <div class="botones d-flex justify-content-between">
+                  <a href="{{ formatos.anteproyecto }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_anteproyecto.pdf">Descargar</a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
-            <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
-            <div class="card-body">
-              <p class="card-text">
-                Carta cargada de <strong>{{ proyecto.nombre_anteproyecto }}</strong>
-              </p>
-              <p>
-                <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
-              </p>
-              <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
-              </div>
-            </div>
-          </div>
 
-          {% comment %} {% if retroalimentaciones %}
+            <div class="card m-2 d-flex flex-column justify-content-between">
+              <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
+              <div class="card-body">
+                <p class="card-text">
+                  Carta cargada de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+                </p>
+                <p>
+                  <strong>Fecha de envio:</strong> {{ proyecto.anteproyecto.fecha_envio }}
+                </p>
+                <div class="botones d-flex justify-content-between">
+                  <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+                </div>
+              </div>
+            </div>
+            <div class="card m-2 d-flex flex-column justify-content-between">
+              <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
+              <div class="card-body">
+                <p class="card-text">
+                  Proyecto final <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+                </p>
+                <p>
+                  <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
+                </p>
+                <div class="botones d-flex justify-content-between">
+                  <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+                </div>
+              </div>
+            </div>
+            <div class="card m-2 d-flex flex-column justify-content-between">
+              <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
+              <div class="card-body">
+                <p class="card-text">
+                  Carta de presentación final cargada de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+                </p>
+                <p>
+                  <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
+                </p>
+                <div class="botones d-flex justify-content-between">
+                  <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <p>No se ha cargado ningun documento.</p>
+          {% endif %}
+        </section>
+      </article>
+      {% if retroalimentaciones %}
+        <article class="col d-flex flex-column m-2 p-2 w-100">
+          <div class="d-flex justify-content-between align-items-center flex-column">
+            <h5>Retroalimentciones del proyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong></h5>
+            <p>Revisa cada uno de los documentos de los cuales se dio respuesta a la solicitud de los integrantes del proyecto.</p>
+          </div>
+          <section class="grid-container w-100">
             {% for key, value in retroalimentaciones.items %}
-              
-              <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
+              <div class="card m-2 d-flex flex-column justify-content-between">
                 <embed class="card-img-top" src="data:application/pdf;base64,{{ value.doc_retroalimentacion }}" type="application/pdf" />
                 <div class="card-body">
                   <p class="card-text">
@@ -101,11 +154,35 @@
                 </div>
               </div>
             {% endfor %}
-          {% endif %} {% endcomment %}
-        {% else %}
-          <p>No se ha cargado ningun documento.</p>
-        {% endif %}
-      </section>
+          </section>
+        </article>
+      {% endif %}
+      {% if solicitudes %}
+        <article class="col d-flex flex-column m-2 p-2 w-100">
+          <div class="d-flex justify-content-between align-items-center flex-column">
+            <h5>Solicitudes especiales del proyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong></h5>
+            <p>Observa cada una de las solicitudes especiales pedidas para el proyecto.</p>
+          </div>
+          <section class="grid-container w-100">
+            {% for key, value in solicitudes.items %}
+              <div class="card m-2 d-flex flex-column justify-content-between">
+                <embed class="card-img-top" src="data:application/pdf;base64,{{ value.doc_retroalimentacion }}" type="application/pdf" />
+                <div class="card-body">
+                  <p class="card-text">
+                    Retroalimentación por el comité para <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+                  </p>
+                  <p>
+                    <strong>Fecha de retroalimentación:</strong> {{ value.fecha_retroalimentacion }}
+                  </p>
+                  <div class="botones d-flex justify-content-between">
+                    <a href="{{ value.doc_retroalimentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_retroalimentacion.pdf">Descargar</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </section>
+        </article>
+      {% endif %}
     </article>
   </main>
 {% endblock %}

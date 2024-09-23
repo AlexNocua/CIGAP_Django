@@ -13,7 +13,7 @@ from login.views import editar_usuario
 from login.forms import FormEditarUsuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
-from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto_finalizado, recuperar_proyecto_actual
+from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto_finalizado, recuperar_proyecto_actual, recuperar_solicitudes_especiales_proyecto
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de los modelos
@@ -244,7 +244,7 @@ def solicitudes_anteproyectos(request):
     else:
         anteproyectos = recuperar_anteproyectos_pendientes()
         context['anteproyectos'] = anteproyectos
-        print(anteproyectos)
+
         return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)
 
 
@@ -278,11 +278,11 @@ def view_solicitud_especial(request, id):
     solicitud_especial = recuperar_solicitud_especial(id)
 
     context['solicitud_especial'] = solicitud_especial
-    print(context['solicitud_especial'])
+
     documento_binario = solicitud_especial.documento_soporte
     documento_soporte = recuperar_documento(documento_binario)
     context['documento_soporte'] = documento_soporte
-    print(documento_soporte)
+
     if solicitud_especial.anteproyecto:
         form_anteproyecto = FormAnteproyecto(
             instance=solicitud_especial.anteproyecto)
@@ -355,7 +355,7 @@ def actualizar_datos_solicitud_proyecto(request, id):
 
 def enviar_retroalimentacion_solicitud(request, id):
     solicitud_especial = recuperar_solicitud_especial(id)
-    print(solicitud_especial)
+
     if solicitud_especial.anteproyecto:
         form_retro = FormRetroalimentacionAnteproyecto(
             request.POST, request.FILES)
@@ -445,7 +445,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 print("Error al subir el documento")
             return redirect('correspondencia:solicitudes')
         else:
-            print(form_retro.errors)  # Para depuración
+            print(form_retro.errors)
 
     return redirect('correspondencia:solicitudes')
 
@@ -493,8 +493,9 @@ def ver_proyecto_final(request, nombre):
             else:
                 print("Error al subir el documento")
             # tener en cuenta el envio de datos desde url
-            url = reverse('correspondencia:asignar_jurados')
-            return redirect(f"{url}?nombre_proyecto={nombre}")
+            url = reverse('correspondencia:asignar_jurados',
+                          kwargs={'nombre_proyecto': nombre})
+            return redirect(url)
 
         else:
             print(form_retro.errors)  # Para depuración
@@ -502,10 +503,10 @@ def ver_proyecto_final(request, nombre):
 
         anteproyecto = recuperar_anteproyecto(nombre)
         if anteproyecto:
-            print(anteproyecto)
+
             proyecto_final = recuperar_proyecto_final(anteproyecto)
             if proyecto_final:
-                print(proyecto_final)
+
                 doc_proyecto_final = recuperar_documento(
                     proyecto_final.proyecto_final)
                 doc_carta_final = recuperar_documento(
@@ -516,7 +517,6 @@ def ver_proyecto_final(request, nombre):
 
         directores = recuperar_directores()
 
-        print(directores)
         context['directores'] = directores
         form_retroalimentaciones_proyecto = FormRetroalimentacionProyecto
         form_jurados = FormJurados
@@ -528,10 +528,9 @@ def ver_proyecto_final(request, nombre):
 # asi mismo crear la vista de enviar retroalimentaicon de proyecto
 
 
-def asignar_jurados(request):
+def asignar_jurados(request, nombre):
     context = datosusuario(request)
-    nombre_proyecto = request.GET.get('nombre_proyecto')
-    print(nombre_proyecto)
+    nombre_proyecto = nombre
 
     if request.method == 'POST':
         directores_seleccionados = request.POST.getlist('directores')
@@ -542,7 +541,6 @@ def asignar_jurados(request):
         asignacion_jurados = ModelAsignacionJurados()
         anteproyecto = recuperar_anteproyecto(nombre_proyecto)
         proyecto_final = recuperar_proyecto_aceptado(anteproyecto)
-        print(proyecto_final)
 
         asignacion_jurados.proyecto_final = proyecto_final
         asignacion_jurados.nombre_jurado = ', '.join(directores_seleccionados)
@@ -555,10 +553,10 @@ def asignar_jurados(request):
     else:
         anteproyecto = recuperar_anteproyecto(nombre_proyecto)
         if anteproyecto:
-            print(anteproyecto)
+
             proyecto_final = recuperar_proyecto_final(anteproyecto)
             if proyecto_final:
-                print(proyecto_final)
+
                 context['inf_proyecto'] = proyecto_final
 
         directores = recuperar_directores()
@@ -581,7 +579,6 @@ def asignar_jurados(request):
             imagen_director = recuperar_documento(director.imagen)
             context['img_director'] = imagen_director
 
-        print(context)
         form_jurados = FormJurados()
         context['form_jurados'] = form_jurados
 
@@ -699,7 +696,6 @@ def eliminar_formato(request, id):
     formato_id = id
     formato = ModelDocumentos.objects.get(id=formato_id)
     formato.delete()
-    print(f'formato {formato_id} eliminado')
     return redirect('correspondencia:formatos_documentos')
 
 
@@ -740,18 +736,19 @@ def proyectos(request):
 
 def proyectos_finalizados(request):
     context = datosusuario(request)
-    proyectos_finalizados = recuperar_proyectos_finalizados()
+    list_proyectos_finalizados = recuperar_proyectos_finalizados()
     dic_proyectos = {}
+    if list_proyectos_finalizados:
 
-    for i, proyecto in enumerate(proyectos_finalizados):
-        documento_convert = proyecto.proyecto_final
-        documento = recuperar_documento(documento_convert)
-        print(documento)
-        dic_proyectos[f'proyecto{i}'] = {
-            'proyecto': proyecto,
-            'documento_convert': documento
-        }
-    context['proyectos'] = dic_proyectos
+        for i, proyecto in enumerate(list_proyectos_finalizados):
+            documento_convert = proyecto.proyecto_final
+            documento = recuperar_documento(documento_convert)
+
+            dic_proyectos[f'proyecto{i}'] = {
+                'proyecto': proyecto,
+                'documento_convert': documento
+            }
+        context['proyectos'] = dic_proyectos
     return render(request, 'correspondencia/views_proyectos/list_proyectos_finalizados.html', context)
 
 
@@ -759,27 +756,81 @@ def proyectos_actuales(request):
     context = datosusuario(request)
     proyectos_actuales = recuperar_proyectos_pendientes()
     dic_proyectos = {}
+    if proyectos_actuales:
+        for i, proyecto in enumerate(proyectos_actuales):
+            documento_convert_carta = proyecto.carta_presentacion
+            documento_convert_ante = proyecto.anteproyecto
+            documento_carta = recuperar_documento(documento_convert_carta)
+            documento_ante = recuperar_documento(documento_convert_ante)
 
-    for i, proyecto in enumerate(proyectos_actuales):
-        documento_convert_carta = proyecto.carta_presentacion
-        documento_convert_ante = proyecto.anteproyecto
-        documento_carta = recuperar_documento(documento_convert_carta)
-        documento_ante = recuperar_documento(documento_convert_ante)
-
-        dic_proyectos[f'proyecto{i}'] = {
-            'proyecto': proyecto,
-            'documento_ante': documento_ante,
-            'documento_carta': documento_carta
-        }
-    context['proyectos'] = dic_proyectos
+            dic_proyectos[f'proyecto{i}'] = {
+                'proyecto': proyecto,
+                'documento_ante': documento_ante,
+                'documento_carta': documento_carta
+            }
+        context['proyectos'] = dic_proyectos
     return render(request, 'correspondencia/views_proyectos/list_proyectos_actuales.html', context)
 
 
 def proyecto_final(request, id):
     context = datosusuario(request)
+
     proyecto = recuperar_proyecto_finalizado(id)
+    # return HttpResponse(
+    #     proyecto
+    # )
+    integrantes = (proyecto.anteproyecto.nombre_integrante1, proyecto.anteproyecto.nombre_integrante2,
+                   proyecto.anteproyecto.director, proyecto.anteproyecto.codirector)
+    datos_integrantes = {}
+    for i, integrante in enumerate(integrantes, start=1):
+        if integrante:
+            datos_integrantes[f'integrante_{i}'] = recuperar_datos_integrantes(
+                integrante)
+        context['datos_integrantes'] = datos_integrantes
     context['proyecto'] = proyecto
-    return render(request, 'correspondencia/views_proyectos/proyecto.html', context)
+    carta_convert = recuperar_documento(
+        proyecto.anteproyecto.carta_presentacion)
+    ante_convert = recuperar_documento(proyecto.anteproyecto.anteproyecto)
+    carta_final_convert = recuperar_documento(
+        proyecto.carta_presentacion_final)
+    proyecto__final_convert = recuperar_documento(proyecto.proyecto_final)
+
+
+# añadir la logica de solicitudes pesepciales tambien pero para el proyecto finalizado
+
+    retroalimentaciones = recuperar_solicitudes_anteproyecto()
+
+    if retroalimentaciones:
+        dic_retroalimentaciones = {}
+        for i, retroalimentacion in enumerate(retroalimentaciones):
+
+            dic_retroalimentaciones[f'retroalimentacion{i}'] = {
+                'doc_retroalimentacion': recuperar_documento(retroalimentacion.doc_retroalimentacion),
+                'fecha_retroalimentacion': retroalimentacion.fecha_retroalimentacion,
+                'respuesta': retroalimentacion.retroalimentacion,
+            }
+
+            context['retroalimentaciones'] = dic_retroalimentaciones
+
+        context['formatos'] = {
+            'anteproyecto': ante_convert,
+            'carta_presentacion': carta_convert,
+            'anteproyecto': ante_convert,
+            'proyecto__final_convert': carta_final_convert
+        }
+
+    # apartado para recuperar cada una de las solicitudes especiales
+    solicitudes_especiales = recuperar_solicitudes_especiales_proyecto(
+        proyecto, proyecto.anteproyecto)
+    dict_solicitudes = {}
+    if solicitudes_especiales:
+        for i, solicitud_especial in enumerate(solicitudes_especiales):
+            dict_solicitudes[f'solicitud{i}'] = {
+                'doc_solicitudes': solicitud_especial.documento_soporte,
+                'fecha_envio': solicitud_especial.fecha_envio,
+            }
+        context['solicitudes'] = dict_solicitudes
+    return render(request, 'correspondencia/views_proyectos/proyecto_finalizado.html', context)
 
 
 def proyecto_actual(request, id):
@@ -801,7 +852,7 @@ def proyecto_actual(request, id):
 # añadir la logica de solicitudes pesepciales tambien pero para el proyecto finalizado
 
     retroalimentaciones = recuperar_solicitudes_anteproyecto()
-    print(retroalimentaciones)
+
     if retroalimentaciones:
         dic_retroalimentaciones = {}
         for i, retroalimentacion in enumerate(retroalimentaciones):
@@ -811,7 +862,7 @@ def proyecto_actual(request, id):
                 'fecha_retroalimentacion': retroalimentacion.fecha_retroalimentacion,
                 'respuesta': retroalimentacion.retroalimentacion,
             }
-            print(recuperar_documento(retroalimentacion.doc_retroalimentacion))
+
             context['retroalimentaciones'] = dic_retroalimentaciones
 
         context['formatos'] = {

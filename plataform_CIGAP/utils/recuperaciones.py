@@ -45,14 +45,14 @@ def recuperar_num_formatos_comite():
 
 
 def recuperar_proyectos_pendientes():
-    proyectos_pendientes = ModelAnteproyecto.objects.filter(
+    anteproyectos = ModelAnteproyecto.objects.filter(
         Q(solicitud_enviada=True) & Q(estado=True))
-    print(proyectos_pendientes, 'Desde utilidades')
-    if proyectos_pendientes:
-        return proyectos_pendientes
+    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))
+    if anteproyectos and proyectos_finales:
+        print(anteproyectos, 'Desde utilidades')
+        return anteproyectos
     else:
-        proyectos_pendientes = None
-        return proyectos_pendientes
+        return None
 
 
 def recuperar_proyectos_finalizados():
@@ -73,4 +73,11 @@ def recuperar_proyecto_actual(id):
     proyecto = ModelAnteproyecto.objects.get(
         id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None
     return proyecto
+
+
+def recuperar_solicitudes_especiales_proyecto(proyecto, anteproyecto):
+    solicitudes_especiales_proyecto = ModelSolicitudes.objects.filter(
+        Q(proyecto_final=proyecto) | Q(anteproyecto=anteproyecto))
+    print(solicitudes_especiales_proyecto .count())
+    return solicitudes_especiales_proyecto
 #######################################################################################################

@@ -102,7 +102,7 @@
                 <td>No cuenta con fecha de sustentación</td>
               {% endif %}
               <td>
-                <a class="btn btn-success" href="data:application/pdf;base64,{{ value.documento_convert }}" download="Proyecto_final_{{ value.proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Descargar {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
+                <a class="btn btn-success" href="{% url 'correspondencia:proyecto_final' value.proyecto.id %}">Mas info {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
               </td>
             </tr>
           {% endfor %}

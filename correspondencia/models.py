@@ -19,7 +19,7 @@ class ModelRetroalimentaciones(models.Model):
     ]
 
     anteproyecto = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
+        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Retroalimentaciones', blank=True, null=True)
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
     retroalimentacion = models.TextField(
@@ -41,7 +41,7 @@ class ModelRetroalimentaciones(models.Model):
 
 class ModelInformacionEntregaFinal(models.Model):
     anteproyecto = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)
+        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)
     jurado = models.ForeignKey(
@@ -68,7 +68,7 @@ class ModelSolicitudes(models.Model):
     user = models.ForeignKey(Usuarios, on_delete=models.SET_NULL,
                              related_name='Solicitudes', blank=True, null=True)
     anteproyecto = models.ForeignKey(
-        ModelAnteproyecto, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
+        ModelAnteproyecto, on_delete=models.CASCADE, blank=True, null=True, related_name='Solicitudes')
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
     relacionado_con = models.CharField(

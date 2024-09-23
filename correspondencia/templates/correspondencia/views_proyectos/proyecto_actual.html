@@ -14,6 +14,17 @@
       object-fit: cover;
       border-radius: 50%;
     }
+    
+    /*ajustes de diseño de la seccion de los cards para manejar los grids*/
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 4fr));
+      gap: 1rem;
+    }
+    
+    .card {
+      width: 100%;
+    }
   </style>
 
   <main class="w-100">
@@ -52,9 +63,9 @@
     padding: 12px;
     border-top: 1px solid #cacaca;">
       <h5>Documentos cargados</h5>
-      <section class="d-flex justify-content-around align-items-center">
+      <section class="grid-container w-100">
         {% if formatos %}
-          <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
+          <div class="card m-2 d-flex flex-column justify-content-between">
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.anteproyecto }}" type="application/pdf" />
             <div class="card-body">
               <p class="card-text">
@@ -68,7 +79,8 @@
               </div>
             </div>
           </div>
-          <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
+
+          <div class="card m-2 d-flex flex-column justify-content-between">
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
             <div class="card-body">
               <p class="card-text">
@@ -82,25 +94,6 @@
               </div>
             </div>
           </div>
-
-          {% comment %} {% if retroalimentaciones %}
-            {% for key, value in retroalimentaciones.items %}
-              <div class="card m-2 d-flex flex-column justify-content-between" style="width: 18rem;">
-                <embed class="card-img-top" src="data:application/pdf;base64,{{ value.doc_retroalimentacion }}" type="application/pdf" />
-                <div class="card-body">
-                  <p class="card-text">
-                    Retroalimentación por el comité para <strong>{{ proyecto.nombre_anteproyecto }}</strong>
-                  </p>
-                  <p>
-                    <strong>Fecha de retroalimentación:</strong> {{ value.fecha_retroalimentacion }}
-                  </p>
-                  <div class="botones d-flex justify-content-between">
-                    <a href="{{ value.doc_retroalimentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_retroalimentacion.pdf">Descargar</a>
-                  </div>
-                </div>
-              </div>
-            {% endfor %}
-          {% endif %} {% endcomment %}
         {% else %}
           <p>No se ha cargado ningun documento.</p>
         {% endif %}

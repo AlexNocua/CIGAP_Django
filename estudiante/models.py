@@ -54,7 +54,7 @@ class ModelProyectoFinal(models.Model):
     user = models.OneToOneField(
         Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     anteproyecto = models.OneToOneField(
-        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
+        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     jurado = models.ForeignKey(
         ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
     descripcion = models.TextField(max_length=10000, null=True, blank=True)

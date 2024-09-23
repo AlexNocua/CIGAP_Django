@@ -47,7 +47,7 @@ urlpatterns = [
          views.ver_proyecto_final, name='ver_proyecto_final'),
     path('enviar_retroalimentacion/<str:nombre_anteproyecto>',
          views.enviar_retroalimentacion, name='enviar_retroalimentacion'),
-    path('asignar_jurados/<str:nombre_proyecto>',
+    path('asignar_jurados/<str:nombre>',
          views.asignar_jurados, name='asignar_jurados'),
     ##############################################################################################
     path('proyectos',

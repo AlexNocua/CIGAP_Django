@@ -289,6 +289,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -522,6 +538,22 @@
     },
     {
         "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -1419,6 +1451,14 @@
         "documentation": {}
     },
     {
+        "label": "recuperar_solicitudes_especiales_proyecto",
+        "importPath": "plataform_CIGAP.utils.recuperaciones",
+        "description": "plataform_CIGAP.utils.recuperaciones",
+        "isExtraImport": true,
+        "detail": "plataform_CIGAP.utils.recuperaciones",
+        "documentation": {}
+    },
+    {
         "label": "fecha_actual",
         "importPath": "plataform_CIGAP.utils.funcionalidades_fechas",
         "description": "plataform_CIGAP.utils.funcionalidades_fechas",
@@ -2020,6 +2060,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "correspondencia.migrations.0020_alter_modelinformacionentregafinal_anteproyecto_and_more",
+        "description": "correspondencia.migrations.0020_alter_modelinformacionentregafinal_anteproyecto_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('correspondencia', '0019_modeldocumentos_descripcion'),\n        ('estudiante', '0021_alter_modelproyectofinal_anteproyecto'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelinformacionentregafinal',\n            name='anteproyecto',\n            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='Informacion_Entrega_Final', to='estudiante.modelanteproyecto'),",
+        "detail": "correspondencia.migrations.0020_alter_modelinformacionentregafinal_anteproyecto_and_more",
+        "documentation": {}
+    },
+    {
         "label": "ModelRetroalimentacionesAdmin",
         "kind": 6,
         "importPath": "correspondencia.admin",
@@ -2087,7 +2136,7 @@
         "kind": 6,
         "importPath": "correspondencia.models",
         "description": "correspondencia.models",
-        "peekOfCode": "class ModelRetroalimentaciones(models.Model):\n    ESTADOS_CHOICES = [\n        ('Aprobado', 'Aprobado'),\n        ('Rechazado', 'Rechazado'),\n    ]\n    anteproyecto = models.ForeignKey(\n        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)\n    proyecto_final = models.ForeignKey(\n        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)\n    retroalimentacion = models.TextField(",
+        "peekOfCode": "class ModelRetroalimentaciones(models.Model):\n    ESTADOS_CHOICES = [\n        ('Aprobado', 'Aprobado'),\n        ('Rechazado', 'Rechazado'),\n    ]\n    anteproyecto = models.ForeignKey(\n        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Retroalimentaciones', blank=True, null=True)\n    proyecto_final = models.ForeignKey(\n        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)\n    retroalimentacion = models.TextField(",
         "detail": "correspondencia.models",
         "documentation": {}
     },
@@ -2096,7 +2145,7 @@
         "kind": 6,
         "importPath": "correspondencia.models",
         "description": "correspondencia.models",
-        "peekOfCode": "class ModelInformacionEntregaFinal(models.Model):\n    anteproyecto = models.ForeignKey(\n        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n    proyecto_final = models.ForeignKey(\n        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n    jurado = models.ForeignKey(\n        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n    retroalimentaciones = models.ForeignKey(\n        ModelRetroalimentaciones, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n# creacion del modelo de solicitudes para el cambio de infromacion respecto al proyecto",
+        "peekOfCode": "class ModelInformacionEntregaFinal(models.Model):\n    anteproyecto = models.ForeignKey(\n        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Informacion_Entrega_Final', blank=True, null=True)\n    proyecto_final = models.ForeignKey(\n        ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n    jurado = models.ForeignKey(\n        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n    retroalimentaciones = models.ForeignKey(\n        ModelRetroalimentaciones, on_delete=models.SET_NULL, related_name='Informacion_Entrega_Final', blank=True, null=True)\n# creacion del modelo de solicitudes para el cambio de infromacion respecto al proyecto",
         "detail": "correspondencia.models",
         "documentation": {}
     },
@@ -2348,7 +2397,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def solicitudes_anteproyectos(request):\n    context = datosusuario(request)\n    if request.method == 'POST':\n        pass\n    else:\n        anteproyectos = recuperar_anteproyectos_pendientes()\n        context['anteproyectos'] = anteproyectos\n        print(anteproyectos)\n        return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)\ndef solicitudes_proyectos_finales(request):",
+        "peekOfCode": "def solicitudes_anteproyectos(request):\n    context = datosusuario(request)\n    if request.method == 'POST':\n        pass\n    else:\n        anteproyectos = recuperar_anteproyectos_pendientes()\n        context['anteproyectos'] = anteproyectos\n        return render(request, 'correspondencia/views_solicitud/list_anteproyectos.html', context)\ndef solicitudes_proyectos_finales(request):\n    context = context = datosusuario(request)",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2375,7 +2424,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def view_solicitud_especial(request, id):\n    context = datosusuario(request)\n    solicitud_especial = recuperar_solicitud_especial(id)\n    context['solicitud_especial'] = solicitud_especial\n    print(context['solicitud_especial'])\n    documento_binario = solicitud_especial.documento_soporte\n    documento_soporte = recuperar_documento(documento_binario)\n    context['documento_soporte'] = documento_soporte\n    print(documento_soporte)\n    if solicitud_especial.anteproyecto:",
+        "peekOfCode": "def view_solicitud_especial(request, id):\n    context = datosusuario(request)\n    solicitud_especial = recuperar_solicitud_especial(id)\n    context['solicitud_especial'] = solicitud_especial\n    documento_binario = solicitud_especial.documento_soporte\n    documento_soporte = recuperar_documento(documento_binario)\n    context['documento_soporte'] = documento_soporte\n    if solicitud_especial.anteproyecto:\n        form_anteproyecto = FormAnteproyecto(\n            instance=solicitud_especial.anteproyecto)",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2402,7 +2451,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def enviar_retroalimentacion_solicitud(request, id):\n    solicitud_especial = recuperar_solicitud_especial(id)\n    print(solicitud_especial)\n    if solicitud_especial.anteproyecto:\n        form_retro = FormRetroalimentacionAnteproyecto(\n            request.POST, request.FILES)\n        if form_retro.is_valid():\n            solicitud_especial.estado = True\n            solicitud_especial.save()\n            retroalimentacion = form_retro.save(commit=False)",
+        "peekOfCode": "def enviar_retroalimentacion_solicitud(request, id):\n    solicitud_especial = recuperar_solicitud_especial(id)\n    if solicitud_especial.anteproyecto:\n        form_retro = FormRetroalimentacionAnteproyecto(\n            request.POST, request.FILES)\n        if form_retro.is_valid():\n            solicitud_especial.estado = True\n            solicitud_especial.save()\n            retroalimentacion = form_retro.save(commit=False)\n            retroalimentacion.anteproyecto = solicitud_especial.anteproyecto",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2438,7 +2487,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def asignar_jurados(request):\n    context = datosusuario(request)\n    nombre_proyecto = request.GET.get('nombre_proyecto')\n    print(nombre_proyecto)\n    if request.method == 'POST':\n        directores_seleccionados = request.POST.getlist('directores')\n        fecha_sustentacion_str = request.POST.get('fecha_sustentacion')\n        fecha_sustentacion = datetime.fromisoformat(\n            str(fecha_sustentacion_str)).date()\n        asignacion_jurados = ModelAsignacionJurados()",
+        "peekOfCode": "def asignar_jurados(request, nombre):\n    context = datosusuario(request)\n    nombre_proyecto = nombre\n    if request.method == 'POST':\n        directores_seleccionados = request.POST.getlist('directores')\n        fecha_sustentacion_str = request.POST.get('fecha_sustentacion')\n        fecha_sustentacion = datetime.fromisoformat(\n            str(fecha_sustentacion_str)).date()\n        asignacion_jurados = ModelAsignacionJurados()\n        anteproyecto = recuperar_anteproyecto(nombre_proyecto)",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2483,7 +2532,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def eliminar_formato(request, id):\n    formato_id = id\n    formato = ModelDocumentos.objects.get(id=formato_id)\n    formato.delete()\n    print(f'formato {formato_id} eliminado')\n    return redirect('correspondencia:formatos_documentos')\n# funcion para editar un formato\ndef editar_formato(request, id):\n    formato = ModelDocumentos.objects.get(id=id)\n    if request.method == 'POST':",
+        "peekOfCode": "def eliminar_formato(request, id):\n    formato_id = id\n    formato = ModelDocumentos.objects.get(id=formato_id)\n    formato.delete()\n    return redirect('correspondencia:formatos_documentos')\n# funcion para editar un formato\ndef editar_formato(request, id):\n    formato = ModelDocumentos.objects.get(id=id)\n    if request.method == 'POST':\n        form_cargar_docs = FormDocumentos(",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2501,7 +2550,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def proyectos(request):\n    context = datosusuario(request)\n    num_proyectos_terminados = recuperar_num_proyectos_terminados()\n    num_proyectos_actuales = recuperar_num_proyectos_pendientes()\n    context['num_proyectos_actuales'] = num_proyectos_actuales\n    context['num_proyectos_terminados'] = num_proyectos_terminados\n    return render(request, 'correspondencia/views_proyectos/proyectos.html', context)\ndef proyectos_finalizados(request):\n    context = datosusuario(request)\n    proyectos_finalizados = recuperar_proyectos_finalizados()",
+        "peekOfCode": "def proyectos(request):\n    context = datosusuario(request)\n    num_proyectos_terminados = recuperar_num_proyectos_terminados()\n    num_proyectos_actuales = recuperar_num_proyectos_pendientes()\n    context['num_proyectos_actuales'] = num_proyectos_actuales\n    context['num_proyectos_terminados'] = num_proyectos_terminados\n    return render(request, 'correspondencia/views_proyectos/proyectos.html', context)\ndef proyectos_finalizados(request):\n    context = datosusuario(request)\n    list_proyectos_finalizados = recuperar_proyectos_finalizados()",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2510,7 +2559,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def proyectos_finalizados(request):\n    context = datosusuario(request)\n    proyectos_finalizados = recuperar_proyectos_finalizados()\n    dic_proyectos = {}\n    for i, proyecto in enumerate(proyectos_finalizados):\n        documento_convert = proyecto.proyecto_final\n        documento = recuperar_documento(documento_convert)\n        print(documento)\n        dic_proyectos[f'proyecto{i}'] = {\n            'proyecto': proyecto,",
+        "peekOfCode": "def proyectos_finalizados(request):\n    context = datosusuario(request)\n    list_proyectos_finalizados = recuperar_proyectos_finalizados()\n    dic_proyectos = {}\n    if list_proyectos_finalizados:\n        for i, proyecto in enumerate(list_proyectos_finalizados):\n            documento_convert = proyecto.proyecto_final\n            documento = recuperar_documento(documento_convert)\n            dic_proyectos[f'proyecto{i}'] = {\n                'proyecto': proyecto,",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2519,7 +2568,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def proyectos_actuales(request):\n    context = datosusuario(request)\n    proyectos_actuales = recuperar_proyectos_pendientes()\n    dic_proyectos = {}\n    for i, proyecto in enumerate(proyectos_actuales):\n        documento_convert_carta = proyecto.carta_presentacion\n        documento_convert_ante = proyecto.anteproyecto\n        documento_carta = recuperar_documento(documento_convert_carta)\n        documento_ante = recuperar_documento(documento_convert_ante)\n        dic_proyectos[f'proyecto{i}'] = {",
+        "peekOfCode": "def proyectos_actuales(request):\n    context = datosusuario(request)\n    proyectos_actuales = recuperar_proyectos_pendientes()\n    dic_proyectos = {}\n    if proyectos_actuales:\n        for i, proyecto in enumerate(proyectos_actuales):\n            documento_convert_carta = proyecto.carta_presentacion\n            documento_convert_ante = proyecto.anteproyecto\n            documento_carta = recuperar_documento(documento_convert_carta)\n            documento_ante = recuperar_documento(documento_convert_ante)",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2528,7 +2577,7 @@
         "kind": 2,
         "importPath": "correspondencia.views",
         "description": "correspondencia.views",
-        "peekOfCode": "def proyecto_final(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto_finalizado(id)\n    context['proyecto'] = proyecto\n    return render(request, 'correspondencia/views_proyectos/proyecto.html', context)\ndef proyecto_actual(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto_actual(id)\n    integrantes = (proyecto.nombre_integrante1, proyecto.nombre_integrante2,\n                   proyecto.director, proyecto.codirector)",
+        "peekOfCode": "def proyecto_final(request, id):\n    context = datosusuario(request)\n    proyecto = recuperar_proyecto_finalizado(id)\n    # return HttpResponse(\n    #     proyecto\n    # )\n    integrantes = (proyecto.anteproyecto.nombre_integrante1, proyecto.anteproyecto.nombre_integrante2,\n                   proyecto.anteproyecto.director, proyecto.anteproyecto.codirector)\n    datos_integrantes = {}\n    for i, integrante in enumerate(integrantes, start=1):",
         "detail": "correspondencia.views",
         "documentation": {}
     },
@@ -2839,6 +2888,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0021_alter_modelproyectofinal_anteproyecto",
+        "description": "estudiante.migrations.0021_alter_modelproyectofinal_anteproyecto",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0020_modelasignacionjurados_modelproyectofinal_jurado'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='modelproyectofinal',\n            name='anteproyecto',\n            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='Proyecto_Final', to='estudiante.modelanteproyecto'),\n        ),",
+        "detail": "estudiante.migrations.0021_alter_modelproyectofinal_anteproyecto",
+        "documentation": {}
+    },
+    {
         "label": "ModelAnteproyectoAdmin",
         "kind": 6,
         "importPath": "estudiante.admin",
@@ -2906,7 +2964,7 @@
         "kind": 6,
         "importPath": "estudiante.models",
         "description": "estudiante.models",
-        "peekOfCode": "class ModelAsignacionJurados(models.Model):\n    nombre_jurado = models.CharField(max_length=50)\n    fecha_sustentacion = models.DateField(max_length=50)\n    def save(self, *args, **kwargs):\n        super().save(*args, **kwargs)\nclass ModelProyectoFinal(models.Model):\n    user = models.OneToOneField(\n        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    anteproyecto = models.OneToOneField(\n        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)",
+        "peekOfCode": "class ModelAsignacionJurados(models.Model):\n    nombre_jurado = models.CharField(max_length=50)\n    fecha_sustentacion = models.DateField(max_length=50)\n    def save(self, *args, **kwargs):\n        super().save(*args, **kwargs)\nclass ModelProyectoFinal(models.Model):\n    user = models.OneToOneField(\n        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    anteproyecto = models.OneToOneField(\n        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)",
         "detail": "estudiante.models",
         "documentation": {}
     },
@@ -2915,7 +2973,7 @@
         "kind": 6,
         "importPath": "estudiante.models",
         "description": "estudiante.models",
-        "peekOfCode": "class ModelProyectoFinal(models.Model):\n    user = models.OneToOneField(\n        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    anteproyecto = models.OneToOneField(\n        ModelAnteproyecto, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)\n    jurado = models.ForeignKey(\n        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)\n    descripcion = models.TextField(max_length=10000, null=True, blank=True)\n    carta_presentacion_final = models.BinaryField(null=True, blank=True)\n    proyecto_final = models.BinaryField(null=True, blank=True)",
+        "peekOfCode": "class ModelProyectoFinal(models.Model):\n    user = models.OneToOneField(\n        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    anteproyecto = models.OneToOneField(\n        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    jurado = models.ForeignKey(\n        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)\n    descripcion = models.TextField(max_length=10000, null=True, blank=True)\n    carta_presentacion_final = models.BinaryField(null=True, blank=True)\n    proyecto_final = models.BinaryField(null=True, blank=True)",
         "detail": "estudiante.models",
         "documentation": {}
     },
@@ -2969,7 +3027,7 @@
         "kind": 2,
         "importPath": "estudiante.views",
         "description": "estudiante.views",
-        "peekOfCode": "def recuperar_retroalimentacion(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(\n        anteproyecto=anteproyecto_, estado__in=['Aprobado', 'Aprobado_con_correciones']).first() if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    doc_convert = devolver_documento_imagen(\n        retroalimentaciones.doc_retroalimentacion)\n    return {'respuesta': retroalimentaciones,\n            'doc_retroalimentacion': doc_convert}\ndef recuperar_retroalimentaciones(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(\n        anteproyecto=anteproyecto_)",
+        "peekOfCode": "def recuperar_retroalimentacion(anteproyecto_):\n    retroalimentaciones = ModelRetroalimentaciones.objects.filter(\n        anteproyecto=anteproyecto_, estado__in=['Aprobado', 'Aprobado_con_correciones']).first() if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None\n    if retroalimentaciones:\n        doc_convert = devolver_documento_imagen(\n            retroalimentaciones.doc_retroalimentacion)\n        return {'respuesta': retroalimentaciones,\n                'doc_retroalimentacion': doc_convert}\n    else:\n        return None",
         "detail": "estudiante.views",
         "documentation": {}
     },
@@ -3266,7 +3324,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_num_formatos_comite():\n    num_formatos = ModelDocumentos.objects.all().count()\n    return num_formatos\n#######################################################################################################\ndef recuperar_proyectos_pendientes():\n    proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    print(proyectos_pendientes, 'Desde utilidades')\n    if proyectos_pendientes:\n        return proyectos_pendientes",
+        "peekOfCode": "def recuperar_num_formatos_comite():\n    num_formatos = ModelDocumentos.objects.all().count()\n    return num_formatos\n#######################################################################################################\ndef recuperar_proyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))\n    if anteproyectos and proyectos_finales:\n        print(anteproyectos, 'Desde utilidades')",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3275,7 +3333,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyectos_pendientes():\n    proyectos_pendientes = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    print(proyectos_pendientes, 'Desde utilidades')\n    if proyectos_pendientes:\n        return proyectos_pendientes\n    else:\n        proyectos_pendientes = None\n        return proyectos_pendientes\ndef recuperar_proyectos_finalizados():",
+        "peekOfCode": "def recuperar_proyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))\n    if anteproyectos and proyectos_finales:\n        print(anteproyectos, 'Desde utilidades')\n        return anteproyectos\n    else:\n        return None\ndef recuperar_proyectos_finalizados():",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3293,7 +3351,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyecto_finalizado(id):\n    proyecto = ModelProyectoFinal.objects.get(\n        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None\n    return proyecto\ndef recuperar_proyecto_actual(id):\n    proyecto = ModelAnteproyecto.objects.get(\n        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None\n    return proyecto\n#######################################################################################################",
+        "peekOfCode": "def recuperar_proyecto_finalizado(id):\n    proyecto = ModelProyectoFinal.objects.get(\n        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None\n    return proyecto\ndef recuperar_proyecto_actual(id):\n    proyecto = ModelAnteproyecto.objects.get(\n        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None\n    return proyecto\ndef recuperar_solicitudes_especiales_proyecto(proyecto, anteproyecto):\n    solicitudes_especiales_proyecto = ModelSolicitudes.objects.filter(",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3302,7 +3360,16 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyecto_actual(id):\n    proyecto = ModelAnteproyecto.objects.get(\n        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None\n    return proyecto\n#######################################################################################################",
+        "peekOfCode": "def recuperar_proyecto_actual(id):\n    proyecto = ModelAnteproyecto.objects.get(\n        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None\n    return proyecto\ndef recuperar_solicitudes_especiales_proyecto(proyecto, anteproyecto):\n    solicitudes_especiales_proyecto = ModelSolicitudes.objects.filter(\n        Q(proyecto_final=proyecto) | Q(anteproyecto=anteproyecto))\n    print(solicitudes_especiales_proyecto .count())\n    return solicitudes_especiales_proyecto\n#######################################################################################################",
+        "detail": "plataform_CIGAP.utils.recuperaciones",
+        "documentation": {}
+    },
+    {
+        "label": "recuperar_solicitudes_especiales_proyecto",
+        "kind": 2,
+        "importPath": "plataform_CIGAP.utils.recuperaciones",
+        "description": "plataform_CIGAP.utils.recuperaciones",
+        "peekOfCode": "def recuperar_solicitudes_especiales_proyecto(proyecto, anteproyecto):\n    solicitudes_especiales_proyecto = ModelSolicitudes.objects.filter(\n        Q(proyecto_final=proyecto) | Q(anteproyecto=anteproyecto))\n    print(solicitudes_especiales_proyecto .count())\n    return solicitudes_especiales_proyecto\n#######################################################################################################",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },

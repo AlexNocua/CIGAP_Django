@@ -104,10 +104,13 @@ def contenido_anteproyecto(request):
 def recuperar_retroalimentacion(anteproyecto_):
     retroalimentaciones = ModelRetroalimentaciones.objects.filter(
         anteproyecto=anteproyecto_, estado__in=['Aprobado', 'Aprobado_con_correciones']).first() if ModelRetroalimentaciones.objects.filter(anteproyecto=anteproyecto_).exists() else None
-    doc_convert = devolver_documento_imagen(
-        retroalimentaciones.doc_retroalimentacion)
-    return {'respuesta': retroalimentaciones,
-            'doc_retroalimentacion': doc_convert}
+    if retroalimentaciones:
+        doc_convert = devolver_documento_imagen(
+            retroalimentaciones.doc_retroalimentacion)
+        return {'respuesta': retroalimentaciones,
+                'doc_retroalimentacion': doc_convert}
+    else:
+        return None
 
 
 def recuperar_retroalimentaciones(anteproyecto_):
@@ -292,8 +295,10 @@ def enviar_solicitud_proyecto(request):
             proyecto_final.fecha_envio = fecha_actual()
 
             # Depuración: Verificar que los archivos aún estén presentes
-            print(f"Archivo proyecto_final (longitud): {len(proyecto_final.proyecto_final) if proyecto_final.proyecto_final else 'No encontrado'}")
-            print(f"Archivo carta_presentacion_final (longitud): {len(proyecto_final.carta_presentacion_final) if proyecto_final.carta_presentacion_final else 'No encontrado'}")
+            print(
+                f"Archivo proyecto_final (longitud): {len(proyecto_final.proyecto_final) if proyecto_final.proyecto_final else 'No encontrado'}")
+            print(
+                f"Archivo carta_presentacion_final (longitud): {len(proyecto_final.carta_presentacion_final) if proyecto_final.carta_presentacion_final else 'No encontrado'}")
 
             # Guardar el proyecto final una sola vez
             proyecto_final.save()
