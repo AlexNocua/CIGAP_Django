@@ -494,7 +494,7 @@ def ver_proyecto_final(request, nombre):
                 print("Error al subir el documento")
             # tener en cuenta el envio de datos desde url
             url = reverse('correspondencia:asignar_jurados',
-                          kwargs={'nombre_proyecto': nombre})
+                          kwargs={'nombre': nombre})
             return redirect(url)
 
         else:

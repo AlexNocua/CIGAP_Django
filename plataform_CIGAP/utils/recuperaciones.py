@@ -43,7 +43,7 @@ def recuperar_num_formatos_comite():
 
 #######################################################################################################
 
-
+# revisar
 def recuperar_proyectos_pendientes():
     anteproyectos = ModelAnteproyecto.objects.filter(
         Q(solicitud_enviada=True) & Q(estado=True))
@@ -52,7 +52,7 @@ def recuperar_proyectos_pendientes():
         print(anteproyectos, 'Desde utilidades')
         return anteproyectos
     else:
-        return None
+        return anteproyectos
 
 
 def recuperar_proyectos_finalizados():

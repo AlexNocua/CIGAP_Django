@@ -69,3 +69,21 @@ class ModelProyectoFinal(models.Model):
     def save(self, *args, **kwargs):
         super(ModelProyectoFinal, self).save(*args, **kwargs)
 
+
+# creacion de los modelos correspondientes a la linea de tiempo
+
+
+class ModelObjetivoGeneral(models.Model):
+    anteproyecto = models.OneToOneField(ModelAnteproyecto, on_delete = models.CASCADE,  related_name='objetivo_general',blank=True, null=True)
+    descripcion = models.CharField(max_length=1000, blank=True, null=True)
+    estado = models.BooleanField(blank=True, default=False)
+
+class ModelObjetivosEspecificos(models.Model):
+    objetivo_general = models.ForeignKey(ModelObjetivoGeneral, on_delete=models.CASCADE, related_name="objetivos_especificos",blank=True, null=True)
+    descripcion = models.CharField(max_length=1000, blank=True, null=True)
+    estado = models.BooleanField(blank=True, default=False)
+
+class ModelActividades(models.Model):
+    objetivos_especificos= models.ForeignKey(ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name="actividades",blank=True, null=True)
+    descripcion = models.CharField(max_length=1000, blank=True, null=True)
+    estado = models.BooleanField(blank=True, null=True)

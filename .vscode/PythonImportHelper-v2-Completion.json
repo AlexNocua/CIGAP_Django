@@ -625,6 +625,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -2897,6 +2913,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "estudiante.migrations.0022_modelobjetivogeneral_modelobjetivosespecificos_and_more",
+        "description": "estudiante.migrations.0022_modelobjetivogeneral_modelobjetivosespecificos_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('estudiante', '0021_alter_modelproyectofinal_anteproyecto'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='ModelObjetivoGeneral',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('descripcion', models.CharField(blank=True, max_length=1000, null=True)),",
+        "detail": "estudiante.migrations.0022_modelobjetivogeneral_modelobjetivosespecificos_and_more",
+        "documentation": {}
+    },
+    {
         "label": "ModelAnteproyectoAdmin",
         "kind": 6,
         "importPath": "estudiante.admin",
@@ -2974,6 +2999,33 @@
         "importPath": "estudiante.models",
         "description": "estudiante.models",
         "peekOfCode": "class ModelProyectoFinal(models.Model):\n    user = models.OneToOneField(\n        Usuarios, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    anteproyecto = models.OneToOneField(\n        ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)\n    jurado = models.ForeignKey(\n        ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)\n    descripcion = models.TextField(max_length=10000, null=True, blank=True)\n    carta_presentacion_final = models.BinaryField(null=True, blank=True)\n    proyecto_final = models.BinaryField(null=True, blank=True)",
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "ModelObjetivoGeneral",
+        "kind": 6,
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "peekOfCode": "class ModelObjetivoGeneral(models.Model):\n    anteproyecto = models.OneToOneField(ModelAnteproyecto, on_delete = models.CASCADE,  related_name='objetivo_general',blank=True, null=True)\n    descripcion = models.CharField(max_length=1000, blank=True, null=True)\n    estado = models.BooleanField(blank=True, default=False)\nclass ModelObjetivosEspecificos(models.Model):\n    objetivo_general = models.ForeignKey(ModelObjetivoGeneral, on_delete=models.CASCADE, related_name=\"objetivos_especificos\",blank=True, null=True)\n    descripcion = models.CharField(max_length=1000, blank=True, null=True)\n    estado = models.BooleanField(blank=True, default=False)\nclass ModelActividades(models.Model):\n    objetivos_especificos= models.ForeignKey(ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name=\"actividades\",blank=True, null=True)",
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "ModelObjetivosEspecificos",
+        "kind": 6,
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "peekOfCode": "class ModelObjetivosEspecificos(models.Model):\n    objetivo_general = models.ForeignKey(ModelObjetivoGeneral, on_delete=models.CASCADE, related_name=\"objetivos_especificos\",blank=True, null=True)\n    descripcion = models.CharField(max_length=1000, blank=True, null=True)\n    estado = models.BooleanField(blank=True, default=False)\nclass ModelActividades(models.Model):\n    objetivos_especificos= models.ForeignKey(ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name=\"actividades\",blank=True, null=True)\n    descripcion = models.CharField(max_length=1000, blank=True, null=True)\n    estado = models.BooleanField(blank=True, null=True)",
+        "detail": "estudiante.models",
+        "documentation": {}
+    },
+    {
+        "label": "ModelActividades",
+        "kind": 6,
+        "importPath": "estudiante.models",
+        "description": "estudiante.models",
+        "peekOfCode": "class ModelActividades(models.Model):\n    objetivos_especificos= models.ForeignKey(ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name=\"actividades\",blank=True, null=True)\n    descripcion = models.CharField(max_length=1000, blank=True, null=True)\n    estado = models.BooleanField(blank=True, null=True)",
         "detail": "estudiante.models",
         "documentation": {}
     },
@@ -3324,7 +3376,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_num_formatos_comite():\n    num_formatos = ModelDocumentos.objects.all().count()\n    return num_formatos\n#######################################################################################################\ndef recuperar_proyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))\n    if anteproyectos and proyectos_finales:\n        print(anteproyectos, 'Desde utilidades')",
+        "peekOfCode": "def recuperar_num_formatos_comite():\n    num_formatos = ModelDocumentos.objects.all().count()\n    return num_formatos\n#######################################################################################################\n# revisar\ndef recuperar_proyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))\n    if anteproyectos and proyectos_finales:",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
@@ -3333,7 +3385,7 @@
         "kind": 2,
         "importPath": "plataform_CIGAP.utils.recuperaciones",
         "description": "plataform_CIGAP.utils.recuperaciones",
-        "peekOfCode": "def recuperar_proyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))\n    if anteproyectos and proyectos_finales:\n        print(anteproyectos, 'Desde utilidades')\n        return anteproyectos\n    else:\n        return None\ndef recuperar_proyectos_finalizados():",
+        "peekOfCode": "def recuperar_proyectos_pendientes():\n    anteproyectos = ModelAnteproyecto.objects.filter(\n        Q(solicitud_enviada=True) & Q(estado=True))\n    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))\n    if anteproyectos and proyectos_finales:\n        print(anteproyectos, 'Desde utilidades')\n        return anteproyectos\n    else:\n        return anteproyectos\ndef recuperar_proyectos_finalizados():",
         "detail": "plataform_CIGAP.utils.recuperaciones",
         "documentation": {}
     },
