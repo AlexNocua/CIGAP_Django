@@ -1,5 +1,6 @@
 from django import forms
-from .models import ModelAnteproyecto, ModelProyectoFinal
+from estudiante.views import solicitud
+from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades
 
 #!funcionando
 # class FormPrimeraSolicitud(forms.ModelForm):
@@ -69,14 +70,18 @@ class FormProyectoFinal(forms.ModelForm):
 
     def save(self, commit=True):
         form_proyecto_final = super().save(commit=False)
-        
+
         # Leer los archivos como binarios y agregar mensajes de depuración
-        doc_proyecto_final = self.cleaned_data['doc_proyecto_final_form'].read()
-        carta_presentacion_final = self.cleaned_data['carta_presentacion_final_form'].read()
+        doc_proyecto_final = self.cleaned_data['doc_proyecto_final_form'].read(
+        )
+        carta_presentacion_final = self.cleaned_data['carta_presentacion_final_form'].read(
+        )
 
         # Depuración: Verificar el contenido binario
-        print(f"Contenido binario del proyecto final (longitud): {len(doc_proyecto_final)}")
-        print(f"Contenido binario de la carta de presentación (longitud): {len(carta_presentacion_final)}")
+        print(
+            f"Contenido binario del proyecto final (longitud): {len(doc_proyecto_final)}")
+        print(
+            f"Contenido binario de la carta de presentación (longitud): {len(carta_presentacion_final)}")
 
         # Asignar el contenido leído al campo binario
         form_proyecto_final.proyecto_final = doc_proyecto_final
@@ -118,3 +123,44 @@ class FormActualizarProyectoFinal(forms.ModelForm):
             form_proyecto_final.save()
 
         return form_proyecto_final
+
+# creacion de cada uno de los formularios del apartado de la linea de tiempo de los objetivos
+
+
+class FormObjetivoGeneral(forms.ModelForm):
+    class Meta:
+        model = ObjetivoGeneral
+        fields = ('descripcion', 'estado')
+
+    def save(self, commit=True):
+        objetivo_general = super().save(commit=False)
+        objetivo_general.descripcion = self.cleaned_data['descripcion']
+        if commit:
+            objetivo_general.save()
+        return objetivo_general
+
+
+class FormObjetivosEspecificos(forms.ModelForm):
+    class Meta:
+        model = ObjetivosEspecificos
+        fields = ('descripcion', 'estado')
+
+    def save(self, commit=True):
+        objetivos_especificos = super().save(commit=False)
+        objetivos_especificos.descripcion = self.cleaned_data['descripcion']
+        if commit:
+            objetivos_especificos.save()
+        return objetivos_especificos
+
+
+class FormActividades(forms.ModelForm):
+    class Meta:
+        model = Actividades
+        fields = ('descripcion', 'estado')
+
+    def save(self, commit=True):
+        actividades = super().save(commit=False)
+        actividades.descripcion = self.cleaned_data['descripcion']
+        if commit:
+            actividades.save()
+        return actividades

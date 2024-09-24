@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 # formularios
 from correspondencia.forms import FormSolicitudes
-from .forms import FormAnteproyecto, FormProyectoFinal
+from .forms import FormAnteproyecto, FormProyectoFinal, FormObjetivoGeneral, FormObjetivosEspecificos, FormActividades
 # modelos
 from .models import ModelAnteproyecto, ModelProyectoFinal
 import base64

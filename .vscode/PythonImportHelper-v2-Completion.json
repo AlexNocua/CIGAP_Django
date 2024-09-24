@@ -1767,6 +1767,14 @@
         "documentation": {}
     },
     {
+        "label": "solicitud",
+        "importPath": "estudiante.views",
+        "description": "estudiante.views",
+        "isExtraImport": true,
+        "detail": "estudiante.views",
+        "documentation": {}
+    },
+    {
         "label": "MinValueValidator",
         "importPath": "django.core.validators",
         "description": "django.core.validators",
@@ -2962,7 +2970,7 @@
         "kind": 6,
         "importPath": "estudiante.forms",
         "description": "estudiante.forms",
-        "peekOfCode": "class FormProyectoFinal(forms.ModelForm):\n    doc_proyecto_final_form = forms.FileField(required=True)\n    carta_presentacion_final_form = forms.FileField(required=True)\n    class Meta:\n        model = ModelProyectoFinal\n        fields = ('doc_proyecto_final_form', 'carta_presentacion_final_form')\n    def save(self, commit=True):\n        form_proyecto_final = super().save(commit=False)\n        # Leer los archivos como binarios y agregar mensajes de depuración\n        doc_proyecto_final = self.cleaned_data['doc_proyecto_final_form'].read()",
+        "peekOfCode": "class FormProyectoFinal(forms.ModelForm):\n    doc_proyecto_final_form = forms.FileField(required=True)\n    carta_presentacion_final_form = forms.FileField(required=True)\n    class Meta:\n        model = ModelProyectoFinal\n        fields = ('doc_proyecto_final_form', 'carta_presentacion_final_form')\n    def save(self, commit=True):\n        form_proyecto_final = super().save(commit=False)\n        # Leer los archivos como binarios y agregar mensajes de depuración\n        doc_proyecto_final = self.cleaned_data['doc_proyecto_final_form'].read(",
         "detail": "estudiante.forms",
         "documentation": {}
     },
@@ -2972,6 +2980,33 @@
         "importPath": "estudiante.forms",
         "description": "estudiante.forms",
         "peekOfCode": "class FormActualizarProyectoFinal(forms.ModelForm):\n    doc_proyecto_final_form = forms.FileField(required=True)\n    carta_presentacion_final_form = forms.FileField(required=True)\n    class Meta:\n        model = ModelProyectoFinal\n        fields = ('doc_proyecto_final_form',\n                  'carta_presentacion_final_form', 'director', 'codirector')\n    def __init__(self, *args, **kwargs):\n        super(FormActualizarProyectoFinal, self).__init__(*args, **kwargs)\n        if self.instance and self.instance.pk:",
+        "detail": "estudiante.forms",
+        "documentation": {}
+    },
+    {
+        "label": "FormObjetivoGeneral",
+        "kind": 6,
+        "importPath": "estudiante.forms",
+        "description": "estudiante.forms",
+        "peekOfCode": "class FormObjetivoGeneral(forms.ModelForm):\n    class Meta:\n        model = ObjetivoGeneral\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        objetivo_general = super().save(commit=False)\n        objetivo_general.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            objetivo_general.save()\n        return objetivo_general",
+        "detail": "estudiante.forms",
+        "documentation": {}
+    },
+    {
+        "label": "FormObjetivosEspecificos",
+        "kind": 6,
+        "importPath": "estudiante.forms",
+        "description": "estudiante.forms",
+        "peekOfCode": "class FormObjetivosEspecificos(forms.ModelForm):\n    class Meta:\n        model = ObjetivosEspecificos\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        objetivos_especificos = super().save(commit=False)\n        objetivos_especificos.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            objetivos_especificos.save()\n        return objetivos_especificos",
+        "detail": "estudiante.forms",
+        "documentation": {}
+    },
+    {
+        "label": "FormActividades",
+        "kind": 6,
+        "importPath": "estudiante.forms",
+        "description": "estudiante.forms",
+        "peekOfCode": "class FormActividades(forms.ModelForm):\n    class Meta:\n        model = Actividades\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        actividades = super().save(commit=False)\n        actividades.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            actividades.save()\n        return actividades",
         "detail": "estudiante.forms",
         "documentation": {}
     },

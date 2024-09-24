@@ -5,7 +5,7 @@ from django.contrib import admin
 # Para conseguir renderizar componentes en el admin
 from django.utils.html import format_html
 
-from .models import ModelAnteproyecto, ModelProyectoFinal
+from .models import ModelAnteproyecto, ModelProyectoFinal,ModelObjetivoGeneral,ModelObjetivosEspecificos,ModelActividades
 # Register your models here.
 
 
