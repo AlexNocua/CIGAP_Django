@@ -1767,14 +1767,6 @@
         "documentation": {}
     },
     {
-        "label": "solicitud",
-        "importPath": "estudiante.views",
-        "description": "estudiante.views",
-        "isExtraImport": true,
-        "detail": "estudiante.views",
-        "documentation": {}
-    },
-    {
         "label": "MinValueValidator",
         "importPath": "django.core.validators",
         "description": "django.core.validators",
@@ -2988,7 +2980,7 @@
         "kind": 6,
         "importPath": "estudiante.forms",
         "description": "estudiante.forms",
-        "peekOfCode": "class FormObjetivoGeneral(forms.ModelForm):\n    class Meta:\n        model = ObjetivoGeneral\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        objetivo_general = super().save(commit=False)\n        objetivo_general.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            objetivo_general.save()\n        return objetivo_general",
+        "peekOfCode": "class FormObjetivoGeneral(forms.ModelForm):\n    class Meta:\n        model = ModelObjetivoGeneral\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        objetivo_general = super().save(commit=False)\n        objetivo_general.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            objetivo_general.save()\n        return objetivo_general",
         "detail": "estudiante.forms",
         "documentation": {}
     },
@@ -2997,7 +2989,7 @@
         "kind": 6,
         "importPath": "estudiante.forms",
         "description": "estudiante.forms",
-        "peekOfCode": "class FormObjetivosEspecificos(forms.ModelForm):\n    class Meta:\n        model = ObjetivosEspecificos\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        objetivos_especificos = super().save(commit=False)\n        objetivos_especificos.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            objetivos_especificos.save()\n        return objetivos_especificos",
+        "peekOfCode": "class FormObjetivosEspecificos(forms.ModelForm):\n    class Meta:\n        model = ModelObjetivosEspecificos\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        objetivos_especificos = super().save(commit=False)\n        objetivos_especificos.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            objetivos_especificos.save()\n        return objetivos_especificos",
         "detail": "estudiante.forms",
         "documentation": {}
     },
@@ -3006,7 +2998,7 @@
         "kind": 6,
         "importPath": "estudiante.forms",
         "description": "estudiante.forms",
-        "peekOfCode": "class FormActividades(forms.ModelForm):\n    class Meta:\n        model = Actividades\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        actividades = super().save(commit=False)\n        actividades.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            actividades.save()\n        return actividades",
+        "peekOfCode": "class FormActividades(forms.ModelForm):\n    class Meta:\n        model = ModelActividades\n        fields = ('descripcion', 'estado')\n    def save(self, commit=True):\n        actividades = super().save(commit=False)\n        actividades.descripcion = self.cleaned_data['descripcion']\n        if commit:\n            actividades.save()\n        return actividades",
         "detail": "estudiante.forms",
         "documentation": {}
     },

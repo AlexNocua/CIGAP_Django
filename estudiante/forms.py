@@ -1,5 +1,4 @@
 from django import forms
-from estudiante.views import solicitud
 from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades
 
 #!funcionando
@@ -129,7 +128,7 @@ class FormActualizarProyectoFinal(forms.ModelForm):
 
 class FormObjetivoGeneral(forms.ModelForm):
     class Meta:
-        model = ObjetivoGeneral
+        model = ModelObjetivoGeneral
         fields = ('descripcion', 'estado')
 
     def save(self, commit=True):
@@ -142,7 +141,7 @@ class FormObjetivoGeneral(forms.ModelForm):
 
 class FormObjetivosEspecificos(forms.ModelForm):
     class Meta:
-        model = ObjetivosEspecificos
+        model = ModelObjetivosEspecificos
         fields = ('descripcion', 'estado')
 
     def save(self, commit=True):
@@ -155,7 +154,7 @@ class FormObjetivosEspecificos(forms.ModelForm):
 
 class FormActividades(forms.ModelForm):
     class Meta:
-        model = Actividades
+        model = ModelActividades
         fields = ('descripcion', 'estado')
 
     def save(self, commit=True):
