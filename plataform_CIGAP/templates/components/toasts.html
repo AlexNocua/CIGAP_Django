@@ -1,0 +1,23 @@
+{% if messages %}
+  {% for message in messages %}
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 1100; top: 20px; right: 30px; position: fixed;">
+      <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="..." />
+        <strong class="me-auto">Bootstrap</strong>
+        <small class="text-muted">Ahora</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">{{ message }}</div>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach((toast) => toast.show())
+  })
+</script>

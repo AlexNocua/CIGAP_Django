@@ -59,8 +59,6 @@ class ModelProyectoFinalAdmin(admin.ModelAdmin):
         'user',
         'anteproyecto',
         'jurado',
-        'director',
-        'codirector',
         'fecha_envio',
         'solicitud_enviada',
         'estado',
@@ -97,3 +95,29 @@ class ModelProyectoFinalAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ModelProyectoFinal, ModelProyectoFinalAdmin)
+
+
+###########################################################################
+# tener en cuenta estas nuevas formas de registro de los modelos en el panel de administracion
+
+
+@admin.register(ModelObjetivoGeneral)
+class ModelObjetivoGeneralAdmin(admin.ModelAdmin):
+    list_display = ('anteproyecto', 'descripcion', 'estado')
+    search_fields = ('descripcion',)
+    list_filter = ('estado',)
+
+
+@admin.register(ModelObjetivosEspecificos)
+class ModelObjetivosEspecificosAdmin(admin.ModelAdmin):
+    list_display = ('objetivo_general', 'descripcion', 'estado')
+    search_fields = ('descripcion',)
+    list_filter = ('estado',)
+
+
+@admin.register(ModelActividades)
+class ModelActividadesAdmin(admin.ModelAdmin):
+    list_display = ('objetivos_especificos', 'descripcion', 'estado')
+    search_fields = ('descripcion',)
+    list_filter = ('estado',)
+

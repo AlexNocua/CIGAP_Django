@@ -3,7 +3,14 @@ from .models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJ
 
 
 class FormRetroalimentacionAnteproyecto(forms.ModelForm):
-    doc_retroalimentacion_convert = forms.FileField(required=True)
+    doc_retroalimentacion_convert = forms.FileField(
+        required=True,
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'custom-file-input',  # Clase CSS para el estilo
+            'id': 'doc_retroalimentacion_convert',  # ID específico
+            'accept': 'application/pdf'  # Aceptar solo PDF
+        })
+    )
 
     class Meta:
         model = ModelRetroalimentaciones
@@ -16,6 +23,30 @@ class FormRetroalimentacionAnteproyecto(forms.ModelForm):
         retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(
         )
         retroalimentacion.estado = self.cleaned_data['estado']
+        if commit:
+            retroalimentacion.save()
+        return retroalimentacion
+class FormObservacionAnteproyecto(forms.ModelForm):
+    doc_retroalimentacion_convert = forms.FileField(
+        required=True,
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'custom-file-input',  # Clase CSS para el estilo
+            'id': 'doc_retroalimentacion_convert',  # ID específico
+            'accept': 'application/pdf'  # Aceptar solo PDF
+        })
+    )
+
+    class Meta:
+        model = ModelRetroalimentaciones
+        fields = ('retroalimentacion',
+                  'doc_retroalimentacion_convert', )
+
+    def save(self, commit=True):
+        retroalimentacion = super().save(commit=False)
+        retroalimentacion.retroalimentacion = self.cleaned_data['retroalimentacion']
+        retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(
+        )
+        
         if commit:
             retroalimentacion.save()
         return retroalimentacion
@@ -39,6 +70,27 @@ class FormRetroalimentacionProyecto(forms.ModelForm):
         retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(
         )
         retroalimentacion.estado = self.cleaned_data['estado']
+        if commit:
+            retroalimentacion.save()
+        return retroalimentacion
+class FormObservacionProyecto(forms.ModelForm):
+    doc_retroalimentacion_convert = forms.FileField(required=True)
+
+    class Meta:
+        model = ModelRetroalimentaciones
+        fields = ('retroalimentacion',
+                  'doc_retroalimentacion_convert', )
+
+        estado = forms.ChoiceField(
+            widget=forms.CheckboxSelectMultiple(attrs={'id': 'element_estado'})
+        )
+
+    def save(self, commit=True):
+        retroalimentacion = super().save(commit=False)
+        retroalimentacion.retroalimentacion = self.cleaned_data['retroalimentacion']
+        retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(
+        )
+        
         if commit:
             retroalimentacion.save()
         return retroalimentacion
@@ -104,7 +156,8 @@ class FormDocumentos(forms.ModelForm):
 
     class Meta:
         model = ModelDocumentos
-        fields = ['nombre_documento', 'descripcion', 'version', 'documento_convert']
+        fields = ['nombre_documento', 'descripcion',
+                  'version', 'documento_convert']
 
     def __init__(self, *args, **kwargs):
         super(FormDocumentos, self).__init__(*args, **kwargs)
@@ -114,9 +167,8 @@ class FormDocumentos(forms.ModelForm):
     def save(self, commit=True):
         documentos = super().save(commit=False)
         if self.cleaned_data['documento_convert']:
-            documentos.documento = self.cleaned_data['documento_convert'].read()
+            documentos.documento = self.cleaned_data['documento_convert'].read(
+            )
         if commit:
             documentos.save()
         return documentos
-
-

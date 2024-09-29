@@ -99,7 +99,7 @@ class FormActualizarProyectoFinal(forms.ModelForm):
     class Meta:
         model = ModelProyectoFinal
         fields = ('doc_proyecto_final_form',
-                  'carta_presentacion_final_form', 'director', 'codirector')
+                  'carta_presentacion_final_form',)
 
     def __init__(self, *args, **kwargs):
         super(FormActualizarProyectoFinal, self).__init__(*args, **kwargs)

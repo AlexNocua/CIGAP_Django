@@ -57,14 +57,12 @@ class ModelProyectoFinal(models.Model):
         ModelAnteproyecto, on_delete=models.CASCADE, related_name='Proyecto_Final', blank=True, null=True)
     jurado = models.ForeignKey(
         ModelAsignacionJurados, on_delete=models.SET_NULL, related_name='Proyecto_Final', blank=True, null=True)
-    descripcion = models.TextField(max_length=10000, null=True, blank=True)
     carta_presentacion_final = models.BinaryField(null=True, blank=True)
     proyecto_final = models.BinaryField(null=True, blank=True)
-    director = models.CharField(max_length=200, null=True)
-    codirector = models.CharField(max_length=200, null=True, blank=True)
-    fecha_envio = models.CharField(max_length=200)
-    solicitud_enviada = models.BooleanField()
-    estado = models.BooleanField(default=False)
+
+    fecha_envio = models.CharField(max_length=200,null=True, blank=True)
+    solicitud_enviada = models.BooleanField(default =False,null=True, blank=True)
+    estado = models.BooleanField(default=False,null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super(ModelProyectoFinal, self).save(*args, **kwargs)

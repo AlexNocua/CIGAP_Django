@@ -1,0 +1,60 @@
+{% extends 'director/base_director.html' %}
+
+{% block anteproyectos %}
+  <style>
+    .principal_director {
+      display: none;
+    }
+    
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 4fr));
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .no-projects {
+      text-align: center;
+      color: #777;
+    }
+    .cont_anteproyectos {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+
+  <article class="cont_anteproyectos">
+    <h3>Proyectos Asignados</h3>
+    <p>En esta sección se presenta una descripción breve de los proyectos en los que actualmente se encuentra trabajando, incluyendo detalles relevantes y el estado de cada uno.</p>
+    <section class="grid-container">
+      {% if anteproyectos %}
+        {% for anteproyecto in anteproyectos %}
+          <div class="card d-flex flex-column justify-content-center align-items-center">
+            <h5 class="d-flex justify-content-center align-items-center" style="max-height: 300px;min-height: 100px;">{{ anteproyecto.nombre_anteproyecto }}</h5>
+            <p style="max-height: 200px; min-height:200px;overflow: scroll;
+">
+              <strong>descripción:</strong><br />{{ anteproyecto.descripcion }}
+            </p>
+            <a href="{% url 'director:anteproyecto' anteproyecto.id %}">Ver detalles</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-projects">
+          <h4>No hay proyectos asignados</h4>
+          <p>Actualmente no tiene ningún proyecto asignado. Por favor, revise más tarde para actualizaciones.</p>
+        </div>
+      {% endif %}
+    </section>
+  </article>
+
+  {% comment %}#######################################################################{% endcomment %}
+  {% comment %}vistas de las plantillas hijas{% endcomment %}
+  {% block anteproyecto %}
+
+  {% endblock %}
+  {% comment %}#######################################################################{% endcomment %}
+{% endblock %}

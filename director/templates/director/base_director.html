@@ -21,10 +21,8 @@
     .cards {
       /*distancia entre componentes dentro del Grid*/
       grid-gap: 20px;
-      /*Alineacion de componentes del grid
-                                                                                                                                                                    justify-self: center;
-                                                                                                                                                                    align-self: center;
-                                                                                                                                                                    */
+      /*Alineacion de componentes del grid*/
+
     }
     
     .cards img {
@@ -35,8 +33,7 @@
       min-width: 250px;
       padding: 12px;
     
-      /*                    esta configuracion es para recortar la imagen sin que pierda sus proporciones iniciales
-                                                                                                                                                                */
+      /*                    esta configuracion es para recortar la imagen sin que pierda sus proporciones iniciales*/
       object-fit: cover;
     }
     
@@ -52,12 +49,55 @@
       background: rgba(255, 255, 255, 0.7) !important;
       z-index: 100;
     }
+
+    .principal {
+      display: flex;
+    }
+    .panel_config,
+    form {
+      z-index: 0;
+    }
+    .views {
+      z-index: 100;
+    }
   </style>
 
-  {% include 'components/view_drcr.html' %}
-  <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
-    {% include 'components/config_user.html' %}
+  <div class="position-relative container justify-content-center align-items-center w-100">
+    <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
+      {% include 'components/config_user.html' %}
+    </div>
+    <div class="principal_director">
+      {% include 'components/view_drcr.html' %}
+    </div>
+    <div class="views container mt-4">
+      {% comment %}###################################################################{% endcomment %}
+
+      {% block proyectos %}
+
+      {% endblock %}
+      {% block proyecto %}
+
+      {% endblock %}
+      {% comment %}###################################################################{% endcomment %}
+      {% block anteproyectos %}
+
+      {% endblock %}
+
+      {% comment %}###################################################################{% endcomment %}
+      {% block evaluacion_proyectos %}
+
+      {% endblock %}
+
+      {% block evaluador_proyectos %}
+        {% block evaluador_jurado %}
+
+        {% endblock %}
+      {% endblock %}
+      {% comment %}###################################################################{% endcomment %}
+    </div>
   </div>
+
+
   <script>
     console.log('manipulacion del config funcionando')
     

@@ -15,9 +15,6 @@ body {
 }
 
 
-html, body {
-    min-height: 100%;
-}
 
 .fondo {
     position: absolute;
