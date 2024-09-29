@@ -1,6 +1,11 @@
+<style>
+  .toast {
+    z-index: 1001;
+  }
+</style>
 {% if messages %}
   {% for message in messages %}
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 1100; top: 20px; right: 30px; position: fixed;">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 1001; top: 20px; right: 30px; position: fixed;">
       <div class="toast-header">
         <img src="..." class="rounded me-2" alt="..." />
         <strong class="me-auto">Bootstrap</strong>

@@ -14,6 +14,8 @@ urlpatterns = [
     path('solicitudes', views.solicitudes, name='solicitudes'),
     path('solicitudes_anteproyectos', views.solicitudes_anteproyectos,
          name='solicitudes_anteproyectos'),
+    path('asignar_evaluadores_ante/<int:id>', views.asignar_evaluadores_ante,
+         name='asignar_evaluadores_ante'),
     path('solicitudes_proyectos_finales', views.solicitudes_proyectos_finales,
          name='solicitudes_proyectos_finales'),
     path('solicitudes_especiales', views.solicitudes_especiales,

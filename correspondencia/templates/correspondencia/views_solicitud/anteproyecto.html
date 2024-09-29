@@ -215,7 +215,35 @@
               <a class="" href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
           </ol>
-          <button id="btn-asignar">Asignar docente evaluador</button>
+          {% if evaluaciones %}
+            <div class="">
+              <button id="btn-asignar" class="btn btn-primary mt-2 mb-3">Asignar docente evaluador</button>
+              <p class="m-0 p-0 text-center">
+                <strong class="text-center">Directores o director asignado</strong>
+              </p>
+              {% for evaluacion in evaluaciones %}
+                <div class="list-group-item">
+                  <h6 class="mb-1">{{ evaluacion.evaluador.nombre_completo }}</h6>
+                  <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
+                  {% if evaluacion.comentarios %}
+                    <p class="mb-1">
+                      <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+                    </p>
+                    <p class="mb-1">
+                      <strong>Calificación:</strong> {{ evaluacion.calificacion }}
+                    </p>
+                    <p class="mb-1">
+                      <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
+                    </p>
+                  {% else %}
+                    <p class="mb-1 text-muted">Aún no se ha dado una evaluación</p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <button id="btn-asignar" class="btn btn-primary">Asignar docente evaluador</button>
+          {% endif %}
         </div>
         <div class="info-integrantes-ante col mt-2 p-2">
           <p class="text-center">
@@ -266,14 +294,14 @@
       <!-- Descripción añadida -->
       <p class="form-directores-description">Selecciona uno o más directores para asignar a este proyecto. Puedes elegir varios si es necesario.</p>
 
-      <form id="directoresForm" class="needs-validation form-directores-form" novalidate method="post">
+      <form id="directoresForm" action="{% url 'correspondencia:asignar_evaluadores_ante' inf_anteproyecto.anteproyecto.id %}" class="needs-validation form-directores-form" novalidate method="post">
         {% csrf_token %}
 
         <div class="form-directores-container">
           {% for director in directores %}
             <div class="form-directores-item d-flex justify-content-between align-items-center mb-3">
               <label for="{{ director.nombre_completo }}" class="form-directores-label">{{ director.nombre_completo }}</label>
-              <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.nombre_completo }}" class="form-directores-checkbox" />
+              <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.id }}" class="form-directores-checkbox" />
             </div>
           {% endfor %}
         </div>

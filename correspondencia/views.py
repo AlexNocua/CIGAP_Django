@@ -5,6 +5,7 @@ from plataform_CIGAP.views import logout_user
 from django.contrib.auth.decorators import login_required
 import base64
 from datetime import datetime
+from django.contrib import messages
 # importacion de operadores para consultas de django
 from django.db.models import Q
 
@@ -18,6 +19,7 @@ from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de los modelos
 from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
+from director.models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
 from login.models import Usuarios
 from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados, ModelDocumentos
 
@@ -36,6 +38,19 @@ from django.views.generic.edit import CreateView
 #     return HttpResponse('app_ correspondencia funcionando.')
 ########################################################################################################################
 # Recuperar informaciones y funciones especificas para las vistas
+
+
+def recuperar_usuario(id):
+    usuario = Usuarios.objects.get(id=id)
+    if not usuario:
+        return None
+    return usuario
+
+
+def verificar_evaluador(id):
+    es_evaluador = ModelEvaluacionAnteproyecto.objects.filter(
+        evaluador__id=id).exists()
+    return es_evaluador
 
 
 def recuperar_anteproyectos_pendientes():
@@ -94,6 +109,13 @@ def recuperar_anteproyecto(nombre):
         nombre_anteproyecto=nombre).exists() else None
     return anteproyecto
 
+
+def recuperar_anteproyecto_id(id):
+    anteproyecto = ModelAnteproyecto.objects.get(id=id)
+    if not anteproyecto:
+        return None
+    return anteproyecto
+
 # funcion para recuperar un proyecto Final
 
 
@@ -147,7 +169,17 @@ def recuperar_datos_integrantes(nombre):
         return {'nombre': nombre, 'imagen': False, 'grupo': 'Desconocido'}
 
 
+def recuperar_evaluaciones_anteproyecto(anteproyecto):
+    evaluaciones_anteproyecto = ModelEvaluacionAnteproyecto.objects.filter(
+        anteproyecto=anteproyecto)
+    if evaluaciones_anteproyecto:
+        return evaluaciones_anteproyecto
+    else:
+        return None
+
 # funcion para traer la lista de solicitudes
+
+
 def recuperar_solicitudes():
     solicitudes = ModelRetroalimentaciones.objects.all()
     return solicitudes
@@ -180,7 +212,7 @@ def recuperar_documento(documento):
 
 def recuperar_directores():
     directores = Usuarios.objects.filter(
-        groups__name="Directores").values('nombre_completo', 'email')
+        groups__name="Directores").values('id', 'nombre_completo', 'email')
     if directores:
         return directores
     else:
@@ -398,9 +430,13 @@ def enviar_retroalimentacion_solicitud(request, id):
 def ver_anteproyecto(request, nombre_anteproyecto):
     context = datosusuario(request)
     directores = recuperar_directores()
+
     if directores:
         context['directores'] = directores
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
+    evaluaciones = recuperar_evaluaciones_anteproyecto(anteproyecto)
+    if evaluaciones:
+        context['evaluaciones'] = evaluaciones
     doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)
     doc_carta = recuperar_documento(anteproyecto.carta_presentacion)
     context['inf_anteproyecto'] = {'anteproyecto': anteproyecto,
@@ -595,9 +631,35 @@ def asignar_jurados(request, nombre):
         return render(request, 'correspondencia/views_solicitud/asignacion_jurados.html', context)
 
 
-########################################################################################################################
+def asignar_evaluadores_ante(request, id):
+    anteproyecto = recuperar_anteproyecto_id(id)
+    if anteproyecto:
+        directores_evaluadores_id = request.POST.getlist('directores')
 
-# listado de solicitudes
+        for director_id in directores_evaluadores_id:
+            usuario = recuperar_usuario(director_id)
+            es_evaluador = verificar_evaluador(director_id)
+            if es_evaluador:
+                messages.error(
+                    request, f'El director {usuario.nombre_completo} ya fue asignado para evaluar el anteproyecto {anteproyecto.nombre_anteproyecto}')
+                return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+
+            evaluacion_anteproyecto = ModelEvaluacionAnteproyecto(
+                evaluador=usuario,
+                anteproyecto=anteproyecto,
+                fecha_asignacion=fecha_actual()
+            )
+            evaluacion_anteproyecto.save()
+        messages.success(
+            request, f'Los directores han sido asignados exitosamente para la evaluación del anteproyecto {anteproyecto.nombre_anteproyecto}.')
+        return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+    else:
+        messages.error(
+            request, f'Hubo un error al asignar los directores para la evaluación del anteproyecto {anteproyecto.nombre_anteproyecto}')
+    return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+    ########################################################################################################################
+
+    # listado de solicitudes
 
 
 def solicitudes_respondidas(request):
