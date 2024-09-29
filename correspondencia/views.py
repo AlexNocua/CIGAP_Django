@@ -39,13 +39,14 @@ from django.views.generic.edit import CreateView
 
 
 def recuperar_anteproyectos_pendientes():
-    anteproyectos_pendientes = ModelAnteproyecto.objects.filter(estado=False,solicitud_enviada = True)
+    anteproyectos_pendientes = ModelAnteproyecto.objects.filter(
+        estado=False, solicitud_enviada=True)
     return anteproyectos_pendientes
 
 
 def recuperar_proyectos_finales_pendientes():
-    proyectos_finales_pendientes = ModelProyectoFinal.objects.filter(solicitud_enviada = True, estado = False
-       )
+    proyectos_finales_pendientes = ModelProyectoFinal.objects.filter(solicitud_enviada=True, estado=False
+                                                                     )
     return proyectos_finales_pendientes
 
 
@@ -111,7 +112,8 @@ def recuperar_proyecto_aceptado(anteproyecto):
 
 
 def recuperar_proyectos_finales():
-    proyectos_finales = ModelProyectoFinal.objects.filter(solicitud_enviada = True)
+    proyectos_finales = ModelProyectoFinal.objects.filter(
+        solicitud_enviada=True)
     return proyectos_finales
 
 # funcion para recuperar una solicitud espeial
@@ -395,6 +397,9 @@ def enviar_retroalimentacion_solicitud(request, id):
 
 def ver_anteproyecto(request, nombre_anteproyecto):
     context = datosusuario(request)
+    directores = recuperar_directores()
+    if directores:
+        context['directores'] = directores
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
     doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)
     doc_carta = recuperar_documento(anteproyecto.carta_presentacion)
@@ -439,9 +444,9 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 # salvar las informaciones
                 anteproyecto.save(update_fields=['estado',])
                 nuevo_proyecto_final = ModelProyectoFinal(
-                user=request.user,
-                anteproyecto=anteproyecto,
-            )
+                    user=request.user,
+                    anteproyecto=anteproyecto,
+                )
                 nuevo_proyecto_final.save()
                 retroalimentacion.save()
             if retroalimentacion.doc_retroalimentacion:

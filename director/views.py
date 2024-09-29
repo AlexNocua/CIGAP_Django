@@ -5,6 +5,8 @@ from login.models import Usuarios
 from django.contrib.auth import login as auth_login
 import base64
 from django.contrib import messages
+from django.db.models import Q
+
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
@@ -15,9 +17,11 @@ from login.forms import FormEditarUsuario
 # Create your views here.
 
 # formulario de retroalimentaciones de correspondencia
-from correspondencia.forms import  FormObservacionAnteproyecto,FormObservacionProyecto
+from correspondencia.forms import FormObservacionAnteproyecto, FormObservacionProyecto
 from correspondencia.views import recuperar_anteproyecto
 
+# imortacion de modelos de los estudinates
+from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
 
 
 # datos del usuario
@@ -48,7 +52,8 @@ def recuperar_documento(documento):
 def recuperar_anteproyectos(request):
     usuario = request.user
     anteproyectos = ModelAnteproyecto.objects.filter(
-        (Q(director=usuario) | Q(codirector=usuario)) & Q(estado=False)
+        (Q(director=usuario.nombre_completo) | Q(
+            codirector=usuario.nombre_completo)) & Q(estado=False)
     )
     if not anteproyectos.exists():
         anteproyectos = None
@@ -64,8 +69,11 @@ def recuperar_anteproyecto(id):
 
 def recuperar_proyectos(request):
     usuario = request.user
-    proyectos = ModelProyectoFinal.objects.filter((Q(anteproyecto__director=usuario.nombre_completo) | Q(anteproyecto__codirector=usuario.nombre_completo)) & Q(estado=False)) if ModelProyectoFinal.objects.filter(
-        Q(anteproyecto__director=usuario.nombre_completo) | Q(anteproyecto__codirector=usuario.nombre_completo)).exists() else None
+    proyectos = ModelProyectoFinal.objects.filter((Q(anteproyecto__director=usuario.nombre_completo) | Q(
+        anteproyecto__codirector=usuario.nombre_completo)) & Q(estado=False))
+    print(proyectos)
+    if not proyectos:
+        return None
     return proyectos
 
 
@@ -76,7 +84,6 @@ def recuperar_proyecto(id):
         return None
     return proyecto
 #############################################################################################################
-
 
 
 @login_required
@@ -182,13 +189,13 @@ def view_proyectos(request):
     proyectos = recuperar_proyectos(request)
     if proyectos:
         context['proyectos'] = proyectos
-    
+
     return render(request, 'director/proyectos/proyectos.html', context)
 
 
 def proyecto(request, id):
     context = {}
-    proyecto = recuperar_proyecto(id)     
+    proyecto = recuperar_proyecto(id)
     if proyecto:
         context['proyecto_final'] = proyecto
         doc_proyecto_final = recuperar_documento(proyecto.proyecto_final)
@@ -196,7 +203,7 @@ def proyecto(request, id):
             proyecto.carta_presentacion_final)
         context['doc_proyecto_final'] = doc_proyecto_final
         context['doc_carta_presentacion_final'] = doc_carta_presentacion_final
-        
+
     if request.method == 'POST':
         formulario_observacion = FormObservacionProyecto(
             request.POST, request.FILES)
@@ -215,8 +222,9 @@ def proyecto(request, id):
                 request, f'Hubo un error al enviar la retroalimentación. Por favor, revise los campos. {formulario_retroalimentacion.errors}')
     else:
         formulario_observacion = FormObservacionProyecto()
-        context['from_retroalimentacion'] =formulario_observacion
+        context['from_retroalimentacion'] = formulario_observacion
     return render(request, 'director/proyectos/proyecto.html', context)
+
 
 def enviar_proyecto(request, id):
     proyecto = recuperar_proyecto(id)

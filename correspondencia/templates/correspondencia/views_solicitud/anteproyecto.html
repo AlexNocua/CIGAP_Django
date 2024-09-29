@@ -24,14 +24,177 @@
       display: flex;
       flex-direction: column;
     }
+    
+    .section_anteproyecto {
+      z-index: 100;
+      overflow: hidden;
+    }
+    .info-integrantes-ante {
+      z-index: 0;
+    }
+    
+    /* Mejora la responsividad */
+    @media (max-width: 768px) {
+      .info_anteproyecto {
+        grid-template-columns: 1fr; /* Columna única en pantallas pequeñas */
+      }
+    
+      .form-group.row {
+        flex-direction: column; /* Colocar los elementos en columna */
+      }
+    
+      .col {
+        margin-bottom: 1rem; /* Espaciado entre columnas */
+      }
+    }
+    .form_retroalimentacion {
+      position: absolute;
+      box-shadow: 0px 0px 11px 0px #636363;
+      border: 1px solid #cacaca;
+      border-radius: 12px;
+      padding: 12px;
+      background: #ffffff;
+      top: 5%;
+      transition: all 0.5s;
+      z-index: 200;
+      max-width: 100%; /* Ajustar ancho máximo */
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores {
+      transition: all 0.5s;
+      right: -1000px; /* Posición fuera de la pantalla inicialmente */
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: left; /* Agregado */
+      z-index: 1000;
+    }
+    
+    #formDirectores h5 {
+      margin-bottom: 20px;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores .font-weight-bold {
+      font-weight: bold;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores .btn-primary {
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores .btn-outline-danger {
+      border: 1px solid #dc3545;
+      border-radius: 4px;
+      color: #dc3545;
+      font-weight: bold;
+      text-align: left; /* Agregado */
+    }
+    
+    /* Clase específica para el formulario modal */
+    .form-retoalimentacion-modal {
+      width: 100%;
+      max-width: 500px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f8f9fa; /* Fondo claro */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 0;
+      opacity: 0;
+    }
+    
+    .form-directores-description {
+      font-size: 0.95rem;
+      color: #6c757d; /* Color de texto sutil */
+      margin-bottom: 1rem; /* Espacio debajo de la descripción */
+      text-align: center; /* Centrar el texto */
+    }
+    /* Estilo para el título del formulario */
+    .form-directores-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #343a40;
+      text-align: center;
+    }
+    
+    /* Contenedor de los elementos del formulario */
+    .form-directores-container {
+      padding: 10px;
+    }
+    
+    /* Estilo para cada ítem (director) */
+    .form-directores-item {
+      padding: 8px 0;
+    }
+    
+    /* Estilo para las etiquetas de los directores */
+    .form-directores-label {
+      font-size: 1rem;
+      color: #495057;
+      margin-right: 10px;
+    }
+    
+    /* Estilo para los checkboxes */
+    .form-directores-checkbox {
+      transform: scale(1.2);
+      accent-color: #007bff;
+    }
+    
+    /* Acciones (botones) del formulario */
+    .form-directores-actions {
+      margin-top: 20px;
+    }
+    
+    /* Estilo del botón de enviar */
+    .form-directores-submit {
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    /* Efecto hover para el botón de enviar */
+    .form-directores-submit:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Estilo del botón de cancelar */
+    .form-directores-cancel {
+      border: 1px solid #dc3545;
+      color: #dc3545;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    /* Efecto hover para el botón de cancelar */
+    .form-directores-cancel:hover {
+      background-color: #f8d7da;
+      transform: scale(1.05);
+    }
+    
+    /* Spinner de carga oculto inicialmente */
+    .spinner-border {
+      margin-right: 8px;
+    }
   </style>
-  <section class="container mt-3">
+  <section class="container section_anteproyecto mt-3 d-flex justify-content-center align-items-center position-relative">
     <div class="row info_anteproyecto d-flex">
-      {% comment %}tener en cuneta el acceso a las llaves e items{% endcomment %}
       <h2>Proyecto: {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</h2>
-      <div class="container-fluid row">
-        <h4>Información de la solicitud</h4>
-
+      <h4>Información de la solicitud</h4>
+      <div class="container-fluid d-flex flex-column flex-md-row">
         <div class="col mt-2 p-2">
           <p class="m-0 p-0 text-center">
             <strong class="text-center">Información del proyecto</strong>
@@ -52,8 +215,9 @@
               <a class="" href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
           </ol>
+          <button id="btn-asignar">Asignar docente evaluador</button>
         </div>
-        <div class="col mt-2 p-2">
+        <div class="info-integrantes-ante col mt-2 p-2">
           <p class="text-center">
             <strong>Miembros</strong>
           </p>
@@ -64,7 +228,6 @@
               {% else %}
                 <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
               {% endif %}
-
               <p class="m-1">
                 {{ integrante.nombre }}<br />
                 <strong>{{ integrante.grupo }}</strong>
@@ -74,7 +237,6 @@
         </div>
       </div>
 
-      {% comment %}apartado de retroalimentacione{% endcomment %}
       <div class="col container-fluid mt-4">
         <h3>Enviar Retroalimentación</h3>
         <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion' inf_anteproyecto.anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
@@ -93,10 +255,110 @@
               {{ inf_anteproyecto.form_retroalimentacion.estado }}
             </div>
           </div>
-          {% comment %}buenas{% endcomment %}
           <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
       </div>
     </div>
+
+    <div id="formDirectores" class="form-retoalimentacion-modal position-absolute mt-2 p-4">
+      <h5 class="form-directores-title">Seleccionar Directores</h5>
+
+      <!-- Descripción añadida -->
+      <p class="form-directores-description">Selecciona uno o más directores para asignar a este proyecto. Puedes elegir varios si es necesario.</p>
+
+      <form id="directoresForm" class="needs-validation form-directores-form" novalidate method="post">
+        {% csrf_token %}
+
+        <div class="form-directores-container">
+          {% for director in directores %}
+            <div class="form-directores-item d-flex justify-content-between align-items-center mb-3">
+              <label for="{{ director.nombre_completo }}" class="form-directores-label">{{ director.nombre_completo }}</label>
+              <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.nombre_completo }}" class="form-directores-checkbox" />
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="form-directores-actions d-flex justify-content-center mt-4 gap-3">
+          <button type="submit" id="btnEnviarDirectores" class="btn form-directores-submit px-5 py-2">
+            <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
+            Enviar
+          </button>
+          <button type="button" id="btn-cerrar-directores" class="btn form-directores-cancel px-5 py-2">Cancelar</button>
+        </div>
+      </form>
+    </div>
   </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('btn-asignar').addEventListener('click', function () {
+        const formdirectores = document.getElementById('formDirectores')
+        formdirectores.style.position = 'fixed'
+        formdirectores.style.top = '50%'
+        formdirectores.style.left = '50%'
+        formdirectores.style.transform = 'translate(-50%, -50%)'
+        formdirectores.style.transition = 'opacity 0.5s'
+        formdirectores.style.opacity = '1'
+        formdirectores.style.zIndex = '1000'
+      })
+    
+      document.getElementById('btn-cerrar-directores').addEventListener('click', function () {
+        const formdirectores = document.getElementById('formDirectores')
+        console.log('funcionando')
+        formdirectores.style.opacity = '0'
+        formdirectores.style.transition = 'opacity 0.5s'
+    
+        setTimeout(() => {
+          formdirectores.style.zIndex = '-1'
+          formdirectores.style.position = 'absolute'
+        }, 500)
+      })
+    
+      document.getElementById('directoresForm').addEventListener('submit', function (event) {
+        event.preventDefault() // Prevenir el envío predeterminado
+    
+        const form = event.target
+    
+        // Verificar si el formulario es válido
+        if (!form.checkValidity()) {
+          event.stopPropagation()
+          form.classList.add('was-validated') // Mostrar errores de validación
+          Swal.fire({
+            icon: 'error',
+            title: 'Formulario incompleto',
+            text: 'Por favor, complete todos los campos requeridos antes de enviar.'
+          })
+          return
+        }
+    
+        Swal.fire({
+          title: '¿Está seguro de que desea enviar?',
+          text: 'Una vez enviado, no podrá cambiar su selección.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, enviar',
+          cancelButtonText: 'No, cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Mostrar animación de carga
+            Swal.fire({
+              title: 'Enviando...',
+              allowOutsideClick: false,
+              didOpen: () => {
+                Swal.showLoading() // Mostrar el spinner de carga
+              }
+            })
+    
+            // Agregar un delay de 3000 ms antes de enviar el formulario
+            setTimeout(() => {
+              form.submit() // Enviar el formulario después de 3 segundos
+            }, 3000)
+          }
+        })
+      })
+    })
+  </script>
 {% endblock %}
