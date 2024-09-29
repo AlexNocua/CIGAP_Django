@@ -1,0 +1,67 @@
+{% extends 'director/base_director.html' %}
+{% block evaluacion_proyectos %}
+  <style>
+    .principal_director {
+      display: none;
+    }
+    .navbar-dark {
+      background-color: #1a472a;
+    }
+    .card {
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    } 
+  </style>
+
+  <main class="container mt-5">
+    <h1 class="mb-4">Calificación de Proyectos</h1>
+    <section class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <article class="col">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <i class="fas fa-file-alt card-icon text-primary" aria-hidden="true"></i>
+            <h2 class="card-title h5">Proyectos Finales</h2>
+            <p class="card-text">Califica y revisa los proyectos finales de los estudiantes.</p>
+            <p class="text-primary">
+              Proyectos por calificar: <span aria-label="5 proyectos">5</span>
+            </p>
+            <a href="#" class="btn btn-outline-primary">Ver Proyectos</a>
+          </div>
+        </div>
+      </article>
+      <article class="col">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <i class="fas fa-project-diagram card-icon text-success" aria-hidden="true"></i>
+            <h2 class="card-title h5">Anteproyectos</h2>
+            <p class="card-text">Evalúa y proporciona retroalimentación a los anteproyectos.</p>
+            <p class="text-success">
+              Anteproyectos pendientes: <span aria-label="3 anteproyectos">3</span>
+            </p>
+            <a href="#" class="btn btn-outline-success">Revisar Anteproyectos</a>
+          </div>
+        </div>
+      </article>
+      <article class="col">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <i class="fas fa-chart-line card-icon text-info" aria-hidden="true"></i>
+            <h2 class="card-title h5">Estadísticas</h2>
+            <p class="card-text">Visualiza estadísticas y métricas de calificación.</p>
+            <p class="text-info">
+              Último informe: <time datetime="2024-09-26">Hace 2 días</time>
+            </p>
+            <a href="#" class="btn btn-outline-info">Ver Estadísticas</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+{% endblock %}

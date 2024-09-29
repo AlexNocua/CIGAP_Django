@@ -1,0 +1,53 @@
+{% extends 'director/base_director.html' %}
+
+{% block proyectos %}
+  <style>
+    .principal_director {
+      display: none;
+    }
+    
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 4fr));
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .no-projects {
+      text-align: center;
+      color: #777;
+    }
+    
+    .cont_proyectos {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+
+  <article class="cont_proyectos">
+    <h3>Proyectos de Grado Asignados</h3>
+    <p>En esta sección se presenta una descripción breve de los proyectos de grado en los que actualmente se encuentra trabajando, incluyendo detalles relevantes y el estado de cada uno.</p>
+    <section class="grid-container">
+      {% if proyectos %}
+        {% for proyecto in proyectos %}
+          <div class="card d-flex flex-column justify-content-center align-items-center">
+            <h5 class="d-flex justify-content-center align-items-center" style="max-height: 300px;min-height: 100px;">{{ proyecto.anteproyecto.nombre_anteproyecto }}</h5>
+            <p style="max-height: 200px; min-height:200px;overflow: scroll;">
+              <strong>Descripción:</strong><br />{{ proyecto.anteproyecto.descripcion }}
+            </p>
+            <a href="{% url 'director:proyecto' proyecto.id %}">Ver detalles</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-projects">
+          <h4>No hay proyectos asignados</h4>
+          <p>Actualmente no tiene ningún proyecto asignado. Por favor, revise más tarde para actualizaciones.</p>
+        </div>
+      {% endif %}
+    </section>
+  </article>
+{% endblock %}
