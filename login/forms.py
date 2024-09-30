@@ -2,6 +2,7 @@
 
 from django.contrib.auth import authenticate
 from .models import Usuarios
+import re
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import AuthenticationForm
@@ -44,25 +45,53 @@ class FormRegistro(UserCreationForm):
 
     class Meta:
         model = Usuarios
-
-        fields = ('nombres', 'apellidos',
-                  'email', 'password1', 'password2')
+        fields = ('nombres', 'apellidos', 'email', 'password1', 'password2')
         widgets = {
-            'nombres': forms.TextInput(attrs={'placeholder': 'Digita tus nombres', 'class': 'form-control'}),
-            'apellidos': forms.TextInput(attrs={'placeholder': 'Digita tus apellidos', 'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'example@correo.com', 'class': 'form-control'}),
+            'nombres': forms.TextInput(attrs={
+                'placeholder': 'Digita tus nombres',
+                'class': 'form-control',
+                'id': 'inputNombre'
+            }),
+            'apellidos': forms.TextInput(attrs={
+                'placeholder': 'Digita tus apellidos',
+                'class': 'form-control',
+                'id': 'inputApellido'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'example@correo.com',
+                'class': 'form-control',
+                'id': 'inputCorreo'
+            }),
             'password1': forms.PasswordInput(attrs={
                 'placeholder': 'Contraseña mayor a 8 caracteres',
                 'class': 'form-control',
+                'id': 'id_password1'
             }),
             'password2': forms.PasswordInput(attrs={
                 'placeholder': 'Repite la contraseña',
                 'class': 'form-control',
+                'id': 'id_password2'
             }),
         }
 
-    # funcion para guardar el registro
+    # Función para validar las contraseñas
+    def clean_password1(self):
+        password = self.cleaned_data.get("password1")
+        if not self.password_is_strong(password):
+            raise ValidationError(
+                "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un símbolo especial.")
+        return password
 
+    def password_is_strong(self, password):
+        if (len(password) < 8 or
+            not re.search(r"[A-Z]", password) or
+            not re.search(r"[a-z]", password) or
+            not re.search(r"[0-9]", password) or
+                not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password)):
+            return False
+        return True
+
+    # Función para guardar el registro
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_active = True
@@ -71,7 +100,7 @@ class FormRegistro(UserCreationForm):
         user.nombres = self.cleaned_data["nombres"]
         user.apellidos = self.cleaned_data["apellidos"]
         user.nombre_completo = self.cleaned_data["nombres"] + \
-            ' '+self.cleaned_data["apellidos"]
+            ' ' + self.cleaned_data["apellidos"]
 
         if commit:
             user.save()
@@ -82,7 +111,6 @@ class FormRegistro(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # esto es para sobrescribir las configuraciones predeterminadas
         self.fields['password1'].widget.attrs.update({
             'placeholder': 'Contraseña mayor a 8 caracteres',
             'class': 'form-control',

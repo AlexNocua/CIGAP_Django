@@ -2,6 +2,30 @@
   .toast {
     z-index: 1001;
   }
+  #liveToast, strong, small {
+    color: #fff;
+ }
+
+ #liveToast {
+    background: var(--colores_institucionalesfondo1);
+ }
+
+
+ div #toast-text {
+    background: #ffffff;
+    color: var(--colores_institucionalesTextoNegrilla);
+ }
+
+ .toast-body {
+    background: #fff;
+ }
+
+ .toast-header {
+    background: var(--colores_institucionalesfondo1);
+ }
+  .toast-body {
+    background: #fff;
+  }
 </style>
 {% if messages %}
   {% for message in messages %}

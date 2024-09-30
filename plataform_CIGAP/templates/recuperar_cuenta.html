@@ -1,0 +1,40 @@
+{% extends 'login.html' %}
+{% block recuperar_cuenta %}
+  <style>
+    .content_login {
+      display: none;
+    }
+    
+    .recuperar_cuenta {
+      z-index: 100;
+      top: 200px;
+      width: 100%;
+    }
+  </style>
+  <div id="col_datos" class="w-50" style="padding: 40px 20px;">
+    <section id="sectionLogin" class="login rounded overflow-hidden justify-content-center flex-row w-100 h-100" style="display: flex;">
+      <div class="d-flex w-100 h-100 justify-content-around align-items-center" style="background:#2a2a2a;">
+        <div id="camposDoLogin" class="camposLogin col justify-content-end w-100 h-100 d-flex flex-column">
+          <div class="contentLogin d-flex w-100 flex-column justify-content-center align-items-center">
+            <h1 class="pb-3 text-center">Recupera tu cuenta</h1>
+            <form class="d-flex pb-5 flex-column w-75 mb-3" method="post">
+              {% csrf_token %}
+              <p class="p-0 pb-2 m-0">Ingresa tu correo electrónico:</p>
+              <div class="contenedoresInput bg-white rounded-3 d-flex justify-content-center align-items-center">
+                <input id="email" type="email" name="email" class="custom-input w-100 p-1 rounded-3 border-0" placeholder="example@app.com" required />
+                <svg class="m-2 me-3" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16" style="color: rgb(48, 48, 48);">
+                  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
+                </svg>
+              </div>
+              <button type="submit" id="submit" class="buttonIngresar mt-4 border-0 w-100 p-2 text-center fw-bold" style="border-radius: 8px !important;">Enviar enlace de recuperación</button>
+            </form>
+            <p class="m-0 mt-3 text-center">
+              <a href="{% url 'login:loginapps' %}" class="text-white">Volver a la página de inicio de sesión</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      {% include 'components/toasts.html' %}
+    </section>
+  </div>
+{% endblock %}
