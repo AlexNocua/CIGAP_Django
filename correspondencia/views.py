@@ -59,6 +59,14 @@ def recuperar_anteproyectos_pendientes():
     return anteproyectos_pendientes
 
 
+def recuperar_proyectos_finales():
+    proyectos_finales = ModelProyectoFinal.objects.filter(solicitud_enviada=False, estado=False
+                                                          )
+    if not proyectos_finales:
+        return None
+    return proyectos_finales
+
+
 def recuperar_proyectos_finales_pendientes():
     proyectos_finales_pendientes = ModelProyectoFinal.objects.filter(solicitud_enviada=True, estado=False
                                                                      )
@@ -284,13 +292,10 @@ def solicitudes_anteproyectos(request):
 
 def solicitudes_proyectos_finales(request):
     context = datosusuario(request)
-
-    if request.method == 'POST':
-        pass
-    else:
-        proyectos_finales = recuperar_proyectos_finales()
-        context['proyectos_finales'] = proyectos_finales
-        return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)
+    proyectos_finales = recuperar_proyectos_finales()
+    print(proyectos_finales)
+    context['proyectos_finales'] = proyectos_finales
+    return render(request, 'correspondencia/views_solicitud/list_proyectos_finales.html', context)
 
 # funcion de la vista de lista de solicitudes especiales
 
@@ -469,6 +474,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         if form_retro.is_valid():
             retroalimentacion = form_retro.save(commit=False)
             retroalimentacion.anteproyecto = anteproyecto
+            retroalimentacion.anteproyecto = anteproyecto
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (
                 retroalimentacion.revs_dadas or 0) + 1
@@ -480,7 +486,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 # salvar las informaciones
                 anteproyecto.save(update_fields=['estado',])
                 nuevo_proyecto_final = ModelProyectoFinal(
-                    user=request.user,
+                    user=anteproyecto.user,
                     anteproyecto=anteproyecto,
                 )
                 nuevo_proyecto_final.save()

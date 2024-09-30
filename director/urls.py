@@ -15,7 +15,8 @@ urlpatterns = [
     # vinculos del modulo de anteproyecto
     path('view_anteproyectos', views.view_anteproyectos, name='view_anteproyectos'),
     path('anteproyecto/<int:id>', views.anteproyecto, name='anteproyecto'),
-    path('enviar_anteproyecto/<int:id>', views.enviar_anteproyecto, name='enviar_anteproyecto'),
+    path('enviar_anteproyecto/<int:id>',
+         views.enviar_anteproyecto, name='enviar_anteproyecto'),
     ########################################################################
     # vinculos del modulo de proyectos
     path('view_proyectos', views.view_proyectos, name='view_proyectos'),
@@ -23,8 +24,14 @@ urlpatterns = [
     path('enviar_proyecto/<int:id>', views.enviar_proyecto, name='enviar_proyecto'),
     ########################################################################
     # vinculos del modulo de evaluacion de proyectos
-    path('evaluacion_proyectos', views.evaluacion_proyectos, name='evaluacion_proyectos'),
-    path('view_evaluador', views.view_evaluador, name='view_evaluador'),
+    path('evaluacion_proyectos', views.evaluacion_proyectos,
+         name='evaluacion_proyectos'),
+    path('view_evaluador_anteproyectos', views.view_evaluador_anteproyectos,
+         name='view_evaluador_anteproyectos'),
+    path('evaluar_anteproyecto/<int:id>', views.evaluar_anteproyecto,
+         name='evaluar_anteproyecto'),
+    path('enviar_evaluacion/<int:id>', views.enviar_evaluacion,
+         name='enviar_evaluacion'),
     path('view_jurado', views.view_jurado, name='view_jurado'),
     ########################################################################
 ]

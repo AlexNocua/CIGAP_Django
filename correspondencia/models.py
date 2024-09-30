@@ -24,7 +24,7 @@ class ModelRetroalimentaciones(models.Model):
         ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
     retroalimentacion = models.TextField(
         max_length=10000)
-    fecha_retroalimentacion = models.CharField(max_length=50)
+    fecha_retroalimentacion = models.DateTimeField(blank=True, null=True)
     doc_retroalimentacion = models.BinaryField(null=True, blank=True)
     estado = models.CharField(
         max_length=25, choices=ESTADOS_CHOICES, default='aprobado')
@@ -80,7 +80,7 @@ class ModelSolicitudes(models.Model):
         max_length=200, choices=TIPO_SOLICITUD, default='otro',)
     motivo_solicitud = models.TextField(max_length=10000)
     documento_soporte = models.BinaryField(blank=True, null=True)
-    fecha_envio = models.CharField(max_length=50)
+    fecha_envio = models.DateTimeField(blank=True, null=True)
     estado = models.BooleanField(default=False)
 
 
@@ -90,4 +90,4 @@ class ModelDocumentos(models.Model):
     version = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=500)
     documento = models.BinaryField(blank=True, null=True)
-    fecha_cargue = models.CharField(max_length=50)
+    fecha_cargue = models.DateTimeField(blank=True, null=True)

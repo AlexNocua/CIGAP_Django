@@ -32,7 +32,7 @@ class ModelAnteproyecto(models.Model):
     director = models.CharField(max_length=200, null=True)
     codirector = models.CharField(
         max_length=200, null=True, blank=True)  # Cambio aquí
-    fecha_envio = models.CharField(max_length=200)
+    fecha_envio = models.DateTimeField(null=True, blank=True)
 
     # estas son modificadas por correspondencia
     solicitud_enviada = models.BooleanField()
@@ -60,9 +60,10 @@ class ModelProyectoFinal(models.Model):
     carta_presentacion_final = models.BinaryField(null=True, blank=True)
     proyecto_final = models.BinaryField(null=True, blank=True)
 
-    fecha_envio = models.CharField(max_length=200,null=True, blank=True)
-    solicitud_enviada = models.BooleanField(default =False,null=True, blank=True)
-    estado = models.BooleanField(default=False,null=True, blank=True)
+    fecha_envio = models.DateTimeField(null=True, blank=True)
+    solicitud_enviada = models.BooleanField(
+        default=False, null=True, blank=True)
+    estado = models.BooleanField(default=False, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super(ModelProyectoFinal, self).save(*args, **kwargs)
@@ -72,16 +73,21 @@ class ModelProyectoFinal(models.Model):
 
 
 class ModelObjetivoGeneral(models.Model):
-    anteproyecto = models.OneToOneField(ModelAnteproyecto, on_delete = models.CASCADE,  related_name='objetivo_general',blank=True, null=True)
+    anteproyecto = models.OneToOneField(
+        ModelAnteproyecto, on_delete=models.CASCADE,  related_name='objetivo_general', blank=True, null=True)
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
     estado = models.BooleanField(blank=True, default=False)
+
 
 class ModelObjetivosEspecificos(models.Model):
-    objetivo_general = models.ForeignKey(ModelObjetivoGeneral, on_delete=models.CASCADE, related_name="objetivos_especificos",blank=True, null=True)
+    objetivo_general = models.ForeignKey(
+        ModelObjetivoGeneral, on_delete=models.CASCADE, related_name="objetivos_especificos", blank=True, null=True)
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
     estado = models.BooleanField(blank=True, default=False)
 
+
 class ModelActividades(models.Model):
-    objetivos_especificos= models.ForeignKey(ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name="actividades",blank=True, null=True)
+    objetivos_especificos = models.ForeignKey(
+        ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name="actividades", blank=True, null=True)
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
     estado = models.BooleanField(blank=True, null=True)

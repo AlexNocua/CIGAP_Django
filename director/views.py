@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.contrib.auth.decorators import login_required
@@ -20,7 +21,10 @@ from login.forms import FormEditarUsuario
 from correspondencia.forms import FormObservacionAnteproyecto, FormObservacionProyecto
 from correspondencia.views import recuperar_anteproyecto
 
-# imortacion de modelos de los estudinates
+# importacion de los modelos
+from .models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
+
+# importacion de modelos de los estudinates
 from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
 
 
@@ -41,6 +45,26 @@ def datos_usuario_director(request):
 
 #############################################################################################################
 # utilidades
+
+
+def recuperar_proyectos_evaluador(request):
+    usuario = request.user
+    nombre_usuario = usuario.nombre_completo
+    proyectos = ModelProyectoFinal.objects.filter(
+        Q(anteproyecto__director=nombre_usuario) |
+        Q(anteproyecto__codirector=nombre_usuario)
+    )
+    if not proyectos:
+        return None
+    return proyectos
+
+
+def recuperar_evaluacion_anteproyecto(anteproyecto):
+    evaluacion = ModelEvaluacionAnteproyecto.objects.get(
+        anteproyecto=anteproyecto)
+    if not evaluacion:
+        return None
+    return evaluacion
 
 
 def recuperar_documento(documento):
@@ -252,20 +276,77 @@ def enviar_proyecto(request, id):
 
 def evaluacion_proyectos(request):
     context = datos_usuario_director(request)
-    anteproyectos = recuperar_anteproyectos(request)
-    if anteproyectos:
-        context['anteproyectos'] = anteproyectos
+
     return render(request, 'director/evaluacion_proyectos/eva_proyectos.html', context)
 
 
-def view_evaluador(request):
-    anteproyecto = recuperar_anteproyecto(id)
-    context = anteproyecto
+def view_evaluador_anteproyectos(request):
+    context = datos_usuario_director(request)
+    anteproyectos = recuperar_anteproyectos(request)
+    if anteproyectos:
+        context['anteproyectos'] = anteproyectos
     return render(request, 'director/evaluacion_proyectos/list_evaluador.html', context)
 
 
-def view_jurado(request):
+def evaluar_anteproyecto(request, id):
+    context = datos_usuario_director(request)
     anteproyecto = recuperar_anteproyecto(id)
-    context = anteproyecto
+    if anteproyecto:
+        evaluacion = recuperar_evaluacion_anteproyecto(anteproyecto)
+        if evaluacion:
+            documento_evaluacion = recuperar_documento(
+                evaluacion.doc_evaluacion_anteproyecto)
+            print(documento_evaluacion, 'documento')
+            context['doc_evaluacion_anteproyecto'] = documento_evaluacion
+            context['evaluacion'] = evaluacion
+        context['anteproyecto'] = anteproyecto
+        doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)
+        context['doc_anteproyecto'] = doc_anteproyecto
+    return render(request, 'director/evaluacion_proyectos/anteproyecto.html', context)
+
+
+def enviar_evaluacion(request, id):
+    context = datos_usuario_director(request)
+    anteproyecto = recuperar_anteproyecto(id)
+    if anteproyecto:
+        evaluacion_anteproyecto = recuperar_evaluacion_anteproyecto(
+            anteproyecto)
+        if evaluacion_anteproyecto:
+
+            evaluacion_anteproyecto.calificacion = request.POST.get(
+                'calificacion')
+            evaluacion_anteproyecto.comentarios = request.POST.get(
+                'comentarios')
+            evaluacion_anteproyecto.estado = request.POST.get(
+                'estado') == 'True'
+            doc_retro = request.FILES.get(
+                'doc_retroalimentacion_convert')
+
+            if doc_retro:
+                evaluacion_anteproyecto.doc_evaluacion_anteproyecto = doc_retro.read()
+
+            evaluacion_anteproyecto.save()
+
+            messages.success(
+                request, f'La evaluación del anteproyecto "{anteproyecto.nombre_anteproyecto}" ha sido guardada con la calificación {evaluacion_anteproyecto.calificacion}.')
+
+            return redirect('director:evaluar_anteproyecto', id=id)
+
+        else:
+            messages.error(
+                request, f'No se encontró la evaluación para el anteproyecto "{anteproyecto.nombre_anteproyecto}".')
+
+    else:
+        messages.error(request, f'El anteproyecto con ID {id} no existe.')
+
+    return redirect('director:evaluar_anteproyecto', id=id)
+
+
+def view_jurado(request):
+    context = datos_usuario_director(request)
+    proyectos = recuperar_proyectos_evaluador(request)
+    if proyectos:
+        context['proyectos'] = proyectos
+        print(proyectos)
     return render(request, 'director/evaluacion_proyectos/list_jurado.html', context)
 #############################################################################################################

@@ -1,57 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Avances del Proyecto Final</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .progress {
+            height: 25px;
+            background-color: #ecf0f1;
+        }
+        .progress-bar {
+            background-color: #3498db;
+        }
+        .objetivo-especifico {
+            border-left: 3px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+        .objetivo-especifico:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .form-check-input:checked + .form-check-label {
+            text-decoration: line-through;
+            color: #7f8c8d;
+        }
+        .btn-outline-primary {
+            color: #3498db;
+            border-color: #3498db;
+        }
+        .btn-outline-primary:hover {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+        .list-group-item {
+            border-left: 3px solid #3498db;
+            margin-bottom: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+        .badge {
+            background-color: #2980b9;
+        }
+        .modal-content {
+            border-radius: 15px;
+        }
+        .modal-header {
+            background-color: #3498db;
+            color: #ffffff;
+            border-radius: 15px 15px 0 0;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Avances del Proyecto Final</h1>
+        
+        <section class="mb-5">
+            <h2>Información General</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Fecha de Inicio:</strong> <time datetime="2024-09-01">1 de Septiembre, 2024</time></p>
+                    <p><strong>Fecha Estimada de Finalización:</strong> <time datetime="2024-12-15">15 de Diciembre, 2024</time></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Progreso General:</strong></p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div id="carouselExampleCaptions" class="carousel slide">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>First slide label</h5>
-                    <p>Some representative placeholder content for the first slide.</p>
+        <section class="mb-5">
+            <h2>Objetivo General</h2>
+            <p class="lead">Desarrollar un sistema de gestión de proyectos que optimice la planificación, seguimiento y evaluación de proyectos académicos.</p>
+        </section>
+
+        <section class="mb-5">
+            <h2>Objetivos Específicos</h2>
+            <div class="objetivo-especifico">
+                <h3 class="h5">1. Análisis de Requerimientos</h3>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="obj1" checked>
+                    <label class="form-check-label" for="obj1">
+                        Completar entrevistas con stakeholders
+                    </label>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Second slide label</h5>
-                    <p>Some representative placeholder content for the second slide.</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="obj2">
+                    <label class="form-check-label" for="obj2">
+                        Documentar requisitos funcionales y no funcionales
+                    </label>
                 </div>
+                <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    Cargar Avance <i class="fas fa-upload"></i>
+                </button>
             </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Third slide label</h5>
-                    <p>Some representative placeholder content for the third slide.</p>
+
+            <div class="objetivo-especifico">
+                <h3 class="h5">2. Diseño de la Arquitectura</h3>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="obj3">
+                    <label class="form-check-label" for="obj3">
+                        Crear diagrama de arquitectura del sistema
+                    </label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="obj4">
+                    <label class="form-check-label" for="obj4">
+                        Definir tecnologías a utilizar
+                    </label>
+                </div>
+                <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    Cargar Avance <i class="fas fa-upload"></i>
+                </button>
             </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        </section>
+
+        <section class="mb-5">
+            <h2>Próximas Entregas</h2>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Informe de Análisis de Requerimientos
+                    <span class="badge bg-primary rounded-pill"><time datetime="2024-10-15">15 Oct 2024</time></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Documento de Diseño de Arquitectura
+                    <span class="badge bg-primary rounded-pill"><time datetime="2024-11-01">1 Nov 2024</time></span>
+                </li>
+            </ul>
+        </section>
     </div>
-</body>
 
+    <!-- Modal para cargar avances -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Cargar Avance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="documentTitle" class="form-label">Título del Documento</label>
+                            <input type="text" class="form-control" id="documentTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="documentFile" class="form-label">Seleccionar Archivo</label>
+                            <input type="file" class="form-control" id="documentFile" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="documentDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="documentDescription" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Subir Documento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

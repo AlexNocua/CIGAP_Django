@@ -1,0 +1,336 @@
+{% extends 'director/evaluacion_proyectos/eva_proyectos.html' %}
+{% block proyecto  %}
+  <style>
+    .principal_director {
+      display: none;
+    }
+    .content_eva_proyectos {
+      display: none;
+    }
+    .anteproyecto-info-title {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    .sections-anteproyecto {
+      z-index: 1;
+    }
+    
+    .anteproyecto-info-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    /* Documento del Anteproyecto */
+    .anteproyecto-doc-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .anteproyecto-doc-details {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .anteproyecto-doc-simulation {
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+    
+    /* Botones */
+    .anteproyecto-btn-download {
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border-radius: 5px;
+      text-align: center;
+    }
+    
+    .anteproyecto-btn-download:hover {
+      background-color: #2980b9;
+      color: #f1f1f1;
+    }
+    
+    /* Formulario de Evaluación */
+    .anteproyecto-form-title {
+      color: #2c3e50;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .anteproyecto-form-label {
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .anteproyecto-form-control {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .anteproyecto-form-control:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+    
+    .anteproyecto-form-submit {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+    
+    .anteproyecto-form-submit:hover {
+      background-color: #2980b9;
+    }
+    
+    /* Estado botones */
+    .anteproyecto-estado-btn {
+      width: 120px;
+      font-size: 16px;
+      padding: 8px;
+      margin-right: 10px;
+    }
+    
+    .anteproyecto-estado-btn-check {
+      display: none;
+    }
+    
+    #form_evaluacion {
+      opacity: 0;
+      width: 75%;
+      box-shadow: 0px 0px 20px -4px;
+      border-radius: 12px;
+      border: 2px solid #cacaca;
+      padding: 16px;
+    
+      background: #fff;
+    }
+  </style>
+
+  <div class="container position-relative d-flex flex-column justify-content-center align-items-center">
+    <h3 class="mb-4">Evaluación de Anteproyecto</h3>
+
+    <section class="mb-5 sections-anteproyecto">
+      <h4 class="anteproyecto-info-title">Información del Anteproyecto</h4>
+      <div class="row">
+        <div class="col-md-6 anteproyecto-info-text">
+          <p>
+            <strong>Título:</strong> {{ anteproyecto.nombre_anteproyecto }}
+          </p>
+          <p>
+            <strong>Integrantes:</strong> <br />
+            {% if anteproyecto.nombre_integrante2 %}
+              {{ anteproyecto.nombre_integrante1 }}<br />
+              {{ anteproyecto.nombre_integrante2 }}
+            {% else %}
+              {{ anteproyecto.nombre_integrante1 }}
+            {% endif %}
+          </p>
+          <p>
+            <strong>Fecha de Presentación:</strong> <time datetime="">{{ anteproyecto.fecha_envio }}</time>
+          </p>
+          {% if evaluacion.estado %}
+            <div class="d-flex flex-column">
+              <h4>Evaluación Existente</h4>
+              <p>Ya hay una evaluación para este anteproyecto.</p>
+              <p>
+                <strong>Calificación:</strong> {{ evaluacion.calificacion }}
+              </p>
+              <p>
+                <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+              </p>
+              <p>
+                <strong>Estado:</strong> {{ evaluacion.estado|yesno:'Aprobado,Rechazado' }}
+              </p>
+              
+              <embed src="data:application/pdf;base64,{{ doc_evaluacion_anteproyecto }}" type="application/pdf" width="100%" height="200px" />
+
+              <button id="btn_enviar_evaluacion">Editar evaluación</button>
+            </div>
+          {% else %}
+            <div>
+              <h4>Sin Evaluación</h4>
+              <p>No hay una evaluación registrada para este anteproyecto.</p>
+              <button id="btn_enviar_evaluacion">Enviar evaluación</button>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-md-6 anteproyecto-info-text">
+          <p>
+            <strong>Descripción:</strong>
+          </p>
+          <p>{{ anteproyecto.descripcion }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5 sections-anteproyecto">
+      <h4 class="anteproyecto-info-title">Documento del Anteproyecto</h4>
+      <div class="anteproyecto-doc-simulation">
+        <h3 class="anteproyecto-doc-title">{{ anteproyecto.nombre_anteproyecto }}.pdf</h3>
+        <p class="anteproyecto-doc-details">
+          <i class="fas fa-file-pdf"></i> 25 páginas | 2.3 MB
+        </p>
+        <div class="text-center">
+          <embed src="data:application/pdf;base64,{{ doc_anteproyecto }}" type="application/pdf" width="50%" height="600px" />
+        </div>
+        <div class="mt-3 text-center">
+          <a href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="{{ anteproyecto.nombre_anteproyecto }}.pdf" class="anteproyecto-btn-download"><i class="fas fa-download"></i> Descargar PDF</a>
+        </div>
+      </div>
+    </section>
+    <section id="form_evaluacion" class="position-absolute">
+      <h4 class="anteproyecto-form-title">Formulario de Evaluación</h4>
+      {% if evaluacion.estado %}
+        <form id="evaluacionForm" action="{% url 'director:enviar_evaluacion' anteproyecto.id %}" novalidate enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="observacion" class="anteproyecto-form-label">Observaciones</label>
+            <textarea class="form-control anteproyecto-form-control" id="observacion" name="comentarios" rows="4" required>{{ evaluacion.comentarios }}</textarea>
+            <small class="form-text text-muted">Escribe tus observaciones sobre el anteproyecto.</small>
+            <div class="invalid-feedback">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="anteproyecto-form-label">Estado</label>
+            <div>
+              <input type="radio" class="btn-check anteproyecto-estado-btn-check" name="estado" id="aprobado" autocomplete="off" value="{{ evaluacion.estado }}" required />
+              <label class="btn btn-outline-success anteproyecto-estado-btn" for="aprobado">Aprobado</label>
+
+              <input type="radio" class="btn-check anteproyecto-estado-btn-check" name="estado" id="rechazado" autocomplete="off" value="{{ evaluacion.estado }}" required />
+              <label class="btn btn-outline-danger anteproyecto-estado-btn" for="rechazado">Rechazado</label>
+            </div>
+            <small class="form-text text-muted">
+              Selecciona el estado del anteproyecto. Estado anterior{% if evaluacion.estado %}
+                Aprobado
+              {% else %}
+                Rechazado
+              {% endif %}
+            </small>
+            <div class="invalid-feedback">Debe seleccionar una opción.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="calificacion" class="anteproyecto-form-label">Calificación (0-100)</label>
+            <input type="number" class="form-control anteproyecto-form-control" id="calificacion" min="0" max="100" step="0.01" required name="calificacion" value="{{ evaluacion.calificacion }}" />
+            <small class="form-text text-muted">Asigna una calificación al anteproyecto, calificación anterior {{ evaluacion.calificacion }}</small>
+            <div class="invalid-feedback">Debe asignar una calificación válida (0-100).</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="archivo_pdf" class="anteproyecto-form-label">Subir archivo PDF</label>
+            <input type="file" class="form-control anteproyecto-form-control" id="archivo_pdf" accept="application/pdf" required name="doc_retroalimentacion_convert" />
+            <small class="form-text text-muted">Sube el anteproyecto en formato PDF.</small>
+            <div class="invalid-feedback">Debe subir un archivo en formato PDF.</div>
+          </div>
+
+          <button type="submit" id="btn_enviar_evaluacion" class="btn anteproyecto-form-submit">Enviar Evaluación</button>
+          <button type="button" id="btn_cerrar_evaluacion" class="btn anteproyecto-form-submit">Cancelar</button>
+        </form>
+      {% else %}
+        <form id="evaluacionForm" action="{% url 'director:enviar_evaluacion' anteproyecto.id %}" novalidate enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="observacion" class="anteproyecto-form-label">Observaciones</label>
+            <textarea class="form-control anteproyecto-form-control" id="observacion" name="comentarios" rows="4" required></textarea>
+            <small class="form-text text-muted">Escribe tus observaciones sobre el anteproyecto.</small>
+            <div class="invalid-feedback">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="anteproyecto-form-label">Estado</label>
+            <div>
+              <input type="radio" class="btn-check anteproyecto-estado-btn-check" name="estado" id="aprobado" autocomplete="off" value="True" required />
+              <label class="btn btn-outline-success anteproyecto-estado-btn" for="aprobado">Aprobado</label>
+
+              <input type="radio" class="btn-check anteproyecto-estado-btn-check" name="estado" id="rechazado" autocomplete="off" value="False" required />
+              <label class="btn btn-outline-danger anteproyecto-estado-btn" for="rechazado">Rechazado</label>
+            </div>
+            <small class="form-text text-muted">Selecciona el estado del anteproyecto.</small>
+            <div class="invalid-feedback">Debe seleccionar una opción.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="calificacion" class="anteproyecto-form-label">Calificación (0-100)</label>
+            <input type="number" class="form-control anteproyecto-form-control" id="calificacion" min="0" max="100" step="0.01" required name="calificacion" /> <small class="form-text text-muted">Asigna una calificación al anteproyecto.</small>
+            <div class="invalid-feedback">Debe asignar una calificación válida (0-100).</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="archivo_pdf" class="anteproyecto-form-label">Subir archivo PDF</label>
+            <input type="file" class="form-control anteproyecto-form-control" id="archivo_pdf" name="doc_retroalimentacion_convert" accept="application/pdf" required />
+            <small class="form-text text-muted">Sube el anteproyecto en formato PDF.</small>
+            <div class="invalid-feedback">Debe subir un archivo en formato PDF.</div>
+          </div>
+
+          <button type="submit" id="btn_enviar_evaluacion" class="btn anteproyecto-form-submit">Enviar Evaluación</button>
+          <button type="button" id="btn_cerrar_evaluacion" class="btn anteproyecto-form-submit">Cancelar</button>
+        </form>
+      {% endif %}
+    </section>
+    {% include 'components/toasts.html' %}
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('evaluacionForm')
+    
+      form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        event.stopPropagation()
+    
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated')
+          Swal.fire({
+            icon: 'error',
+            title: 'Formulario incompleto',
+            text: 'Por favor, complete todos los campos requeridos antes de enviar.'
+          })
+        } else {
+          Swal.fire({
+            title: '¿Está seguro de que desea enviar?',
+            text: 'Una vez enviado, no podrá cambiar su selección.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, enviar',
+            cancelButtonText: 'No, cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: 'Enviando...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                  Swal.showLoading()
+                }
+              })
+    
+              setTimeout(() => {
+                form.submit()
+              }, 3000)
+            }
+          })
+        }
+      })
+    
+      document.getElementById('btn_cerrar_evaluacion').addEventListener('click', function () {
+        const form_evaluacion = document.getElementById('form_evaluacion')
+        form_evaluacion.style.opacity = '0'
+        form_evaluacion.style.zIndex = '-1'
+      })
+    
+      document.getElementById('btn_enviar_evaluacion').addEventListener('click', function () {
+        const form_evaluacion = document.getElementById('form_evaluacion')
+        form_evaluacion.style.opacity = '1'
+        form_evaluacion.style.zIndex = '100'
+      })
+    })
+  </script>
+{% endblock %}
