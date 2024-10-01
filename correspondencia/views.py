@@ -107,7 +107,7 @@ def recuperar_anteproyectos():
 
 
 def recuperar_anteproyectos_pendientes():
-    anteproyectos = ModelAnteproyecto.objects.filter(estado=False)
+    anteproyectos = ModelAnteproyecto.objects.filter(Q(estado=False) & Q(solicitud_enviada = True))
     return anteproyectos
 # funcion para traer un anteproyecto en especifico
 

@@ -4,19 +4,28 @@
     .content_login {
       display: none;
     }
-    
+    .fondo {
+      z-index: 0;
+    }
     .recuperar_cuenta {
       z-index: 100;
       top: 200px;
       width: 100%;
     }
+    .contentLogin {
+      padding: 20px;
+    }
+    .titulo_recuperar {
+      padding: 0 40px;
+      border-bottom: 2px solid;
+    }
   </style>
-  <div id="col_datos" class="w-50" style="padding: 40px 20px;">
+  <div id="col_datos" class="w-100" style="">
     <section id="sectionLogin" class="login rounded overflow-hidden justify-content-center flex-row w-100 h-100" style="display: flex;">
       <div class="d-flex w-100 h-100 justify-content-around align-items-center" style="background:#2a2a2a;">
         <div id="camposDoLogin" class="camposLogin col justify-content-end w-100 h-100 d-flex flex-column">
           <div class="contentLogin d-flex w-100 flex-column justify-content-center align-items-center">
-            <h1 class="pb-3 text-center">Recupera tu cuenta</h1>
+            <h1 class="titulo_recuperar pb-3 text-center">Recupera tu cuenta</h1>
             <form class="d-flex pb-5 flex-column w-75 mb-3" method="post">
               {% csrf_token %}
               <p class="p-0 pb-2 m-0">Ingresa tu correo electrónico:</p>
@@ -29,7 +38,7 @@
               <button type="submit" id="submit" class="buttonIngresar mt-4 border-0 w-100 p-2 text-center fw-bold" style="border-radius: 8px !important;">Enviar enlace de recuperación</button>
             </form>
             <p class="m-0 mt-3 text-center">
-              <a href="{% url 'login:loginapps' %}" class="text-white">Volver a la página de inicio de sesión</a>
+              <a href="{% url 'login:loginapps' %}" class="text-white btn btn-outline-success" style="text-decoration: none;">Volver a la página de inicio de sesión</a>
             </p>
           </div>
         </div>

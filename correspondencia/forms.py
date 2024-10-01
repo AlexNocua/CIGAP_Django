@@ -26,6 +26,8 @@ class FormRetroalimentacionAnteproyecto(forms.ModelForm):
         if commit:
             retroalimentacion.save()
         return retroalimentacion
+
+
 class FormObservacionAnteproyecto(forms.ModelForm):
     doc_retroalimentacion_convert = forms.FileField(
         required=True,
@@ -46,7 +48,7 @@ class FormObservacionAnteproyecto(forms.ModelForm):
         retroalimentacion.retroalimentacion = self.cleaned_data['retroalimentacion']
         retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(
         )
-        
+
         if commit:
             retroalimentacion.save()
         return retroalimentacion
@@ -73,6 +75,8 @@ class FormRetroalimentacionProyecto(forms.ModelForm):
         if commit:
             retroalimentacion.save()
         return retroalimentacion
+
+
 class FormObservacionProyecto(forms.ModelForm):
     doc_retroalimentacion_convert = forms.FileField(required=True)
 
@@ -90,7 +94,7 @@ class FormObservacionProyecto(forms.ModelForm):
         retroalimentacion.retroalimentacion = self.cleaned_data['retroalimentacion']
         retroalimentacion.doc_retroalimentacion = self.cleaned_data['doc_retroalimentacion_convert'].read(
         )
-        
+
         if commit:
             retroalimentacion.save()
         return retroalimentacion
@@ -103,7 +107,7 @@ class FormSolicitudes(forms.ModelForm):
     class Meta:
         model = ModelSolicitudes
         fields = [
-            'relacionado_con',
+            
             'retroalimentaciones',
             'tipo_solicitud',
             'motivo_solicitud',
@@ -113,13 +117,12 @@ class FormSolicitudes(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FormSolicitudes, self).__init__(*args, **kwargs)
         # Hacer que los campos específicos sean requeridos
-        self.fields['relacionado_con'].required = True
+      
         self.fields['motivo_solicitud'].required = True
         self.fields['documento_soporte_convert'].required = True
 
     def save(self, commit=False):
         solicitudes = super().save(commit=True)
-        solicitudes.relacionado_con = self.cleaned_data['relacionado_con']
         solicitudes.tipo_solicitud = self.cleaned_data['tipo_solicitud']
         solicitudes.motivo_solicitud = self.cleaned_data['motivo_solicitud']
         solicitudes.documento_soporte = self.cleaned_data['documento_soporte_convert'].read(

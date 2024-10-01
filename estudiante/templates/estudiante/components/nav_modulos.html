@@ -11,14 +11,14 @@
   .navMenu {
     margin: 0;
     display: flex;
-  
+    z-index: 1;
     box-shadow: 1px 3px 6px -2px #28482a;
   }
   
   .modulo {
     padding: 4px;
     margin: 8px;
-    z-index: 100;
+    z-index: 1;
     transition: all 0.2s;
     text-decoration: none;
     color: #fff;
@@ -35,6 +35,7 @@
   /*estilos de la nav de modulos*/
   .modulos,
   .collapse {
+    z-index: 500;
     color: #fff !important;
     background: var(--colores_institucionalesfondo1) !important;
   }
@@ -73,7 +74,6 @@
 
         <a class="modulo w-100" href="{% url 'estudiante:solicitud' %}">Documentos cargados</a>
       </div>
-
     </div>
   </div>
 </nav>

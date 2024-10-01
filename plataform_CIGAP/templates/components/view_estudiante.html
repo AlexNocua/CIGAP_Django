@@ -14,7 +14,16 @@
           {% for key, value in retroalimentacion.items %}
             {% if forloop.first %}
               <p class="p-0 m-0">
-                <b>Anteproyecto:</b> {{ value.respuesta.estado }}.
+                <b>Anteproyecto:</b>
+                {% if anteproyecto %}
+                  {% if anteproyecto.estado %}
+                    Aprobado.
+                  {% else %}
+                    Aún no hay una respuesta.
+                  {% endif %}
+                {% else %}
+                  Aún no hay una solicitud de anteproyecto.
+                {% endif %}
               </p>
             {% endif %}
           {% endfor %}
@@ -23,12 +32,31 @@
             <b>Anteproyecto:</b> No hay retroalimentaciones disponibles.
           </p>
         {% endif %}
+
         {% comment %}datos del proyecto final{% endcomment %}
         <p class="p-0 m-0">
-          <b>Proyecto final:</b> En curso.
+          <b>Proyecto final:</b>
+          {% if proyecto_final %}
+            {% if proyecto_final.estado %}
+              Aprobado.
+            {% else %}
+              Aún no hay una respuesta.
+            {% endif %}
+          {% else %}
+            Aún no hay una solicitud de proyecto final.
+          {% endif %}
         </p>
         <p class="p-0 m-0">
-          <b>Avance:</b> 10%
+          fechas{% comment %} <b>Avance:</b>
+          {% if proyecto_final %}
+            {% if proyecto_final.avance %}
+              {{ proyecto_final.avance }}%
+            {% else %}
+              0%
+            {% endif %}
+          {% else %}
+            0%
+          {% endif %} {% endcomment %}
         </p>
       </div>
     </div>

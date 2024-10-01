@@ -181,7 +181,6 @@
               {% if anteproyecto.codirector %}
                 <p>
                   <strong>Director y Codirector</strong>
-
                 </p>
               {% else %}
                 <p>
@@ -215,9 +214,14 @@
             {% if anteproyecto.solicitud_enviada %}
               <div class="d-flex flex-column">
                 <p class="p-2 pt-0 pb-0 m-0">
-                  Ya se envió una solicitud al <strong>comité</strong>, esté atento a las <strong>respuestas</strong>
+                  Ya se envió una solicitud al <strong>comité</strong>, esté atento a las <strong>respuestas</strong><br />
                 </p>
                 <small class="p-2 pt-0 pb-0 m-0"><strong>Fecha de envío:</strong> {{ anteproyecto.fecha_envio }}</small>
+                <p class="p-2 pt-0 pb-0 m-0">
+                  {% if fecha_respuesta_maxima %}
+                    <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
+                  {% endif %}
+                </p>
               </div>
             {% else %}
               <a href="#" id="btnEnviarSolicitud" class="botones_envios">
@@ -244,6 +248,12 @@
                     </div>
                     <p class="card-text">Carta del anteproyecto.</p>
                     <a href="data:application/pdf;base64,{{ doc_carta_presentacion }}" download="Carta_de_Presentacion_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Carta</a>
+                  </div>
+                </div>
+              {% else %}
+                <div class="card">
+                  <div class="card-body">
+                    <p>No se envio la carta del anteproyecto.</p>
                   </div>
                 </div>
               {% endif %}

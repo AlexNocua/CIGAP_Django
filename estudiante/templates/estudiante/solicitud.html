@@ -9,9 +9,11 @@
     
     .solicitud {
       position: relative;
-      z-index: 3001;
+      z-index: 0;
     }
-    
+    #anteproyectoForm {
+      z-index: 0;
+    }
     #id_nombre_proyecto,
     #id_nombre_integrante1,
     #id_nombre_integrante2,
@@ -33,122 +35,243 @@
       border-radius: 4px;
       border: 1px solid #cacaca;
     }
+    
+    /* Personaliza el estilo del input file */
+    .custom-file-input {
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      width: 100%;
+      background-color: #f8f9fa;
+    }
+    
+    .custom-file-input:hover {
+      border-color: #80bdff;
+      background-color: #e2e6ea;
+    }
   </style>
 
   <h2 class="m-3">Crea tu solicitud de anteproyecto</h2>
-  <div class="solicitud d-flex flex-column contenido_estudiante_view">
-    {% if not existe_solicitud %}
-      <div class="col w-100">
-        <div class="acuerdos">
-          <h4>Antes de enviar tu anteproyecto, ten en cuenta lo siguiente:</h4>
-          <p>Una vez que envíes tu anteproyecto, este será revisado por el comité correspondiente. Es crucial que estés pendiente de la retroalimentación del comité, ya que su respuesta puede ser una de las siguientes:</p>
-          <ul>
-            <li>
-              <strong>Aprobado:</strong> Tu anteproyecto cumple con los requisitos establecidos y puedes continuar con el siguiente paso del proceso.
-            </li>
-            <li>
-              <strong>Aplazado:</strong> El comité ha identificado algunos aspectos que necesitan ser corregidos o mejorados antes de poder aprobar el anteproyecto. Se te brindarán indicaciones sobre los cambios necesarios.
-            </li>
-            <li>
-              <strong>Rechazado:</strong> El anteproyecto no cumple con los criterios necesarios para continuar. En este caso, deberás realizar una revisión profunda y volver a presentarlo en una nueva convocatoria.
-            </li>
-          </ul>
-          <p>Además, es fundamental que verifiques los documentos que estás enviando. Asegúrate de que todos los archivos sean los correctos y que cumplan con las especificaciones solicitadas. Un error en esta etapa podría retrasar el proceso de revisión.</p>
-          <p>Mantente atento a las notificaciones y responde oportunamente a cualquier solicitud del comité para garantizar un proceso fluido y eficiente.</p>
+  {% if anteproyecto %}
+    <h3>Detalles del Anteproyecto</h3>
+
+    {% if observaciones %}
+      <h5>Observaciones:</h5>
+      <div id="observacionesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Mostrar número de observaciones -->
+        <div style="text-align: center; margin-bottom: 15px;">
+          <strong>Total de Observaciones:</strong> {{ observaciones.items|length }}
         </div>
 
-        <form class="" action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <h4>Ingresa los siguientes datos</h4>
-          <div class="row">
-            <!-- Nombre del Proyecto -->
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
-              <p class="m-0 p-0">Ingresa el nombre del proyecto.</p>
-              {{ form_anteproyecto.nombre_anteproyecto }}
-            </div>
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_descripcion"><b>Descripción</b></label>
-              <p class="m-0 p-0">Ingresa una breve descripción del proyecto. (No mayor a 400 palabras.)</p>
-              {{ form_anteproyecto.descripcion }}
-            </div>
+        <div class="carousel-inner" style="z-index: 20;     border-top: 2px solid #259100;
+    border-bottom: 2px solid #259100;
+    padding: 12px 0;">
+          {% for key, observacion in observaciones.items %}
+            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+              <div class="card mx-auto" style="width: 50%; padding: 20px; margin: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="card-body">
+                  <!-- Título con observación y usuario -->
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title">Observación {{ forloop.counter }}</h5>
+                    <p>
+                      <strong>Por:</strong> {{ observacion.observacion.user.nombre_completo }}
+                    </p>
+                  </div>
 
-            <!-- Nombre del Primer Integrante -->
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
-              <p class="m-0 p-0">Escribe el nombre completo del primer integrante.</p>
-              {{ form_anteproyecto.nombre_integrante1 }}
-            </div>
-          </div>
+                  <!-- Fecha de retroalimentación -->
+                  <p>
+                    <strong>Fecha de Retroalimentación:</strong> {{ observacion.observacion.fecha_retroalimentacion }}
+                  </p>
 
-          <div class="row">
-            <!-- Nombre del Segundo Integrante -->
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
-              <p class="m-0 p-0">Escribe el nombre completo del segundo integrante.</p>
-              {{ form_anteproyecto.nombre_integrante2 }}
-            </div>
+                  <!-- Documento de evaluación si existe -->
+                  {% if observacion.doc_evaluacion_anteproyecto %}
+                    <p>
+                      <strong>Documento de Evaluación:</strong>
+                      <a href="data:application/pdf;base64,{{ observacion.doc_evaluacion_anteproyecto }}" download="evaluacion_{{ forloop.counter }}_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-sm btn-outline-primary">Descargar Documento</a>
+                    </p>
+                  {% endif %}
 
-            <!-- Carta de Presentación -->
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_carta_presentacion"><b>Carta de Presentación</b></label>
-              <p class="m-0 p-0">Sube la carta de presentación en formato PDF.</p>
-              {{ form_anteproyecto.carta_presentacion_convert }}
-            </div>
-          </div>
+                  <!-- Revisiones dadas -->
+                  <p>
+                    <strong>Revisiones dadas:</strong> {{ observacion.observacion.retroalimentacion }}
+                  </p>
 
-          <div class="row">
-            <!-- Anteproyecto -->
-            <div class="form-group w-100">
-              <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
-              <p class="m-0 p-0">Adjunta el anteproyecto en formato PDF.</p>
-              {{ form_anteproyecto.anteproyecto_convert }}
+                  <!-- Revisiones adicionales si existen -->
+                  {% if observacion.observacion.revs_dadas %}
+                    <p>
+                      <small><strong>Revisiones adicionales:</strong> {{ observacion.observacion.revs_dadas }}</small>
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
             </div>
+          {% endfor %}
+        </div>
 
-            <!-- Director -->
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_director"><b>Director</b></label>
-              <p class="m-0 p-0">Selecciona el director del proyecto.</p>
-              {{ form_anteproyecto.director }}
-            </div>
-          </div>
-
-          <div class="row">
-            <!-- Codirector -->
-            <div class="form-group col-md-6">
-              <label class="m-0 p-0" for="id_coodirector"><b>Codirector</b></label>
-              <p class="m-0 p-0">Selecciona el codirector del proyecto (opcional).</p>
-              {{ form_anteproyecto.codirector }}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12">
-              <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
-            </div>
-          </div>
-        </form>
+        <!-- Controles de navegación con colores personalizados -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="prev" style="z-index: 21 ; border-radius: 50%;">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="next" style="z-index: 21 ; border-radius: 50%;">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-    {% else %}
-      {% if respuesta %}
-        <p>
-          <strong>El comite a respondido a tu solicitud de anteproyecto, la respuesta es:</strong> {{ respuesta.respuesta.estado }}
-          <br />
-          <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-          <strong>Fecha de respuesta por parte del cómite:</strong> {{ respuesta.respuesta.fecha_retroalimentacion }}
-          <br />
-          <strong>Documento retroalimentado:</strong> <a class="mt-2" href="data:application/octet-stream;base64,{{ respuesta.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
-          <br /><br />
-          <strong>Respuesta del cómite:</strong> {{ respuesta.respuesta.retroalimentacion }}
-        </p>
+
+      {% if anteproyecto.solicutud_enviada %}
+        <form method="POST" enctype="multipart/form-data" action="{% url 'estudiante:actualizar_documentos_anteproyecto' anteproyecto.id %}">
+          {% csrf_token %}
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <div style="display: flex; flex-direction: column;">
+              <label for="anteproyecto"><strong>Editar Documento de Anteproyecto:</strong></label>
+              <input type="file" name="anteproyecto" id="anteproyecto" accept="application/pdf" required />
+              <small style="margin-top: 5px;">Por favor, asegúrate de que el archivo del anteproyecto sea un documento PDF.</small>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <label for="carta_anteproyecto"><strong>Editar Carta del Anteproyecto:</strong></label>
+              <input type="file" name="carta_anteproyecto" id="carta_anteproyecto" accept="application/pdf" required />
+              <small style="margin-top: 5px;">Por favor, asegúrate de que la carta del anteproyecto sea un documento PDF.</small>
+            </div>
+          </div>
+          <button type="submit">Subir Nuevos Documentos</button>
+        </form>
       {% else %}
-        <p>
-          <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-          <strong>Estado:</strong> En revisión
-        </p>
+        <div class="p-2" style="border: 1px solid #CACACB;
+    border-radius: 12px">
+          <h3 class="text-center">Enviado al comité</h3>
+          <p>El anteproyecto está siendo revisado por el comité, pendiente a observaciones y evaluaciones.</p>
+          <p>
+            <strong>Nota:</strong>
+            <small>Este anteproyecto aún no ha sido evaluado por el comité.</small><br />
+
+            <small><strong>Fecha de envio de la solicitud:</strong> {{ anteproyecto.fecha_envio }}</small><br />
+            {% if fecha_respuesta_maxima %}
+              <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
+            {% endif %}
+          </p>
+        </div>
       {% endif %}
+    {% else %}
+      <p>El anteproyecto está siendo revisado por el director y codirector, pendiente a observaciones y evaluaciones.</p>
+      <p>
+        <strong>Nota:</strong> <small>Este anteproyecto aún no ha sido evaluado.</small>
+      </p>
     {% endif %}
-  </div>
+  {% else %}
+    <div class="solicitud d-flex flex-column contenido_estudiante_view">
+      {% if not existe_solicitud %}
+        <div class="col w-100">
+          <div class="acuerdos">
+            <h4>Antes de enviar tu anteproyecto, ten en cuenta lo siguiente:</h4>
+            <p>Una vez que envíes tu anteproyecto, este será revisado por el comité correspondiente. Es crucial que estés pendiente de la retroalimentación del comité, ya que su respuesta puede ser una de las siguientes:</p>
+            <ul>
+              <li>
+                <strong>Aprobado:</strong> Tu anteproyecto cumple con los requisitos establecidos y puedes continuar con el siguiente paso del proceso.
+              </li>
+              <li>
+                <strong>Rechazado:</strong> El anteproyecto no cumple con los criterios necesarios para continuar. En este caso, deberás realizar una revisión profunda y volver a presentarlo en una nueva convocatoria.
+              </li>
+            </ul>
+            <p>Además, es fundamental que verifiques los documentos que estás enviando. Asegúrate de que todos los archivos sean los correctos y que cumplan con las especificaciones solicitadas. Un error en esta etapa podría retrasar el proceso de revisión.</p>
+            <p>Mantente atento a las notificaciones y responde oportunamente a cualquier solicitud del comité para garantizar un proceso fluido y eficiente.</p>
+          </div>
+
+          <form id="anteproyectoForm" action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h4>Ingresa los siguientes datos</h4>
+            <div class="col">
+              <!-- Nombre del Proyecto -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
+                {{ form_anteproyecto.nombre_anteproyecto }}
+                <small class="form-text text-muted">Ingresa el nombre del proyecto.</small>
+              </div>
+
+              <!-- Descripción -->
+              <div class="form-group col-md-6 d-flex flex-column">
+                <label class="m-0 p-0" for="id_descripcion"><b>Resumen</b></label>
+                {{ form_anteproyecto.descripcion }}
+                <small class="form-text text-muted">Ingresa el resumen del proyecto. (No mayor a 400 palabras.)</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Nombre del Primer Integrante -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
+                {{ form_anteproyecto.nombre_integrante1 }}
+                <small class="form-text text-muted">Escribe el nombre completo del primer integrante.</small>
+              </div>
+
+              <!-- Nombre del Segundo Integrante -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
+                {{ form_anteproyecto.nombre_integrante2 }}
+                <small class="form-text text-muted">Escribe el nombre completo del segundo integrante.</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Carta de Presentación -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_carta_presentacion_convert"><b>Carta de Presentación</b></label>
+                <input type="file" id="id_carta_presentacion_convert" name="carta_presentacion_convert" accept=".pdf" />
+                <small class="form-text text-muted">Sube la carta de presentación en formato PDF.</small>
+              </div>
+
+              <!-- Anteproyecto -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
+                <input type="file" id="id_anteproyecto_convert" name="anteproyecto_convert" accept=".pdf" />
+                <small class="form-text text-muted">Adjunta el anteproyecto en formato PDF.</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Director -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_director"><b>Director</b></label>
+                {{ form_anteproyecto.director }}
+                <small class="form-text text-muted">Selecciona el director del proyecto.</small>
+              </div>
+
+              <!-- Codirector -->
+              <div class="form-group col-md-6">
+                <label class="m-0 p-0" for="id_coodirector"><b>Codirector</b></label>
+                {{ form_anteproyecto.codirector }}
+                <small class="form-text text-muted">Selecciona el codirector del proyecto (opcional).</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
+              </div>
+            </div>
+          </form>
+        </div>
+      {% else %}
+        {% if respuesta %}
+          <p>
+            <strong>El comite a respondido a tu solicitud de anteproyecto, la respuesta es:</strong> {{ respuesta.respuesta.estado }}
+            <br />
+            <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+            <strong>Fecha de respuesta por parte del cómite:</strong> {{ respuesta.respuesta.fecha_retroalimentacion }}
+            <br />
+            <strong>Documento retroalimentado:</strong> <a class="mt-2" href="data:application/octet-stream;base64,{{ respuesta.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
+            <br /><br />
+            <strong>Respuesta del cómite:</strong> {{ respuesta.respuesta.retroalimentacion }}
+          </p>
+        {% else %}
+          <p>
+            <strong>Ya enviaste una solicitud, espera la respuesta del comité.</strong> <br /><strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+            <strong>Estado:</strong> En revisión
+          </p>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
 
   {% comment %}tener en cuenta que este cambia segun la respuesta del comite{% endcomment %}
   {% if respuesta %}
@@ -205,10 +328,6 @@
       <div class="row">
         <div class="col-md-6">
           <div class="mb-3">
-            <label class="form-label fw-bold">Relacionado con</label>
-            <div style="cursor: pointer;">{{ form_solicitudes.relacionado_con }}</div>
-          </div>
-          <div class="mb-3">
             <label class="form-label fw-bold">Tipo de Solicitud</label>
             <div style="cursor: pointer;">{{ form_solicitudes.tipo_solicitud }}</div>
           </div>
@@ -235,4 +354,52 @@
       </div>
     </form>
   </div>
+  
+  <script>
+    document.getElementById('anteproyectoForm').addEventListener('submit', function (event) {
+      event.preventDefault() // Prevenir el envío inmediato del formulario
+      const form = this
+    
+      // Obtener los archivos de los campos de archivo
+      const cartaPresentacion = document.getElementById('id_carta_presentacion_convert').files.length
+      const anteproyecto = document.getElementById('id_anteproyecto_convert').files.length
+    
+      // Verificar si ambos campos de archivo tienen archivos seleccionados
+      if (cartaPresentacion === 0 || anteproyecto === 0) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Por favor, cargue todos los archivos requeridos.',
+          icon: 'error',
+          confirmButtonText: 'Entendido'
+        })
+        return // Salir de la función si los archivos no están cargados
+      }
+    
+      // Si los archivos están presentes, proceder con la confirmación
+      Swal.fire({
+        title: '¿Está seguro de que desea enviar?',
+        text: 'Una vez enviado, no podrá cambiar su selección.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, enviar',
+        cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Mostrar animación de carga
+          Swal.fire({
+            title: 'Enviando...',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading() // Mostrar el spinner de carga
+            }
+          })
+    
+          // Agregar un delay de 3000 ms antes de enviar el formulario
+          setTimeout(() => {
+            form.submit() // Enviar el formulario después de 3 segundos
+          }, 3000)
+        }
+      })
+    })
+  </script>
 {% endblock %}

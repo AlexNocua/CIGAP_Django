@@ -8,23 +8,45 @@ from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral,
 #         fields = '__all__'
 
 
+from django import forms
+
+
 class FormAnteproyecto(forms.ModelForm):
-    carta_presentacion_convert = forms.FileField(required=False)
-    anteproyecto_convert = forms.FileField(required=False)
+    carta_presentacion_convert = forms.FileField(
+        required=True, widget=forms.ClearableFileInput(attrs={'class': 'custom-file-input'})
+    )
+    anteproyecto_convert = forms.FileField(
+        required=True, widget=forms.ClearableFileInput(attrs={'class': 'custom-file-input'})
+    )
 
     class Meta:
         model = ModelAnteproyecto
-        fields = ('nombre_anteproyecto', 'descripcion', 'nombre_integrante1', 'nombre_integrante2',
-                  'carta_presentacion_convert', 'anteproyecto_convert', 'director', 'codirector')
+        fields = (
+            'nombre_anteproyecto',
+            'descripcion',
+            'nombre_integrante1',
+            'nombre_integrante2',
+            'carta_presentacion_convert',
+            'anteproyecto_convert',
+            'director',
+            'codirector'
+        )
         widgets = {
-            'nombre_integrante2': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
-            'codirector': forms.TextInput(attrs={'placeholder': 'Si tienes.'}),
+            'nombre_anteproyecto': forms.TextInput(attrs={'placeholder': 'Ejemplo: Proyecto de Investigación'}),
+            'nombre_integrante1': forms.TextInput(attrs={'placeholder': 'Ejemplo: Alex Eduardo Oliveira'}),
+            'nombre_integrante2': forms.TextInput(attrs={'placeholder': 'Ejemplo: Harold Santiago Almanza Rivera'}),
+            'director': forms.TextInput(attrs={'placeholder': 'Ejemplo: Manuel Felipe Gomez'}),
+            'codirector': forms.TextInput(attrs={'placeholder': 'Ejemplo: Rafael Cano Cano'}),
         }
 
     def __init__(self, *args, **kwargs):
         super(FormAnteproyecto, self).__init__(*args, **kwargs)
+        # Aseguramos que los campos de archivo sean requeridos
+        self.fields['carta_presentacion_convert'].required = True
+        self.fields['anteproyecto_convert'].required = True
+
+        # Si la instancia ya existe, hacemos que 'nombre_anteproyecto' no sea requerido
         if self.instance and self.instance.pk:
-            # Si el anteproyecto ya existe (es una actualización), haz opcional el campo
             self.fields['nombre_anteproyecto'].required = False
 
     def save(self, commit=True):
@@ -38,7 +60,6 @@ class FormAnteproyecto(forms.ModelForm):
         solicitud.descripcion = self.cleaned_data.get(
             'descripcion', solicitud.descripcion)
 
-        # Solo reemplaza los archivos si se han proporcionado nuevos
         if self.cleaned_data.get('carta_presentacion_convert'):
             solicitud.carta_presentacion = self.cleaned_data['carta_presentacion_convert'].read(
             )
@@ -55,7 +76,6 @@ class FormAnteproyecto(forms.ModelForm):
         if commit:
             solicitud.save()
         return solicitud
-
 # formulario de proyecto final
 
 

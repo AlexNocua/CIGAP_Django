@@ -35,7 +35,7 @@ class ModelAnteproyecto(models.Model):
     fecha_envio = models.DateTimeField(null=True, blank=True)
 
     # estas son modificadas por correspondencia
-    solicitud_enviada = models.BooleanField()
+    solicitud_enviada = models.BooleanField(null=True, blank=True)
     estado = models.BooleanField(default=False)
 
 # creacion del modelo de monografia o proyecto de grado

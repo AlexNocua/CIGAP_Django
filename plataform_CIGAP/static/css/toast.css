@@ -1,4 +1,4 @@
- #liveToast, strong, small {
+ /* #liveToast, strong, small {
     color: #fff;
  }
 
@@ -22,5 +22,14 @@
  }
 
  .toast-header {
+    color: #fff !important;
     background: var(--colores_institucionalesfondo1);
  }
+
+ .text-muted {
+    color: #fff !important;
+ }
+
+ .btn-close {
+    color: #fff !important;
+ } */

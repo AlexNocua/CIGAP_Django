@@ -10,7 +10,7 @@ from django.db.models import Q
 
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
-from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
+from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual, fecha_maxima_respuesta
 
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario
@@ -153,6 +153,9 @@ def anteproyecto(request, id):
     anteproyecto = recuperar_anteproyecto(id)
     context['anteproyecto'] = anteproyecto
     if anteproyecto:
+        if anteproyecto.fecha_envio:
+            context['fecha_respuesta_maxima'] = fecha_maxima_respuesta(
+                anteproyecto.fecha_envio)
         doc_anteproyecto = recuperar_documento(anteproyecto.anteproyecto)
         doc_carta_presentacion = recuperar_documento(
             anteproyecto.carta_presentacion)
@@ -167,6 +170,8 @@ def anteproyecto(request, id):
 
             retroalimentacion = formulario_observacion.save(commit=False)
             retroalimentacion.anteproyecto = anteproyecto
+            retroalimentacion.fecha_retroalimentacion = fecha_actual()
+
             retroalimentacion.save()
 
             messages.success(
@@ -178,8 +183,7 @@ def anteproyecto(request, id):
 
     else:
         formulario_retroalimentacion = FormObservacionAnteproyecto()
-
-    context['from_retroalimentacion'] = formulario_retroalimentacion
+        context['from_retroalimentacion'] = formulario_retroalimentacion
     return render(request, 'director/anteproyectos/anteproyecto.html', context)
 
 

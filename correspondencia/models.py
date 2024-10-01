@@ -20,6 +20,8 @@ class ModelRetroalimentaciones(models.Model):
 
     anteproyecto = models.ForeignKey(
         ModelAnteproyecto, on_delete=models.CASCADE, related_name='Retroalimentaciones', blank=True, null=True)
+    user = models.ForeignKey(Usuarios, on_delete=models.SET_NULL,
+                             related_name='Retroalimentaciones', blank=True, null=True)
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, related_name='Retroalimentaciones', blank=True, null=True)
     retroalimentacion = models.TextField(
@@ -60,20 +62,12 @@ class ModelSolicitudes(models.Model):
         ('otro', 'Otro'),
     ]
 
-    RELACIONADO_CON_CHOICES = [
-        ('Anteproyecto', 'Anteproyecto'),
-        ('Proyecto_final', 'Proyecto Final'),
-    ]
-
     user = models.ForeignKey(Usuarios, on_delete=models.SET_NULL,
                              related_name='Solicitudes', blank=True, null=True)
     anteproyecto = models.ForeignKey(
         ModelAnteproyecto, on_delete=models.CASCADE, blank=True, null=True, related_name='Solicitudes')
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
-    relacionado_con = models.CharField(
-        max_length=255,
-        choices=RELACIONADO_CON_CHOICES)
     retroalimentaciones = models.ForeignKey(
         ModelRetroalimentaciones, on_delete=models.SET_NULL, blank=True, null=True, related_name='Solicitudes')
     tipo_solicitud = models.CharField(

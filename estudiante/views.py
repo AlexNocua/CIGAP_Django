@@ -1,8 +1,10 @@
 
 # get_object_or_404 para el manejo de errores si no se encuentra un modelo con los siguientes datos
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 
 from django.contrib.auth.decorators import login_required
@@ -15,13 +17,15 @@ import base64
 # modelo de correspondencia
 from correspondencia.models import ModelRetroalimentaciones
 
+# importacion de modelos del director
+from director.models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario
 # importacion del formulario para editar el usuario
 from login.forms import FormEditarUsuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
-from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
+from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual, fecha_maxima_respuesta
 
 
 # Create your views here.
@@ -29,6 +33,31 @@ from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 # vista de funcionamiento respecto a la url de la aplicacion
 # def funcionando(request):
 #     return HttpResponse('app_ estudiante funcionando.')
+
+# recuperar anteproyecto por id
+def recuperar_anteproyecto_id(id):
+    anteproyecto = ModelAnteproyecto.objects.get(id=id)
+    if not anteproyecto:
+        return None
+    return anteproyecto
+# recuperacion de las observaciones de anteproyecto
+
+
+def recuperar_observaciones_anteproyecto(anteproyecto):
+    observaciones = ModelRetroalimentaciones.objects.filter(
+        anteproyecto=anteproyecto)
+    if not observaciones:
+        return None
+    return observaciones
+# recuperacion de las observaciones de proyecto
+
+
+def recuperar_observaciones_proyecto_final(proyecto):
+    observaciones = ModelEvaluacionAnteproyecto.objects.filter(
+        proyecto_final=proyecto)
+    if not observaciones:
+        return None
+    return observaciones
 
 
 # funcion para devolver documentos o imagenes
@@ -133,7 +162,9 @@ def recuperar_retroalimentaciones(anteproyecto_):
 
 def recuperar_anteproyecto(request):
     anteproyecto = ModelAnteproyecto.objects.get(
-        user=request.user) if ModelAnteproyecto.objects.filter(user=request.user).exists() else None
+        Q(user=request.user) | Q(nombre_integrante1=request.user.nombre_completo) | Q(nombre_integrante1=request.user.nombre_completo))
+    if not anteproyecto:
+        return None
     return anteproyecto
 
 # funcion para recuperar el proyecto final
@@ -151,7 +182,12 @@ def principal_estudiante(request):
     context = {}
     anteproyecto = recuperar_anteproyecto(request)
     retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)
+    if anteproyecto:
+        context['anteproyecto'] = anteproyecto
 
+    proyecto_final = recuperar_proyecto_final(anteproyecto)
+    if proyecto_final:
+        context['proyecto_final'] = proyecto_final
     if request.method == 'POST':
         editar_usuario(request)
     else:
@@ -168,28 +204,76 @@ def principal_estudiante(request):
 @ grupo_usuario('Estudiantes')
 def solicitud(request):
     context = datosusuario(request)
+
     # Si el método es POST, procesamos el formulario.
     if request.method == 'POST':
-        form = FormAnteproyecto(request.POST, request.FILES)
-        if form.is_valid():
-            anteproyecto = form.save(commit=False)
-            anteproyecto.fecha_envio = fecha_actual()
-            anteproyecto.solicitud_enviada = True
-            anteproyecto.estado = False
-            anteproyecto.user = request.user  # Asigna el usuario actual al campo user
-            anteproyecto.save()
+        # Verificamos si el estudiante ya tiene un anteproyecto.
+        try:
+            # Buscamos un anteproyecto donde el usuario sea el creador o uno de los integrantes
+            existing_anteproyecto = ModelAnteproyecto.objects.get(
+                user=request.user)
+            messages.warning(
+                request, "Ya tienes un anteproyecto creado. No puedes crear otro hasta que el actual sea evaluado.")
             return redirect('estudiante:info_proyect')
+        except ModelAnteproyecto.DoesNotExist:
+            try:
+                existing_anteproyecto1 = ModelAnteproyecto.objects.get(
+                    nombre_integrante1=request.user.nombre_completo)
+                messages.warning(
+                    request, "Ya tienes un anteproyecto creado. No puedes crear otro hasta que el actual sea evaluado.")
+                return redirect('estudiante:info_proyect')
+            except ModelAnteproyecto.DoesNotExist:
+                try:
+                    existing_anteproyecto2 = ModelAnteproyecto.objects.get(
+                        nombre_integrante2=request.user.nombre_completo)
+                    messages.warning(
+                        request, "Ya tienes un anteproyecto creado. No puedes crear otro hasta que el actual sea evaluado.")
+                    return redirect('estudiante:info_proyect')
+                except ModelAnteproyecto.DoesNotExist:
+                    # Solo se ejecuta si no se encontró anteproyecto en ninguna de las condiciones anteriores
+                    form = FormAnteproyecto(request.POST, request.FILES)
+                    if form.is_valid():
+                        anteproyecto = form.save(commit=False)
+                        anteproyecto.estado = False
+                        anteproyecto.user = request.user
+                        anteproyecto.save()
+
+                        # Mensaje de éxito
+                        messages.success(
+                            request, f"El proyecto '{anteproyecto.nombre_anteproyecto}' ha sido enviado al director y codirector para las retroalimentaciones pertinentes.")
+                        return redirect('estudiante:info_proyect')
+                    else:
+                        # Mensaje de error si el formulario no es válido
+                        messages.error(
+                            request, "Hubo un problema al enviar el formulario. Por favor, verifica los campos y vuelve a intentarlo.")
 
     # Si el método es GET, buscamos el anteproyecto del usuario actual.
     else:
-
         try:
             anteproyecto = recuperar_anteproyecto(request)
+            if anteproyecto:
+                context['anteproyecto'] = anteproyecto
+                if anteproyecto.fecha_envio:
+                    context['fecha_respuesta_maxima'] = fecha_maxima_respuesta(
+                        anteproyecto.fecha_envio)
+                observaciones_anteproyecto = recuperar_observaciones_anteproyecto(
+                    anteproyecto)
+                if observaciones_anteproyecto:
+                    dict_observaciones = {}
+                    for i, observacion in enumerate(observaciones_anteproyecto):
+                        # Crea un nuevo diccionario para cada observación
+                        dict_observaciones[f'observacion{i}'] = {
+                            'observacion': observacion,
+                            'doc_evaluacion_anteproyecto': devolver_documento_imagen(observacion.doc_retroalimentacion)
+                        }
+                        context['observaciones'] = dict_observaciones
             proyecto_final = recuperar_proyecto_final(anteproyecto)
             content_anteproyecto = ModelAnteproyecto.objects.get(
                 user=request.user)
         except ModelAnteproyecto.DoesNotExist:
             content_anteproyecto = None
+            messages.warning(
+                request, "No se encontró ningún anteproyecto asociado a tu cuenta.")
 
         if content_anteproyecto:
             estado = content_anteproyecto.solicitud_enviada
@@ -197,14 +281,15 @@ def solicitud(request):
             nombre_anteproyecto = content_anteproyecto.nombre_anteproyecto
             form_anteproyecto = FormAnteproyecto(instance=content_anteproyecto)
             context['form_anteproyecto'] = form_anteproyecto
-            context['estado'] = estado
 
             if existe_solicitud:
                 context['existe_solicitud'] = existe_solicitud
                 context['nombre_anteproyecto'] = nombre_anteproyecto
                 context['fecha_envio'] = content_anteproyecto.fecha_envio
+                messages.info(
+                    request, f"La solicitud para el proyecto '{nombre_anteproyecto}' ya fue enviada anteriormente.")
 
-        # logica para saber si el proyecto fue aceptado
+        # lógica para saber si el proyecto fue aceptado
         context['respuesta'] = recuperar_retroalimentacion(
             content_anteproyecto)
 
@@ -218,29 +303,55 @@ def solicitud(request):
         return render(request, 'estudiante/solicitud.html', context)
 
 
+def actualizar_documentos_anteproyecto(request, id):
+    anteproyecto = recuperar_anteproyecto_id(id)
+
+    if anteproyecto:
+        if 'carta_anteproyecto' in request.FILES:
+            anteproyecto.carta_presentacion = request.FILES.get(
+                'carta_anteproyecto').read()
+        if 'anteproyecto' in request.FILES:
+            anteproyecto.anteproyecto = request.FILES.get(
+                'anteproyecto').read()
+            anteproyecto.save()
+            messages.success(
+                request, "El documento del anteproyecto se actualizó correctamente.")
+        else:
+            messages.warning(
+                request, "No se encontró el archivo del anteproyecto para actualizar.")
+    else:
+        messages.error(
+            request, "No se encontró el anteproyecto con el ID proporcionado.")
+
+    return redirect('estudiante:solicitud')
+
+
 # funcion de solicitudes especificas
+
+
 def solicitudes_especificas(request):
     if request.method == 'POST':
         form = FormSolicitudes(request.POST, request.FILES)
         if form.is_valid():
             solicitud = form.save(commit=False)
             solicitud.user = request.user
-
-            if solicitud.relacionado_con == 'Anteproyecto':
-                solicitud.anteproyecto = recuperar_anteproyecto(request)
-            elif solicitud.relacionado_con == 'Proyecto_final':
-                anteproyecto = recuperar_anteproyecto(request)
-                solicitud.retroalimentaiciones = recuperar_retroalimentaciones(
-                    anteproyecto)
-                solicitud.proyecto_final = recuperar_proyecto_final(
-                    anteproyecto)
-
+            solicitud.anteproyecto = recuperar_anteproyecto(request)
             solicitud.fecha_envio = fecha_actual()
             solicitud.estado = False
             solicitud.save()
-        return redirect('estudiante:solicitud')
+
+            # Enviar mensaje de éxito
+            messages.success(request, 'Solicitud enviada con éxito.')
+            return redirect('estudiante:solicitud')
+        else:
+            # Enviar mensaje de error si el formulario no es válido
+            messages.error(
+                request, 'Error en el formulario. Por favor, revisa los datos ingresados.')
+            return redirect('estudiante:solicitud')
     else:
-        return HttpResponse('Algo ocurrio.')
+        # Enviar mensaje de error si no es un POST
+        messages.error(request, 'Método de solicitud no permitido.')
+        return HttpResponse('Algo ocurrió.')
 
 # vista de la informacion del proyecto
 
