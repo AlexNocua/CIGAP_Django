@@ -73,6 +73,15 @@ def recuperar_documento(documento):
     return documento
 
 
+def recuperar_anteproyectos_a_evaluar(request):
+    usuario = request.user
+    ante_a_evaluar = ModelEvaluacionAnteproyecto.objects.filter(
+        Q(evaluador=usuario) & Q(anteproyecto__estado=False))
+    if not ante_a_evaluar:
+        return None
+    return ante_a_evaluar
+
+
 def recuperar_anteproyectos(request):
     usuario = request.user
     anteproyectos = ModelAnteproyecto.objects.filter(
@@ -286,7 +295,7 @@ def evaluacion_proyectos(request):
 
 def view_evaluador_anteproyectos(request):
     context = datos_usuario_director(request)
-    anteproyectos = recuperar_anteproyectos(request)
+    anteproyectos = recuperar_anteproyectos_a_evaluar(request)
     if anteproyectos:
         context['anteproyectos'] = anteproyectos
     return render(request, 'director/evaluacion_proyectos/list_evaluador.html', context)
@@ -329,6 +338,7 @@ def enviar_evaluacion(request, id):
             if doc_retro:
                 evaluacion_anteproyecto.doc_evaluacion_anteproyecto = doc_retro.read()
 
+            evaluacion_anteproyecto.fecha_evaluacion = fecha_actual()
             evaluacion_anteproyecto.save()
 
             messages.success(

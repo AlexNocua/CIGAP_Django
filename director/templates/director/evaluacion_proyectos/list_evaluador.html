@@ -48,32 +48,32 @@
     <p class="text-muted">A continuación, se muestra la lista de anteproyectos que requieren su evaluación. Por favor, revise la información y responda a la solicitud de retroalimentación.</p>
     <div class="grid-container mt-4">
       {% if anteproyectos %}
-        {% for anteproyecto in anteproyectos %}
+        {% for evaluacion in anteproyectos %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{ anteproyecto.nombre_anteproyecto }}</h5>
+              <h5 class="card-title">{{ evaluacion.anteproyecto.nombre_anteproyecto }}</h5>
               <p class="card-text">
                 <strong>Integrantes del anteproyecto:</strong><br />
-                {% if anteproyecto.nombre_integrante2 %}
-                  {{ anteproyecto.nombre_integrante1 }}<br />
-                  {{ anteproyecto.nombre_integrante2 }}
+                {% if evaluacion.anteproyecto.nombre_integrante2 %}
+                  {{ evaluacion.anteproyecto.nombre_integrante1 }}<br />
+                  {{ evaluacion.anteproyecto.nombre_integrante2 }}
                 {% else %}
-                  {{ anteproyecto.nombre_integrante1 }}
+                  {{ evaluacion.anteproyecto.nombre_integrante1 }}
                 {% endif %}
               </p>
               <p class="card-text">
                 <strong>Director y Codirector:</strong><br />
-                {% if anteproyecto.codirector %}
-                  <strong>Director:</strong> {{ anteproyecto.director }}<br />
-                  <strong>Codirector:</strong> {{ anteproyecto.codirector }}
+                {% if evaluacion.anteproyecto.codirector %}
+                  <strong>Director:</strong> {{ evaluacion.anteproyecto.director }}<br />
+                  <strong>Codirector:</strong> {{ evaluacion.anteproyecto.codirector }}
                 {% else %}
-                  <strong>Director:</strong> {{ anteproyecto.director }}
+                  <strong>Director:</strong> {{ evaluacion.anteproyecto.director }}
                 {% endif %}
               </p>
               <p class="card-text">
-                <strong>Fecha de radicación:</strong> {{ anteproyecto.fecha_envio }}
+                <strong>Fecha de radicación:</strong> {{ evaluacion.anteproyecto.fecha_envio }}
               </p>
-              <a href="{% url 'director:evaluar_anteproyecto' anteproyecto.id %}" class="btn btn-primary">Evaluar Anteproyecto</a>
+              <a href="{% url 'director:evaluar_anteproyecto' evaluacion.anteproyecto.id %}" class="btn btn-primary">Evaluar Anteproyecto</a>
             </div>
           </div>
         {% endfor %}

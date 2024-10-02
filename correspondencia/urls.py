@@ -45,6 +45,10 @@ urlpatterns = [
     ##############################################################################################
     path('ver_anteproyecto/<str:nombre_anteproyecto>',
          views.ver_anteproyecto, name='ver_anteproyecto'),
+    path('cargar_radicado/<int:id>',
+         views.cargar_radicado, name='cargar_radicado'),
+    path('editar_radicado/<int:id>',
+         views.editar_radicado, name='editar_radicado'),
     path('ver_proyecto_final/<str:nombre>/',
          views.ver_proyecto_final, name='ver_proyecto_final'),
     path('enviar_retroalimentacion/<str:nombre_anteproyecto>',

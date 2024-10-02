@@ -107,7 +107,8 @@ def recuperar_anteproyectos():
 
 
 def recuperar_anteproyectos_pendientes():
-    anteproyectos = ModelAnteproyecto.objects.filter(Q(estado=False) & Q(solicitud_enviada = True))
+    anteproyectos = ModelAnteproyecto.objects.filter(
+        Q(estado=False) & Q(solicitud_enviada=True))
     return anteproyectos
 # funcion para traer un anteproyecto en especifico
 
@@ -450,6 +451,9 @@ def ver_anteproyecto(request, nombre_anteproyecto):
                                    'doc_carta': doc_carta}
 
     if anteproyecto:
+        if anteproyecto.documento_radicado:
+            context['documento_radicado'] = recuperar_documento(
+                anteproyecto.documento_radicado)
         integrantes = (anteproyecto.nombre_integrante1, anteproyecto.nombre_integrante2,
                        anteproyecto.director, anteproyecto.codirector)
         datos_integrantes = {}
@@ -463,9 +467,61 @@ def ver_anteproyecto(request, nombre_anteproyecto):
         return HttpResponse('Gestiona los proyectos existentes, algo pasó con este.')
 
 
+def cargar_radicado(request, id):
+    anteproyecto = recuperar_anteproyecto_id(id)
+
+    if not anteproyecto:
+        messages.error(request, "El anteproyecto no existe.")
+        return redirect('correspondencia:solicitudes')
+    if anteproyecto.documento_radicado:
+        messages.warning(
+            request, "Este anteproyecto ya tiene un radicado cargado.")
+        return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+
+    if 'documento_radicado' in request.FILES:
+        try:
+            anteproyecto.documento_radicado = request.FILES.get(
+                'documento_radicado').read()
+            anteproyecto.save()
+            messages.success(
+                request, "El radicado ha sido cargado exitosamente.")
+        except Exception as e:
+            messages.error(
+                request, f"Hubo un error al cargar el radicado: {str(e)}")
+            return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+
+        return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+    else:
+        messages.error(request, "No se ha enviado ningún archivo.")
+        return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+
+
+def editar_radicado(request, id):
+    anteproyecto = recuperar_anteproyecto_id(id)
+
+    if 'documento_radicado' in request.FILES:
+        try:
+            anteproyecto.documento_radicado = request.FILES.get(
+                'documento_radicado').read()
+            anteproyecto.save()
+            messages.success(
+                request, "El radicado ha sido actualizado exitosamente.")
+        except Exception as e:
+            messages.error(
+                request, f"Hubo un error al cargar el radicado: {str(e)}")
+            return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+
+        return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+    else:
+        messages.error(request, "No se ha enviado ningún archivo.")
+        return redirect('correspondencia:ver_anteproyecto', nombre_anteproyecto=anteproyecto.nombre_anteproyecto)
+
+
 def enviar_retroalimentacion(request, nombre_anteproyecto):
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
     if anteproyecto is None:
+        messages.error(
+            request, "Anteproyecto no encontrado. Redirigiendo a solicitudes.")
         return redirect('correspondencia:solicitudes')
 
     if request.method == 'POST':
@@ -474,34 +530,41 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         if form_retro.is_valid():
             retroalimentacion = form_retro.save(commit=False)
             retroalimentacion.anteproyecto = anteproyecto
-            retroalimentacion.anteproyecto = anteproyecto
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (
                 retroalimentacion.revs_dadas or 0) + 1
+
             if retroalimentacion.estado not in ['Aprobado', 'Aprobado_con_correcciones']:
                 anteproyecto.delete()
+                messages.warning(
+                    request, "El anteproyecto ha sido eliminado debido a un estado no aprobado.")
 
             else:
                 anteproyecto.estado = True
-                # salvar las informaciones
-                anteproyecto.save(update_fields=['estado',])
+                anteproyecto.save(update_fields=['estado'])
                 nuevo_proyecto_final = ModelProyectoFinal(
                     user=anteproyecto.user,
                     anteproyecto=anteproyecto,
                 )
                 nuevo_proyecto_final.save()
                 retroalimentacion.save()
+                messages.success(
+                    request, "La retroalimentación se ha enviado exitosamente.")
+
             if retroalimentacion.doc_retroalimentacion:
                 print("Documento subido correctamente")
+                messages.info(request, "Documento subido correctamente.")
             else:
                 print("Error al subir el documento")
+                messages.error(request, "Error al subir el documento.")
+
             return redirect('correspondencia:solicitudes')
         else:
+            messages.error(
+                request, "Por favor, corrige los errores en el formulario.")
             print(form_retro.errors)
 
     return redirect('correspondencia:solicitudes')
-
-
 # vista de informacion de proyecto
 
 

@@ -33,7 +33,7 @@ class ModelAnteproyecto(models.Model):
     codirector = models.CharField(
         max_length=200, null=True, blank=True)  # Cambio aquí
     fecha_envio = models.DateTimeField(null=True, blank=True)
-
+    documento_radicado = models.BinaryField(null=True, blank=True)
     # estas son modificadas por correspondencia
     solicitud_enviada = models.BooleanField(null=True, blank=True)
     estado = models.BooleanField(default=False)
@@ -64,6 +64,7 @@ class ModelProyectoFinal(models.Model):
     solicitud_enviada = models.BooleanField(
         default=False, null=True, blank=True)
     estado = models.BooleanField(default=False, null=True, blank=True)
+    documento_radicado = models.BinaryField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super(ModelProyectoFinal, self).save(*args, **kwargs)
