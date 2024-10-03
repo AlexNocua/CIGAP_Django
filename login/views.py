@@ -75,7 +75,8 @@ def loginapps(request):
             else:
                 return HttpResponse("No tienes acceso a ninguna sección.")
         else:
-            return HttpResponse("Credenciales inválidas")
+            messages.error(request, "Verifique que el correo y la contraseña sean correctos.")
+            return redirect("login:loginapps")
 
     else:
         form = FormRegistro

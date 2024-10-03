@@ -5,11 +5,11 @@ from django.contrib import admin
 # Para conseguir renderizar componentes en el admin
 from django.utils.html import format_html
 
-from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades, ModelFechasProyecto
+from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades, ModelFechasProyecto, ModelAsignacionJurados
 # Register your models here.
-
-
 # Revisar esto con el fin de descargar los documentos desde el admin
+
+
 class ModelAnteproyectoAdmin(admin.ModelAdmin):
     list_display = (
         'nombre_anteproyecto',
@@ -58,7 +58,6 @@ class ModelProyectoFinalAdmin(admin.ModelAdmin):
     list_display = (
         'user',
         'anteproyecto',
-        'jurado',
         'fecha_envio',
         'solicitud_enviada',
         'estado',
@@ -116,7 +115,8 @@ class ModelObjetivosEspecificosAdmin(admin.ModelAdmin):
 
 @admin.register(ModelActividades)
 class ModelActividadesAdmin(admin.ModelAdmin):
-    list_display = ('objetivos_especificos', 'descripcion', 'estado')
+    list_display = ('objetivo_general', 'objetivos_especificos',
+                    'descripcion', 'estado')
     search_fields = ('descripcion',)
     list_filter = ('estado',)
 
@@ -132,3 +132,18 @@ class ModelFechasProyectoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ModelFechasProyecto, ModelFechasProyectoAdmin)
+
+
+# class ModelAsignacionJuradosAdmin(admin.ModelAdmin):
+#     list_display = ('proyecto_final', 'nombre_jurado', 'fecha_sustentacion')
+#     search_fields = ('nombre_jurado', 'proyecto_final__nombre_anteproyecto')
+#     list_filter = ('fecha_sustentacion',)
+#     date_hierarchy = 'fecha_sustentacion'
+
+#     def get_queryset(self, request):
+#         # Esto asegura que los jurados se obtengan de manera eficiente con el proyecto final relacionado
+#         queryset = super().get_queryset(request)
+#         return queryset.select_related('proyecto_final')
+
+
+# admin.site.register(ModelAsignacionJurados, ModelAsignacionJuradosAdmin)

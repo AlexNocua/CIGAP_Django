@@ -11,14 +11,14 @@
   .navMenu {
     margin: 0;
     display: flex;
-    z-index: 1;
+  
     box-shadow: 1px 3px 6px -2px #28482a;
   }
   
   .modulo {
     padding: 4px;
     margin: 8px;
-    z-index: 1;
+  
     transition: all 0.2s;
     text-decoration: none;
     color: #fff;
@@ -35,7 +35,6 @@
   /*estilos de la nav de modulos*/
   .modulos,
   .collapse_estudiantes {
-    z-index: 500;
     color: #fff !important;
     background: var(--colores_institucionalesfondo1) !important;
   }
@@ -66,12 +65,9 @@
       <div class="d-flex w-100 flex-column flex-md-row justify-content-around align-items-center">
         <a class="modulo w-100" href="{% url 'estudiante:principal_estudiante' %}">Estudiante</a>
 
-        <a class="modulo w-100" href="{% url 'estudiante:solicitud' %}">Crea tu solicitud</a>
-
+        <a class="modulo w-100" href="{% url 'estudiante:solicitud' %}">Anteproyecto</a>
+        <a class="modulo w-100" href="{% url 'estudiante:avances_proyecto' %}">Proyecto de grado</a>
         <a class="modulo w-100" href="{% url 'estudiante:info_proyect' %}">Información del proyecto</a>
-
-        <a class="modulo w-100" href="{% url 'estudiante:avances_proyecto' %}">Avances</a>
-
         <a class="modulo w-100" href="{% url 'estudiante:formatos_documentos' %}">Formatos</a>
       </div>
     </div>

@@ -15,7 +15,7 @@ from login.views import editar_usuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto_finalizado, recuperar_proyecto_actual, recuperar_solicitudes_especiales_proyecto, recuperar_formatos, recuperar_documento, datosusuario
-from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
+from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual, fecha_culminacion_anteproyecto
 
 # importacion de los modelos
 from estudiante.models import ModelAnteproyecto, ModelProyectoFinal, ModelFechasProyecto
@@ -877,15 +877,14 @@ def proyectos_actuales(request):
     dic_proyectos = {}
     if proyectos_actuales:
         for i, proyecto in enumerate(proyectos_actuales):
-            documento_convert_carta = proyecto.carta_presentacion
-            documento_convert_ante = proyecto.anteproyecto
-            documento_carta = recuperar_documento(documento_convert_carta)
-            documento_ante = recuperar_documento(documento_convert_ante)
-
+            fechas_proyectos = ModelFechasProyecto.objects.get(
+                proyecto_final=proyecto) if ModelFechasProyecto.objects.filter(
+                proyecto_final=proyecto).exists() else None
             dic_proyectos[f'proyecto{i}'] = {
                 'proyecto': proyecto,
-                'documento_ante': documento_ante,
-                'documento_carta': documento_carta
+                'fecha_inicio': fechas_proyectos.fecha_inicio,
+                'fecha_finalizacion': fecha_culminacion_anteproyecto(fechas_proyectos.fecha_inicio),
+
             }
         context['proyectos'] = dic_proyectos
     return render(request, 'correspondencia/views_proyectos/list_proyectos_actuales.html', context)
@@ -955,8 +954,15 @@ def proyecto_final(request, id):
 def proyecto_actual(request, id):
     context = datosusuario(request)
     proyecto = recuperar_proyecto_actual(id)
-    integrantes = (proyecto.nombre_integrante1, proyecto.nombre_integrante2,
-                   proyecto.director, proyecto.codirector)
+    fechas_proyecto = ModelFechasProyecto.objects.get(
+        proyecto_final=proyecto) if ModelFechasProyecto.objects.filter(
+        proyecto_final=proyecto).exists() else None
+    if fechas_proyecto:
+        context['fechas'] = fechas_proyecto
+        context['fecha_finalizacion'] = fecha_culminacion_anteproyecto(
+            fechas_proyecto.fecha_inicio)
+    integrantes = (proyecto.anteproyecto.nombre_integrante1, proyecto.anteproyecto.nombre_integrante2,
+                   proyecto.anteproyecto.director, proyecto.anteproyecto.codirector)
     datos_integrantes = {}
     for i, integrante in enumerate(integrantes, start=1):
         if integrante:
@@ -964,11 +970,13 @@ def proyecto_actual(request, id):
                 integrante)
         context['datos_integrantes'] = datos_integrantes
     context['proyecto'] = proyecto
-    carta_convert = recuperar_documento(proyecto.carta_presentacion)
-    ante_convert = recuperar_documento(proyecto.anteproyecto)
+    carta_convert = recuperar_documento(
+        proyecto.anteproyecto.carta_presentacion)
+    ante_convert = recuperar_documento(proyecto.anteproyecto.anteproyecto)
+    radicado_convert = recuperar_documento(
+        proyecto.anteproyecto.documento_radicado)
+    concepto_convert = recuperar_documento(proyecto.anteproyecto.documento_concepto)
 
-
-# añadir la logica de solicitudes pesepciales tambien pero para el proyecto finalizado
 
     retroalimentaciones = recuperar_solicitudes_anteproyecto()
 
@@ -986,7 +994,8 @@ def proyecto_actual(request, id):
 
         context['formatos'] = {
             'anteproyecto': ante_convert,
-            'carta_presentacion': carta_convert
+            'carta_presentacion': carta_convert,'radicado_convert':radicado_convert
+                ,'concepto_convert':concepto_convert,
         }
     return render(request, 'correspondencia/views_proyectos/proyecto_actual.html', context)
 #####################################################################################################################

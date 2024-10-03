@@ -10,11 +10,11 @@
     }
     .content_articulo {
       border-top: 1px solid #cacaca;
+      z-index: 1;
     }
     article {
-      z-index: 100;
     }
-    .img_fondo {
+    .img_fondo_formato {
       position: absolute;
       width: 50%;
       z-index: 0;
@@ -36,9 +36,9 @@
     }
   </style>
   <main class="d-flex w-100 flex-column justify-content-center align-items-center position-relative">
-    <img class="img_fondo" src="{% static 'icons/logoUDEC.png' %}" alt="logo_udec" />
+    <img class="img_fondo_formato" src="{% static 'icons/logoUDEC.png' %}" alt="logo_udec" />
     <h3>Editar información del formato</h3>
-    <a href="{% url 'correspondencia:formatos_documentos' %}" class="btn-volver">Volver</a>
+    <a href="{% url 'correspondencia:formatos_documentos' %}" class="btn-volver btns-solicitudes">Volver</a>
     <article class="w-100 content_articulo p-2 mt-3 d-flex flex-column flex-md-row">
       <section class="col w-100 flex-column">
         <h4>Estos son los datos del formato:</h4>
@@ -65,7 +65,7 @@
             {{ form_edit.documento_convert }}
           </div>
 
-          <button type="submit" class="mb-3 mt-2 btn btn-primary" onclick="return confirm('¿Deseas actualizar estos datos?')">Guardar</button>
+          <button type="submit" class="mb-3 mt-2 btn btn-primary btns-solicitudes" onclick="return confirm('¿Deseas actualizar estos datos?')">Guardar</button>
         </form>
       </section>
       <section class="w-100 col d-flex flex-column">

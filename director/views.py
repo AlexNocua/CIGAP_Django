@@ -25,7 +25,7 @@ from correspondencia.views import recuperar_anteproyecto
 from .models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
 
 # importacion de modelos de los estudinates
-from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
+from estudiante.models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades, ModelFechasProyecto
 
 # impotacion de recuperaciones
 from plataform_CIGAP.utils.recuperaciones import recuperar_formatos, datosusuario
@@ -47,6 +47,12 @@ def datos_usuario_director(request):
 
 #############################################################################################################
 # utilidades
+
+
+def recuperar_actividad(id):
+    actividad = ModelActividades.objects.get(
+        id=id) if ModelActividades.objects.filter(id=id).exists() else None
+    return actividad
 
 
 def recuperar_proyectos_evaluador(request):
@@ -224,6 +230,13 @@ def enviar_anteproyecto(request, id):
 #############################################################################################################
 # configuracion de las vistas del modulo de proyectos
 
+def recuperar_objetivo_especifico(id):
+    obj_especifico = ModelObjetivosEspecificos.objects.get(
+        id=id)
+    if not obj_especifico:
+        return None
+    return obj_especifico
+
 
 def view_proyectos(request):
     context = datos_usuario_director(request)
@@ -244,6 +257,30 @@ def proyecto(request, id):
             proyecto.carta_presentacion_final)
         context['doc_proyecto_final'] = doc_proyecto_final
         context['doc_carta_presentacion_final'] = doc_carta_presentacion_final
+        objetivo_general = ModelObjetivoGeneral.objects.get(
+            proyecto_final=proyecto) if ModelObjetivoGeneral.objects.filter(proyecto_final=proyecto).exists() else None
+        objetivos_especificos = ModelObjetivosEspecificos.objects.filter(
+            objetivo_general=objetivo_general) if ModelObjetivosEspecificos.objects.filter(objetivo_general=objetivo_general).exists() else None
+        actividades = ModelActividades.objects.filter(
+            objetivo_general=objetivo_general)
+        print(
+            proyecto,
+            objetivo_general,
+            objetivos_especificos,
+            actividades
+        )
+        if objetivo_general:
+            dict_documentos_avance = {}
+            if objetivos_especificos:
+                for i, objetivo_especifico in enumerate(objetivos_especificos):
+                    if objetivo_especifico.documento_avance:
+                        dict_documentos_avance[f'doc_avance{i}'] = recuperar_documento(
+                            objetivo_especifico.documento_avance)
+                context['objetivos_especificos'] = objetivos_especificos
+
+            context['docs_avances'] = dict_documentos_avance
+            context['objetivo_general'] = objetivo_general
+            context['actividades'] = actividades
 
     if request.method == 'POST':
         formulario_observacion = FormObservacionProyecto(
@@ -253,14 +290,20 @@ def proyecto(request, id):
 
             retroalimentacion = formulario_observacion.save(commit=False)
             retroalimentacion.proyecto_final = proyecto
+            retroalimentacion.user = request.user
+            retroalimentacion.fecha_retroalimentacion = fecha_actual()
+            retroalimentacion.estado = None
             retroalimentacion.save()
 
             messages.success(
                 request, 'La retroalimentación se envió correctamente.')
+            return redirect('director:proyecto', id=proyecto.id)
 
         else:
             messages.error(
                 request, f'Hubo un error al enviar la retroalimentación. Por favor, revise los campos. {formulario_retroalimentacion.errors}')
+            return redirect('director:proyecto', id=proyecto.id)
+
     else:
         formulario_observacion = FormObservacionProyecto()
         context['from_retroalimentacion'] = formulario_observacion
@@ -284,6 +327,61 @@ def enviar_proyecto(request, id):
         messages.error(
             request, 'No se pudo encontrar el proyecto especificado.')
         return redirect('director:proyecto', id=id)
+
+    # funcion para actualizar el estado de la actividad
+
+
+def enviar_observacion_objetivo(request, id_proyect, id_esp):
+    proyecto = recuperar_proyecto(id_proyect)
+    obj_especifico = recuperar_objetivo_especifico(id_esp)
+
+    if request.method == 'POST':
+        if obj_especifico:
+            # Recuperar y procesar las observaciones y el documento
+            observaciones = request.POST.get('observaciones')
+            documento = request.FILES.get('doc_retroalimentacion').read()
+
+            if not documento:
+                messages.warning(
+                    request, 'No se ha subido ningún documento. Por favor, suba un archivo PDF.')
+
+            obj_especifico.observaciones = observaciones
+            obj_especifico.documento_avance = None
+
+            if documento:
+                obj_especifico.documento_correcciones = documento
+
+            obj_especifico.fecha_observacion = fecha_actual()
+            obj_especifico.save()  # Asegúrate de guardar los cambios en el objeto
+
+            messages.success(
+                request, 'Las observaciones se han enviado correctamente.')
+        else:
+            messages.error(
+                request, 'No se pudo encontrar el objetivo específico.')
+    else:
+        messages.error(
+            request, 'Método no permitido. Solo se permiten solicitudes POST.')
+
+    # Redirigir a la vista del proyecto
+    return redirect('director:proyecto', id=proyecto.id)
+
+
+def actualizar_estado_actividad(request, actividad_id, id_proyecto):
+
+    try:
+        actividad = ModelActividades.objects.get(id=actividad_id)
+        actividad.estado = not actividad.estado
+        actividad.save()
+
+        messages.success(
+            request, f"La actividad '{actividad.descripcion}' ha sido actualizada correctamente.")
+    except ModelActividades.DoesNotExist:
+        messages.error(
+            request, "La actividad que intentas actualizar no existe.")
+    return redirect('director:proyecto', id=id_proyecto)
+
+
 #############################################################################################################
 
 

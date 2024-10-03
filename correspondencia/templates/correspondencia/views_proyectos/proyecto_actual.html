@@ -28,13 +28,21 @@
   </style>
 
   <main class="w-100">
-    <h3>Proyecto {{ proyecto.nombre_anteproyecto }}</h3>
-    <p>Proyecto iniciado en la fecha {{ proyecto.fecha_envio }}</p>
+    <h3>Proyecto {{ proyecto.anteproyecto.nombre_anteproyecto }}</h3>
+    <small>
+      <p class="p-0 m-0">
+        <strong>Proyecto iniciado en la fecha:</strong> {{ fechas.fecha_inicio|date:'d/M/Y' }}
+      </p>
+      <p class="p-0 m-0">
+        <strong>Fecha estimada de finalización del proyecto:</strong> {{ fecha_finalizacion|date:'d/M/Y' }}
+      </p>
+    </small>
+
     <article class="w-100 mt-3 p-2 d-flex flex-column flex-md-row" style="border-top:1px solid #cacaca;">
       <section class="w-50">
         <h5>Datos del proyecto</h5>
         <p class="m-0 p-0 text-center">
-          <strong>Resumen:</strong> {{ proyecto.descripcion }}
+          <strong>Resumen:</strong> {{ proyecto.anteproyecto.descripcion }}
         </p>
       </section>
       <section class="w-50">
@@ -51,7 +59,7 @@
               {% endif %}
 
               <p class="m-1">{{ integrante.nombre }}</p>
-              <p>
+              <p class="text-center">
                 <strong>{{ integrante.grupo }}</strong>
               </p>
             </div>
@@ -69,13 +77,13 @@
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.anteproyecto }}" type="application/pdf" />
             <div class="card-body">
               <p class="card-text">
-                Anteproyecto cargado de <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+                Anteproyecto cargado de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
               </p>
-              <p>
-                <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
+              <p class="text-center">
+                <strong>Fecha de envio:</strong> {{ proyecto.anteproyecto.fecha_envio }}
               </p>
               <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.anteproyecto }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_anteproyecto.pdf">Descargar</a>
+                <a href="{{ formatos.anteproyecto }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_anteproyecto.anteproyecto.pdf">Descargar</a>
               </div>
             </div>
           </div>
@@ -84,13 +92,41 @@
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
             <div class="card-body">
               <p class="card-text">
-                Carta cargada de <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+                Carta cargada de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
               </p>
-              <p>
-                <strong>Fecha de envio:</strong> {{ proyecto.fecha_envio }}
+              <p class="text-center">
+                <strong>Fecha de envio:</strong> {{ proyecto.anteproyecto.fecha_envio }}
               </p>
               <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+                <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+              </div>
+            </div>
+          </div>
+          <div class="card m-2 d-flex flex-column justify-content-between">
+            <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.radicado_convert }}" type="application/pdf" />
+            <div class="card-body">
+              <p class="card-text">
+                Radicado del comité para el anteproyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+              </p>
+              <p class="text-center">
+                <strong>Respuesta del comité</strong>
+              </p>
+              <div class="botones d-flex justify-content-between">
+                <a href="{{ formatos.radicado_convert }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_radicado.pdf">Descargar</a>
+              </div>
+            </div>
+          </div>
+          <div class="card m-2 d-flex flex-column justify-content-between">
+            <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.concepto_convert }}" type="application/pdf" />
+            <div class="card-body">
+              <p class="card-text">
+                Concepto del comité para el anteproyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+              </p>
+              <p class="text-center">
+                <strong>Respuesta del comite</strong>
+              </p>
+              <div class="botones d-flex justify-content-between">
+                <a href="{{ formatos.concepto_convert }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_concepto.pdf">Descargar</a>
               </div>
             </div>
           </div>

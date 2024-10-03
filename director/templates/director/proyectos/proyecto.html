@@ -54,7 +54,7 @@
       background: #cacaca36;
       padding: 8px;
       border-radius: 12px;
-      z-index: 1;
+  
     }
     .img-icons-ante {
       margin: 0px;
@@ -71,6 +71,7 @@
       margin: 0px 0px 0px 8px;
     }
     .content_card .header_infos {
+      align-items: center;
       margin: 12px;
       padding: 12px 0 0 0;
       border-top: 1px solid #cacaca;
@@ -97,7 +98,7 @@
       top: 5%;
       right: -500px; /* Posición fuera de la pantalla inicialmente */
       transition: all 0.5s;
-      z-index: 200;
+
       max-width: 100%; /* Ajustar ancho máximo */
       text-align: left; /* Agregado */
     }
@@ -147,6 +148,11 @@
       font-weight: bold;
       text-align: left; /* Agregado */
     }
+    
+    .content_avances h5 {
+      margin: 12px 0;
+      text-align: start;
+    }
   </style>
   <div class="container-anteproyectos container-fluid mt-5 position-relative d-flex">
     <div class="shadow-sm d-flex">
@@ -193,7 +199,6 @@
           </div>
 
           <div class="d-flex flex-column justify-content-center">
-
             <div class="d-flex header_infos">
               <img class="img-icons-ante" src="{% static 'icons/icons_proyect/personas.png' %}" alt="imagen de usuarios" />
               <h5 class="">Fecha de Envío</h5>
@@ -205,11 +210,12 @@
             {% endif %}
           </div>
           <div class="d-flex justify-content-between mt-3">
-            <a class="botones_envios btn_observaciones">
+            <a class="botones_envios btn_observaciones mb-2" data-bs-toggle="modal" data-bs-target="#retroModal">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                 <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
                 <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-              </svg><span class="m-1">Enviar observaciones</span>
+              </svg>
+              <span class="m-1">Enviar observaciones</span>
             </a>
 
             {% if proyecto_final.solicitud_enviada %}
@@ -225,7 +231,7 @@
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V5.383l-7 4.2-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-1.99zm1 7.105 4.708-2.897L1 5.383zM1 4v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1" />
                   <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.354 1.25 1.25a.5.5 0 0 1-.708.708L13 12.207V14a.5.5 0 0 1-1 0v-1.717l-.28.305a.5.5 0 0 1-.737-.676l1.149-1.25a.5.5 0 0 1 .722-.016" />
                 </svg>
-                <span class="m-1">Enviar anteproyecto al comité</span>
+                <span class="m-1">Enviar proyecto final al comité</span>
               </a>
             {% endif %}
           </div>
@@ -268,11 +274,163 @@
               {% endif %}
             </div>
           </div>
+
+          <div class="d-flex flex-column content_avances">
+            <!-- Información del proyecto -->
+            <div class="d-flex header_infos text-center">
+              <img class="img-icons-ante" src="{% static 'icons/icons_proyect/avances.png' %}" alt="imagen de usuarios" />
+              <h5 style="margin: 0 0 0 8px;">Avances actuales del proyecto {{ proyecto_final.anteproyecto.nombre_anteproyecto }}</h5>
+            </div>
+
+            <!-- Objetivo General -->
+            <div class="mt-4 text-center text-md-start">
+              <h6 class="header_infos text-md-start text-center">
+                <i class="fas fa-tasks"></i> <!-- Icono para "Objetivo General" -->
+                Objetivo General
+              </h6>
+              {% if objetivo_general %}
+                <p>{{ objetivo_general.descripcion }}</p>
+              {% else %}
+                <p>Aún no se ha cargado el objetivo general.</p>
+              {% endif %}
+            </div>
+
+            <!-- Objetivos Específicos en formato de tarjetas -->
+            <div class="mt-4 text-center text-md-start">
+              <div class="row header_infos">
+                <div class="col">
+                  <h6 class="">
+                    <i class="fas fa-bullseye"></i> <!-- Icono para "Objetivos Específicos" -->
+                    Objetivos Específicos
+                  </h6>
+                </div>
+                <div class="col">
+                  <small>Acorde al documento cargado para mostrar avances, apruebe las actividades realizadas en el checkbox.</small>
+                </div>
+              </div>
+              {% if objetivos_especificos %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                  {% for objetivo in objetivos_especificos %}
+                    <div class="col">
+                      <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                          <p>
+                            <strong>Objetivo {{ forloop.counter }}</strong>
+                          </p>
+                          <p class="card-text">{{ objetivo.descripcion }}</p>
+
+                          <!-- Actividades relacionadas al objetivo -->
+                          {% if actividades %}
+                            <h6 class="mt-2" style="text-align: start;"><i class="fas fa-check-circle"></i> Actividades</h6>
+                            <ul class="list-group">
+                              {% for actividad in actividades %}
+                                {% if actividad.objetivos_especificos == objetivo %}
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <form action="{% url 'director:actualizar_estado_actividad' actividad.id proyecto_final.id %}" method="POST" class="form-inline">
+                                      {% csrf_token %}
+                                      <div class="form-check">
+                                        <div class="row align-items-center">
+                                          <div class="col-auto p-0 m-1">
+                                            {% if actividad.estado %}
+                                              <input class="form-check-input" type="checkbox" id="actividad{{ actividad.id }}" name="estado" checked onchange="this.form.submit()" />
+                                            {% else %}
+                                              <input class="form-check-input" type="checkbox" id="actividad{{ actividad.id }}" name="estado" onchange="this.form.submit()" />
+                                            {% endif %}
+                                          </div>
+                                          <div class="col m-0 p-0">
+                                            <p class="small text-muted m-0 p-1">{{ actividad.descripcion }}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          {% else %}
+                            <p>Aún no se han cargado actividades.</p>
+                          {% endif %}
+
+                          <!-- Documentos Cargados por los Estudiantes -->
+                          <h6 class="mt-2" style="text-align: start;"><i class="fas fa-file-upload"></i> Documentos Cargados</h6>
+                          {% if objetivo.documento_avance %}
+                            {% for j, doc in docs_avances.items %}
+                              {% if forloop.first %}
+                                <ul class="list-group">
+                                  <li class="list-group-item">
+                                    <a href="data:application/pdf;base64,{{ doc }}" target="_blank" download="avance_objetivo_especifico{{  forloop.parentloop.counter }}.pdf">Descargar documento de avance</a> <!-- Suponiendo que los documentos tienen un 'url' y 'titulo' -->
+                                  </li>
+                                </ul>
+                              {% endif %}
+                            {% endfor %}
+
+                            <a class="botones_envios btn_observaciones mb-2" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+                              </svg>
+                              <span class="m-1">Enviar Observaciones</span>
+                            </a>
+                          {% else %}
+                            {% if objetivo.fecha_observacion %}
+                              <small><strong>Ya se envio una observación:</strong>{{ objetivo.fecha_observacion|date:'d/M/Y' }}</small>
+                              <i>Edite o sobrescriba la observación</i>
+                              <a class="botones_envios btn_observaciones mb-2" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                                  <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                                  <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+                                </svg>
+                                <span class="m-1">Enviar Observaciones</span>
+                              </a>
+                            {% else %}
+                              <p>No se han cargado documentos para este objetivo.</p>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <!--                 
+modal de retroalimentaciones  de los objetivos especificos
+                 -->
+
+                    <div class="modal fade" id="modalObservacionesEspecificos" tabindex="-1" aria-labelledby="modalObservacionesLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="modalObservacionesLabel">Observaciones del Objetivo Específico</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form id="formObservaciones" method="POST" action="{% url 'director:enviar_observacion_objetivo' proyecto_final.id objetivo.id %}" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="mb-3">
+                                <label for="campo1" class="form-label">Observaciones</label>
+                                <textarea class="form-control" id="campo1" name="observaciones" rows="3" required></textarea>
+                                <small class="form-text text-muted">Por favor, proporcione sus observaciones detalladas.</small>
+                              </div>
+                              <div class="mb-3">
+                                <label for="doc_retroalimentacion" class="form-label">Documento PDF</label>
+                                <input type="file" name="doc_retroalimentacion" id="doc_retroalimentacion" class="form-control" required accept="application/pdf" />
+                                <small class="form-text text-muted">Suba un archivo PDF con sus observaciones.</small>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Enviar Observaciones</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <p>Aún no se han cargado objetivos específicos.</p>
+              {% endif %}
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="formretro" class="form_retroalimentacion position-absolute mt-2 p-4">
+    {% comment %} <div id="formretro" class="form_retroalimentacion position-absolute mt-2 p-4">
       <h5>Formulario de Retroalimentación</h5>
 
       <form id="retroForm" class="d-flex flex-column needs-validation" novalidate method="post" enctype="multipart/form-data">
@@ -300,6 +458,48 @@
           <button type="button" class="btn btn-outline-danger btn-cerrar px-4 py-2">Cancelar</button>
         </div>
       </form>
+    </div> {% endcomment %}
+
+    <!--                 
+modal de retroalimentaciones    
+                 -->
+    <div class="modal fade" id="retroModal" tabindex="-1" aria-labelledby="retroModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="retroModalLabel">Formulario de Retroalimentación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="retroForm" class="d-flex flex-column needs-validation" novalidate method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="mb-3">
+                <label for="retroalimentacion" class="form-label">Retroalimentación:</label>
+                <textarea name="retroalimentacion" id="retroalimentacion" class="form-control" required></textarea>
+                <small class="form-text text-muted">Por favor, digite las observaciones aquí.</small>
+                <div class="invalid-feedback">Por favor, proporcione una retroalimentación.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="doc_retroalimentacion_convert" class="form-label">Documento con correcciones:</label>
+                <input type="file" name="doc_retroalimentacion_convert" id="doc_retroalimentacion_convert" class="form-control" required accept="application/pdf" />
+                <small class="form-text text-muted">Suba correcciones si son necesarias (Solo se aceptan archivos PDF).</small>
+                <div class="invalid-feedback">Por favor, seleccione un archivo PDF válido.</div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" id="btnEnviarObservacion" class="btn btn-primary px-4 py-2">
+                  <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
+                  Enviar
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-cerrar" data-bs-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     {% include 'components/toasts.html' %}
   </div>

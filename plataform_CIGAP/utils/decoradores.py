@@ -4,6 +4,9 @@
 # esto con el fin de controlar el acceso a otras aplicaciones por medio de las url, estas solo por permiciones de grupos
 
 
+from django.contrib import messages
+
+
 def grupo_usuario(nombre_grupo):
     def decorador(view):
         def view_envuelta(request, *args, **kwargs):
@@ -12,7 +15,6 @@ def grupo_usuario(nombre_grupo):
                     return view(request, *args, **kwargs)
                 else:
 
-                    # en este decorador puedo manejar una vista de permisos
                     return handler404
 
             else:
@@ -21,3 +23,25 @@ def grupo_usuario(nombre_grupo):
                 # return redirect
         return view_envuelta
     return decorador
+
+
+# def grupo_usuario(nombre_grupo):
+#     def decorador(view):
+#         def view_envuelta(request, *args, **kwargs):
+#             if request.user.is_authenticated:
+#                 if request.user.groups.filter(name=nombre_grupo).exists():
+#                     return view(request, *args, **kwargs)
+#                 else:
+
+#                     messages.error(
+#                         request, "No tiene permisos para acceder a esta sección.")
+#                     return redirect('nombre_de_la_vista_de_permiso')
+#             else:
+
+#                 messages.error(
+#                     request, "Error: debe iniciar sesión para acceder a esta sección.")
+
+#                 return redirect('login:loginapps')
+
+#         return view_envuelta
+#     return decorador

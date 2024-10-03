@@ -18,7 +18,7 @@
       text-decoration: line-through;
     }
   </style>
-  <div class="container mt-5">
+  {% if proyecto_final %}
     <style>
       .project-header {
         margin-bottom: 2.5rem;
@@ -134,7 +134,7 @@
       .objectives-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2rem;
+        padding: 12px;
         font-family: 'Inter', sans-serif;
       }
       .main-card {
@@ -283,6 +283,9 @@
         font-weight: 500;
         color: #6c757d;
         margin: 0;
+      }
+      .accordion-body {
+        padding: 8px !important;
       }
     </style>
     <!-- Bootstrap CSS -->
@@ -437,7 +440,7 @@
           <div class="specific-objectives-grid row row-cols-1 row-cols-md-2 g-3">
             <!-- Rejilla responsive -->
             {% if objs_especificos %}
-              <div class="objectives-grid w-100" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 4fr)); gap: 1rem;">
+              <div class="objectives-grid w-100 position-relative" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 4fr)); gap: 1rem;">
                 {% for obj_especifico in objs_especificos %}
                   <div class="objective-card card h-100">
                     <div class="objective-header card-header d-flex justify-content-between">
@@ -489,7 +492,6 @@
                               {% if actividad.objetivos_especificos == obj_especifico %}
                                 <div class="activity-item d-flex justify-content-between align-items-center mb-2">
                                   <div class="d-flex align-items-center">
-                                    <input class="form-check-input me-2" type="checkbox" id="actividad{{ forloop.counter }}" checked />
                                     <label class="form-check-label" for="actividad{{ forloop.counter }}">{{ actividad.descripcion }}</label>
                                   </div>
                                   <div class="btn-group" role="group" aria-label="Acciones de actividad">
@@ -531,31 +533,101 @@
                           <p class="text-muted">Sin actividades definidas</p>
                         {% endif %}
                       </div>
+                      {% if obj_especifico.documento_avance %}
+                        <div class="accordion" id="accordionExample">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ i }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ i }}" aria-expanded="false" aria-controls="collapse{{ i }}">Objetivo Específico {{ forloop.counter }}</button></h2>
+                            <div id="collapse{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading{{ i }}" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                {% for j, doc in docs_avances.items %}
+                                  {% if forloop.first %}
+                                    <div class="document-container w-100">
+                                      <!-- Visualización del documento cargado -->
+                                      <div class="document-info">
+                                        <p>
+                                          <i class="fas fa-file-pdf"></i> Documento {{ forloop.parentloop.counter }}.{{ forloop.counter }}
+                                        </p>
 
-                      <form method="POST" action="{% url 'estudiante:subir_actividad' id=obj_especifico.id %}">
-                        {% csrf_token %}
-                        <input type="text" name="descripcion" class="form-control" placeholder="Describe una nueva actividad..." required />
-                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus"></i> Agregar Actividad</button>
-                      </form>
+                                        <a href="data:application/pdf;base64,{{ doc }}" download="documento_avance_objetivo_especifico_{{ forloop.parentloop.counter }}.pdf" class="btn btn-outline-secondary btn-sm"><i class="fas fa-download"></i> Descargar</a>
+                                      </div>
 
-                      <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="fas fa-upload"></i> Cargar Avance</button>
+                                      <!-- Formulario para editar/eliminar el archivo -->
+                                      <form method="POST" action="{% url 'estudiante:editar_eliminar_archivo' obj_especifico.id %}" enctype="multipart/form-data" class="document-actions mt-3">
+                                        {% csrf_token %}
+
+                                        <!-- Campo para editar el archivo -->
+                                        <div class="file-upload mb-3">
+                                          <label for="archivo_nuevo_{{ forloop.parentloop.counter }}" class="form-label"><i class="fas fa-edit"></i> Subir nuevo archivo:</label>
+                                          <input type="file" class="form-control" id="archivo_nuevo_{{ forloop.parentloop.counter }}" name="archivo_nuevo" accept="application/pdf" />
+                                        </div>
+
+                                        <!-- Botones de acción -->
+                                        <div class="action-buttons">
+                                          <button type="submit" name="accion" value="editar" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Actualizar Documento</button>
+
+                                          <button type="submit" name="accion" value="eliminar" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Eliminar Documento</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% else %}
+                        <form method="POST" action="{% url 'estudiante:subir_actividad' id_proyecto=proyecto_final.id id_esp=obj_especifico.id %}">
+                          {% csrf_token %}
+                          <input type="text" name="descripcion" class="form-control" placeholder="Describe una nueva actividad..." required />
+                          <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus"></i> Agregar Actividad</button>
+                        </form>
+
+                        <!-- Botón para mostrar/ocultar el formulario -->
+                        <button class="btn btn-primary w-100 mt-3" data-bs-toggle="collapse" data-bs-target="#uploadForm{{ forloop.counter }}"><i class="fas fa-upload"></i> Cargar Avance</button>
+
+                        <!-- Formulario desplegable -->
+                        <div id="uploadForm{{ forloop.counter }}" class="collapse mt-3">
+                          <div class="card card-body">
+                            <form method="post" enctype="multipart/form-data" action="{% url 'estudiante:subir_avance' obj_especifico.id %}">
+                              {% csrf_token %}
+                              <div class="mb-3">
+                                <label for="documentFile{{ forloop.counter }}" class="form-label">Seleccionar Archivo</label>
+                                <input type="file" class="form-control" id="documento_avance{{ forloop.counter }}" name="documento_avance" required accept=".pdf" />
+                                <small class="form-text text-muted">Este archivo debe subirse siempre y cuando todas las actividades estén completadas y debe ser un archivo PDF.</small>
+                              </div>
+                              <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">Subir Documento</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      {% endif %}
                     </div>
                   </div>
                 {% endfor %}
                 <!-- Botón para nuevo objetivo -->
                 <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
                   <i class="fas fa-plus-circle"></i>
-                  <h4>Nuevo Objetivo</h4>
+                  <h4>Nuevo objetivo específico</h4>
 
                   <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
                     {% csrf_token %}
-                    <input type="text" name="descripcion" class="form-control" placeholder="Describe el nuevo objetivo..." required />
-                    <button type="submit" class="btn-primary w-100">
-                      <i class="fas fa-plus-circle"></i>
-                      Crear Objetivo
-                    </button>
+                    <input type="text" class="form-control mt-1" name="descripcion" placeholder="Descripción del objetivo específico" required />
+                    <button type="submit" class="btn btn-success w-100 mt-2">Crear objetivo específico</button>
                   </form>
                 </div>
+              </div>
+            {% else %}
+              <!-- Botón para nuevo objetivo -->
+              <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
+                <i class="fas fa-plus-circle"></i>
+                <h4>Nuevo objetivo específico</h4>
+
+                <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
+                  {% csrf_token %}
+                  <input type="text" class="form-control mt-1" name="descripcion" placeholder="Descripción del objetivo específico" required />
+                  <button type="submit" class="btn btn-success w-100 mt-2">Crear objetivo específico</button>
+                </form>
               </div>
             {% endif %}
           </div>
@@ -578,37 +650,23 @@
         {% endif %}
       </ul>
     </section>
-  </div>
+  {% else %}
+    <style>
+      .link-primary:hover {
+        text-decoration: underline !important;
+      }
+    </style>
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <h1 class="h2 mt-3 mb-4">Avances del Proyecto Final</h1>
 
-  <!-- Modal para cargar avances -->
-  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="uploadModalLabel">Cargar Avance</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="documentTitle" class="form-label">Título del Documento</label>
-              <input type="text" class="form-control" id="documentTitle" required />
-            </div>
-            <div class="mb-3">
-              <label for="documentFile" class="form-label">Seleccionar Archivo</label>
-              <input type="file" class="form-control" id="documentFile" required />
-            </div>
-            <div class="mb-3">
-              <label for="documentDescription" class="form-label">Descripción</label>
-              <textarea class="form-control" id="documentDescription" rows="3"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Subir Documento</button>
-        </div>
+        <p class="text-muted mb-0">Aun no se ha aprovado alguna solicitud de anteproyecto.</p>
+
+        <small class="text-secondary">
+          Crea una solicitud en el siguiente link
+          <a href="{% url 'estudiante:solicitud' %}" class="link-primary ms-1 text-decoration-none">Crea una solicitud</a>
+        </small>
       </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock %}

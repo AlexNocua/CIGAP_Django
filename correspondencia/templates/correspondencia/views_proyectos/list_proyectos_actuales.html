@@ -74,6 +74,7 @@
             <th scope="col">Director</th>
             <th scope="col">Codirector</th>
             <th scope="col">Fecha de aprovación</th>
+            <th scope="col">Fecha estimada de finalización</th>
             <th scope="col">Mas Info</th>
           </tr>
         </thead>
@@ -81,23 +82,28 @@
           {% for key, value in proyectos.items %}
             <tr>
               <td>{{ forloop.counter }}</td>
-              <td>{{ value.proyecto.nombre_anteproyecto }}</td>
-              {% if value.proyecto.nombre_integrante2 %}
-                <td>{{ value.proyecto.nombre_integrante1 }} -
-                  {{ value.proyecto.nombre_integrante2 }}</td>
+              <td>{{ value.proyecto.anteproyecto.nombre_anteproyecto }}</td>
+              {% if value.proyecto.anteproyecto.nombre_integrante2 %}
+                <td>{{ value.proyecto.anteproyecto.nombre_integrante1 }} -
+                  {{ value.proyecto.anteproyecto.nombre_integrante2 }}</td>
               {% else %}
-                <td>{{ value.proyecto.nombre_integrante1 }}</td>
+                <td>{{ value.proyecto.anteproyecto.nombre_integrante1 }}</td>
               {% endif %}
-              <td>{{ value.proyecto.director }}</td>
-              {% if value.proyecto.codirector %}
-                <td>{{ value.proyecto.codirector }}</td>
+              <td>{{ value.proyecto.anteproyecto.director }}</td>
+              {% if value.proyecto.anteproyecto.codirector %}
+                <td>{{ value.proyecto.anteproyecto.codirector }}</td>
               {% else %}
                 <td>No tiene</td>
               {% endif %}
-              {% if value.proyecto.fecha_envio %}
-                <td>{{ value.proyecto.fecha_envio }}</td>
+              {% if value.fecha_inicio %}
+                <td>{{ value.fecha_inicio|date:'d/m/Y' }}</td>
               {% else %}
                 <td>No cuenta con fecha de envio</td>
+              {% endif %}
+              {% if value.fecha_finalizacion %}
+                <td>{{ value.fecha_finalizacion|date:'d/m/Y' }}</td>
+              {% else %}
+                <td>No cuenta con fecha de finalización</td>
               {% endif %}
               <td>
                 <a class="btn btn-success" href="{% url 'correspondencia:proyecto_actual' value.proyecto.id %}">Mas info {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>

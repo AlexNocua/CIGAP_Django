@@ -14,7 +14,7 @@
     }
     
     .info_proyect {
-      z-index: 1001;
+   
     }
     
     .info-block {
@@ -46,7 +46,7 @@
   </style>
 
   {% if solicitud_enviada %}
-  {% include 'components/toasts.html' %}
+    {% include 'components/toasts.html' %}
     <h3 class="m-3">Información del Proyecto</h3>
     <section class="row contenido_estudiante_view">
       <div class="col-md-6">
@@ -150,11 +150,15 @@
     </section>
   {% else %}
     <div class="info_proyect">
-      <h1 class="m-3">Aun no has enviado una solicitud.</h1>
-      <p>
-        ¿Quieres enviar tu primera solicitud de anteproyecto al comité?
-        <a href="{% url 'estudiante:solicitud' %}">Click aquí.</a>
+      <h1 class="m-3">Aún no ha enviado una solicitud de anteproyecto al comite al comité.</h1>
+      <p class="mb-0">
+        Su anteproyecto se encuentra actualmente en proceso de evaluación por parte del director y codirector. Le recomendamos estar atento a las retroalimentaciones que se publicarán en el apartado de solicitudes.
+        <br /><br />
       </p>
+      <small>
+        Acceda al modulo de solicitudes
+        <a href="{% url 'estudiante:solicitud' %}">Haga clic aquí.</a>
+      </small>
     </div>
   {% endif %}
 {% endblock %}

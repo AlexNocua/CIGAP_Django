@@ -77,9 +77,9 @@ def recuperar_proyectos_pendientes():
         Q(solicitud_enviada=False) & Q(estado=False))
     if anteproyectos and proyectos_finales:
         print(anteproyectos, 'Desde utilidades')
-        return anteproyectos
+        return proyectos_finales
     else:
-        return anteproyectos
+        return proyectos_finales
 
 
 def recuperar_proyectos_finalizados():
@@ -97,8 +97,8 @@ def recuperar_proyecto_finalizado(id):
 
 
 def recuperar_proyecto_actual(id):
-    proyecto = ModelAnteproyecto.objects.get(
-        id=id) if ModelAnteproyecto.objects.filter(id=id).exists() else None
+    proyecto = ModelProyectoFinal.objects.get(
+        id=id) if ModelProyectoFinal.objects.filter(id=id).exists() else None
     return proyecto
 
 

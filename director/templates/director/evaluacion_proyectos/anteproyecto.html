@@ -13,7 +13,7 @@
       padding-bottom: 10px;
     }
     .sections-anteproyecto {
-      z-index: 1;
+      
     }
     
     .anteproyecto-info-text {
@@ -136,7 +136,7 @@
                 <p>
                     <strong>Fecha de Presentación:</strong> <time datetime="">{{ anteproyecto.fecha_envio }}</time>
                 </p>
-                {% if evaluacion %}
+                {% if evaluacion.estado %}
                     <div class="d-flex flex-column">
                         <h4>Evaluación Existente</h4>
                         <p>Ya hay una evaluación para este anteproyecto.</p>

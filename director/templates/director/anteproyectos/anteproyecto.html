@@ -6,6 +6,7 @@
     .container-anteproyectos {
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
     
     .cont_anteproyectos {
@@ -29,7 +30,7 @@
     .content_card {
       background: #fff;
       overflow: hidden;
-    
+      width: 100%;
       box-shadow: 0px 0px 6px 2px #86868647;
       border-radius: 12px;
       margin: 4px;
@@ -54,7 +55,6 @@
       background: #cacaca36;
       padding: 8px;
       border-radius: 12px;
-      z-index: 1;
     }
     .img-icons-ante {
       margin: 0px;
@@ -97,7 +97,6 @@
       top: 5%;
       right: -500px; /* Posición fuera de la pantalla inicialmente */
       transition: all 0.5s;
-      z-index: 200;
       max-width: 100%; /* Ajustar ancho máximo */
       text-align: left; /* Agregado */
     }
@@ -109,7 +108,6 @@
       max-width: 500px;
       width: 100%;
       text-align: left; /* Agregado */
-      z-index: 1000;
     }
     
     #formretro h4 {
@@ -148,165 +146,168 @@
       text-align: left; /* Agregado */
     }
   </style>
-  <div class="container-anteproyectos container-fluid mt-5 position-relative d-flex">
-    <div class="shadow-sm d-flex">
-      <div class="content_card p-0 d-flex flex-column">
-        <div class="header-card d-flex w-100">
-          <img class="" src="{% static 'icons/icons_proyect/documento.png' %}" alt="imagen de documento" />
-          <h3 class="">{{ anteproyecto.nombre_anteproyecto }}</h3>
-        </div>
-        <div class="d-flex flex-column p-4">
-          <div class="d-flex flex-column mb-2">
-            <div class="d-flex header_infos">
-              <img class="img-icons-ante" src="{% static 'icons/icons_proyect/buscar.png' %}" alt="imagen de documento" />
-              <h5 class="">Resumen</h5>
-            </div>
-
-            <p class="informacion">{{ anteproyecto.descripcion }}</p>
+  <div class="shadow-sm d-flex">
+    <div class="content_card p-0 d-flex flex-column">
+      <div class="header-card d-flex w-100">
+        <img class="" src="{% static 'icons/icons_proyect/documento.png' %}" alt="imagen de documento" />
+        <h3 class="">{{ anteproyecto.nombre_anteproyecto }}</h3>
+      </div>
+      <div class="d-flex flex-column p-4">
+        <div class="d-flex flex-column mb-2">
+          <div class="d-flex header_infos">
+            <img class="img-icons-ante" src="{% static 'icons/icons_proyect/buscar.png' %}" alt="imagen de documento" />
+            <h5 class="">Resumen</h5>
           </div>
 
+          <p class="informacion">{{ anteproyecto.descripcion }}</p>
+        </div>
+
+        <div class="d-flex header_infos">
+          <img class="img-icons-ante" src="{% static 'icons/icons_proyect/personas.png' %}" alt="imagen de usuarios" />
+          <h5>Integrantes</h5>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>
+              <strong>Estudiantes</strong>
+            </p>
+            <p class="informacion">{{ anteproyecto.nombre_integrante1 }}</p>
+            <p class="informacion">{{ anteproyecto.nombre_integrante2 }}</p>
+          </div>
+          <div class="col">
+            {% if anteproyecto.codirector %}
+              <p>
+                <strong>Director y Codirector</strong>
+              </p>
+            {% else %}
+              <p>
+                <strong>Director</strong>
+              </p>
+            {% endif %}
+            <p class="informacion">{{ anteproyecto.director }}</p>
+            <p class="informacion">{{ anteproyecto.codirector }}</p>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center">
           <div class="d-flex header_infos">
             <img class="img-icons-ante" src="{% static 'icons/icons_proyect/personas.png' %}" alt="imagen de usuarios" />
-            <h5>Integrantes</h5>
+            <h5 class="">Fecha de Envío</h5>
           </div>
-          <div class="row">
-            <div class="col">
-              <p>
-                <strong>Estudiantes</strong>
+          {% if anteproyecto.fecha_envio %}
+            <p class="informacion">{{ anteproyecto.fecha_envio }}</p>
+          {% else %}
+            <p class="text-muted">No se ha registrado el envío de una solicitud al comité correspondiente para el anteproyecto.</p>
+          {% endif %}
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+          <a class="botones_envios btn_observaciones" data-bs-toggle="modal" data-bs-target="#formretro">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+            </svg>
+            <span class="m-1">Enviar observaciones</span>
+          </a>
+          <div class="modal fade" id="formretro" tabindex="-1" aria-labelledby="formretroLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="formretroLabel">Formulario de Retroalimentación</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="retroForm" class="d-flex flex-column needs-validation" novalidate method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="retroalimentacion" class="form-label">Retroalimentación:</label>
+                      <textarea name="retroalimentacion" id="retroalimentacion" class="form-control" required></textarea>
+                      <small class="form-text text-muted">Por favor, digite las observaciones aquí.</small>
+                      <div class="invalid-feedback">Por favor, proporcione una retroalimentación.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="doc_retroalimentacion_convert" class="form-label">Documento con correcciones:</label>
+                      <input type="file" name="doc_retroalimentacion_convert" id="doc_retroalimentacion_convert" class="form-control" required accept="application/pdf" />
+                      <small class="form-text text-muted">Suba correcciones si son necesarias (Solo se aceptan archivos PDF).</small>
+                      <div class="invalid-feedback">Por favor, seleccione un archivo PDF válido.</div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                      <button type="submit" id="btnEnviarObservacion" class="btn btn-primary px-4 py-2">
+                        <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
+                        Enviar
+                      </button>
+                      <button type="button" class="btn btn-outline-danger btn-cerrar px-4 py-2" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if anteproyecto.solicitud_enviada %}
+            <div class="d-flex flex-column">
+              <p class="p-2 pt-0 pb-0 m-0">
+                Ya se envió una solicitud al <strong>comité</strong>, esté atento a las <strong>respuestas</strong><br />
               </p>
-              <p class="informacion">{{ anteproyecto.nombre_integrante1 }}</p>
-              <p class="informacion">{{ anteproyecto.nombre_integrante2 }}</p>
+              <small class="p-2 pt-0 pb-0 m-0"><strong>Fecha de envío:</strong> {{ anteproyecto.fecha_envio }}</small>
+              <p class="p-2 pt-0 pb-0 m-0">
+                {% if fecha_respuesta_maxima %}
+                  <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
+                {% endif %}
+              </p>
             </div>
-            <div class="col">
-              {% if anteproyecto.codirector %}
-                <p>
-                  <strong>Director y Codirector</strong>
-                </p>
-              {% else %}
-                <p>
-                  <strong>Director</strong>
-                </p>
-              {% endif %}
-              <p class="informacion">{{ anteproyecto.director }}</p>
-              <p class="informacion">{{ anteproyecto.codirector }}</p>
-            </div>
-          </div>
-
-          <div class="d-flex flex-column justify-content-center">
-            <div class="d-flex header_infos">
-              <img class="img-icons-ante" src="{% static 'icons/icons_proyect/personas.png' %}" alt="imagen de usuarios" />
-              <h5 class="">Fecha de Envío</h5>
-            </div>
-            {% if anteproyecto.fecha_envio %}
-              <p class="informacion">{{ anteproyecto.fecha_envio }}</p>
-            {% else %}
-              <p class="text-muted">No se ha registrado el envío de una solicitud al comité correspondiente para el anteproyecto.</p>
-            {% endif %}
-          </div>
-          <div class="d-flex justify-content-between mt-3">
-            <a class="botones_envios btn_observaciones">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-              </svg><span class="m-1">Enviar observaciones</span>
+          {% else %}
+            <a href="#" id="btnEnviarSolicitud" class="botones_envios">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-arrow-up" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V5.383l-7 4.2-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-1.99zm1 7.105 4.708-2.897L1 5.383zM1 4v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1" />
+                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.354 1.25 1.25a.5.5 0 0 1-.708.708L13 12.207V14a.5.5 0 0 1-1 0v-1.717l-.28.305a.5.5 0 0 1-.737-.676l1.149-1.25a.5.5 0 0 1 .722-.016" />
+              </svg>
+              <span class="m-1">Enviar anteproyecto al comité</span>
             </a>
-
-            {% if anteproyecto.solicitud_enviada %}
-              <div class="d-flex flex-column">
-                <p class="p-2 pt-0 pb-0 m-0">
-                  Ya se envió una solicitud al <strong>comité</strong>, esté atento a las <strong>respuestas</strong><br />
-                </p>
-                <small class="p-2 pt-0 pb-0 m-0"><strong>Fecha de envío:</strong> {{ anteproyecto.fecha_envio }}</small>
-                <p class="p-2 pt-0 pb-0 m-0">
-                  {% if fecha_respuesta_maxima %}
-                    <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
-                  {% endif %}
-                </p>
+          {% endif %}
+        </div>
+        <div class="d-flex flex-column">
+          <div class="d-flex header_infos">
+            <img class="img-icons-ante" src="{% static 'icons/icons_proyect/carpeta-vacia.png' %}" alt="carpeta" />
+            <h5>Documentos</h5>
+          </div>
+          <div class="d-flex justify-content-around flex-wrap">
+            {% if doc_carta_presentacion %}
+              <div class="card document mt-2" style="width: 18rem;">
+                <div class="card-body d-flex flex-column justify-content-between p-2">
+                  <h4 class="card-title">Carta de Presentación</h4>
+                  <div class="embed-responsive embed-responsive-16by9 mb-2" style="padding: 5px;">
+                    <embed src="data:application/pdf;base64,{{ doc_carta_presentacion }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
+                  </div>
+                  <p class="card-text">Carta del anteproyecto.</p>
+                  <a href="data:application/pdf;base64,{{ doc_carta_presentacion }}" download="Carta_de_Presentacion_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Carta</a>
+                </div>
               </div>
             {% else %}
-              <a href="#" id="btnEnviarSolicitud" class="botones_envios">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-arrow-up" viewBox="0 0 16 16">
-                  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V5.383l-7 4.2-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-1.99zm1 7.105 4.708-2.897L1 5.383zM1 4v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1" />
-                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.354 1.25 1.25a.5.5 0 0 1-.708.708L13 12.207V14a.5.5 0 0 1-1 0v-1.717l-.28.305a.5.5 0 0 1-.737-.676l1.149-1.25a.5.5 0 0 1 .722-.016" />
-                </svg>
-                <span class="m-1">Enviar anteproyecto al comité</span>
-              </a>
+              <div class="card">
+                <div class="card-body">
+                  <p>No se envio la carta del anteproyecto.</p>
+                </div>
+              </div>
             {% endif %}
-          </div>
-          <div class="d-flex flex-column">
-            <div class="d-flex header_infos">
-              <img class="img-icons-ante" src="{% static 'icons/icons_proyect/carpeta-vacia.png' %}" alt="carpeta" />
-              <h5>Documentos</h5>
-            </div>
-            <div class="d-flex justify-content-around flex-wrap">
-              {% if doc_carta_presentacion %}
-                <div class="card document mt-2" style="width: 18rem;">
-                  <div class="card-body d-flex flex-column justify-content-between p-2">
-                    <h4 class="card-title">Carta de Presentación</h4>
-                    <div class="embed-responsive embed-responsive-16by9 mb-2" style="padding: 5px;">
-                      <embed src="data:application/pdf;base64,{{ doc_carta_presentacion }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
-                    </div>
-                    <p class="card-text">Carta del anteproyecto.</p>
-                    <a href="data:application/pdf;base64,{{ doc_carta_presentacion }}" download="Carta_de_Presentacion_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Carta</a>
-                  </div>
-                </div>
-              {% else %}
-                <div class="card">
-                  <div class="card-body">
-                    <p>No se envio la carta del anteproyecto.</p>
-                  </div>
-                </div>
-              {% endif %}
 
-              {% if doc_anteproyecto %}
-                <div class="card document mt-2" style="width: 18rem;">
-                  <div class="card-body d-flex flex-column justify-content-between p-2">
-                    <h4 class="card-title">Anteproyecto</h4>
-                    <div class="embed-responsive embed-responsive-16by9 mb-2" style="padding: 5px;">
-                      <embed src="data:application/pdf;base64,{{ doc_anteproyecto }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
-                    </div>
-                    <p class="card-text">Anteproyecto completo.</p>
-                    <a href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Anteproyecto</a>
+            {% if doc_anteproyecto %}
+              <div class="card document mt-2" style="width: 18rem;">
+                <div class="card-body d-flex flex-column justify-content-between p-2">
+                  <h4 class="card-title">Anteproyecto</h4>
+                  <div class="embed-responsive embed-responsive-16by9 mb-2" style="padding: 5px;">
+                    <embed src="data:application/pdf;base64,{{ doc_anteproyecto }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
                   </div>
+                  <p class="card-text">Anteproyecto completo.</p>
+                  <a href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Anteproyecto</a>
                 </div>
-              {% endif %}
-            </div>
+              </div>
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
-
-    <div id="formretro" class="form_retroalimentacion position-absolute mt-2 p-4">
-      <h5>Formulario de Retroalimentación</h5>
-
-      <form id="retroForm" class="d-flex flex-column needs-validation" novalidate method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <div class="mb-3">
-          <label for="retroalimentacion" class="form-label">Retroalimentación:</label>
-          <textarea name="retroalimentacion" id="retroalimentacion" class="form-control" required></textarea>
-          <small class="form-text text-muted">Por favor, digite las observaciones aquí.</small>
-          <div class="invalid-feedback">Por favor, proporcione una retroalimentación.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="doc_retroalimentacion_convert" class="form-label">Documento con correcciones:</label>
-          <input type="file" name="doc_retroalimentacion_convert" id="doc_retroalimentacion_convert" class="form-control" required accept="application/pdf" />
-          <small class="form-text text-muted">Suba correcciones si son necesarias (Solo se aceptan archivos PDF).</small>
-          <div class="invalid-feedback">Por favor, seleccione un archivo PDF válido.</div>
-        </div>
-
-        <div class="d-flex justify-content-between mt-4">
-          <button type="submit" id="btnEnviarObservacion" class="btn btn-primary px-4 py-2">
-            <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
-            Enviar
-          </button>
-          <button type="button" class="btn btn-outline-danger btn-cerrar px-4 py-2">Cancelar</button>
-        </div>
-      </form>
-    </div>
-    {% include 'components/toasts.html' %}
   </div>
+
+  {% include 'components/toasts.html' %}
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

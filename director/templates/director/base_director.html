@@ -46,7 +46,7 @@
     li,
     .list-group-item {
       background: rgba(255, 255, 255, 0.7) !important;
-      z-index: 100;
+   
     }
     
     .principal {
@@ -54,17 +54,15 @@
     }
     .panel_config,
     form {
-      z-index: 0;
+   
     }
     .views {
-      z-index: 100;
+  
     }
   </style>
 
   <div class="position-relative container justify-content-center align-items-center w-100">
-    <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
       {% include 'components/config_user.html' %}
-    </div>
     <div class="principal_director">
       {% include 'components/view_drcr.html' %}
     </div>
@@ -99,33 +97,5 @@
     </div>
   </div>
 
-  <script>
-    console.log('manipulacion del config funcionando')
-    
-    const config = document.getElementById('config')
-    const configcard = document.getElementById('configcard')
-    const panelconf = document.getElementById('panel_config')
-    const btncerrar = document.getElementById('cerrar')
-    
-    console.log(btncerrar)
-    config.onclick = () => {
-      // console.log('funcionando');
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '1'
-      panelconf.style.zIndex = '2000'
-    }
-    console.log(configcard)
-    configcard.onclick = () => {
-      // console.log('funcionando');
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '1'
-      panelconf.style.zIndex = '2000'
-    }
-    btncerrar.onclick = () => {
-      console.log('funcionando btncerrar ')
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '0'
-      panelconf.style.zIndex = '0'
-    }
-  </script>
+
 {% endblock %}

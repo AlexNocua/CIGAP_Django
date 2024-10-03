@@ -8,6 +8,8 @@
     .views {
       display: flex;
     }
+   
+    
     .main-grid {
       display: flex;
       flex-wrap: wrap;
@@ -21,7 +23,7 @@
 
   <main class="d-flex flex-column">
     <h3 class="text-center m-2 p-0">Proyectos</h3>
-    <p class="text-center m-0 p-0 mb-3">
+    <p class="etiq-parrafo text-center m-0 p-0 mb-3">
       En esta sección, puedes explorar los <strong>proyectos en curso</strong> y los <strong>proyectos finalizados</strong>. Además, puedes <strong>asignar jurados</strong> a cada proyecto según sea necesario.
     </p>
 
@@ -30,12 +32,12 @@
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
             <h5 class="card-title">Proyectos en Curso</h5>
-            <p class="card-text">Conoce los proyectos que están actualmente en desarrollo y asigna jurados.</p>
+            <p class="etiq-parrafo card-text">Conoce los proyectos que están actualmente en desarrollo y asigna jurados.</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
             <a href="{% url 'correspondencia:proyectos_actuales' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_pendiente.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Proyectos en curso: {{ num_proyectos_actuales }}</p>
+              <p class="etiq-parrafo card-text">Proyectos en curso: {{ num_proyectos_actuales }}</p>
             </a>
           </div>
         </div>
@@ -45,12 +47,12 @@
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
             <h5 class="card-title">Proyectos Finalizados</h5>
-            <p class="card-text">Revisa los proyectos que ya han sido completados y asigna jurados.</p>
+            <p class="etiq-parrafo card-text">Revisa los proyectos que ya han sido completados y asigna jurados.</p>
           </div>
           <div class="card-footer link-card d-flex flex-column">
             <a href="{% url 'correspondencia:proyectos_finalizados' %}" class="w-100 h-100">
               <img src="{% static 'correspondencia/icons/image_finalizado.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Proyectos finalizados: {{ num_proyectos_terminados }}</p>
+              <p class="etiq-parrafo card-text">Proyectos finalizados: {{ num_proyectos_terminados }}</p>
             </a>
           </div>
         </div>

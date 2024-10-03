@@ -78,6 +78,7 @@
   }
   
   .content_config {
+    z-index: 0;
     background: #fff;
     box-shadow: 0px 0px 20px 3px #000000;
     margin: 12px;
@@ -132,78 +133,103 @@
   }
 </style>
 
-<main class="content_config">
-  <div class="panel-config">
-    <img src="{% static 'icons/icons_nav/logoUDEC.png' %}" alt="LogoUDEC" class="logo-config position-absolute" />
-    <h3 class="m-0 p-0">Bienvenido {{ form_config.instance.nombres }}</h3>
-    <p class="m-0 p-0">Configura tus datos</p>
+<div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <!-- Cambiado a modal-lg para un modal más grande -->
+    <div class="modal-content">
+      <div class="modal-header panel-config position-relative">
+        <img src="{% static 'icons/icons_nav/logoUDEC.png' %}" alt="LogoUDEC" class="logo-config position-absolute" style="z-index: 0;" />
+        <div class="text-center w-100" style="z-index: 1;">
+          <!-- Centrar el contenido del encabezado -->
+          <h3 class="m-0 p-0">Bienvenido {{ form_config.instance.nombres }}</h3>
+          <p class="m-0 p-0">Configure sus datos</p>
+        </div>
+        <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close" style="z-index: 2; top: 10px; right: 20px;"></button>
+      </div>
+      <div class="modal-body">
+        <form class="d-flex flex-column align-items-center" action="{% url 'login:editar_usuario' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row w-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+              {% if user_img %}
+                <img src="data:image/jpeg;base64,{{ user_img }}" alt="Imagen de usuario" class="rounded-circle mb-3 img-fluid" style="width: 150px; height: 150px; object-fit: cover;" />
+              {% else %}
+                <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" class="rounded-circle mb-3 img-fluid" style="width: 150px; height: 150px; object-fit: cover;" />
+              {% endif %}
+              <label for="imagen_file" class="form-label"><b>Agrege o cambie su imagen</b></label>
+              {{ form_config.imagen_file }}
+            </div>
+          </div>
+
+          <div class="contenedor w-100 mt-3">
+            <div class="campos p-3">
+              <p class="text-center mb-3">
+                Ajuste sus <b>nombres</b> y el <b>correo</b>.
+              </p>
+              <div class="row">
+                <div class="col-12 col-md-4 mb-3">
+                  <label for="nombres" class="form-label"><b>Nombres actuales</b></label>
+                  {{ form_config.nombres }}
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                  <label for="apellidos" class="form-label"><b>Apellidos actuales</b></label>
+                  {{ form_config.apellidos }}
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                  <label for="email" class="form-label"><b>Correo actual</b></label>
+                  {{ form_config.email }}
+                </div>
+              </div>
+            </div>
+
+            <div class="campos campos_top p-3">
+              <p class="text-center mb-3">
+                Cambie su <b>contraseña</b>. Recuerde que debe tener al menos <b>8 caracteres</b> con <b>mayúsculas</b>, <b>minúsculas</b>, <b>números</b>, y <b>caracteres especiales</b>.
+              </p>
+              <div class="row">
+                <div class="col-12 col-md-4 mb-3">
+                  <label for="current_password" class="form-label"><b>Contraseña actual</b></label>
+                  {{ form_config.current_password }}
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                  <label for="password1" class="form-label"><b>Nueva contraseña</b></label>
+                  {{ form_config.password1 }}
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                  <label for="password2" class="form-label"><b>Confirma la nueva contraseña</b></label>
+                  {{ form_config.password2 }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end w-100 mt-4">
+            <button class="btn btn-secondary me-2" id="cerrar" type="button" data-bs-dismiss="modal">Cerrar</button>
+            <button class="btn btn-primary" type="submit">Actualizar datos</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="d-flex flex-column justify-content-center align-items-center contenido-form">
-    <form class="d-flex flex-column justify-content-center align-items-center" action="{% url 'login:editar_usuario' %}" method="post" enctype="multipart/form-data">
-      <div class="d-flex">
-        {% csrf_token %}
-        {% if user_img %}
-          <img src="data:image/jpeg;base64,{{ user_img }}" alt="Imagen de usuario" class="mt-3 mb-0" />
-        {% else %}
-          <img src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" class="mt-3 mb-0" />
-        {% endif %}
-
-        <div class="m-2 d-flex justify-content-center">
-          <div class="m-2 d-flex justify-content-center flex-column">
-            <label class="text-start" for=""><b>Agrega o cambia tu imagen</b></label>
-            {{ form_config.imagen_file }}
-          </div>
-        </div>
-      </div>
-
-      <div class="contenedor">
-        <div class="campos p-2">
-          <p class="text-center m-0 p-0">
-            Ajusta tus <b>nombres</b> y el <b>correo</b>.
-          </p>
-          <div class="d-flex flex-column flex-md-row">
-            <div class="m-2 col">
-              <label for=""><b>Nombres actuales</b></label>
-              {{ form_config.nombres }}
-            </div>
-            <div class="m-2 col">
-              <label for=""><b>Apellidos actuales</b></label>
-              {{ form_config.apellidos }}
-            </div>
-            <div class="m-2 col">
-              <label for=""><b>Correo actual</b></label>
-              {{ form_config.email }}
-            </div>
-          </div>
-        </div>
-
-        <div class="campos campos_top p-3">
-          <p class="text-center m-0 p-0">
-            Cambia tu <b>contraseña</b>. Recuerda que debe tener al menos <b>8 caracteres</b> con <b>mayúsculas</b>, <b>minúsculas</b>, <b>números</b>, y <b>caracteres especiales</b>.
-          </p>
-          <div class="d-flex flex-column flex-md-row">
-            <div class="m-2 col">
-              <label for=""><b>Contraseña actual</b></label>
-              {{ form_config.current_password }}
-            </div>
-            <div class="m-2 col">
-              <label for=""><b>Nueva contraseña</b></label>
-              {{ form_config.password1 }}
-            </div>
-            <div class="m-2 col">
-              <label for=""><b>Confirma la nueva contraseña</b></label>
-              {{ form_config.password2 }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <button class="btn_cerrar" id="cerrar" type="button">Cerrar</button>
-        <button class="btn_actualizar" type="submit">Actualizar datos</button>
-      </div>
-    </form>
-  </div>
-  <script src="{% static 'js/Manipulacion_config.js' %}"></script>
-</main>
+<script>
+  console.log('manipulacion del config funcionando')
+  
+  const config = document.getElementById('config_user')
+  const btncerrar = document.getElementById('cerrar')
+  
+  // Configura el evento para abrir el modal
+  config.addEventListener('click', (event) => {
+    event.preventDefault()
+    const modal = new bootstrap.Modal(document.getElementById('configModal'))
+    modal.show()
+  })
+  
+  // Configura el evento para cerrar el modal
+  btncerrar.addEventListener('click', () => {
+    const modalElement = document.getElementById('configModal')
+    const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement)
+    modal.hide()
+  })
+</script>

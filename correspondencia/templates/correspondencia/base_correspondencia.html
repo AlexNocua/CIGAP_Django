@@ -70,7 +70,6 @@
     }
     
     .contenido_correspondencia {
-      z-index: 1000;
     }
     .contenido_correspondencia .views {
       border: 1px solid #cacaca;
@@ -95,16 +94,140 @@
   </style>
 
   <main class="contenido_correspondencia container mt-5 d-flex position-relative justify-content-center align-items-center">
-    <div class="row content_correspondecia justify-content-center position-relative">
+    <style>
+      /**/
+      
+      .btns-editar {
+        background: linear-gradient(141deg, #ffe56c, #ff6300) !important;
+        color: #fff !important;
+        border: none !important;
+      }
+      .btns-cancelar-cerrar {
+        background: linear-gradient(141deg, #ff9e9e, red) !important;
+        border: none !important;
+      }
+      
+      .btn-primary,
+      .btn-warning,
+      .btn-danger {
+      
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        color: white;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .btn-primary:hover,
+      .btn-warning:hover,
+      .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      .btns-solicitudes {
+        background: linear-gradient(150deg, #7fddfb, 20%, #004886) !important;
+      }
+      .notif_pendientes {
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        color: white;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s;
+      }
+      .notif_pendientes:hover {
+        transform: scale(1.1);
+      }
+      
+      .card-text {
+        color: #666;
+        font-size: 0.95rem;
+      }
+      
+      .etiq-parrafo {
+        color: #666 !important;
+      }
+      
+      .card,
+      .card-content {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+      }
+      .card-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        border-color: #d0d0d0;
+      }
+      /**/
+      
+      .correspondencia .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+      }
+      .correspondencia .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        border-color: #d0d0d0;
+      }
+      .correspondencia .card-body {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      .correspondencia .card-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      .correspondencia .card-text {
+        color: #666;
+        font-size: 0.95rem;
+      }
+      .correspondencia .link-card a {
+        text-decoration: none;
+        color: inherit;
+        padding: 1rem;
+        transition: background-color 0.2s;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+      .correspondencia .link-card a:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+      .correspondencia .card-footer {
+        background: rgba(248, 249, 250, 0.5);
+        border-top: 1px solid #eee;
+      }
+      .correspondencia .img-fluid {
+        max-width: 64px;
+        margin: 0 auto;
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+      }
+      .correspondencia .card-content {
+        padding: 0.5rem;
+      }
+    </style>
+    <div class="correspondencia row content_correspondecia justify-content-center position-relative g-4">
       <!-- Card 1 -->
-      <div class="card-content col-md-3 mb-4">
+      <div class="card-content col-md-3">
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
             <h2 class="card-title">Solicitudes</h2>
-            <p class="card-text">Conoce las solicitudes de los estudiantes</p>
+            <p class="card-text">Explore las solicitudes presentadas por los estudiantes.</p>
           </div>
-          <div class="card-footer link-card d-flex flex-column">
-            <a href="{% url 'correspondencia:solicitudes' %}" class="w-100 h-100">
+          <div class="card-footer link-card">
+            <a href="{% url 'correspondencia:solicitudes' %}" class="d-block">
               <img src="{% static 'correspondencia/icons/image_documentos.png' %}" alt="icon" class="img-fluid mb-2" />
               <p class="card-text">Número de solicitudes: {{ num_solicitudes }}</p>
             </a>
@@ -113,14 +236,14 @@
       </div>
 
       <!-- Card 2 -->
-      <div class="card-content col-md-3 mb-4">
+      <div class="card-content col-md-3">
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
             <h2 class="card-title">Respuestas</h2>
-            <p class="card-text">Conoce las respuestas a las solicitudes</p>
+            <p class="card-text">Infórmese sobre las respuestas a las solicitudes realizadas.</p>
           </div>
-          <div class="card-footer link-card d-flex flex-column">
-            <a href="{% url 'correspondencia:solicitudes_respondidas' %}" class="w-100 h-100">
+          <div class="card-footer link-card">
+            <a href="{% url 'correspondencia:solicitudes_respondidas' %}" class="d-block">
               <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
               <p class="card-text">Número de respuestas: {{ num_respuestas }}</p>
             </a>
@@ -129,16 +252,15 @@
       </div>
 
       <!-- Card 3 -->
-      <div class="card-content col-md-3 mb-4">
+      <div class="card-content col-md-3">
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
             <h2 class="card-title">Proyectos</h2>
-            <p class="card-text">Conoce los proyectos en curso y finalizados, así mismo asigna jurados.</p>
+            <p class="card-text">Infórmese sobre los proyectos en curso y finalizados.</p>
           </div>
-          <div class="card-footer link-card d-flex flex-column">
-            <a href="{% url 'correspondencia:proyectos' %}" class="w-100 h-100">
+          <div class="card-footer link-card">
+            <a href="{% url 'correspondencia:proyectos' %}" class="d-block">
               <img src="{% static 'correspondencia/icons/image_proyecto.png' %}" alt="icon" class="img-fluid mb-2" />
-
               <p class="card-text">Proyectos en curso: {{ num_proyectos }}</p>
             </a>
           </div>
@@ -146,14 +268,14 @@
       </div>
 
       <!-- Card 4 -->
-      <div class="card-content col-md-3 mb-4">
+      <div class="card-content col-md-3">
         <div class="d-flex card h-100 text-center">
           <div class="card-body">
-            <h2 class="card-title">Formatos de documentos</h2>
-            <p class="card-text">Carga y revisa los formatos de documentos</p>
+            <h2 class="card-title">Formatos</h2>
+            <p class="card-text">Cargue y revise los formatos de documentos correspondientes.</p>
           </div>
-          <div class="card-footer link-card d-flex flex-column">
-            <a href="{% url 'correspondencia:formatos_documentos' %}" class="w-100 h-100">
+          <div class="card-footer link-card">
+            <a href="{% url 'correspondencia:formatos_documentos' %}" class="d-block">
               <img src="{% static 'correspondencia/icons/image_solicitud.png' %}" alt="icon" class="img-fluid mb-2" />
               <p class="card-text">Número de formatos: {{ num_formatos }}</p>
             </a>
@@ -166,104 +288,50 @@
       {% block content_solicitudes %}
 
       {% endblock %}
-      {% comment %}plantilla de la lista de los proyectos{% endcomment %}
       {% block list_proyect %}
 
       {% endblock %}
-
-      {% comment %}vista de el anteproyecto{% endcomment %}
       {% block view_anteproyecto %}
 
       {% endblock %}
-
-      {% comment %}vista del proyecto{% endcomment %}
       {% block view_proyecto %}
 
       {% endblock %}
-
-      {% comment %}vista para ver una solicitud especial{% endcomment %}
       {% block view_solicitud_especial %}
 
       {% endblock %}
-      {% comment %}vista de la asignacion de jurados para el proyecto{% endcomment %}
       {% block asignacion_jurados %}
 
       {% endblock %}
-
-      {% comment %}plantilla de vista de solicitudes{% endcomment %}
       {% block view_solicitudes %}
 
       {% endblock %}
-
       {% block view_retroalimentacion %}
 
       {% endblock %}
-
-      {% comment %}vista de la plantilla de documentos cargados por los estudiantes{% endcomment %}
       {% block view_documentos_cargados %}
 
       {% endblock %}
-
-      {% comment %}vista de la plantilla de documentos del comite{% endcomment %}
       {% block view_documentos_correspondencia %}
 
       {% endblock %}
-
-      {% comment %}vista para la edicion o eliminacion de un formato{% endcomment %}
       {% block formato %}
 
       {% endblock %}
-
-      {% comment %}###################################################################################################################{% endcomment %}
-
-      {% comment %}vistas para los proyectos{% endcomment %}
       {% block proyectos %}
 
       {% endblock %}
-
-      {% comment %}vista de la plantilla de proyectos finalizados{% endcomment %}
       {% block proyectos_finalizados %}
 
       {% endblock %}
-      {% comment %}vista de la plantilla de proyectos actuales{% endcomment %}
       {% block proyectos_actuales %}
 
       {% endblock %}
-
-      {% comment %}vista para la plantilla especifica del proyecto{% endcomment %}
       {% block proyecto %}
 
       {% endblock %}
-
-      {% comment %}###################################################################################################################{% endcomment %}
       {% include 'components/toasts.html' %}
     </div>
   </main>
-  <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
-    {% include 'components/config_user.html' %}
-  </div>
-  <script>
-    console.log('manipulacion del config funcionando')
-    
-    const config = document.getElementById('config')
-    
-    const panelconf = document.getElementById('panel_config')
-    const btncerrar = document.getElementById('cerrar')
-    
-    console.log(btncerrar, 'boton de cerrar')
-    config.onclick = () => {
-      // console.log('funcionando');
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '1'
-      panelconf.style.zIndex = '2000'
-    }
-    
-    console.log(btncerrar, 'btncerrar')
-    btncerrar.onclick = () => {
-      console.log('funcionando btncerrar ')
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '0'
-      panelconf.style.zIndex = '0'
-    }
-  </script>
+  {% include 'components/config_user.html' %}
 {% endblock %}

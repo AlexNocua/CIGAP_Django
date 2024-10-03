@@ -21,7 +21,7 @@
       text-align: center;
       color: #777;
     }
-
+    
     .cont_proyectos {
       display: flex;
       flex-direction: column;
@@ -38,6 +38,15 @@
             <h5 class="d-flex justify-content-center align-items-center" style="max-height: 300px;min-height: 100px;">{{ proyecto.anteproyecto.nombre_anteproyecto }}</h5>
             <p style="max-height: 200px; min-height:200px;overflow: scroll;">
               <strong>Descripción:</strong><br />{{ proyecto.anteproyecto.descripcion }}
+            </p>
+            <p class="text-center">
+              {% if proyecto.anteproyecto.nombre_integrante2 %}
+                <strong>Integrantes:</strong> <br />
+                {{ proyecto.anteproyecto.nombre_integrante1 }}<br />
+                {{ proyecto.anteproyecto.nombre_integrante2 }}
+              {% else %}
+                {{ proyecto.anteproyecto.nombre_integrante1 }}
+              {% endif %}
             </p>
             <a href="{% url 'director:proyecto' proyecto.id %}">Ver detalles</a>
           </div>

@@ -36,7 +36,7 @@
       padding: 16px;
     }
     .contenido_estudiante {
-      z-index: 100;
+    
     }
   </style>
   {% include 'components/toasts.html' %}
@@ -75,42 +75,11 @@
         border: 1px solid #d0d0d0;
         /*Revisar este*/
         overflow: scroll;
-        z-index: 0;
+       
       }
     </style>
-    <div id="panel_config" class="position-absolute container-fluid m-0 p-0" style="z-index: 0;opacity: 0; ">
-      {% include 'components/config_user.html' %}
-    </div>
+    {% include 'components/config_user.html' %}
+
     {% comment %}recordar el manejo de mediaquerys{% endcomment %}
   </main>
-
-  <script>
-    console.log('manipulacion del config funcionando')
-    
-    const config = document.getElementById('config')
-    const configcard = document.getElementById('configcard')
-    const panelconf = document.getElementById('panel_config')
-    const btncerrar = document.getElementById('cerrar')
-    
-    console.log(btncerrar)
-    config.onclick = () => {
-      // console.log('funcionando');
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '1'
-      panelconf.style.zIndex = '2000'
-    }
-    console.log(configcard)
-    configcard.onclick = () => {
-      // console.log('funcionando');
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '1'
-      panelconf.style.zIndex = '2000'
-    }
-    btncerrar.onclick = () => {
-      console.log('funcionando btncerrar ')
-      panelconf.style.transition = 'all 0.5s'
-      panelconf.style.opacity = '0'
-      panelconf.style.zIndex = '0'
-    }
-  </script>
 {% endblock %}

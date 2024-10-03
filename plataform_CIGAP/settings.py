@@ -58,11 +58,19 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'plataform_CIGAP.urls'
 
 TEMPLATES = [
+    # Motor de plantillas Jinja2
+    # {
+    #     'BACKEND': 'django.template.backends.jinja2.Jinja2',
+    #     'DIRS': [os.path.join(BASE_DIR, 'plataform_CIGAP', 'templates')],
+    #     'APP_DIRS': True,
+    #     'OPTIONS': {
+    #         'environment': 'plataform_CIGAP.jinja2_environment.environment',  # Asegúrate de tener este archivo
+    #     },
+    # },
+    # Motor de plantillas predeterminado de Django
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # Directorio global de templates
         'DIRS': [os.path.join(BASE_DIR, 'plataform_CIGAP', 'templates')],
-        # 'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +82,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'plataform_CIGAP.wsgi.application'
 

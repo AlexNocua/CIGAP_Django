@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from correspondencia.forms import FormSolicitudes
 from .forms import FormAnteproyecto, FormProyectoFinal, FormObjetivoGeneral, FormObjetivosEspecificos, FormActividades
 # modelos
+from login.models import Usuarios
 from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades, ModelFechasProyecto
 import base64
 # modelo de correspondencia
@@ -45,11 +46,16 @@ def recuperar_proyecto_final_id(id):
 
 def recuperar_proyecto_final_usuario(user):
     proyecto = ModelProyectoFinal.objects.get(Q(user=user) | Q(
-        anteproyecto__nombre_integrante1=user.nombre_completo) | Q(anteproyecto__nombre_integrante2=user.nombre_completo))
-    if not proyecto:
-        return None
+        anteproyecto__nombre_integrante1=user.nombre_completo) | Q(anteproyecto__nombre_integrante2=user.nombre_completo)) if ModelProyectoFinal.objects.filter(Q(user=user) | Q(
+            anteproyecto__nombre_integrante1=user.nombre_completo) | Q(anteproyecto__nombre_integrante2=user.nombre_completo)).exists() else None
     return proyecto
 # recuperar retralimentacion por anteproyecto
+
+
+def recuperar_directores():
+    directores = list(Usuarios.objects.filter(
+        groups__name="Directores").values('id', 'nombre_completo', 'email'))
+    return directores
 
 
 def recuperar_retroalimentacion_anteproyecto(anteproyecto):
@@ -234,9 +240,20 @@ def principal_estudiante(request):
 @ grupo_usuario('Estudiantes')
 def solicitud(request):
     context = datosusuario(request)
-
+    directores = recuperar_directores()
+    context['directores'] = directores
     # Si el método es POST, procesamos el formulario.
     if request.method == 'POST':
+
+        nombre_integrante2 = request.POST.get('nombre_integrante2')
+        print(nombre_integrante2)
+        if nombre_integrante2:
+            existing_anteproyecto = ModelAnteproyecto.objects.filter(
+                Q(nombre_integrante2=nombre_integrante2) | Q(nombre_integrante1=nombre_integrante2))
+            if existing_anteproyecto:
+                messages.error(
+                    request, f"El estudiante {nombre_integrante2} actualmente ya esta vinculado a otro anteproyecto.")
+                return redirect('estudiante:info_proyect')
         # Verificamos si el estudiante ya tiene un anteproyecto.
         try:
             # Buscamos un anteproyecto donde el usuario sea el creador o uno de los integrantes
@@ -260,22 +277,51 @@ def solicitud(request):
                         request, "Ya tienes un anteproyecto creado. No puedes crear otro hasta que el actual sea evaluado.")
                     return redirect('estudiante:info_proyect')
                 except ModelAnteproyecto.DoesNotExist:
-                    # Solo se ejecuta si no se encontró anteproyecto en ninguna de las condiciones anteriores
-                    form = FormAnteproyecto(request.POST, request.FILES)
-                    if form.is_valid():
-                        anteproyecto = form.save(commit=False)
-                        anteproyecto.estado = False
-                        anteproyecto.user = request.user
-                        anteproyecto.save()
 
-                        # Mensaje de éxito
-                        messages.success(
-                            request, f"El proyecto '{anteproyecto.nombre_anteproyecto}' ha sido enviado al director y codirector para las retroalimentaciones pertinentes.")
-                        return redirect('estudiante:info_proyect')
-                    else:
-                        # Mensaje de error si el formulario no es válido
+                    # Obtener valores del POST y FILES
+                    director = request.POST.get('director')
+                    codirector = request.POST.get('codirector')
+
+                    # Validaciones previas a guardar el nuevo anteproyecto
+                    if not director or director.strip() == '':
                         messages.error(
-                            request, "Hubo un problema al enviar el formulario. Por favor, verifica los campos y vuelve a intentarlo.")
+                            request, "Debe seleccionar un director.")
+                        return redirect('estudiante:solicitud')
+
+                    if director == codirector:
+                        messages.error(
+                            request, "El director y el codirector no pueden ser la misma persona.")
+                        return redirect('estudiante:solicitud')
+
+                    # Crear nuevo anteproyecto solo si las validaciones anteriores pasan
+                    new_anteproyecto = ModelAnteproyecto(
+                        user=request.user,
+                        nombre_anteproyecto=request.POST.get(
+                            'nombre_anteproyecto'),
+                        nombre_integrante1=request.POST.get(
+                            'nombre_integrante1'),
+                        nombre_integrante2=request.POST.get(
+                            'nombre_integrante2'),
+                        descripcion=request.POST.get('descripcion'),
+                        carta_presentacion=request.FILES.get('carta_presentacion_convert').read(
+                        ) if request.FILES.get('carta_presentacion_convert') else None,
+                        anteproyecto=request.FILES.get('anteproyecto_convert').read(
+                        ) if request.FILES.get('anteproyecto_convert') else None,
+                        director=director,
+                        codirector=codirector,
+                        fecha_envio=fecha_actual(),
+                    )
+
+                    # Guardar el anteproyecto si todo está correcto
+                    new_anteproyecto.save()
+
+                    messages.success(
+                        request, f"El proyecto '{new_anteproyecto.nombre_anteproyecto}' ha sido enviado al director y codirector para las retroalimentaciones pertinentes.")
+                    return redirect('estudiante:info_proyect')
+
+                    # # Mensaje de error si el formulario no es válido
+                    # messages.error(
+                    #     request, "Hubo un problema al enviar el formulario. Por favor, verifica los campos y vuelve a intentarlo.")
 
     # Si el método es GET, buscamos el anteproyecto del usuario actual.
     else:
@@ -405,7 +451,6 @@ def info_proyect(request):
         if proyecto_final:
             context['proyecto_final'] = proyecto_final
         if retroalimentaciones:
-            # recordar que este recibe el documento y la respuesta general en un diccionario
             context['content_retroalimentacion'] = retroalimentaciones
 
             return render(request, 'estudiante/Inf_proyect.html', context)
@@ -417,6 +462,7 @@ def info_proyect(request):
 
 
 @login_required
+@ grupo_usuario('Estudiantes')
 def enviar_solicitud_proyecto(request):
     print(f"Usuario autenticado: {request.user}")
     if request.method == 'POST':
@@ -497,28 +543,33 @@ def recuperar_actividades(objetivo_esp):
 def avances_proyecto(request):
     context = datosusuario(request)
     proyecto_final = recuperar_proyecto_final_usuario(request.user)
-    print(proyecto_final)
-    fechas = ModelFechasProyecto.objects.get(proyecto_final=proyecto_final)
-    if fechas:
-        context['fechas'] = fechas
-        context['fecha_culminacion_anteproyecto'] = fecha_culminacion_anteproyecto(
-            fechas.fecha_inicio)
     if proyecto_final:
-        context['proyecto_final'] = proyecto_final
+        print(proyecto_final)
+        fechas = ModelFechasProyecto.objects.get(proyecto_final=proyecto_final)
+        if fechas:
+            context['fechas'] = fechas
+            context['fecha_culminacion_anteproyecto'] = fecha_culminacion_anteproyecto(
+                fechas.fecha_inicio)
+        if proyecto_final:
+            context['proyecto_final'] = proyecto_final
 
-    obj_general = recuperar_objetivo_general(proyecto_final)
-    if obj_general:
-        context['obj_general'] = obj_general
-        objs_especificos = recuperar_objetivos_especificos(obj_general)
-        if objs_especificos:
-            context['objs_especificos'] = objs_especificos
-            dict_actividades = {}
+        obj_general = recuperar_objetivo_general(proyecto_final)
+        if obj_general:
+            context['obj_general'] = obj_general
+            objs_especificos = recuperar_objetivos_especificos(obj_general)
+            if objs_especificos:
+                context['objs_especificos'] = objs_especificos
+                dict_actividades = {}
+                dict_docs_avances = {}
 
-            for i, obj_especifico in enumerate(objs_especificos):
-                actividades = recuperar_actividades(obj_especifico)
-                if actividades:
-                    dict_actividades[f'actividades_obj_especifico_{i}'] = actividades
-            context['actividades'] = dict_actividades
+                for i, obj_especifico in enumerate(objs_especificos):
+                    dict_docs_avances[f'doc_avance_{i}'] = devolver_documento_imagen(
+                        obj_especifico.documento_avance)
+                    actividades = recuperar_actividades(obj_especifico)
+                    if actividades:
+                        dict_actividades[f'actividades_obj_especifico_{i}'] = actividades
+                context['actividades'] = dict_actividades
+                context['docs_avances'] = dict_docs_avances
 
     return render(request, 'estudiante/avances_proyecto.html', context)
 
@@ -562,7 +613,7 @@ def editar_objetivo_general(request, id):
 def eliminar_objetivo_general(request, id):
 
     objetivo_general = ModelObjetivoGeneral.objects.filter(id=id).first()
-    if objetivo_general:  # Verificar si el objetivo existe
+    if objetivo_general:
         objetivo_general.delete()
         messages.success(
             request, 'El objetivo general ha sido eliminado correctamente.')
@@ -627,10 +678,48 @@ def eliminar_objetivo_especifico(request, id):
     return redirect('estudiante:avances_proyecto')
 
 
-def subir_actividad(request, id):
+def editar_eliminar_archivo(request, id):
+    # Obtener el objetivo específico correspondiente
+    objetivo_especifico = ModelObjetivosEspecificos.objects.get(id=id)
+
+    if objetivo_especifico:
+        # Acción de eliminar
+        if request.POST.get('accion') == 'eliminar':
+            objetivo_especifico.documento_avance = None
+            objetivo_especifico.fecha_envio = None
+            objetivo_especifico.save()
+            messages.success(
+                request, 'El documento ha sido eliminado exitosamente.')
+
+        # Acción de editar
+        elif request.POST.get('accion') == 'editar':
+            nuevo_archivo = request.FILES.get('archivo_nuevo')
+            if nuevo_archivo:
+                objetivo_especifico.fecha_envio = fecha_actual()
+                objetivo_especifico.documento_avance = nuevo_archivo.read()
+                objetivo_especifico.save()
+                messages.success(
+                    request, 'El documento ha sido actualizado correctamente.')
+            else:
+                messages.error(
+                    request, 'No se ha seleccionado ningún archivo. Por favor, seleccione un archivo válido para actualizar.')
+
+        # Redirigir tras la operación
+        return redirect('estudiante:avances_proyecto')
+
+    else:
+        # En caso de que no se encuentre el objetivo específico
+        messages.error(
+            request, 'El objetivo específico no ha sido encontrado. Intente nuevamente.')
+        return redirect('estudiante:avances_proyecto')
+
+
+def subir_actividad(request, id_proyecto, id_esp):
     if request.method == 'POST':
+        proyecto_final = recuperar_proyecto_final_id(id_proyecto)
         actividad = ModelActividades(
-            objetivos_especificos=recuperar_objetivo_especifico(id),
+            objetivo_general=recuperar_objetivo_general(proyecto_final),
+            objetivos_especificos=recuperar_objetivo_especifico(id_esp),
             descripcion=request.POST.get('descripcion')
         )
         actividad.save()
@@ -675,6 +764,27 @@ def eliminar_actividad(request, id):
     else:
         messages.error(
             request, 'No se ha encontrado la actividad especificada.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+def subir_avance(request, id_esp):
+    obj_esp = recuperar_objetivo_especifico(id_esp)
+
+    if obj_esp:
+        documento_avance = request.FILES.get('documento_avance')
+
+        if documento_avance:
+            obj_esp.documento_avance = documento_avance.read()
+            obj_esp.save()
+            messages.success(
+                request, f'El avance del objetivo "{obj_esp.descripcion}" ha sido subido correctamente.')
+        else:
+            messages.error(
+                request, 'No se ha seleccionado ningún archivo para subir.')
+    else:
+        messages.error(
+            request, 'El objetivo específico que intentas actualizar no existe.')
 
     return redirect('estudiante:avances_proyecto')
 

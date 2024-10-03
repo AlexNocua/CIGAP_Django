@@ -26,11 +26,11 @@
     }
     
     .section_anteproyecto {
-      z-index: 100;
+     
       overflow: hidden;
     }
     .info-integrantes-ante {
-      z-index: 0;
+     
     }
     
     /* Mejora la responsividad */
@@ -56,7 +56,7 @@
       background: #ffffff;
       top: 5%;
       transition: all 0.5s;
-      z-index: 200;
+     
       max-width: 100%; /* Ajustar ancho máximo */
       text-align: left; /* Agregado */
     }
@@ -70,7 +70,7 @@
       max-width: 500px;
       width: 100%;
       text-align: left; /* Agregado */
-      z-index: 1000;
+    
     }
     
     #formDirectores h5 {
@@ -110,7 +110,7 @@
       background-color: #f8f9fa; /* Fondo claro */
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      z-index: 0;
+
       opacity: 0;
     }
     .form-retoalimentacion-modal {
@@ -122,7 +122,7 @@
       background-color: #f8f9fa; /* Fondo claro */
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      z-index: 0;
+   
       opacity: 0;
     }
     
@@ -221,10 +221,10 @@
           <br />
           <ol>
             <li>
-              <a class="" href="data:application/pdf;base64,{{ doc_carta }}" download="CartaPresentacion {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
+              <a class="" href="data:application/pdf;base64,{{ inf_anteproyecto.doc_carta }}" download="CartaPresentacion {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
             <li>
-              <a class="" href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
+              <a class="" href="data:application/pdf;base64,{{ inf_anteproyecto.doc_anteproyecto }}" download="Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_anteproyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
           </ol>
           {% if evaluaciones %}
@@ -247,15 +247,15 @@
                     <p class="mb-1">
                       <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
                     </p>
+                    <button class="btn btn-primary btn-concepto" style="text-decoration: none;">Enviar concepto de anteproyecto</button>
                   {% else %}
                     <p class="mb-1 text-muted">Aún no se ha dado una evaluación</p>
                   {% endif %}
                 </div>
               {% endfor %}
-              <button class="btn btn-primary btn-concepto" style="text-decoration: none;">Enviar concepto de anteproyecto</button>
             </div>
           {% else %}
-            <button id="btn-asignar" class="btn btn-primary">Asignar docente evaluador</button>
+            <p class="mb-1 text-muted">Aún no se ha dado una evaluación</p>
           {% endif %}
         </div>
         <div class="info-integrantes-ante col mt-2 p-2">

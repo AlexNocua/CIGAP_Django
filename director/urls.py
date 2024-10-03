@@ -22,6 +22,10 @@ urlpatterns = [
     path('view_proyectos', views.view_proyectos, name='view_proyectos'),
     path('proyecto/<int:id>', views.proyecto, name='proyecto'),
     path('enviar_proyecto/<int:id>', views.enviar_proyecto, name='enviar_proyecto'),
+    path('actualizar_estado_actividad/<int:actividad_id>/<int:id_proyecto>/',
+         views.actualizar_estado_actividad, name='actualizar_estado_actividad'),
+    path('enviar_observacion_objetivo/<int:id_proyect>/<int:id_esp>/',
+         views.enviar_observacion_objetivo, name='enviar_observacion_objetivo'),
     ########################################################################
     # vinculos del modulo de evaluacion de proyectos
     path('evaluacion_proyectos', views.evaluacion_proyectos,
