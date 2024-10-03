@@ -1,134 +1,614 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Avances del Proyecto Final</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+{% extends 'estudiante/base_estudiante.html' %}
+{% block avances_proyecto %}
+  {% load custom_filters %}
+
+  <style>
+    .inf_user {
+      display: none;
+    }
+    .progress {
+      height: 25px;
+    }
+    .objetivo-especifico {
+      border-left: 3px solid #007bff;
+      padding-left: 15px;
+      margin-bottom: 15px;
+    }
+    .form-check-input:checked + .form-check-label {
+      text-decoration: line-through;
+    }
+  </style>
+  <div class="container mt-5">
     <style>
-      .progress {
-        height: 25px;
+      .project-header {
+        margin-bottom: 2.5rem;
       }
-      .objetivo-especifico {
-        border-left: 3px solid #007bff;
-        padding-left: 15px;
-        margin-bottom: 15px;
+      
+      .project-title {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
       }
-      .form-check-input:checked + .form-check-label {
-        text-decoration: line-through;
+      
+      .project-subtitle {
+        font-size: 1rem;
+        color: #6c757d;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 2rem;
+      }
+      
+      .info-section {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+      }
+      
+      .info-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #1a1a1a;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .info-title i {
+        color: #0d6efd;
+        font-size: 1.25rem;
+      }
+      
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      
+      .info-item {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .info-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+      }
+      
+      .info-value {
+        font-size: 1rem;
+        color: #1a1a1a;
+      }
+      
+      .progress-container {
+        background: #f8f9fa;
+        border-radius: 100px;
+        height: 8px;
+        overflow: hidden;
+      }
+      
+      .progress-bar {
+        background: linear-gradient(90deg, #0d6efd, #0099ff);
+        height: 100%;
+        border-radius: 100px;
+        transition: width 0.5s ease;
       }
     </style>
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h1 class="mb-4">Avances del Proyecto Final</h1>
 
-      <section class="mb-5">
-        <h2>Información General</h2>
-        <div class="row">
-          <div class="col-md-6">
-            <p>
-              <strong>Fecha de Inicio:</strong> <time datetime="2024-09-01">1 de Septiembre, 2024</time>
-            </p>
-            <p>
-              <strong>Fecha Estimada de Finalización:</strong> <time datetime="2024-12-15">15 de Diciembre, 2024</time>
-            </p>
+    <div class="project-header">
+      <h1 class="project-title">Avances del Proyecto Final</h1>
+      <span class="project-subtitle">{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</span>
+
+      <section class="info-section">
+        <h2 class="info-title">
+          <i class="fas fa-info-circle"></i>
+          Información General
+        </h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Fecha de Inicio</span>
+            <time class="info-value" datetime="{{ fechas.fecha_inicio }}">{{ fechas.fecha_inicio|date:'d \d\e F \d\e Y' }}</time>
           </div>
-          <div class="col-md-6">
-            <p>
-              <strong>Progreso General:</strong>
-            </p>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
+          <div class="info-item">
+            <span class="info-label">Fecha Estimada de Finalización</span>
+            <time class="info-value" datetime="{{ fecha_culminacion_anteproyecto }}">{{ fecha_culminacion_anteproyecto|date:'d \d\e F \d\e Y' }}</time>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">Progreso General</span>
+            <div class="progress-container">
+              <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+            <span class="info-value text-end mt-1">65%</span>
           </div>
         </div>
-      </section>
-
-      <section class="mb-5">
-        <h2>Objetivo General</h2>
-        <p>Desarrollar un sistema de gestión de proyectos que optimice la planificación, seguimiento y evaluación de proyectos académicos.</p>
-      </section>
-
-      <section class="mb-5">
-        <h2>Objetivos Específicos</h2>
-        <div class="objetivo-especifico">
-          <h3 class="h5">1. Análisis de Requerimientos</h3>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="obj1" checked />
-            <label class="form-check-label" for="obj1">Completar entrevistas con stakeholders</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="obj2" />
-            <label class="form-check-label" for="obj2">Documentar requisitos funcionales y no funcionales</label>
-          </div>
-          <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#uploadModal">Cargar Avance <i class="fas fa-upload"></i></button>
-        </div>
-
-        <div class="objetivo-especifico">
-          <h3 class="h5">2. Diseño de la Arquitectura</h3>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="obj3" />
-            <label class="form-check-label" for="obj3">Crear diagrama de arquitectura del sistema</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="obj4" />
-            <label class="form-check-label" for="obj4">Definir tecnologías a utilizar</label>
-          </div>
-          <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#uploadModal">Cargar Avance <i class="fas fa-upload"></i></button>
-        </div>
-
-        <!-- Más objetivos específicos pueden ser añadidos aquí -->
-      </section>
-
-      <section class="mb-5">
-        <h2>Próximas Entregas</h2>
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Informe de Análisis de Requerimientos
-            <span class="badge bg-primary rounded-pill"><time datetime="2024-10-15">15 Oct 2024</time></span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Documento de Diseño de Arquitectura
-            <span class="badge bg-primary rounded-pill"><time datetime="2024-11-01">1 Nov 2024</time></span>
-          </li>
-        </ul>
       </section>
     </div>
 
-    <!-- Modal para cargar avances -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="uploadModalLabel">Cargar Avance</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="documentTitle" class="form-label">Título del Documento</label>
-                <input type="text" class="form-control" id="documentTitle" required />
+    <style>
+      .objectives-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        font-family: 'Inter', sans-serif;
+      }
+      .main-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2.5rem;
+        padding: 2rem;
+      }
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #1a1a1a;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .section-title i {
+        color: #0d6efd;
+        font-size: 1.25rem;
+      }
+      .specific-objectives-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+      }
+      .objective-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid #f0f0f0;
+        overflow: hidden;
+      }
+      .objective-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+      }
+      .objective-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.25rem;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .objective-header h3 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #2c3e50;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .objective-number {
+        background: #0d6efd;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      .objective-body {
+        padding: 1.25rem;
+      }
+      .activities-title {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #6c757d;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .activity-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border-radius: 6px;
+        transition: background 0.2s ease;
+      }
+      .activity-item:hover {
+        background: #e9ecef;
+      }
+      .btn-primary {
+        background: #0d6efd;
+        color: white;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .btn-primary:hover {
+        background: #0b5ed7;
+        transform: translateY(-1px);
+      }
+      .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        transition: border-color 0.2s ease;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+      }
+      .add-objective-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 12px;
+        padding: 2rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        height: 100%;
+        min-height: 200px;
+      }
+      .add-objective-card:hover {
+        background: #e9ecef;
+        border-color: #0d6efd;
+      }
+      .add-objective-card i {
+        color: #0d6efd;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .add-objective-card h4 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #6c757d;
+        margin: 0;
+      }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap JS, Popper.js, y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+    <div class="objectives-container">
+      <!-- Objetivo General -->
+      <div class="main-card">
+        <h2 class="section-title"><i class="fas fa-bullseye"></i> Objetivo General</h2>
+
+        {% if obj_general %}
+          <p class="lead">{{ obj_general.descripcion }}</p>
+
+          <!-- Botón para mostrar el acordeón de opciones -->
+          <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#accordionObjGeneral" aria-expanded="false" aria-controls="accordionObjGeneral">Opciones</button>
+
+          <!-- Acordeón para editar o eliminar -->
+          <div id="accordionObjGeneral" class="collapse mt-3">
+            <!-- Formulario para editar el objetivo general -->
+            <form id="editarObjetivoForm" method="POST" action="{% url 'estudiante:editar_objetivo_general' obj_general.id %}" class="needs-validation" novalidate>
+              {% csrf_token %}
+              <div class="form-group mb-3">
+                <label for="editar_objetivo_general" class="form-label fw-bold">Objetivo General</label>
+                <textarea id="editar_objetivo_general" name="editar_objetivo_general" class="form-control" rows="3" required placeholder="Escriba aquí el objetivo general...">{{ obj_general.descripcion }}</textarea>
+                <div class="invalid-feedback">Por favor, ingrese el objetivo general.</div>
               </div>
-              <div class="mb-3">
-                <label for="documentFile" class="form-label">Seleccionar Archivo</label>
-                <input type="file" class="form-control" id="documentFile" required />
-              </div>
-              <div class="mb-3">
-                <label for="documentDescription" class="form-label">Descripción</label>
-                <textarea class="form-control" id="documentDescription" rows="3"></textarea>
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-warning">
+                  <i class="fas fa-edit me-1"></i>
+                  <span>Editar Objetivo General</span>
+                  <span class="spinner-border spinner-border-sm d-none ms-1" role="status" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger" id="btnEliminarObjetivo">
+                  <i class="fas fa-trash me-1"></i>
+                  <span>Eliminar Objetivo General</span>
+                </button>
               </div>
             </form>
+
+            <!-- Formulario oculto para eliminar -->
+            <form id="eliminarObjetivoForm" method="POST" action="{% url 'estudiante:eliminar_objetivo_general' obj_general.id %}" class="d-none">
+              {% csrf_token %}
+            </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Subir Documento</button>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              const editarForm = document.getElementById('editarObjetivoForm')
+              const eliminarForm = document.getElementById('eliminarObjetivoForm')
+              const btnEliminar = document.getElementById('btnEliminarObjetivo')
+            
+              // Manejar la edición del objetivo
+              editarForm.addEventListener('submit', function (event) {
+                event.preventDefault()
+            
+                if (!this.checkValidity()) {
+                  event.stopPropagation()
+                  this.classList.add('was-validated')
+                  return
+                }
+            
+                const submitBtn = this.querySelector('button[type="submit"]')
+                const spinner = submitBtn.querySelector('.spinner-border')
+                const btnText = submitBtn.querySelector('span')
+                const originalText = btnText.textContent
+            
+                submitBtn.disabled = true
+                spinner.classList.remove('d-none')
+                btnText.textContent = 'Guardando...'
+            
+                Swal.fire({
+                  title: '¿Confirmar cambios?',
+                  text: 'Estás a punto de modificar el objetivo general',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ffc107',
+                  cancelButtonColor: '#6c757d',
+                  confirmButtonText: 'Sí, modificar',
+                  cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.submit()
+                  } else {
+                    submitBtn.disabled = false
+                    spinner.classList.add('d-none')
+                    btnText.textContent = originalText
+                  }
+                })
+              })
+            
+              // Manejar la eliminación del objetivo
+              btnEliminar.addEventListener('click', function () {
+                Swal.fire({
+                  title: '¿Estás seguro?',
+                  text: 'Esta acción eliminará el objetivo general. Esta acción no se puede deshacer.',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#dc3545',
+                  cancelButtonColor: '#6c757d',
+                  confirmButtonText: 'Sí, eliminar',
+                  cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    eliminarForm.submit()
+                  }
+                })
+              })
+            })
+          </script>
+
+          <style>
+            #accordionObjGeneral {
+              background-color: #f8f9fa;
+              border-radius: 8px;
+              padding: 20px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+            
+            #accordionObjGeneral textarea {
+              resize: vertical;
+              min-height: 100px;
+            }
+            
+            #accordionObjGeneral .btn {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              min-width: 160px;
+            }
+          </style>
+        {% else %}
+          <!-- Si no existe el objetivo general, muestra el formulario para agregarlo -->
+          <form method="POST" action="{% url 'estudiante:subir_objetivo_general' proyecto_final.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea id="descripcion_objetivo_general" name="descripcion_objetivo_general" class="form-control" rows="3" required placeholder="Describe el objetivo general de tu proyecto..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2"><i class="fas fa-plus-circle"></i> Definir Objetivo General</button>
+          </form>
+        {% endif %}
+      </div>
+
+      {% if obj_general %}
+        <div class="main-card">
+          <h2 class="section-title"><i class="fas fa-list-check"></i> Objetivos Específicos</h2>
+
+          <div class="specific-objectives-grid row row-cols-1 row-cols-md-2 g-3">
+            <!-- Rejilla responsive -->
+            {% if objs_especificos %}
+              <div class="objectives-grid w-100" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 4fr)); gap: 1rem;">
+                {% for obj_especifico in objs_especificos %}
+                  <div class="objective-card card h-100">
+                    <div class="objective-header card-header d-flex justify-content-between">
+                      <h3>
+                        <span class="objective-number">{{ forloop.counter }}</span>
+                        {{ obj_especifico.descripcion }}
+                      </h3>
+                      <div>
+                        <!-- Botones para editar y eliminar -->
+                        <button class="btn btn-sm btn-warning" data-bs-toggle="collapse" data-bs-target="#editarObjetivo{{ forloop.counter }}" aria-expanded="false" aria-controls="editarObjetivo{{ forloop.counter }}"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-sm btn-danger" data-bs-toggle="collapse" data-bs-target="#eliminarObjetivo{{ forloop.counter }}" aria-expanded="false" aria-controls="eliminarObjetivo{{ forloop.counter }}"><i class="fas fa-trash"></i> Eliminar</button>
+                      </div>
+                    </div>
+
+                    <!-- Acordeón para edición y eliminación de objetivos -->
+                    <div class="accordion" id="accordionObjetivosEspecificos">
+                      <!-- Formulario para editar -->
+                      <div id="editarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
+                        <form class="d-flex flex-column gap-2" method="POST" action="{% url 'estudiante:editar_objetivo_especifico' id=obj_especifico.id %}">
+                          {% csrf_token %}
+                          <div class="row g-2">
+                            <div class="col-9">
+                              <input type="text" name="editar_objetivo_especifico" class="form-control form-control-sm m-0" value="{{ obj_especifico.descripcion }}" required />
+                              <small class="text-muted">Ingrese el objetivo específico que desea actualizar.</small>
+                            </div>
+                            <div class="col-3">
+                              <button type="submit" class="btn btn-sm btn-success w-100"><i class="fas fa-save"></i> Guardar</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                      <!-- Confirmación de eliminación -->
+                      <div id="eliminarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
+                        <form method="POST" action="{% url 'estudiante:eliminar_objetivo_especifico' id=obj_especifico.id %}">
+                          {% csrf_token %}
+                          <p class="text-danger">¿Está seguro de que desea eliminar este objetivo específico?</p>
+                          <button type="submit" class="btn btn-sm btn-danger w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
+                        </form>
+                      </div>
+                    </div>
+
+                    <div class="objective-body card-body" style="background: #29a70921;">
+                      <h4 class="activities-title"><i class="fas fa-tasks"></i> Actividades</h4>
+                      <div class="activities-list">
+                        {% if actividades %}
+                          {% for key, actividades in actividades.items %}
+                            {% for actividad in actividades %}
+                              {% if actividad.objetivos_especificos == obj_especifico %}
+                                <div class="activity-item d-flex justify-content-between align-items-center mb-2">
+                                  <div class="d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox" id="actividad{{ forloop.counter }}" checked />
+                                    <label class="form-check-label" for="actividad{{ forloop.counter }}">{{ actividad.descripcion }}</label>
+                                  </div>
+                                  <div class="btn-group" role="group" aria-label="Acciones de actividad">
+                                    <button class="btn btn-sm btn-outline-warning" data-bs-toggle="collapse" data-bs-target="#editarActividad{{ forloop.counter }}"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="collapse" data-bs-target="#eliminarActividad{{ forloop.counter }}"><i class="fas fa-trash"></i></button>
+                                  </div>
+                                </div>
+
+                                <div class="accordion" id="accordionactividades">
+                                  <!-- Formulario para editar actividad -->
+                                  <div id="editarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
+                                    <form class="d-flex flex-column gap-2" method="POST" action="{% url 'estudiante:editar_actividad' id=actividad.id %}">
+                                      {% csrf_token %}
+                                      <div class="row g-2">
+                                        <div class="col-9">
+                                          <input type="text" name="editar_actividad" class="form-control form-control-sm m-0" value="{{ actividad.descripcion }}" required />
+                                          <small class="text-muted">Ingrese la descripción actualizada de la actividad.</small>
+                                        </div>
+                                        <div class="col-3">
+                                          <button type="submit" class="btn btn-sm btn-success w-100"><i class="fas fa-save"></i> Guardar</button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+
+                                  <!-- Confirmación de eliminación -->
+                                  <div id="eliminarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
+                                    <form method="POST" action="{% url 'estudiante:eliminar_actividad' id=actividad.id %}">
+                                      {% csrf_token %}
+                                      <p class="text-danger small">¿Está seguro de que desea eliminar esta actividad?</p>
+                                      <button type="submit" class="btn btn-sm btn-danger w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
+                                    </form>
+                                  </div>
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          {% endfor %}
+                        {% else %}
+                          <p class="text-muted">Sin actividades definidas</p>
+                        {% endif %}
+                      </div>
+
+                      <form method="POST" action="{% url 'estudiante:subir_actividad' id=obj_especifico.id %}">
+                        {% csrf_token %}
+                        <input type="text" name="descripcion" class="form-control" placeholder="Describe una nueva actividad..." required />
+                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus"></i> Agregar Actividad</button>
+                      </form>
+
+                      <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="fas fa-upload"></i> Cargar Avance</button>
+                    </div>
+                  </div>
+                {% endfor %}
+                <!-- Botón para nuevo objetivo -->
+                <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
+                  <i class="fas fa-plus-circle"></i>
+                  <h4>Nuevo Objetivo</h4>
+
+                  <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
+                    {% csrf_token %}
+                    <input type="text" name="descripcion" class="form-control" placeholder="Describe el nuevo objetivo..." required />
+                    <button type="submit" class="btn-primary w-100">
+                      <i class="fas fa-plus-circle"></i>
+                      Crear Objetivo
+                    </button>
+                  </form>
+                </div>
+              </div>
+            {% endif %}
           </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <section class="mb-5">
+      <h2>Próximas Entregas</h2>
+      <ul class="list-group">
+        {% if actividades %}
+          {% for key, actividades in actividades.items %}
+            {% for actividad in actividades %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ actividad.descripcion }}
+                <span class="badge bg-primary rounded-pill"><time datetime="2024-10-15"></time></span>
+              </li>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </section>
+  </div>
+
+  <!-- Modal para cargar avances -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadModalLabel">Cargar Avance</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="documentTitle" class="form-label">Título del Documento</label>
+              <input type="text" class="form-control" id="documentTitle" required />
+            </div>
+            <div class="mb-3">
+              <label for="documentFile" class="form-label">Seleccionar Archivo</label>
+              <input type="file" class="form-control" id="documentFile" required />
+            </div>
+            <div class="mb-3">
+              <label for="documentDescription" class="form-label">Descripción</label>
+              <textarea class="form-control" id="documentDescription" rows="3"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Subir Documento</button>
         </div>
       </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+  </div>
+{% endblock %}

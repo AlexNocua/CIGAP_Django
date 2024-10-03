@@ -74,10 +74,9 @@ class ModelProyectoFinal(models.Model):
 
 
 class ModelObjetivoGeneral(models.Model):
-    anteproyecto = models.OneToOneField(
-        ModelAnteproyecto, on_delete=models.CASCADE,  related_name='objetivo_general', blank=True, null=True)
+    proyecto_final = models.OneToOneField(
+        ModelProyectoFinal, on_delete=models.CASCADE,  related_name='objetivo_general', blank=True, null=True)
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
-    estado = models.BooleanField(blank=True, default=False)
 
 
 class ModelObjetivosEspecificos(models.Model):
@@ -92,3 +91,19 @@ class ModelActividades(models.Model):
         ModelObjetivosEspecificos, on_delete=models.CASCADE, related_name="actividades", blank=True, null=True)
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
     estado = models.BooleanField(blank=True, null=True)
+
+
+class ModelFechasProyecto(models.Model):
+    proyecto_final = models.ForeignKey(
+        ModelProyectoFinal, related_name='fechas', on_delete=models.CASCADE)
+    fecha_inicio = models.DateField(blank=True, null=True)
+    fecha_finalizacion = models.DateField(blank=True, null=True)
+    fecha_etapa_uno = models.DateField(blank=True, null=True)
+    fecha_etapa_dos = models.DateField(blank=True, null=True)
+    fecha_etapa_tres = models.DateField(blank=True, null=True)
+    fecha_etapa_cuatro = models.DateField(blank=True, null=True)
+    fecha_etapa_cinco = models.DateField(blank=True, null=True)
+    fecha_etapa_seis = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Fechas del proyecto {self.proyecto_final.anteproyecto.nombre_anteproyecto}"

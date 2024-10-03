@@ -1,0 +1,12 @@
+{% extends 'estudiante/base_estudiante.html' %}
+
+{% block formatos %}
+  <style>
+    .inf_user {
+      display: none;
+    }
+  </style>
+  <div class="container">
+    {% include 'components/view_formatos.html' %}
+  </div>
+{% endblock %}

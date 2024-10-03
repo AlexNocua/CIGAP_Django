@@ -5,7 +5,7 @@ from django.contrib import admin
 # Para conseguir renderizar componentes en el admin
 from django.utils.html import format_html
 
-from .models import ModelAnteproyecto, ModelProyectoFinal,ModelObjetivoGeneral,ModelObjetivosEspecificos,ModelActividades
+from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades, ModelFechasProyecto
 # Register your models here.
 
 
@@ -82,7 +82,7 @@ class ModelProyectoFinalAdmin(admin.ModelAdmin):
 
     def proyecto_final_link(self, obj):
         if obj.proyecto_final:
-            if isinstance(obj.proyecto_final, bytes):  
+            if isinstance(obj.proyecto_final, bytes):
                 base64_data = base64.b64encode(
                     obj.proyecto_final).decode('utf-8')
                 url = f'data:application/octet-stream;base64,{base64_data}'
@@ -103,9 +103,8 @@ admin.site.register(ModelProyectoFinal, ModelProyectoFinalAdmin)
 
 @admin.register(ModelObjetivoGeneral)
 class ModelObjetivoGeneralAdmin(admin.ModelAdmin):
-    list_display = ('anteproyecto', 'descripcion', 'estado')
+    list_display = ('proyecto_final', 'descripcion', )
     search_fields = ('descripcion',)
-    list_filter = ('estado',)
 
 
 @admin.register(ModelObjetivosEspecificos)
@@ -121,3 +120,15 @@ class ModelActividadesAdmin(admin.ModelAdmin):
     search_fields = ('descripcion',)
     list_filter = ('estado',)
 
+
+# creacion personalizada en el admin de django.
+
+
+class ModelFechasProyectoAdmin(admin.ModelAdmin):
+    list_display = ('proyecto_final', 'fecha_inicio', 'fecha_finalizacion', 'fecha_etapa_uno', 'fecha_etapa_dos',
+                    'fecha_etapa_tres', 'fecha_etapa_cuatro', 'fecha_etapa_cinco', 'fecha_etapa_seis')
+    search_fields = ('proyecto__nombre',)
+    list_filter = ('fecha_inicio', 'fecha_finalizacion')
+
+
+admin.site.register(ModelFechasProyecto, ModelFechasProyectoAdmin)

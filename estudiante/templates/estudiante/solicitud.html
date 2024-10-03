@@ -74,7 +74,9 @@
                   <div class="d-flex justify-content-between">
                     <h5 class="card-title">Observación {{ forloop.counter }}</h5>
                     <p>
+                      {% if observacion %}
                       <strong>Por:</strong> {{ observacion.observacion.user.nombre_completo }}
+                      {% endif %}
                     </p>
                   </div>
 

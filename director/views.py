@@ -27,6 +27,8 @@ from .models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
 # importacion de modelos de los estudinates
 from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
 
+# impotacion de recuperaciones
+from plataform_CIGAP.utils.recuperaciones import recuperar_formatos, datosusuario
 
 # datos del usuario
 
@@ -59,9 +61,10 @@ def recuperar_proyectos_evaluador(request):
     return proyectos
 
 
-def recuperar_evaluacion_anteproyecto(anteproyecto):
+def recuperar_evaluacion_anteproyecto(anteproyecto, request):
+    usuario = request.user
     evaluacion = ModelEvaluacionAnteproyecto.objects.get(
-        anteproyecto=anteproyecto)
+        Q(anteproyecto=anteproyecto) & Q(evaluador=usuario))
     if not evaluacion:
         return None
     return evaluacion
@@ -178,6 +181,7 @@ def anteproyecto(request, id):
         if formulario_observacion.is_valid():
 
             retroalimentacion = formulario_observacion.save(commit=False)
+            retroalimentacion.user = request.user
             retroalimentacion.anteproyecto = anteproyecto
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
 
@@ -305,7 +309,7 @@ def evaluar_anteproyecto(request, id):
     context = datos_usuario_director(request)
     anteproyecto = recuperar_anteproyecto(id)
     if anteproyecto:
-        evaluacion = recuperar_evaluacion_anteproyecto(anteproyecto)
+        evaluacion = recuperar_evaluacion_anteproyecto(anteproyecto, request)
         if evaluacion:
             documento_evaluacion = recuperar_documento(
                 evaluacion.doc_evaluacion_anteproyecto)
@@ -323,7 +327,7 @@ def enviar_evaluacion(request, id):
     anteproyecto = recuperar_anteproyecto(id)
     if anteproyecto:
         evaluacion_anteproyecto = recuperar_evaluacion_anteproyecto(
-            anteproyecto)
+            anteproyecto, request)
         if evaluacion_anteproyecto:
 
             evaluacion_anteproyecto.calificacion = request.POST.get(
@@ -364,3 +368,11 @@ def view_jurado(request):
         print(proyectos)
     return render(request, 'director/evaluacion_proyectos/list_jurado.html', context)
 #############################################################################################################
+# formatos de correspondencia
+
+
+def formatos_documentos(request):
+    context = datosusuario(request)
+    context['formatos'] = recuperar_formatos()
+
+    return render(request, 'director/formatos/formatos.html', context)

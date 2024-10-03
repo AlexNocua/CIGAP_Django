@@ -34,4 +34,8 @@ urlpatterns = [
          name='enviar_evaluacion'),
     path('view_jurado', views.view_jurado, name='view_jurado'),
     ########################################################################
+    #     vinculos de formatos por el comite
+    path('formatos_documentos', views.formatos_documentos,
+         name='formatos_documentos'),
+
 ]

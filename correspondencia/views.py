@@ -8,17 +8,17 @@ from datetime import datetime
 from django.contrib import messages
 # importacion de operadores para consultas de django
 from django.db.models import Q
-
+from datetime import date, timedelta
 # importacion de la vista del login que permite cambiar la informacion de ususario
 from login.views import editar_usuario
-from login.forms import FormEditarUsuario
+
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
-from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto_finalizado, recuperar_proyecto_actual, recuperar_solicitudes_especiales_proyecto
+from plataform_CIGAP.utils.recuperaciones import recuperar_num_proyectos_terminados, recuperar_num_proyectos_pendientes, recuperar_num_solicitudes, recuperar_num_formatos_comite, recuperar_num_respuestas, recuperar_proyectos_pendientes, recuperar_proyectos_finalizados, recuperar_proyecto_finalizado, recuperar_proyecto_actual, recuperar_solicitudes_especiales_proyecto, recuperar_formatos, recuperar_documento, datosusuario
 from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual
 
 # importacion de los modelos
-from estudiante.models import ModelAnteproyecto, ModelProyectoFinal
+from estudiante.models import ModelAnteproyecto, ModelProyectoFinal, ModelFechasProyecto
 from director.models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
 from login.models import Usuarios
 from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes, ModelAsignacionJurados, ModelDocumentos
@@ -208,13 +208,6 @@ def recuperar_solicitud(anteproyecto):
 #     solicitudes = ModelRetroalimentaciones.objects.filter(anteproyecto=True)
 #     return solicitudes
 
-# funcion de recuperar documento binario
-
-
-def recuperar_documento(documento):
-    documento = base64.b64encode(documento).decode(
-        'utf-8') if documento else None
-    return documento
 
 # funcion para recuperar datos de los directores
 
@@ -227,20 +220,6 @@ def recuperar_directores():
     else:
         directores = None
         return directores
-
-
-@login_required
-def datosusuario(request):
-
-    usuario = request.user
-    imagen = usuario.imagen
-    imagen_convertida = base64.b64encode(
-        imagen).decode('utf-8') if imagen else ''
-    form_editar_usuario = FormEditarUsuario(instance=usuario)
-    form_solicitud = FormAnteproyecto
-    context = {'form_config': form_editar_usuario, 'usuario': usuario,
-               'user_img': imagen_convertida}
-    return context
 
 
 @login_required
@@ -551,6 +530,25 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 messages.success(
                     request, "La retroalimentación se ha enviado exitosamente.")
 
+                fechas_proyecto_final = ModelFechasProyecto(
+                    proyecto_final=nuevo_proyecto_final,
+                    fecha_inicio=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date(),
+                    fecha_etapa_uno=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=30),
+                    fecha_etapa_dos=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=60),
+                    fecha_etapa_tres=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=90),
+                    fecha_etapa_cuatro=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=120),
+                    fecha_etapa_cinco=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=150),
+                    fecha_etapa_seis=datetime.strptime(
+                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=165)
+                )
+
+                fechas_proyecto_final.save()
             if retroalimentacion.doc_retroalimentacion:
                 print("Documento subido correctamente")
                 messages.info(request, "Documento subido correctamente.")
@@ -790,26 +788,6 @@ def ver_respuesta(request, id):
 #     return render(request, 'correspondencia/list_documentos_cargados.html')
 ########################################################################################################################
 
-
-def recuperar_formatos():
-    documentos_model = ModelDocumentos.objects.all()
-    documentos = {}
-    if documentos_model:
-        for i, documento in enumerate(documentos_model):
-            documento_binario = documento.documento
-            documento_convert = recuperar_documento(documento_binario)
-            documentos[f'documento{i}'] = {
-                'id': documento.id,
-                'nombre_documento': documento.nombre_documento,
-                'descripcion': documento.descripcion,
-                'version': documento.version,
-                'documento': documento_convert,
-                'fecha_cargue': documento.fecha_cargue
-            }
-    else:
-        documentos = None
-
-    return documentos
 
 ############################################################################
 

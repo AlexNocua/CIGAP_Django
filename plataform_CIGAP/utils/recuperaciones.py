@@ -1,10 +1,34 @@
 # importaciones de funcionalidades
 from django.db.models import Q
-
+import base64
+from login.forms import FormEditarUsuario
 # importaciones de los modelos de cada una de las aplicaciones
 from estudiante.models import ModelProyectoFinal, ModelAsignacionJurados, ModelAnteproyecto
 from director.models import *
-from correspondencia.models import ModelDocumentos, ModelSolicitudes, ModelInformacionEntregaFinal, ModelRetroalimentaciones
+from correspondencia.models import ModelDocumentos, ModelSolicitudes, ModelInformacionEntregaFinal, ModelRetroalimentaciones, ModelDocumentos
+from django.contrib.auth.decorators import login_required
+
+# funcion de recuperar documento binario
+
+
+@login_required
+def datosusuario(request):
+
+    usuario = request.user
+    imagen = usuario.imagen
+    imagen_convertida = base64.b64encode(
+        imagen).decode('utf-8') if imagen else ''
+    form_editar_usuario = FormEditarUsuario(instance=usuario)
+    
+    context = {'form_config': form_editar_usuario, 'usuario': usuario,
+               'user_img': imagen_convertida}
+    return context
+
+
+def recuperar_documento(documento):
+    documento = base64.b64encode(documento).decode(
+        'utf-8') if documento else None
+    return documento
 
 
 def recuperar_num_respuestas():
@@ -44,10 +68,13 @@ def recuperar_num_formatos_comite():
 #######################################################################################################
 
 # revisar
+
+
 def recuperar_proyectos_pendientes():
     anteproyectos = ModelAnteproyecto.objects.filter(
         Q(solicitud_enviada=True) & Q(estado=True))
-    proyectos_finales = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=False) & Q(estado=False))
+    proyectos_finales = ModelProyectoFinal.objects.filter(
+        Q(solicitud_enviada=False) & Q(estado=False))
     if anteproyectos and proyectos_finales:
         print(anteproyectos, 'Desde utilidades')
         return anteproyectos
@@ -81,3 +108,25 @@ def recuperar_solicitudes_especiales_proyecto(proyecto, anteproyecto):
     print(solicitudes_especiales_proyecto .count())
     return solicitudes_especiales_proyecto
 #######################################################################################################
+# recuperacion de los documentos cargados por el comite
+
+
+def recuperar_formatos():
+    documentos_model = ModelDocumentos.objects.all()
+    documentos = {}
+    if documentos_model:
+        for i, documento in enumerate(documentos_model):
+            documento_binario = documento.documento
+            documento_convert = recuperar_documento(documento_binario)
+            documentos[f'documento{i}'] = {
+                'id': documento.id,
+                'nombre_documento': documento.nombre_documento,
+                'descripcion': documento.descripcion,
+                'version': documento.version,
+                'documento': documento_convert,
+                'fecha_cargue': documento.fecha_cargue
+            }
+    else:
+        documentos = None
+
+    return documentos

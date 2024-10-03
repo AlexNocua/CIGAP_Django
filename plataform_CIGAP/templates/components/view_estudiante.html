@@ -10,28 +10,22 @@
 
       {% comment %}datos de la retroalimentacion{% endcomment %}
       <div class="col">
-        {% if retroalimentacion %}
-          {% for key, value in retroalimentacion.items %}
-            {% if forloop.first %}
-              <p class="p-0 m-0">
-                <b>Anteproyecto:</b>
-                {% if anteproyecto %}
-                  {% if anteproyecto.estado %}
-                    Aprobado.
-                  {% else %}
-                    Aún no hay una respuesta.
-                  {% endif %}
-                {% else %}
-                  Aún no hay una solicitud de anteproyecto.
-                {% endif %}
-              </p>
+        <p class="p-0 m-0">
+          <b>Anteproyecto:</b>
+          {% if anteproyecto %}
+            {% if retroalimentacion_anteproyecto %}
+              {% if retroalimentacion_anteproyecto.estado %}
+                Aprobado.
+              {% else %}
+                Rechazado.
+              {% endif %}
+            {% else %}
+              Aún no hay una respuesta.
             {% endif %}
-          {% endfor %}
-        {% else %}
-          <p class="p-0 m-0">
-            <b>Anteproyecto:</b> No hay retroalimentaciones disponibles.
-          </p>
-        {% endif %}
+          {% else %}
+            Aún no hay una solicitud de anteproyecto.
+          {% endif %}
+        </p>
 
         {% comment %}datos del proyecto final{% endcomment %}
         <p class="p-0 m-0">
@@ -40,14 +34,17 @@
             {% if proyecto_final.estado %}
               Aprobado.
             {% else %}
-              Aún no hay una respuesta.
+              Aún no se ha enviado la solicitud de proyecto final.
             {% endif %}
           {% else %}
             Aún no hay una solicitud de proyecto final.
           {% endif %}
         </p>
-        <p class="p-0 m-0">
-          fechas{% comment %} <b>Avance:</b>
+        <p class="p- mt-2">
+          <small><strong>Inicio del proyecto:</strong> {{ retroalimentacion_anteproyecto.fecha_retroalimentacion|date:'d/m/Y' }}</small><br />
+          <small><strong>Fecha estimada de finalización del proyecto:</strong> {{ fecha_culminacion_anteproyecto|date:'d/m/Y' }}</small>
+
+          {% comment %} <b>Avance:</b>
           {% if proyecto_final %}
             {% if proyecto_final.avance %}
               {{ proyecto_final.avance }}%

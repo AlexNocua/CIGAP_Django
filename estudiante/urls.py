@@ -20,6 +20,30 @@ urlpatterns = [
          name='enviar_solicitud_proyecto'),
     path('solicitudes_especificas/', views.solicitudes_especificas,
          name='solicitudes_especificas'),
+    ################################################################################
+    path('avances_proyecto/', views.avances_proyecto,
+         name='avances_proyecto'),
+    path('subir_objetivo_general/<int:id>', views.subir_objetivo_general,
+         name='subir_objetivo_general'),
+    path('editar_objetivo_general/<int:id>', views.editar_objetivo_general,
+         name='editar_objetivo_general'),
+    path('subir_objetivo_especifico/<int:id>', views.subir_objetivo_especifico,
+         name='subir_objetivo_especifico'),
+    path('eliminar_objetivo_general/<int:id>', views.eliminar_objetivo_general,
+         name='eliminar_objetivo_general'),
+    path('editar_objetivo_especifico/<int:id>', views.editar_objetivo_especifico,
+         name='editar_objetivo_especifico'),
+    path('eliminar_objetivo_especifico/<int:id>', views.eliminar_objetivo_especifico,
+         name='eliminar_objetivo_especifico'),
+    path('subir_actividad/<int:id>', views.subir_actividad,
+         name='subir_actividad'),
+    path('editar_actividad/<int:id>', views.editar_actividad,
+         name='editar_actividad'),
+    path('eliminar_actividad/<int:id>', views.eliminar_actividad,
+         name='eliminar_actividad'),
+    ################################################################################
+    path('formatos_documentos/', views.formatos_documentos,
+         name='formatos_documentos'),
 
 
 ]

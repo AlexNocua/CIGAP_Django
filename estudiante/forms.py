@@ -149,7 +149,7 @@ class FormActualizarProyectoFinal(forms.ModelForm):
 class FormObjetivoGeneral(forms.ModelForm):
     class Meta:
         model = ModelObjetivoGeneral
-        fields = ('descripcion', 'estado')
+        fields = ('descripcion', )
 
     def save(self, commit=True):
         objetivo_general = super().save(commit=False)

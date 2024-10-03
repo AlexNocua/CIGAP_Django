@@ -1,5 +1,6 @@
 
 # get_object_or_404 para el manejo de errores si no se encuentra un modelo con los siguientes datos
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponsePermanentRedirect
@@ -12,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from correspondencia.forms import FormSolicitudes
 from .forms import FormAnteproyecto, FormProyectoFinal, FormObjetivoGeneral, FormObjetivosEspecificos, FormActividades
 # modelos
-from .models import ModelAnteproyecto, ModelProyectoFinal
+from .models import ModelAnteproyecto, ModelProyectoFinal, ModelObjetivoGeneral, ModelObjetivosEspecificos, ModelActividades, ModelFechasProyecto
 import base64
 # modelo de correspondencia
 from correspondencia.models import ModelRetroalimentaciones
@@ -25,14 +26,39 @@ from login.views import editar_usuario
 from login.forms import FormEditarUsuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
-from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual, fecha_maxima_respuesta
-
-
+from plataform_CIGAP.utils.funcionalidades_fechas import fecha_actual, fecha_maxima_respuesta, fecha_culminacion_anteproyecto
+# importacion de recuperaciones
+from plataform_CIGAP.utils.recuperaciones import recuperar_formatos, datosusuario
 # Create your views here.
 
 # vista de funcionamiento respecto a la url de la aplicacion
 # def funcionando(request):
 #     return HttpResponse('app_ estudiante funcionando.')
+
+# recuperar proyecto final por usuario, integrante 1 o 2
+
+
+def recuperar_proyecto_final_id(id):
+    proyecto_final = ModelProyectoFinal.objects.get(id=id)
+    return proyecto_final
+
+
+def recuperar_proyecto_final_usuario(user):
+    proyecto = ModelProyectoFinal.objects.get(Q(user=user) | Q(
+        anteproyecto__nombre_integrante1=user.nombre_completo) | Q(anteproyecto__nombre_integrante2=user.nombre_completo))
+    if not proyecto:
+        return None
+    return proyecto
+# recuperar retralimentacion por anteproyecto
+
+
+def recuperar_retroalimentacion_anteproyecto(anteproyecto):
+    retroalimentacion = ModelRetroalimentaciones.objects.filter(
+        Q(anteproyecto=anteproyecto) & Q(estado='Aprobado')).first()
+    if not retroalimentacion:
+        return None
+    return retroalimentacion
+
 
 # recuperar anteproyecto por id
 def recuperar_anteproyecto_id(id):
@@ -162,7 +188,7 @@ def recuperar_retroalimentaciones(anteproyecto_):
 
 def recuperar_anteproyecto(request):
     anteproyecto = ModelAnteproyecto.objects.get(
-        Q(user=request.user) | Q(nombre_integrante1=request.user.nombre_completo) | Q(nombre_integrante1=request.user.nombre_completo))
+        Q(user=request.user) | Q(nombre_integrante1=request.user.nombre_completo) | Q(nombre_integrante1=request.user.nombre_completo)) if ModelAnteproyecto.objects.filter(Q(user=request.user) | Q(nombre_integrante1=request.user.nombre_completo) | Q(nombre_integrante1=request.user.nombre_completo)).exists() else None
     if not anteproyecto:
         return None
     return anteproyecto
@@ -179,21 +205,25 @@ def recuperar_proyecto_final(anteproyecto):
 @ login_required
 @ grupo_usuario('Estudiantes')
 def principal_estudiante(request):
-    context = {}
-    anteproyecto = recuperar_anteproyecto(request)
-    retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)
-    if anteproyecto:
-        context['anteproyecto'] = anteproyecto
 
-    proyecto_final = recuperar_proyecto_final(anteproyecto)
-    if proyecto_final:
-        context['proyecto_final'] = proyecto_final
     if request.method == 'POST':
         editar_usuario(request)
     else:
         context = datosusuario(request)
-        context['nombre_anteproyecto'] = anteproyecto.nombre_anteproyecto if anteproyecto else "No hay anteproyecto"
-        context['retroalimentacion'] = retroalimentaciones
+        anteproyecto = recuperar_anteproyecto(request)
+        if anteproyecto:
+            context['anteproyecto'] = anteproyecto
+        retroalimentacion_anteproyecto = recuperar_retroalimentacion_anteproyecto(
+            anteproyecto)
+        if retroalimentacion_anteproyecto:
+            context['retroalimentacion_anteproyecto'] = retroalimentacion_anteproyecto
+            context['fecha_culminacion_anteproyecto'] = fecha_culminacion_anteproyecto(
+                retroalimentacion_anteproyecto.fecha_retroalimentacion)
+
+        proyecto_final = recuperar_proyecto_final(anteproyecto)
+        if proyecto_final:
+            context['proyecto_final'] = proyecto_final
+            context['nombre_anteproyecto'] = anteproyecto.nombre_anteproyecto if anteproyecto else "No hay anteproyecto"
 
     return render(request, 'estudiante/base_estudiante.html', context)
 # vista del template para la solicitud
@@ -353,6 +383,7 @@ def solicitudes_especificas(request):
         messages.error(request, 'Método de solicitud no permitido.')
         return HttpResponse('Algo ocurrió.')
 
+#####################################################################################################################################
 # vista de la informacion del proyecto
 
 
@@ -421,3 +452,241 @@ def enviar_solicitud_proyecto(request):
             print(f"Errores del formulario: {form.errors}")
 
     return redirect('estudiante:solicitud')
+
+#####################################################################################################################################
+# Avances del proyecto
+
+
+# def recuperar_objetivo_general_id(id):
+#     obj_general = ModelObjetivoGeneral.objects.get(id=id)
+#     if not obj_general:
+#         return None
+#     return obj_general
+
+
+def recuperar_objetivo_general(proyecto):
+    obj_general = ModelObjetivoGeneral.objects.get(
+        proyecto_final=proyecto) if ModelObjetivoGeneral.objects.filter(proyecto_final=proyecto).exists() else None
+    return obj_general
+
+
+def recuperar_objetivo_especifico(id):
+    obj_especifico = ModelObjetivosEspecificos.objects.get(
+        id=id)
+    if not obj_especifico:
+        return None
+    return obj_especifico
+
+
+def recuperar_objetivos_especificos(objetivo):
+    obj_especifico = ModelObjetivosEspecificos.objects.filter(
+        objetivo_general=objetivo)
+    if not obj_especifico:
+        return None
+    return obj_especifico
+
+
+def recuperar_actividades(objetivo_esp):
+    actividades = ModelActividades.objects.filter(
+        objetivos_especificos=objetivo_esp)
+    if not actividades:
+        return None
+    return actividades
+
+
+def avances_proyecto(request):
+    context = datosusuario(request)
+    proyecto_final = recuperar_proyecto_final_usuario(request.user)
+    print(proyecto_final)
+    fechas = ModelFechasProyecto.objects.get(proyecto_final=proyecto_final)
+    if fechas:
+        context['fechas'] = fechas
+        context['fecha_culminacion_anteproyecto'] = fecha_culminacion_anteproyecto(
+            fechas.fecha_inicio)
+    if proyecto_final:
+        context['proyecto_final'] = proyecto_final
+
+    obj_general = recuperar_objetivo_general(proyecto_final)
+    if obj_general:
+        context['obj_general'] = obj_general
+        objs_especificos = recuperar_objetivos_especificos(obj_general)
+        if objs_especificos:
+            context['objs_especificos'] = objs_especificos
+            dict_actividades = {}
+
+            for i, obj_especifico in enumerate(objs_especificos):
+                actividades = recuperar_actividades(obj_especifico)
+                if actividades:
+                    dict_actividades[f'actividades_obj_especifico_{i}'] = actividades
+            context['actividades'] = dict_actividades
+
+    return render(request, 'estudiante/avances_proyecto.html', context)
+
+
+def subir_objetivo_general(request, id):
+    if request.method == 'POST':
+        objetivo_general = ModelObjetivoGeneral(
+            proyecto_final=recuperar_proyecto_final_id(id),
+            descripcion=request.POST.get('descripcion_objetivo_general')
+        )
+        objetivo_general.save()
+        messages.success(request, 'Objetivo general agregado exitosamente.')
+        return redirect('estudiante:avances_proyecto')
+    else:
+
+        messages.error(
+            request, 'Error al agregar el objetivo general. Intente nuevamente.')
+        return redirect('estudiante:avances_proyecto')
+
+
+def editar_objetivo_general(request, id):
+    objetivo_general = ModelObjetivoGeneral.objects.filter(id=id).first()
+    if objetivo_general:
+        edit_objetivo = request.POST.get('editar_objetivo_general')
+
+        if edit_objetivo:
+            objetivo_general.descripcion = edit_objetivo
+            objetivo_general.save()
+            messages.success(
+                request, 'El objetivo general ha sido actualizado correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha proporcionado ninguna descripción para el objetivo general.')
+    else:
+        messages.error(
+            request, 'No se ha encontrado el objetivo general especificado.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+def eliminar_objetivo_general(request, id):
+
+    objetivo_general = ModelObjetivoGeneral.objects.filter(id=id).first()
+    if objetivo_general:  # Verificar si el objetivo existe
+        objetivo_general.delete()
+        messages.success(
+            request, 'El objetivo general ha sido eliminado correctamente.')
+    else:
+        messages.error(
+            request, 'No se ha encontrado el objetivo general especificado.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+def subir_objetivo_especifico(request, id):
+    if request.method == 'POST':
+        proyecto_final = recuperar_proyecto_final_id(id)
+        objetivo_especifico = ModelObjetivosEspecificos(
+            objetivo_general=recuperar_objetivo_general(proyecto_final),
+            descripcion=request.POST.get('descripcion')
+        )
+        objetivo_especifico.save()
+        # Mensaje de éxito
+        messages.success(request, 'Objetivo específico agregado exitosamente.')
+        return redirect('estudiante:avances_proyecto')
+    else:
+        # Mensaje de error
+        messages.error(
+            request, 'Error al agregar el objetivo específico. Intente nuevamente.')
+        return redirect('estudiante:avances_proyecto')
+
+
+def editar_objetivo_especifico(request, id):
+    objetivo_especifico = ModelObjetivosEspecificos.objects.filter(
+        id=id).first()
+    if objetivo_especifico:
+        edit_objetivo = request.POST.get('editar_objetivo_especifico')
+
+        if edit_objetivo:
+            objetivo_especifico.descripcion = edit_objetivo
+            objetivo_especifico.save()
+            messages.success(
+                request, 'El objetivo general ha sido actualizado correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha proporcionado ninguna descripción para el objetivo general.')
+    else:
+        messages.error(
+            request, 'No se ha encontrado el objetivo general especificado.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+def eliminar_objetivo_especifico(request, id):
+
+    objetivo_especifico = ModelObjetivosEspecificos.objects.filter(
+        id=id).first()
+    if objetivo_especifico:
+        objetivo_especifico.delete()
+        messages.success(
+            request, 'El objetivo general ha sido eliminado correctamente.')
+    else:
+        messages.error(
+            request, 'No se ha encontrado el objetivo general especificado.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+def subir_actividad(request, id):
+    if request.method == 'POST':
+        actividad = ModelActividades(
+            objetivos_especificos=recuperar_objetivo_especifico(id),
+            descripcion=request.POST.get('descripcion')
+        )
+        actividad.save()
+        # Mensaje de éxito
+        messages.success(request, 'Actividad agregada exitosamente.')
+        return redirect('estudiante:avances_proyecto')
+    else:
+        # Mensaje de error
+        messages.error(
+            request, 'Error al agregar la actividad. Intente nuevamente.')
+        return redirect('estudiante:avances_proyecto')
+
+
+def editar_actividad(request, id):
+    actividad = ModelActividades.objects.filter(id=id).first()
+
+    if actividad:
+        edit_actividad = request.POST.get('editar_actividad')
+
+        if edit_actividad:
+            actividad.descripcion = edit_actividad
+            actividad.save()
+            messages.success(
+                request, 'La actividad ha sido actualizada correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha proporcionado ninguna descripción para la actividad.')
+    else:
+        messages.error(
+            request, 'No se ha encontrado la actividad especificada.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+def eliminar_actividad(request, id):
+    actividad = ModelActividades.objects.filter(id=id).first()
+
+    if actividad:
+        actividad.delete()
+        messages.success(
+            request, 'La actividad ha sido eliminada correctamente.')
+    else:
+        messages.error(
+            request, 'No se ha encontrado la actividad especificada.')
+
+    return redirect('estudiante:avances_proyecto')
+
+
+#####################################################################################################################################
+# formatos del comite
+
+
+def formatos_documentos(request):
+    context = datosusuario(request)
+    context['formatos'] = recuperar_formatos()
+
+    return render(request, 'estudiante/formatos.html', context)
+
+#####################################################################################################################################
