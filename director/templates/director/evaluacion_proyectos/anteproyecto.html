@@ -13,7 +13,6 @@
       padding-bottom: 10px;
     }
     .sections-anteproyecto {
-      
     }
     
     .anteproyecto-info-text {
@@ -118,118 +117,179 @@
     <h3 class="mb-4">Evaluación de Anteproyecto</h3>
 
     <section class="mb-5 sections-anteproyecto w-100">
-        <h4 class="anteproyecto-info-title">Información del Anteproyecto</h4>
-        <div class="row">
-            <div class="col-md-6 anteproyecto-info-text">
-                <p>
-                    <strong>Título:</strong> {{ anteproyecto.nombre_anteproyecto }}
-                </p>
-                <p>
-                    <strong>Integrantes:</strong><br />
-                    {% if anteproyecto.nombre_integrante2 %}
-                        {{ anteproyecto.nombre_integrante1 }}<br />
-                        {{ anteproyecto.nombre_integrante2 }}
-                    {% else %}
-                        {{ anteproyecto.nombre_integrante1 }}
-                    {% endif %}
-                </p>
-                <p>
-                    <strong>Fecha de Presentación:</strong> <time datetime="">{{ anteproyecto.fecha_envio }}</time>
-                </p>
-                {% if evaluacion.estado %}
-                    <div class="d-flex flex-column">
-                        <h4>Evaluación Existente</h4>
-                        <p>Ya hay una evaluación para este anteproyecto.</p>
-                        <p>
-                            <strong>Calificación:</strong> {{ evaluacion.calificacion }}
-                        </p>
-                        <p>
-                            <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
-                        </p>
-                        <p>
-                            <strong>Estado:</strong> {{ evaluacion.estado|yesno:'Aprobado,Rechazado' }}
-                        </p>
-                        <embed src="data:application/pdf;base64,{{ doc_evaluacion_anteproyecto }}" type="application/pdf" width="100%" height="200px" />
-                        <button id="btn_enviar_evaluacion" class="btn btn-warning mt-2">Editar evaluación</button>
-                    </div>
-                {% else %}
-                    <div>
-                        <h4>Sin Evaluación</h4>
-                        <p>No hay una evaluación registrada para este anteproyecto.</p>
-                        <button id="btn_enviar_evaluacion" class="btn btn-primary mt-2">Enviar evaluación</button>
-                    </div>
-                {% endif %}
+      <h4 class="anteproyecto-info-title">Información del Anteproyecto</h4>
+      <div class="row">
+        <div class="col-md-6 anteproyecto-info-text">
+          <p>
+            <strong>Título:</strong> {{ anteproyecto.nombre_anteproyecto }}
+          </p>
+          <p>
+            <strong>Integrantes:</strong><br />
+            {% if anteproyecto.nombre_integrante2 %}
+              {{ anteproyecto.nombre_integrante1 }}<br />
+              {{ anteproyecto.nombre_integrante2 }}
+            {% else %}
+              {{ anteproyecto.nombre_integrante1 }}
+            {% endif %}
+          </p>
+          <p>
+            <strong>Fecha de Presentación:</strong> <time datetime="">{{ anteproyecto.fecha_envio }}</time>
+          </p>
+          {% if evaluacion.estado %}
+            <div class="d-flex flex-column">
+              <h4>Evaluación Existente</h4>
+              <p>Ya hay una evaluación para este anteproyecto.</p>
+              <p>
+                <strong>Calificación:</strong> {{ evaluacion.calificacion }}
+              </p>
+              <p>
+                <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+              </p>
+              <p>
+                <strong>Estado:</strong> {{ evaluacion.estado|yesno:'Aprobado,Rechazado' }}
+              </p>
+              <embed src="data:application/pdf;base64,{{ doc_evaluacion_anteproyecto }}" type="application/pdf" width="100%" height="200px" />
+              <button id="btn_enviar_evaluacion" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#modal_editar_evaluacion">Editar evaluación</button>
             </div>
-            <div class="col-md-6 anteproyecto-info-text">
-                <p>
-                    <strong>Descripción:</strong>
-                </p>
-                <p>{{ anteproyecto.descripcion }}</p>
+          {% else %}
+            <div>
+              <h4>Sin Evaluación</h4>
+              <p>No hay una evaluación registrada para este anteproyecto.</p>
+              <button id="btn_enviar_evaluacion" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#modal_evaluacion">Enviar evaluación</button>
             </div>
+          {% endif %}
         </div>
+        <div class="col-md-6 anteproyecto-info-text">
+          <p>
+            <strong>Descripción:</strong>
+          </p>
+          <p>{{ anteproyecto.descripcion }}</p>
+        </div>
+      </div>
     </section>
 
     <section class="mb-5 sections-anteproyecto w-100">
-        <h4 class="anteproyecto-info-title">Documento del Anteproyecto</h4>
-        <div class="anteproyecto-doc-simulation">
-            <h3 class="anteproyecto-doc-title">{{ anteproyecto.nombre_anteproyecto }}.pdf</h3>
-            <p class="anteproyecto-doc-details">
-                <i class="fas fa-file-pdf"></i> Documento
-            </p>
-            <div class="text-center">
-                <embed src="data:application/pdf;base64,{{ doc_anteproyecto }}" type="application/pdf" width="80%" height="600px" />
-            </div>
-            <div class="mt-3 text-center">
-                <a href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="{{ anteproyecto.nombre_anteproyecto }}.pdf" class="anteproyecto-btn-download"><i class="fas fa-download"></i> Descargar PDF</a>
-            </div>
+      <h4 class="anteproyecto-info-title">Documento del Anteproyecto</h4>
+      <div class="anteproyecto-doc-simulation">
+        <h3 class="anteproyecto-doc-title">{{ anteproyecto.nombre_anteproyecto }}.pdf</h3>
+        <p class="anteproyecto-doc-details">
+          <i class="fas fa-file-pdf"></i> Documento
+        </p>
+        <div class="text-center">
+          <embed src="data:application/pdf;base64,{{ doc_anteproyecto }}" type="application/pdf" width="80%" height="600px" />
         </div>
+        <div class="mt-3 text-center">
+          <a href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="{{ anteproyecto.nombre_anteproyecto }}.pdf" class="anteproyecto-btn-download"><i class="fas fa-download"></i> Descargar PDF</a>
+        </div>
+      </div>
     </section>
 
-    <section id="form_evaluacion" class="position-absolute" style="opacity: 0; z-index: -1;">
-        <h4 class="anteproyecto-form-title">Formulario de Evaluación</h4>
-        <form id="evaluacionForm" action="{% url 'director:enviar_evaluacion' anteproyecto.id %}" novalidate enctype="multipart/form-data" method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="observacion" class="anteproyecto-form-label">Observaciones</label>
-                <textarea class="form-control anteproyecto-form-control" id="observacion" name="comentarios" rows="4" required></textarea>
+    <div class="modal fade" id="modal_evaluacion" tabindex="-1" aria-labelledby="modalEvaluacionLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEvaluacionLabel">Formulario de Evaluación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="evaluacionForm" action="{% url 'director:enviar_evaluacion' anteproyecto.id %}" novalidate enctype="multipart/form-data" method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="observacion" class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observacion" name="comentarios" rows="4" required></textarea>
                 <small class="form-text text-muted">Escribe tus observaciones sobre el anteproyecto.</small>
                 <div class="invalid-feedback">Este campo es obligatorio.</div>
-            </div>
+              </div>
 
-            <div class="mb-3">
-                <label class="anteproyecto-form-label">Estado</label>
+              <div class="mb-3">
+                <label class="form-label">Estado</label>
                 <div>
-                    <input type="radio" class="btn-check anteproyecto-estado-btn-check" name="estado" id="aprobado" autocomplete="off" value="True" required />
-                    <label class="btn btn-outline-success anteproyecto-estado-btn" for="aprobado">Aprobado</label>
+                  <input type="radio" class="btn-check" name="estado" id="aprobado" autocomplete="off" value="True" required />
+                  <label class="btn btn-outline-success" for="aprobado">Aprobado</label>
 
-                    <input type="radio" class="btn-check anteproyecto-estado-btn-check" name="estado" id="rechazado" autocomplete="off" value="False" required />
-                    <label class="btn btn-outline-danger anteproyecto-estado-btn" for="rechazado">Rechazado</label>
+                  <input type="radio" class="btn-check" name="estado" id="rechazado" autocomplete="off" value="False" required />
+                  <label class="btn btn-outline-danger" for="rechazado">Rechazado</label>
                 </div>
                 <small class="form-text text-muted">Selecciona el estado del anteproyecto.</small>
                 <div class="invalid-feedback">Debe seleccionar una opción.</div>
-            </div>
+              </div>
 
-            <div class="mb-3">
-                <label for="calificacion" class="anteproyecto-form-label">Calificación (0-100)</label>
-                <input type="number" class="form-control anteproyecto-form-control" id="calificacion" min="0" max="100" step="0.01" required name="calificacion" value="{{ evaluacion.calificacion }}" />
+              <div class="mb-3">
+                <label for="calificacion" class="form-label">Calificación (0-100)</label>
+                <input type="number" class="form-control" id="calificacion" min="0" max="100" step="0.01" required name="calificacion" value="{{ evaluacion.calificacion }}" />
                 <small class="form-text text-muted">Asigna una calificación al anteproyecto, calificación anterior {{ evaluacion.calificacion }}</small>
                 <div class="invalid-feedback">Debe asignar una calificación válida (0-100).</div>
-            </div>
+              </div>
 
-            <div class="mb-3">
-                <label for="archivo_pdf" class="anteproyecto-form-label">Subir archivo PDF</label>
-                <input type="file" class="form-control anteproyecto-form-control" id="archivo_pdf" accept="application/pdf" required name="doc_retroalimentacion_convert" />
+              <div class="mb-3">
+                <label for="archivo_pdf" class="form-label">Subir archivo PDF</label>
+                <input type="file" class="form-control" id="archivo_pdf" accept="application/pdf" required name="doc_retroalimentacion_convert" />
                 <small class="form-text text-muted">Sube el anteproyecto en formato PDF.</small>
                 <div class="invalid-feedback">Debe subir un archivo en formato PDF.</div>
-            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Enviar Evaluación</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modal_editar_evaluacion" tabindex="-1" aria-labelledby="modalEvaluacion" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEvaluacionLabel">Formulario Edite su Evaluación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="evaluacionForm" action="{% url 'director:enviar_evaluacion' anteproyecto.id %}" novalidate enctype="multipart/form-data" method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="observacion" class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observacion" name="comentarios" rows="4" required value="{{ evaluacion.comentarios }}"></textarea>
+                <small class="form-text text-muted">Escribe tus observaciones sobre el anteproyecto. <br /><strong>Observaciones anteriores:</strong> {{ evaluacion.comentarios }}</small>
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
+              </div>
 
-            <button type="submit" id="btn_enviar_evaluacion" class="btn anteproyecto-form-submit">Enviar Evaluación</button>
-            <button type="button" id="btn_cerrar_evaluacion" class="btn btn-secondary">Cancelar</button>
-        </form>
-    </section>
+              <div class="mb-3">
+                <label class="form-label">Estado</label>
+                <div>
+                  <input type="radio" class="btn-check" name="estado" id="aprobado" autocomplete="off" value="True" required />
+                  <label class="btn btn-outline-success" for="aprobado">Aprobado</label>
+
+                  <input type="radio" class="btn-check" name="estado" id="rechazado" autocomplete="off" value="False" required />
+                  <label class="btn btn-outline-danger" for="rechazado">Rechazado</label>
+                </div>
+                <small class="form-text text-muted">Selecciona el estado del anteproyecto.</small>
+                <div class="invalid-feedback">Debe seleccionar una opción.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="calificacion" class="form-label">Calificación (0-100)</label>
+                <input type="number" class="form-control" id="calificacion" min="0" max="100" step="0.01" required name="calificacion" value="{{ evaluacion.calificacion }}" />
+                <small class="form-text text-muted">Asigna una calificación al anteproyecto, calificación anterior {{ evaluacion.calificacion }}</small>
+                <div class="invalid-feedback">Debe asignar una calificación válida (0-100).</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="archivo_pdf" class="form-label">Subir archivo PDF</label>
+                <input type="file" class="form-control" id="archivo_pdf" accept="application/pdf" required name="doc_retroalimentacion_convert" />
+                <small class="form-text text-muted">Sube el anteproyecto en formato PDF.</small>
+                <div class="invalid-feedback">Debe subir un archivo en formato PDF.</div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Enviar Evaluación</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     {% include 'components/toasts.html' %}
-</div>
-
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -16,6 +16,42 @@
       height: 100%;
     }
     
+    /************************************************************************************/
+    .director .link-doc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #333;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+    .director .link-doc:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    .director .doc-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+    }
+    .director .link-doc:hover .doc-icon {
+      transform: rotate(-10deg);
+    }
+    @keyframes subtle-bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-2px);
+      }
+    }
+    .director .link-doc:active .doc-icon {
+      animation: subtle-bounce 0.3s ease;
+    }
+    /************************************************************************************/
     /* estilos de la vista principal de director */
     
     .cards {
@@ -46,7 +82,6 @@
     li,
     .list-group-item {
       background: rgba(255, 255, 255, 0.7) !important;
-   
     }
     
     .principal {
@@ -54,15 +89,13 @@
     }
     .panel_config,
     form {
-   
     }
     .views {
-  
     }
   </style>
 
-  <div class="position-relative container justify-content-center align-items-center w-100">
-      {% include 'components/config_user.html' %}
+  <div class="director position-relative container justify-content-center align-items-center w-100">
+    {% include 'components/config_user.html' %}
     <div class="principal_director">
       {% include 'components/view_drcr.html' %}
     </div>
@@ -96,6 +129,4 @@
       {% endblock %}
     </div>
   </div>
-
-
 {% endblock %}

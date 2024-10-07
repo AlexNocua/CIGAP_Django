@@ -1,7 +1,6 @@
 {% extends 'estudiante/base_estudiante.html' %}
 
 {% block solicitud %}
-  {% comment %}este estilo es para ocultar los cards del usuario ya que estan estaplecidos en la base{% endcomment %}
   <style>
     .inf_user {
       display: none;
@@ -9,10 +8,8 @@
     
     .solicitud {
       position: relative;
-
     }
     #anteproyectoForm {
-     
     }
     #id_nombre_proyecto,
     #id_nombre_integrante1,
@@ -50,6 +47,7 @@
       background-color: #e2e6ea;
     }
   </style>
+  {% comment %}este estilo es para ocultar los cards del usuario ya que estan estaplecidos en la base{% endcomment %}
 
   <h2 class="m-3">Cree una solicitud de anteproyecto</h2>
   {% if anteproyecto %}
@@ -338,8 +336,7 @@
     </div>
   {% endif %}
 
-  {% comment %}tener en cuenta que este cambia segun la respuesta del comite{% endcomment %}
-  {% if respuesta %}
+  {% comment %}tener en cuenta que este cambia segun la respuesta del comite{% if respuesta %}
     <h2 class="mt-4">Cree una solicitud de proyecto final</h2>
     {% if respuesta.respuesta.estado == 'Aprobado' or respuesta.respuesta.estado == 'Aprobado_con_correcciones' %}
       <div class="container solicitud contenido_estudiante_view">
@@ -385,9 +382,9 @@
     {% else %}
       <h1>errorc</h1>
     {% endif %}
-  {% endif %}
-  <h2 class="mt-4">¿Tiene alguna otra solicitud?</h2>
-  <div class="container solicitud contenido_estudiante_view">
+  {% endif %} {% endcomment %}
+  <h3 class="mt-4">¿Tiene alguna otra solicitud?</h3>
+  <div class="solicitud contenido_estudiante_view">
     <form action="{% url 'estudiante:solicitudes_especificas' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="row">

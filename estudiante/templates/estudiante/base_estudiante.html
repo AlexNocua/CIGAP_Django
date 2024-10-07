@@ -36,32 +36,30 @@
       padding: 16px;
     }
     .contenido_estudiante {
-    
     }
   </style>
   {% include 'components/toasts.html' %}
   <main class="container contenido_estudiante position-relative justify-content-center align-items-center">
-    <div class="contenido_estudiante position-relative">
-      {% block solicitud %}
+    {% block solicitud %}
 
-      {% endblock %}
-      {% comment %}incluir el componente de usuario{% endcomment %}
-      <div class="inf_user">
-        {% include 'components/view_estudiante.html' %}
-      </div>
-      {% block informacion_proyecto %}
-
-      {% endblock %}
-      {% block linea_tiempo %}
-
-      {% endblock %}
-      {% block formatos %}
-
-      {% endblock %}
-      {% block avances_proyecto %}
-
-      {% endblock %}
+    {% endblock %}
+    {% comment %}incluir el componente de usuario{% endcomment %}
+    <div class="inf_user">
+      {% include 'components/view_estudiante.html' %}
     </div>
+    {% block informacion_proyecto %}
+
+    {% endblock %}
+    {% block linea_tiempo %}
+
+    {% endblock %}
+    {% block formatos %}
+
+    {% endblock %}
+    {% block avances_proyecto %}
+
+    {% endblock %}
+
     {% comment %}seccion de la configuracion de cuenta{% endcomment %}
     <style>
       #panel_config {
@@ -75,8 +73,8 @@
         border: 1px solid #d0d0d0;
         /*Revisar este*/
         overflow: scroll;
-       
       }
+      
     </style>
     {% include 'components/config_user.html' %}
 

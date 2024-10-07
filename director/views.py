@@ -387,11 +387,32 @@ def actualizar_estado_actividad(request, actividad_id, id_proyecto):
 
 #############################################################################################################
 # configuracion de las vistas del modulo de anteproyecto
+def recuperar_anteproyectos_para_evaluar(usuario):
+    anteproyectos = ModelEvaluacionAnteproyecto.objects.filter(
+        evaluador=usuario)
+    if not anteproyectos:
+        return None
+    return anteproyectos
+
+
+def recuperar_proyectos_finales_para_evaluar(usuario):
+    proyectos_finales = ModelEvaluacionProyectoFinal.objects.filter(
+        evaluador=usuario)
+    if not proyectos_finales:
+        return None
+    return proyectos_finales
 
 
 def evaluacion_proyectos(request):
     context = datos_usuario_director(request)
-
+    anteproyectos_a_evaluar = recuperar_anteproyectos_para_evaluar(
+        request.user)
+    proyectos_finales_a_evaluar = recuperar_proyectos_finales_para_evaluar(
+        request.user)
+    if anteproyectos_a_evaluar:
+        context['anteproyectos_a_evaluar'] = anteproyectos_a_evaluar.count()
+    if proyectos_finales_a_evaluar:
+        context['proyectos_finales_a_evaluar'] = proyectos_finales_a_evaluar.count()
     return render(request, 'director/evaluacion_proyectos/eva_proyectos.html', context)
 
 
@@ -411,7 +432,6 @@ def evaluar_anteproyecto(request, id):
         if evaluacion:
             documento_evaluacion = recuperar_documento(
                 evaluacion.doc_evaluacion_anteproyecto)
-            print(documento_evaluacion, 'documento')
             context['doc_evaluacion_anteproyecto'] = documento_evaluacion
             context['evaluacion'] = evaluacion
         context['anteproyecto'] = anteproyecto

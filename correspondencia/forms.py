@@ -8,7 +8,8 @@ class FormRetroalimentacionAnteproyecto(forms.ModelForm):
         widget=forms.ClearableFileInput(attrs={
             'class': 'custom-file-input',  # Clase CSS para el estilo
             'id': 'doc_retroalimentacion_convert',  # ID específico
-            'accept': 'application/pdf'  # Aceptar solo PDF
+            'accept': 'application/pdf',  # Aceptar solo PDF
+            'name':'doc_retroalimentacion_convert'
         })
     )
 

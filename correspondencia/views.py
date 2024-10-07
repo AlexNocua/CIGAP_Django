@@ -504,51 +504,72 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         return redirect('correspondencia:solicitudes')
 
     if request.method == 'POST':
-        form_retro = FormRetroalimentacionAnteproyecto(
-            request.POST, request.FILES)
-        if form_retro.is_valid():
-            retroalimentacion = form_retro.save(commit=False)
-            retroalimentacion.anteproyecto = anteproyecto
-            retroalimentacion.fecha_retroalimentacion = fecha_actual()
-            retroalimentacion.revs_dadas = (
-                retroalimentacion.revs_dadas or 0) + 1
 
-            if retroalimentacion.estado not in ['Aprobado', 'Aprobado_con_correcciones']:
-                anteproyecto.delete()
-                messages.warning(
-                    request, "El anteproyecto ha sido eliminado debido a un estado no aprobado.")
+        text_retroalimentaicion = request.POST.get('retroalimentacion')
+        estado = request.POST.get('estado')
+
+        if not estado:
+            anteproyecto.delete()
+            messages.warning(
+                request, "El anteproyecto ha sido eliminado debido a un estado no aprobado.")
+            return redirect('correspondencia:solicitudes')
+
+        else:
+
+            doc_retro = request.FILES.get('doc_retroalimentacion')
+            anteproyecto.estado = True
+            anteproyecto.documento_concepto = doc_retro.read()
+
+            if doc_retro:
+                doc_binario = doc_retro.read()
+                print(doc_binario)
+                print(anteproyecto.documento_concepto)
+                messages.success(
+                    request, f" El concepto del anteproyecto se ha cargado exitosamente.")
 
             else:
-                anteproyecto.estado = True
-                anteproyecto.save(update_fields=['estado'])
-                nuevo_proyecto_final = ModelProyectoFinal(
-                    user=anteproyecto.user,
-                    anteproyecto=anteproyecto,
-                )
-                nuevo_proyecto_final.save()
-                retroalimentacion.save()
-                messages.success(
-                    request, "La retroalimentación se ha enviado exitosamente.")
+                messages.error(
+                    request, "Error: Documento no encontrado")
+                return redirect('correspondencia:solicitudes')
+            # anteproyecto.save(
+            #     update_fields=['estado', 'documento_concepto'])
+            retroalimentacion = ModelRetroalimentaciones(
+                user=request.user,
+                anteproyecto=anteproyecto,
+                retroalimentacion=text_retroalimentaicion,
+                fecha_retroalimentacion=fecha_actual(),
+                doc_retroalimentacion=doc_retro.read(),
+                estado=estado
 
-                fechas_proyecto_final = ModelFechasProyecto(
-                    proyecto_final=nuevo_proyecto_final,
-                    fecha_inicio=datetime.strptime(
-                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date(),
-                    fecha_etapa_uno=datetime.strptime(
-                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=30),
-                    fecha_etapa_dos=datetime.strptime(
-                        fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=60),
-                    fecha_etapa_tres=datetime.strptime(
+            )
+            anteproyecto.save()
+            nuevo_proyecto_final = ModelProyectoFinal(
+                user=anteproyecto.user,
+                anteproyecto=anteproyecto,
+            )
+            nuevo_proyecto_final.save()
+            retroalimentacion.save()
+            messages.success(
+                request, "La retroalimentación se ha enviado exitosamente.")
+            fechas_proyecto_final = ModelFechasProyecto(
+                proyecto_final=nuevo_proyecto_final,
+                fecha_inicio=datetime.strptime(
+                    fecha_actual(), '%Y-%m-%d %H:%M:%S').date(),
+                fecha_etapa_uno=datetime.strptime(
+                    fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=30),
+                fecha_etapa_dos=datetime.strptime(
+                    fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=60),
+                fecha_etapa_tres=datetime.strptime(
                         fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=90),
-                    fecha_etapa_cuatro=datetime.strptime(
+                fecha_etapa_cuatro=datetime.strptime(
                         fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=120),
-                    fecha_etapa_cinco=datetime.strptime(
+                fecha_etapa_cinco=datetime.strptime(
                         fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=150),
-                    fecha_etapa_seis=datetime.strptime(
+                fecha_etapa_seis=datetime.strptime(
                         fecha_actual(), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=165)
-                )
+            )
 
-                fechas_proyecto_final.save()
+            fechas_proyecto_final.save()
             if retroalimentacion.doc_retroalimentacion:
                 print("Documento subido correctamente")
                 messages.info(request, "Documento subido correctamente.")
@@ -557,10 +578,10 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 messages.error(request, "Error al subir el documento.")
 
             return redirect('correspondencia:solicitudes')
-        else:
-            messages.error(
-                request, "Por favor, corrige los errores en el formulario.")
-            print(form_retro.errors)
+    else:
+        messages.error(
+            request, "Por favor, corrige los errores en el formulario.")
+        return redirect('correspondencia:solicitudes')
 
     return redirect('correspondencia:solicitudes')
 # vista de informacion de proyecto
@@ -975,8 +996,9 @@ def proyecto_actual(request, id):
     ante_convert = recuperar_documento(proyecto.anteproyecto.anteproyecto)
     radicado_convert = recuperar_documento(
         proyecto.anteproyecto.documento_radicado)
-    concepto_convert = recuperar_documento(proyecto.anteproyecto.documento_concepto)
-
+    concepto_convert = recuperar_documento(
+        proyecto.anteproyecto.documento_concepto)
+    print(concepto_convert)
 
     retroalimentaciones = recuperar_solicitudes_anteproyecto()
 
@@ -994,8 +1016,7 @@ def proyecto_actual(request, id):
 
         context['formatos'] = {
             'anteproyecto': ante_convert,
-            'carta_presentacion': carta_convert,'radicado_convert':radicado_convert
-                ,'concepto_convert':concepto_convert,
+            'carta_presentacion': carta_convert, 'radicado_convert': radicado_convert, 'concepto_convert': concepto_convert,
         }
     return render(request, 'correspondencia/views_proyectos/proyecto_actual.html', context)
 #####################################################################################################################

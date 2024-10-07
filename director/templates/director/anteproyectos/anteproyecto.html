@@ -75,7 +75,7 @@
       padding: 12px 0 0 0;
       border-top: 1px solid #cacaca;
     }
-    
+    /**************************************************************************************************/
     .botones_envios {
       cursor: pointer;
       display: flex;
@@ -85,8 +85,9 @@
       border-radius: 12px;
       padding: 4px 12px;
       text-decoration: none;
-      background: #002d04;
+      background: linear-gradient(149deg, #2dff00, 10%, #0f3711);
     }
+    /**************************************************************************************************/
     .form_retroalimentacion {
       position: absolute;
       box-shadow: 0px 0px 11px 0px #636363;
@@ -171,28 +172,31 @@
             <p>
               <strong>Estudiantes</strong>
             </p>
+            {% if anteproyecto.nombre_integrante2 %}
+              <p class="informacion">{{ anteproyecto.nombre_integrante1 }}</p>
+              <p class="informacion">{{ anteproyecto.nombre_integrante2 }}</p>
+            {% endif %}
             <p class="informacion">{{ anteproyecto.nombre_integrante1 }}</p>
-            <p class="informacion">{{ anteproyecto.nombre_integrante2 }}</p>
           </div>
           <div class="col">
             {% if anteproyecto.codirector %}
               <p>
                 <strong>Director y Codirector</strong>
               </p>
+              <p class="informacion">{{ anteproyecto.codirector }}</p>
             {% else %}
               <p>
                 <strong>Director</strong>
               </p>
+              <p class="informacion">{{ anteproyecto.director }}</p>
             {% endif %}
-            <p class="informacion">{{ anteproyecto.director }}</p>
-            <p class="informacion">{{ anteproyecto.codirector }}</p>
           </div>
         </div>
 
         <div class="d-flex flex-column justify-content-center">
           <div class="d-flex header_infos">
-            <img class="img-icons-ante" src="{% static 'icons/icons_proyect/personas.png' %}" alt="imagen de usuarios" />
-            <h5 class="">Fecha de Envío</h5>
+            <img class="img-icons-ante" src="{% static 'icons/icons_proyect/tiempo.png' %}" alt="imagen de usuarios" />
+            <h5 class="">Fecha de Envío de Formatos</h5>
           </div>
           {% if anteproyecto.fecha_envio %}
             <p class="informacion">{{ anteproyecto.fecha_envio }}</p>
