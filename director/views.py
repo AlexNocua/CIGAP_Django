@@ -230,6 +230,12 @@ def enviar_anteproyecto(request, id):
 #############################################################################################################
 # configuracion de las vistas del modulo de proyectos
 
+def recuperar_objetivo_general(id_gen):
+    objetivo_general = ModelObjetivoGeneral.objects.get(
+        id=id_gen) if ModelObjetivoGeneral.objects.filter(id=id_gen) else None
+    return objetivo_general
+
+
 def recuperar_objetivo_especifico(id):
     obj_especifico = ModelObjetivosEspecificos.objects.get(
         id=id)
@@ -365,6 +371,21 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
 
     # Redirigir a la vista del proyecto
     return redirect('director:proyecto', id=proyecto.id)
+
+
+def actualizar_estado_objetivo_especifico(request, id_proyect, id_esp):
+    proyecto = recuperar_proyecto(id_proyect)
+    objetivo_especifico = recuperar_objetivo_especifico(id_esp)
+    objetivo_especifico.estado = not objetivo_especifico.estado
+    objetivo_especifico.save()
+    if objetivo_especifico.estado:
+        messages.success(
+            request, "El estado del objetivo específico se ha actualizado exitosamente.")
+        return redirect('director:proyecto', id=proyecto.id)
+    else:
+        messages.success(
+            request, "El estado del objetivo específico se ha actualizado exitosamente.")
+        return redirect('director:proyecto', id=proyecto.id)
 
 
 def actualizar_estado_actividad(request, actividad_id, id_proyecto):

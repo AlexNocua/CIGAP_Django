@@ -24,6 +24,8 @@ urlpatterns = [
     path('enviar_proyecto/<int:id>', views.enviar_proyecto, name='enviar_proyecto'),
     path('actualizar_estado_actividad/<int:actividad_id>/<int:id_proyecto>/',
          views.actualizar_estado_actividad, name='actualizar_estado_actividad'),
+    path('actualizar_estado_objetivo_especifico/<int:id_proyect>/<int:id_esp>/',
+         views.actualizar_estado_objetivo_especifico, name='actualizar_estado_objetivo_especifico'),
     path('enviar_observacion_objetivo/<int:id_proyect>/<int:id_esp>/',
          views.enviar_observacion_objetivo, name='enviar_observacion_objetivo'),
     ########################################################################

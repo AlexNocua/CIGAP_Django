@@ -54,7 +54,6 @@
       background: #cacaca36;
       padding: 8px;
       border-radius: 12px;
-  
     }
     .img-icons-ante {
       margin: 0px;
@@ -98,7 +97,7 @@
       top: 5%;
       right: -500px; /* Posición fuera de la pantalla inicialmente */
       transition: all 0.5s;
-
+    
       max-width: 100%; /* Ajustar ancho máximo */
       text-align: left; /* Agregado */
     }
@@ -317,6 +316,18 @@
                           <p>
                             <strong>Objetivo {{ forloop.counter }}</strong>
                           </p>
+                          <div class="row d-flex">
+                            <form action="{% url 'director:actualizar_estado_objetivo_especifico' proyecto_final.id objetivo.id %}" method="post">
+                              {% csrf_token %}
+                              {% if objetivo.estado %}
+                                <input type="checkbox" name="estado_objetivo_especifico" onchange="this.form.submit()" value="False" checked />
+                              {% else %}
+                                <input type="checkbox" name="estado_objetivo_especifico" value="True" onchange="this.form.submit()" />
+                              {% endif %}
+                              <small>Marque el objetivo acorde a los avances de los estudiantes</small>
+                            </form>
+                          </div>
+
                           <p class="card-text">{{ objetivo.descripcion }}</p>
 
                           <!-- Actividades relacionadas al objetivo -->
@@ -358,7 +369,7 @@
                               {% if forloop.first %}
                                 <ul class="list-group">
                                   <li class="list-group-item">
-                                    <a href="data:application/pdf;base64,{{ doc }}" target="_blank" download="avance_objetivo_especifico{{  forloop.parentloop.counter }}.pdf">Descargar documento de avance</a> <!-- Suponiendo que los documentos tienen un 'url' y 'titulo' -->
+                                    <a href="data:application/pdf;base64,{{ doc }}" target="_blank" download="avance_objetivo_especifico{{ forloop.parentloop.counter }}.pdf">Descargar documento de avance</a> <!-- Suponiendo que los documentos tienen un 'url' y 'titulo' -->
                                   </li>
                                 </ul>
                               {% endif %}
@@ -389,9 +400,9 @@
                         </div>
                       </div>
                     </div>
-                    <!--                 
+                    <!--                          
 modal de retroalimentaciones  de los objetivos especificos
-                 -->
+                          -->
 
                     <div class="modal fade" id="modalObservacionesEspecificos" tabindex="-1" aria-labelledby="modalObservacionesLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -460,9 +471,9 @@ modal de retroalimentaciones  de los objetivos especificos
       </form>
     </div> {% endcomment %}
 
-    <!--                 
+    <!--                          
 modal de retroalimentaciones    
-                 -->
+                          -->
     <div class="modal fade" id="retroModal" tabindex="-1" aria-labelledby="retroModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
