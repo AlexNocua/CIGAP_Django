@@ -23,6 +23,10 @@ urlpatterns = [
     ################################################################################
     path('avances_proyecto/', views.avances_proyecto,
          name='avances_proyecto'),
+    path('cargar_docs_final/<int:id_proyecto>', views.cargar_docs_final,
+         name='cargar_docs_final'),
+    path('modificar_docs_final/<int:id_proyecto>', views.modificar_docs_final,
+         name='modificar_docs_final'),
     path('subir_objetivo_general/<int:id>', views.subir_objetivo_general,
          name='subir_objetivo_general'),
     path('editar_objetivo_general/<int:id>', views.editar_objetivo_general,

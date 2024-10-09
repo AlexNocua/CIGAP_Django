@@ -66,6 +66,14 @@ def recuperar_retroalimentacion_anteproyecto(anteproyecto):
     return retroalimentacion
 
 
+def recuperar_retroalimentacion_proyecto_final(proyecto):
+    retroalimentaciones = ModelRetroalimentaciones.objects.filter(
+        Q(proyecto_final=proyecto))
+    if not retroalimentaciones:
+        return None
+    return retroalimentaciones
+
+
 # recuperar anteproyecto por id
 def recuperar_anteproyecto_id(id):
     anteproyecto = ModelAnteproyecto.objects.get(id=id)
@@ -543,7 +551,25 @@ def recuperar_actividades(objetivo_esp):
 def avances_proyecto(request):
     context = datosusuario(request)
     proyecto_final = recuperar_proyecto_final_usuario(request.user)
+
+    retroalimentaciones = recuperar_retroalimentacion_proyecto_final(
+        proyecto_final)
+    if retroalimentaciones:
+        dict_retroalimentaciones = {}
+        for i, retroalimentacion in enumerate(retroalimentaciones):
+            dict_retroalimentaciones[f'retroalimentacion_{i}'] = {
+                'retroalimentacion': retroalimentacion,
+                'doc_retro': devolver_documento_imagen(retroalimentacion.doc_retroalimentacion),
+            }
+        context['retroalimentaciones'] = dict_retroalimentaciones
     if proyecto_final:
+        doc_proyecto_final = proyecto_final.proyecto_final
+        doc_carta_final = proyecto_final.carta_presentacion_final
+        context['docs_finales'] = {
+            'proyecto_final': devolver_documento_imagen(doc_proyecto_final),
+            'carta_final': devolver_documento_imagen(doc_carta_final),
+
+        }
         print(proyecto_final)
         fechas = ModelFechasProyecto.objects.get(proyecto_final=proyecto_final)
         if fechas:
@@ -557,7 +583,9 @@ def avances_proyecto(request):
         if obj_general:
             context['obj_general'] = obj_general
             objs_especificos = recuperar_objetivos_especificos(obj_general)
+
             if objs_especificos:
+
                 context['objs_especificos'] = objs_especificos
                 dict_actividades = {}
                 dict_docs_avances = {}
@@ -572,6 +600,76 @@ def avances_proyecto(request):
                 context['docs_avances'] = dict_docs_avances
 
     return render(request, 'estudiante/avances_proyecto.html', context)
+
+
+def cargar_docs_final(request, id_proyecto):
+    proyecto = recuperar_proyecto_final_id(id_proyecto)
+
+    if proyecto:
+        messages.success(request, 'Proyecto encontrado correctamente.')
+
+        doc_carta_final = request.FILES.get('carta_final')
+        if doc_carta_final:
+            proyecto.carta_presentacion_final = doc_carta_final.read()
+            messages.success(
+                request, 'Carta de presentación final cargada correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha cargado ninguna carta de presentación final.')
+
+        doc_proyecto_final = request.FILES.get('proyecto_final')
+        if doc_proyecto_final:
+            proyecto.proyecto_final = doc_proyecto_final.read()
+            messages.success(request, 'Proyecto final cargado correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha cargado ningún proyecto final.')
+
+        proyecto.save()
+        return redirect('estudiante:avances_proyecto')
+    else:
+        messages.error(
+            request, 'No se encontró el proyecto con el ID proporcionado.')
+        return redirect('estudiante:avances_proyecto')
+
+
+def modificar_docs_final(request, id_proyecto):
+    proyecto = recuperar_proyecto_final_id(id_proyecto)
+
+    if proyecto:
+        # Mensaje de éxito si se encuentra el proyecto
+        messages.success(request, 'Proyecto encontrado correctamente.')
+
+        # Verifica si se ha subido la carta de presentación final
+        doc_carta_final = request.FILES.get('carta_final')
+        if doc_carta_final:
+            proyecto.carta_presentacion_final = doc_carta_final.read()
+            messages.success(
+                request, 'Carta de presentación final actualizada correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha cargado ninguna carta de presentación final.')
+
+        # Verifica si se ha subido el proyecto final
+        doc_proyecto_final = request.FILES.get('proyecto_final')
+        if doc_proyecto_final:
+            proyecto.proyecto_final = doc_proyecto_final.read()
+            messages.success(
+                request, 'Proyecto final actualizado correctamente.')
+        else:
+            messages.warning(
+                request, 'No se ha cargado ningún proyecto final.')
+
+        # Guarda el proyecto con los archivos actualizados
+        proyecto.save()
+
+        # Redirige a la página de avances con mensaje de éxito
+        return redirect('estudiante:avances_proyecto')
+    else:
+        # Mensaje de error si no se encuentra el proyecto
+        messages.error(
+            request, 'No se encontró el proyecto con el ID proporcionado.')
+        return redirect('estudiante:avances_proyecto')
 
 
 def subir_objetivo_general(request, id):
@@ -769,6 +867,7 @@ def eliminar_actividad(request, id):
 
 
 def subir_avance(request, id_esp):
+    print(id_esp)
     obj_esp = recuperar_objetivo_especifico(id_esp)
 
     if obj_esp:

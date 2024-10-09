@@ -225,13 +225,20 @@
                 <small class="p-2 pt-0 pb-0 m-0"><strong>Fecha de envío:</strong> {{ proyecto_final.anteproyecto.fecha_envio }}</small>
               </div>
             {% else %}
-              <a href="#" id="btnEnviarSolicitud" class="botones_envios">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-arrow-up" viewBox="0 0 16 16">
-                  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V5.383l-7 4.2-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-1.99zm1 7.105 4.708-2.897L1 5.383zM1 4v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1" />
-                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.354 1.25 1.25a.5.5 0 0 1-.708.708L13 12.207V14a.5.5 0 0 1-1 0v-1.717l-.28.305a.5.5 0 0 1-.737-.676l1.149-1.25a.5.5 0 0 1 .722-.016" />
-                </svg>
-                <span class="m-1">Enviar proyecto final al comité</span>
-              </a>
+              {% if puede_enviar %}
+                <div class="d-flex flex-column">
+                  <a href="#" id="btnEnviarSolicitud" class="botones_envios">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-arrow-up" viewBox="0 0 16 16">
+                      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V5.383l-7 4.2-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-1.99zm1 7.105 4.708-2.897L1 5.383zM1 4v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1" />
+                      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.354 1.25 1.25a.5.5 0 0 1-.708.708L13 12.207V14a.5.5 0 0 1-1 0v-1.717l-.28.305a.5.5 0 0 1-.737-.676l1.149-1.25a.5.5 0 0 1 .722-.016" />
+                    </svg>
+                    <span class="m-1">Enviar proyecto final al comité</span>
+                  </a>
+                  <small>Antes de enviar, verifique los documentos cargados por los estudiantes.</small>
+                </div>
+              {% else %}
+                <p>Recuerde revisar los avances de cada objetivo específico y aprobarlos con el fin de enviar una solicitud de proyecto final.</p>
+              {% endif %}
             {% endif %}
           </div>
           <div class="d-flex flex-column">
@@ -240,16 +247,25 @@
               <h5>Documentos</h5>
             </div>
             <div class="d-flex justify-content-around flex-wrap">
+              <div class="card document mt-2" style="width: 18rem;">
+                <h6>Documentos carcados de avances</h6>
+                {% with counter=0 %}
+                  {% for key, doc in docs_avances.items %}
+                    <a href="data:application/pdf;base64,{{ doc }}" download="Avance_objetivo_{{ forloop.counter }}_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary mb-1">Avance del objetivo específico {{ forloop.counter }}</a>
+                  {% endfor %}
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos"><small>Envía retroalimentaciones respecto a los avances.</small></a>
+                {% endwith %}
+              </div>
               <!-- Carta de Presentación -->
               {% if doc_carta_presentacion_final %}
                 <div class="card document mt-2" style="width: 18rem;">
                   <div class="card-body d-flex flex-column justify-content-between p-2">
                     <h4 class="card-title">Carta de Presentación</h4>
                     <div class="embed-responsive embed-responsive-16by9 mb-2" style="padding: 5px;">
-                      <embed src="data:application/pdf;base64,{{ doc_carta_presentacion }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
+                      <embed src="data:application/pdf;base64,{{ doc_carta_presentacion_final }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
                     </div>
                     <p class="card-text">Carta del proyecto final.</p>
-                    <a href="data:application/pdf;base64,{{ doc_carta_presentacion }}" download="Carta_de_Presentacion_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Carta</a>
+                    <a href="data:application/pdf;base64,{{ doc_carta_presentacion_final }}" download="Carta_de_Presentacion_Final{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Carta</a>
                   </div>
                 </div>
               {% else %}
@@ -262,10 +278,10 @@
                   <div class="card-body d-flex flex-column justify-content-between p-2">
                     <h4 class="card-title">Proyecto final</h4>
                     <div class="embed-responsive embed-responsive-16by9 mb-2" style="padding: 5px;">
-                      <embed src="data:application/pdf;base64,{{ doc_anteproyecto }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
+                      <embed src="data:application/pdf;base64,{{ doc_proyecto_final }}" type="application/pdf" class="embed-responsive-item" style="width: 100%; height: auto;" />
                     </div>
                     <p class="card-text">Proyecto final completo.</p>
-                    <a href="data:application/pdf;base64,{{ doc_anteproyecto }}" download="Anteproyecto_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Anteproyecto</a>
+                    <a href="data:application/pdf;base64,{{ doc_proyecto_final }}" download="Proyecto_Final{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary">Descargar Anteproyecto</a>
                   </div>
                 </div>
               {% else %}
@@ -361,48 +377,12 @@
                           {% else %}
                             <p>Aún no se han cargado actividades.</p>
                           {% endif %}
-
-                          <!-- Documentos Cargados por los Estudiantes -->
-                          <h6 class="mt-2" style="text-align: start;"><i class="fas fa-file-upload"></i> Documentos Cargados</h6>
-                          {% if objetivo.documento_avance %}
-                            {% for j, doc in docs_avances.items %}
-                              {% if forloop.first %}
-                                <ul class="list-group">
-                                  <li class="list-group-item">
-                                    <a href="data:application/pdf;base64,{{ doc }}" target="_blank" download="avance_objetivo_especifico{{ forloop.parentloop.counter }}.pdf">Descargar documento de avance</a> <!-- Suponiendo que los documentos tienen un 'url' y 'titulo' -->
-                                  </li>
-                                </ul>
-                              {% endif %}
-                            {% endfor %}
-
-                            <a class="botones_envios btn_observaciones mb-2" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-                              </svg>
-                              <span class="m-1">Enviar Observaciones</span>
-                            </a>
-                          {% else %}
-                            {% if objetivo.fecha_observacion %}
-                              <small><strong>Ya se envio una observación:</strong>{{ objetivo.fecha_observacion|date:'d/M/Y' }}</small>
-                              <i>Edite o sobrescriba la observación</i>
-                              <a class="botones_envios btn_observaciones mb-2" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                  <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                                  <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-                                </svg>
-                                <span class="m-1">Enviar Observaciones</span>
-                              </a>
-                            {% else %}
-                              <p>No se han cargado documentos para este objetivo.</p>
-                            {% endif %}
-                          {% endif %}
                         </div>
                       </div>
                     </div>
-                    <!--                          
+                    <!--                                           
 modal de retroalimentaciones  de los objetivos especificos
-                          -->
+                                           -->
 
                     <div class="modal fade" id="modalObservacionesEspecificos" tabindex="-1" aria-labelledby="modalObservacionesLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -471,9 +451,9 @@ modal de retroalimentaciones  de los objetivos especificos
       </form>
     </div> {% endcomment %}
 
-    <!--                          
+    <!--                                           
 modal de retroalimentaciones    
-                          -->
+                                           -->
     <div class="modal fade" id="retroModal" tabindex="-1" aria-labelledby="retroModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

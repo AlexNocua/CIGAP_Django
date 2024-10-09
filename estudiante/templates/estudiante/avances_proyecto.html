@@ -130,6 +130,46 @@
       </section>
     </div>
 
+    <div id="retroalimentacionesCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for key, retro in retroalimentaciones.items %}
+          <div class="carousel-item {% if forloop.first %} active {% endif %}">
+            <div class="d-flex justify-content-center">
+              <!-- Mostrar la retroalimentación -->
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Retroalimentación {{ forloop.counter }}</h5>
+                  <p class="card-text">
+                    <strong>Por:</strong> {{ retro.retroalimentacion.user.nombre_completo }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Observaciones:</strong> {{ retro.retroalimentacion.retroalimentacion }}
+                  </p>
+
+                  <!-- Mostrar el documento (si es una imagen) -->
+                  {% if retro.doc_retro %}
+                    <img src="data:image/png;base64,{{ retro.doc_retro }}" class="card-img-top" alt="Documento retroalimentación" />
+                  {% else %}
+                    <p>No hay documento disponible.</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Controles del carrusel -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#retroalimentacionesCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#retroalimentacionesCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+
     <style>
       .objectives-container {
         max-width: 1200px;
@@ -297,7 +337,191 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
     <div class="objectives-container">
-      <!-- Objetivo General -->
+      <!-- Incluir Bootstrap y Bootstrap Icons -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+      <div class="d-flex justify-content-around align-items-center">
+        {% if proyecto_final.proyecto_final %}
+          {% if proyecto_final.carta_presentacion %}
+            <p>Ya se cargaron dos documenetos previos a la solicitud de proyecto final y el proyecto final.</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="bi bi-upload"></i> Subir Archivos</button>
+          {% endif %}
+        {% endif %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModificarArchivosModal"><i class="bi bi-upload"></i> Editar archivos cargados</button>
+      </div>
+
+      {% if docs_finales %}
+        <div class="d-flex justify-content-around align-items-center">
+          <div class="card">
+            <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" type="application/pdf" style="border-radius: 8px;" />
+            <div class="card-body">
+              <h5 class="card-title">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
+              <p class="card-text">
+                <strong>Descripción:</strong> Proyecto final cargado por los estudiantes.
+              </p>
+            </div>
+            <a href="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" download="Proyecto_final_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="boton-descargar">Descargar</a>
+          </div>
+          <div class="card">
+            <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.carta_final }}" type="application/pdf" style="border-radius: 8px;" />
+            <div class="card-body">
+              <h5 class="card-title">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
+              <p class="card-text">
+                <strong>Descripción:</strong> Carta de solicitud de proyecto final cargada por los estudiantes.
+              </p>
+            </div>
+            <a href="data:application/pdf;base64,{{ docs_finales.carta_final }}" download="Carta_solicitud_proyecto_final{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="boton-descargar">Descargar</a>
+          </div>
+        </div>
+      {% endif %}
+      <!-- Botón para abrir el modal -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadModalLabel"><i class="bi bi-cloud-upload"></i> Subir Archivos</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <form id="uploadForm" action="{% url 'estudiante:cargar_docs_final' proyecto_final.id %} " method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="file1" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Cargue la solicitud de proyecto final</label>
+                  <input type="file" id="file1" class="form-control" name="carta_final" accept="application/pdf" required />
+                  <small class="text-muted">Solo se permite el formato PDF.</small>
+                </div>
+                <div class="mb-3">
+                  <label for="file2" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Cargue el proyecto final.</label>
+                  <input type="file" id="file2" class="form-control" name="proyecto_final" accept="application/pdf" required />
+                  <small class="text-muted">Solo se permite el formato PDF.</small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cancelar</button>
+              <button type="button" class="btn btn-primary" onclick="confirmUpload()"><i class="bi bi-cloud-upload"></i> Subir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="ModificarArchivosModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadModalLabel"><i class="bi bi-pencil-square"></i> Modificar Archivos</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <form id="modifyForm" action="{% url 'estudiante:modificar_docs_final' proyecto_final.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="fileCartaFinal" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Modificar la solicitud de proyecto final</label>
+                  <input type="file" id="fileCartaFinal" class="form-control" name="carta_final" accept="application/pdf" required />
+                  <small class="text-muted">Solo se permite el formato PDF.</small>
+                </div>
+                <div class="mb-3">
+                  <label for="fileProyectoFinal" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Modificar el proyecto final</label>
+                  <input type="file" id="fileProyectoFinal" class="form-control" name="proyecto_final" accept="application/pdf" required />
+                  <small class="text-muted">Solo se permite el formato PDF.</small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cancelar</button>
+              <button type="button" class="btn btn-primary" onclick="confirmAndSubmit()"><i class="bi bi-cloud-upload"></i> Guardar Cambios</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+        function confirmAndSubmit() {
+          // Verifica si los archivos cargados son PDF
+          const fileCartaFinal = document.getElementById('fileCartaFinal').files[0]
+          const fileProyectoFinal = document.getElementById('fileProyectoFinal').files[0]
+        
+          // Validación del tipo de archivo
+          if (fileCartaFinal && fileCartaFinal.type !== 'application/pdf') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'El archivo de la solicitud de proyecto final debe ser un PDF.',
+              confirmButtonText: 'Aceptar'
+            })
+            return
+          }
+        
+          if (fileProyectoFinal && fileProyectoFinal.type !== 'application/pdf') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'El archivo del proyecto final debe ser un PDF.',
+              confirmButtonText: 'Aceptar'
+            })
+            return
+          }
+        
+          // Confirmación con SweetAlert
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Los archivos serán modificados.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, modificar!',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Si se confirma, enviar el formulario
+              document.getElementById('modifyForm').submit()
+            }
+          })
+        }
+      </script>
+
+      <!-- Incluir scripts de Bootstrap, SweetAlert y script para confirmación -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <!-- Script para confirmación de SweetAlert -->
+      <script>
+        function confirmUpload() {
+          const file1 = document.getElementById('file1').value
+          const file2 = document.getElementById('file2').value
+        
+          if (!file1 || !file2) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Por favor, cargue ambos archivos en formato PDF.'
+            })
+          } else {
+            Swal.fire({
+              title: '¿Estás seguro?',
+              text: 'Estás a punto de subir los archivos.',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Sí, subir',
+              cancelButtonText: 'Cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                document.getElementById('uploadForm').submit()
+              }
+            })
+          }
+        }
+      </script>
+
+      {% if puede_enviar %}
+        <form action="">label</form>
+      {% endif %}
+
       <div class="main-card">
         <h2 class="section-title"><i class="fas fa-bullseye"></i> Objetivo General</h2>
 
@@ -539,38 +763,29 @@
                             <h2 class="accordion-header" id="heading{{ i }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ i }}" aria-expanded="false" aria-controls="collapse{{ i }}">Objetivo Específico {{ forloop.counter }}</button></h2>
                             <div id="collapse{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading{{ i }}" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
-                                {% for j, doc in docs_avances.items %}
-                                  {% if forloop.first %}
-                                    <div class="document-container w-100">
-                                      <!-- Visualización del documento cargado -->
-                                      <div class="document-info">
-                                        <p>
-                                          <i class="fas fa-file-pdf"></i> Documento {{ forloop.parentloop.counter }}.{{ forloop.counter }}
-                                        </p>
+                                <div class="document-container w-100">
+                                  <!-- Visualización del documento cargado -->
 
-                                        <a href="data:application/pdf;base64,{{ doc }}" download="documento_avance_objetivo_especifico_{{ forloop.parentloop.counter }}.pdf" class="btn btn-outline-secondary btn-sm"><i class="fas fa-download"></i> Descargar</a>
-                                      </div>
-
-                                      <!-- Formulario para editar/eliminar el archivo -->
-                                      <form method="POST" action="{% url 'estudiante:editar_eliminar_archivo' obj_especifico.id %}" enctype="multipart/form-data" class="document-actions mt-3">
-                                        {% csrf_token %}
-
-                                        <!-- Campo para editar el archivo -->
-                                        <div class="file-upload mb-3">
-                                          <label for="archivo_nuevo_{{ forloop.parentloop.counter }}" class="form-label"><i class="fas fa-edit"></i> Subir nuevo archivo:</label>
-                                          <input type="file" class="form-control" id="archivo_nuevo_{{ forloop.parentloop.counter }}" name="archivo_nuevo" accept="application/pdf" />
-                                        </div>
-
-                                        <!-- Botones de acción -->
-                                        <div class="action-buttons">
-                                          <button type="submit" name="accion" value="editar" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Actualizar Documento</button>
-
-                                          <button type="submit" name="accion" value="eliminar" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Eliminar Documento</button>
-                                        </div>
-                                      </form>
+                                  <!-- Formulario para editar/eliminar el archivo -->
+                                  <form method="POST" action="{% url 'estudiante:editar_eliminar_archivo' obj_especifico.id %}" enctype="multipart/form-data" class="document-actions mt-3">
+                                    {% csrf_token %}
+                                    <!-- Campo para editar el archivo -->
+                                    <div class="file-upload mb-3">
+                                      <p>
+                                        <small>Ya subio un avance, actualice el documento</small>
+                                      </p>
+                                      <label for="archivo_nuevo_{{ forloop.parentloop.counter }}" class="form-label"><i class="fas fa-edit"></i> Subir nuevo archivo:</label>
+                                      <input type="file" class="form-control" id="archivo_nuevo_{{ forloop.parentloop.counter }}" name="archivo_nuevo" accept="application/pdf" />
                                     </div>
-                                  {% endif %}
-                                {% endfor %}
+
+                                    <!-- Botones de acción -->
+                                    <div class="action-buttons">
+                                      <button type="submit" name="accion" value="editar" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Actualizar Documento</button>
+
+                                      <button type="submit" name="accion" value="eliminar" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Eliminar Documento</button>
+                                    </div>
+                                  </form>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -605,7 +820,18 @@
                     </div>
                   </div>
                 {% endfor %}
+
+                <div class="card objective-card document mt-2" style="width: 18rem;">
+                  <h6>Documentos carcados de avances</h6>
+                  {% with counter=0 %}
+                    {% for key, doc in docs_avances.items %}
+                      <a href="data:application/pdf;base64,{{ doc }}" download="Avance_objetivo_{{ forloop.counter }}_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary mb-1">Avance del objetivo específico {{ forloop.counter }}</a>
+                    {% endfor %}
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos"><small>Envía retroalimentaciones respecto a los avances.</small></a>
+                  {% endwith %}
+                </div>
                 <!-- Botón para nuevo objetivo -->
+
                 <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
                   <i class="fas fa-plus-circle"></i>
                   <h4>Nuevo objetivo específico</h4>

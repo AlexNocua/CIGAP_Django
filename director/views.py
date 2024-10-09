@@ -256,6 +256,7 @@ def view_proyectos(request):
 def proyecto(request, id):
     context = {}
     proyecto = recuperar_proyecto(id)
+
     if proyecto:
         context['proyecto_final'] = proyecto
         doc_proyecto_final = recuperar_documento(proyecto.proyecto_final)
@@ -278,10 +279,18 @@ def proyecto(request, id):
         if objetivo_general:
             dict_documentos_avance = {}
             if objetivos_especificos:
+                num_obj_especificos = objetivos_especificos.count()
+                contador_aprovados = 0
                 for i, objetivo_especifico in enumerate(objetivos_especificos):
+                    if objetivo_especifico.estado:
+                        contador_aprovados += 1
                     if objetivo_especifico.documento_avance:
                         dict_documentos_avance[f'doc_avance{i}'] = recuperar_documento(
                             objetivo_especifico.documento_avance)
+                if num_obj_especificos == contador_aprovados:
+                    messages.success(
+                        request, "El desarrollo de los objetivos específicos ha sido aceptado satisfactoriamente. Ahora puede proceder a enviar la solicitud de proyecto de final al comité para su revisión y posterior aprobación.")
+                    context['puede_enviar'] = True
                 context['objetivos_especificos'] = objetivos_especificos
 
             context['docs_avances'] = dict_documentos_avance
@@ -352,6 +361,8 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
                     request, 'No se ha subido ningún documento. Por favor, suba un archivo PDF.')
 
             obj_especifico.observaciones = observaciones
+            obj_especifico.user = request.user
+            obj_especifico.proyecto_final = proyecto
             obj_especifico.documento_avance = None
 
             if documento:
