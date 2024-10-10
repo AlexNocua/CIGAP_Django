@@ -644,7 +644,8 @@ def enviar_evaluacion_proyecto_final(request, id):
             try:
                 evaluacion.comentarios = comentarios
                 evaluacion.estado = estado
-                evaluacion.calificacion = calificacion
+                evaluacion.fecha_evaluacion = fecha_actual()
+                evaluacion.calificacion = float(calificacion)
                 evaluacion.doc_evaluacion_proyecto = (
                     doc_retroalimentacion_convert.read()
                 )

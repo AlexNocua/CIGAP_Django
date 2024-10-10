@@ -5,6 +5,7 @@ from login.forms import FormEditarUsuario
 
 # importaciones de los modelos de cada una de las aplicaciones
 from estudiante.models import (
+    ModelFechasProyecto,
     ModelProyectoFinal,
     ModelAsignacionJurados,
     ModelAnteproyecto,
@@ -90,7 +91,6 @@ def recuperar_proyectos_pendientes():
         | Q(Q(solicitud_enviada=True) & Q(estado=False))
     )
     if proyectos_finales:
-        print(anteproyectos, "Desde utilidades")
         return proyectos_finales
     else:
         return None
@@ -129,6 +129,15 @@ def recuperar_solicitudes_especiales_proyecto(proyecto, anteproyecto):
     )
     print(solicitudes_especiales_proyecto.count())
     return solicitudes_especiales_proyecto
+
+
+def recuperar_fechas_proyecto(proyecto):
+    fechas = (
+        ModelFechasProyecto.objects.get(proyecto_final=proyecto)
+        if ModelFechasProyecto.objects.filter(proyecto_final=proyecto).exists()
+        else None
+    )
+    return fechas
 
 
 #######################################################################################################

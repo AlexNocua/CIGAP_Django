@@ -143,7 +143,9 @@
                 <strong>Calificación:</strong> {{ evaluacion.calificacion }}
               </p>
               <p>
-                <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+                <strong>Comentarios:</strong> {{ evaluacion.comentarios }}<br>
+
+                <strong>Fecha de elvauación:</strong> {{ evaluacion.fecha_evaluacion }}
               </p>
               <p>
                 <strong>Estado:</strong> {{ evaluacion.estado|yesno:'Aprobado,Rechazado' }}

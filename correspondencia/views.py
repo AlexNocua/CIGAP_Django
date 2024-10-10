@@ -17,6 +17,7 @@ from login.views import editar_usuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.recuperaciones import (
+    recuperar_fechas_proyecto,
     recuperar_num_proyectos_terminados,
     recuperar_num_proyectos_pendientes,
     recuperar_num_solicitudes,
@@ -751,6 +752,11 @@ def recuperar_evaluaciones_jurados(proyecto):
 
 def ver_proyecto_final(request, nombre):
     context = datosusuario(request)
+    context["fecha_actual"] = fecha_actual()
+    ###########################################################################
+    dias_habiles = 10
+    context["fecha_habil"] = fecha_actual() + str(timedelta(days=dias_habiles))
+    ###########################################################################
     anteproyecto = recuperar_anteproyecto(nombre)
     proyecto_final = recuperar_proyecto_final(anteproyecto)
     evaluaciones = recuperar_evaluaciones_jurados(proyecto_final)
@@ -891,8 +897,6 @@ def editar_radicado_proyecto_final(request, id_proyecto):
         )
 
 
-# tener en cuenta la lgoca de javaScript con el fin de que si es aprovado, muestre el formurio de la asignacion de jurados
-# asi mismo crear la vista de enviar retroalimentaicon de proyecto
 def fue_asignado_jurado_jurado(nombre_completo):
     fue_asignado = ModelEvaluacionProyectoFinal.objects.filter(
         jurado__nombre_completo=nombre_completo
@@ -943,6 +947,40 @@ def asignar_jurados(request, id):
         "correspondencia:ver_proyecto_final",
         nombre=proyecto.anteproyecto.nombre_anteproyecto,
     )
+
+
+def asignar_fecha_sustentacion(request, id):
+    proyecto = recuperar_proyecto_final_id(id)
+    if proyecto:
+        fechas_proyecto = recuperar_fechas_proyecto(proyecto)
+        if fechas_proyecto:
+            fechas_proyecto.fecha_sustentacion = request.POST.get("fecha_presentacion")
+            fechas_proyecto.save()
+            messages.success(
+                request, "La fecha de sustentación ha sido asignada correctamente."
+            )
+            return redirect(
+                "correspondencia:ver_proyecto_final",
+                nombre=proyecto.anteproyecto.nombre_anteproyecto,
+            )
+        else:
+            messages.error(
+                request,
+                "No se encontraron fechas asociadas al proyecto. Por favor, intente de nuevo.",
+            )
+            return redirect(
+                "correspondencia:ver_proyecto_final",
+                nombre=proyecto.anteproyecto.nombre_anteproyecto,
+            )
+    else:
+        messages.error(
+            request,
+            "No se encontró el proyecto solicitado. Por favor, verifique la información e intente de nuevo.",
+        )
+        return redirect(
+            "correspondencia:ver_proyecto_final",
+            nombre=proyecto.anteproyecto.nombre_anteproyecto,
+        )
 
 
 def asignar_evaluadores_ante(request, id):

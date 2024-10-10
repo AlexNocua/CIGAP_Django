@@ -247,6 +247,8 @@
                     <p class="card-text mb-1">
                       <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
                     </p>
+
+                    <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_fecha_presentacion">Asignar fecha de sustentación</button>
                     <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_concepto">Enviar concepto de anteproyecto</button>
                   {% else %}
                     <p class="card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
@@ -283,7 +285,7 @@
           <div class="p-4">
             <h4 class="">Radicado ya enviado</h4>
             <p>
-              card-text El radicado ya ha sido enviado al anteproyecto <strong>{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</strong>.
+              El radicado ya ha sido enviado al anteproyecto <strong>{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</strong>.
             </p>
 
             <!-- Enlace para descargar el PDF -->
@@ -514,6 +516,34 @@
         </div>
       </div>
 
+      <div class="modal fade" id="modal_fecha_presentacion" tabindex="-1" aria-labelledby="modalConceptoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalConceptoLabel">Asignar fecha de sustentación</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="container-fluid p-2" action="{% url 'correspondencia:asignar_fecha_sustentacion' inf_proyecto.id %}" method="post">
+                {% csrf_token %}
+                <!-- Campo para la fecha y hora -->
+                <div class="form-group mb-3">
+                  <label for="fecha_presentacion" class="form-label"><strong>Fecha y hora de sustentación:</strong></label>
+                  <input type="datetime-local" class="form-control" id="fecha_presentacion" name="fecha_presentacion" />
+                  {% comment %} <input type="datetime-local" class="form-control" id="fecha_presentacion" name="fecha_presentacion" required min="{{ fecha_actual }}" max="{{ fecha_habil }}" /> {% endcomment %}
+                  <small class="form-text text-muted">Por favor, selecciona la fecha y hora en la que se llevará a cabo la sustentación.</small>
+                  <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Asignar Fecha</button>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal fade" id="modal_concepto" tabindex="-1" aria-labelledby="modalConceptoLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -740,6 +770,29 @@
           }
         })
       })
-    })
+    }) <
+      //logica de alertas respecto a el envio de fechas
+      script >
+      // Validación del formulario y alerta con SweetAlert
+      document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault()
+        const fechaPresentacion = document.getElementById('fecha_presentacion').value
+    
+        if (!fechaPresentacion) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Campo requerido',
+            text: 'Debes seleccionar una fecha y hora para la presentación.'
+          })
+        } else {
+          Swal.fire({
+            icon: 'success',
+            title: 'Fecha asignada',
+            text: 'La fecha de presentación se ha asignado correctamente.'
+          }).then(() => {
+            this.submit() // Si todo es correcto, se envía el formulario
+          })
+        }
+      })
   </script>
 {% endblock %}
