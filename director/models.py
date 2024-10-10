@@ -27,7 +27,7 @@ class ModelEvaluacionAnteproyecto(models.Model):
 
 # creacion del modelo de evaluador de jurado
 class ModelEvaluacionProyectoFinal(models.Model):
-    evaluador = models.ForeignKey(Usuarios, on_delete=models.CASCADE,
+    jurado = models.ForeignKey(Usuarios, on_delete=models.CASCADE,
                                   related_name='evaluacion_proyectos', blank=True, null=True)
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal, on_delete=models.CASCADE, related_name='evaluacion_proyectos', blank=True, null=True)

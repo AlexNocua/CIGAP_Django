@@ -62,58 +62,63 @@
       background-color: #fff;
     }
   </style>
-  <section class="container">
-    <h3 class="mt-3 mb-3">Lista de proyectos actuales</h3>
-    <div class="container_table w-100 pt-2" style="border-top: 1px solid #cacaca;">
-      <table class="table w-100 table-striped border" id="tabla_resultados">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre del proyecto</th>
-            <th scope="col">Estudiantes</th>
-            <th scope="col">Director</th>
-            <th scope="col">Codirector</th>
-            <th scope="col">Fecha de aprovación</th>
-            <th scope="col">Fecha estimada de finalización</th>
-            <th scope="col">Mas Info</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          {% for key, value in proyectos.items %}
+  {% if proyectos %}
+    <section class="container">
+      <h3 class="mt-3 mb-3">Lista de proyectos actuales</h3>
+      <div class="container_table w-100 pt-2" style="border-top: 1px solid #cacaca;">
+        <table class="table w-100 table-striped border" id="tabla_resultados">
+          <thead>
             <tr>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ value.proyecto.anteproyecto.nombre_anteproyecto }}</td>
-              {% if value.proyecto.anteproyecto.nombre_integrante2 %}
-                <td>{{ value.proyecto.anteproyecto.nombre_integrante1 }} -
-                  {{ value.proyecto.anteproyecto.nombre_integrante2 }}</td>
-              {% else %}
-                <td>{{ value.proyecto.anteproyecto.nombre_integrante1 }}</td>
-              {% endif %}
-              <td>{{ value.proyecto.anteproyecto.director }}</td>
-              {% if value.proyecto.anteproyecto.codirector %}
-                <td>{{ value.proyecto.anteproyecto.codirector }}</td>
-              {% else %}
-                <td>No tiene</td>
-              {% endif %}
-              {% if value.fecha_inicio %}
-                <td>{{ value.fecha_inicio|date:'d/m/Y' }}</td>
-              {% else %}
-                <td>No cuenta con fecha de envio</td>
-              {% endif %}
-              {% if value.fecha_finalizacion %}
-                <td>{{ value.fecha_finalizacion|date:'d/m/Y' }}</td>
-              {% else %}
-                <td>No cuenta con fecha de finalización</td>
-              {% endif %}
-              <td>
-                <a class="btn btn-success" href="{% url 'correspondencia:proyecto_actual' value.proyecto.id %}">Mas info {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
-              </td>
+              <th scope="col">#</th>
+              <th scope="col">Nombre del proyecto</th>
+              <th scope="col">Estudiantes</th>
+              <th scope="col">Director</th>
+              <th scope="col">Codirector</th>
+              <th scope="col">Fecha de aprovación</th>
+              <th scope="col">Fecha estimada de finalización</th>
+              <th scope="col">Mas Info</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </section>
+          </thead>
+          <tbody class="table-group-divider">
+            {% for key, value in proyectos.items %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ value.proyecto.anteproyecto.nombre_anteproyecto }}</td>
+                {% if value.proyecto.anteproyecto.nombre_integrante2 %}
+                  <td>{{ value.proyecto.anteproyecto.nombre_integrante1 }} -
+                    {{ value.proyecto.anteproyecto.nombre_integrante2 }}</td>
+                {% else %}
+                  <td>{{ value.proyecto.anteproyecto.nombre_integrante1 }}</td>
+                {% endif %}
+                <td>{{ value.proyecto.anteproyecto.director }}</td>
+                {% if value.proyecto.anteproyecto.codirector %}
+                  <td>{{ value.proyecto.anteproyecto.codirector }}</td>
+                {% else %}
+                  <td>No tiene</td>
+                {% endif %}
+                {% if value.fecha_inicio %}
+                  <td>{{ value.fecha_inicio|date:'d/m/Y' }}</td>
+                {% else %}
+                  <td>No cuenta con fecha de envio</td>
+                {% endif %}
+                {% if value.fecha_finalizacion %}
+                  <td>{{ value.fecha_finalizacion|date:'d/m/Y' }}</td>
+                {% else %}
+                  <td>No cuenta con fecha de finalización</td>
+                {% endif %}
+                <td>
+                  <a class="btn btn-success" href="{% url 'correspondencia:proyecto_actual' value.proyecto.id %}">Mas info {{ value.proyecto.anteproyecto.nombre_anteproyecto }}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% else %}
+    <h3>Proyectos en curso</h3>
+    <p>Por el momento no hay proyectos en curso.F</p>
+  {% endif %}
   <script>
     $(document).ready(function () {
       $('#tabla_resultados').DataTable({

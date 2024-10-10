@@ -5,8 +5,8 @@
     .content_correspondecia {
       display: none;
     }
-    .views{
-      display:flex;
+    .views {
+      display: flex;
     }
     .info_anteproyecto {
       display: grid;
@@ -24,37 +24,243 @@
       display: flex;
       flex-direction: column;
     }
+    
+    .section_anteproyecto {
+      overflow: hidden;
+    }
+    .info-integrantes-ante {
+    }
+    
+    /* Mejora la responsividad */
+    @media (max-width: 768px) {
+      .info_anteproyecto {
+        grid-template-columns: 1fr; /* Columna única en pantallas pequeñas */
+      }
+    
+      .form-group.row {
+        flex-direction: column; /* Colocar los elementos en columna */
+      }
+    
+      .col {
+        margin-bottom: 1rem; /* Espaciado entre columnas */
+      }
+    }
+    .form_retroalimentacion {
+      position: absolute;
+      box-shadow: 0px 0px 11px 0px #636363;
+      border: 1px solid #cacaca;
+      border-radius: 12px;
+      padding: 12px;
+      background: #ffffff;
+      top: 5%;
+      transition: all 0.5s;
+    
+      max-width: 100%; /* Ajustar ancho máximo */
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores {
+      transition: all 0.5s;
+      right: -1000px; /* Posición fuera de la pantalla inicialmente */
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores h5 {
+      margin-bottom: 20px;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores .font-weight-bold {
+      font-weight: bold;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores .btn-primary {
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+      text-align: left; /* Agregado */
+    }
+    
+    #formDirectores .btn-outline-danger {
+      border: 1px solid #dc3545;
+      border-radius: 4px;
+      color: #dc3545;
+      font-weight: bold;
+      text-align: left; /* Agregado */
+    }
+    
+    /* Clase específica para el formulario modal */
+    .form-formconcepto-modal {
+      width: 100%;
+      max-width: 500px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f8f9fa; /* Fondo claro */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+      opacity: 0;
+    }
+    .form-retoalimentacion-modal {
+      width: 100%;
+      max-width: 500px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f8f9fa; /* Fondo claro */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+      opacity: 0;
+    }
+    
+    .form-directores-description {
+      font-size: 0.95rem;
+      color: #6c757d; /* Color de texto sutil */
+      margin-bottom: 1rem; /* Espacio debajo de la descripción */
+      text-align: center; /* Centrar el texto */
+    }
+    /* Estilo para el título del formulario */
+    .form-directores-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #343a40;
+      text-align: center;
+    }
+    
+    /* Contenedor de los elementos del formulario */
+    .form-directores-container {
+      padding: 10px;
+    }
+    
+    /* Estilo para cada ítem (director) */
+    .form-directores-item {
+      padding: 8px 0;
+    }
+    
+    /* Estilo para las etiquetas de los directores */
+    .form-directores-label {
+      font-size: 1rem;
+      color: #495057;
+      margin-right: 10px;
+    }
+    
+    /* Estilo para los checkboxes */
+    .form-directores-checkbox {
+      transform: scale(1.2);
+      accent-color: #007bff;
+    }
+    
+    /* Acciones (botones) del formulario */
+    .form-directores-actions {
+      margin-top: 20px;
+    }
+    
+    /* Estilo del botón de enviar */
+    .form-directores-submit {
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    /* Efecto hover para el botón de enviar */
+    .form-directores-submit:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Estilo del botón de cancelar */
+    .form-directores-cancel {
+      border: 1px solid #dc3545;
+      color: #dc3545;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    /* Efecto hover para el botón de cancelar */
+    .form-directores-cancel:hover {
+      background-color: #f8d7da;
+      transform: scale(1.05);
+    }
+    
+    /* Spinner de carga oculto inicialmente */
+    .spinner-border {
+      margin-right: 8px;
+    }
   </style>
-  <section class="container mt-3">
+  <section class="container section_anteproyecto mt-3 d-flex justify-content-center align-items-center position-relative">
     <div class="row info_anteproyecto d-flex">
-      {% comment %}tener en cuneta el acceso a las llaves e items{% endcomment %}
-      <h2>Proyecto: {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</h2>
-      <div class="container-fluid row">
-        <h4>Información de la solicitud</h4>
-
+      <h3>Proyecto: {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</h3>
+      <h4>Información de la solicitud</h4>
+      <div class="container-fluid d-flex flex-column flex-md-row">
         <div class="col mt-2 p-2">
-          <p class="m-0 p-0 text-center">
+          <p class="card-text m-0 p-0 text-center">
             <strong class="text-center">Información del proyecto</strong>
           </p>
-          <p class="m-0 p-0">
+          <p class="card-text m-0 p-0">
             <br />
             <strong>Nombre del proyecto:</strong> {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}
             <br />
             <strong>Descripción:</strong> {{ inf_proyecto.anteproyecto.descripcion }}
           </p>
-          <strong>Documentos cargados:</strong>
           <br />
-          <ol>
+          <p class="card-text mt-2">
+            <strong>Documentos cargados:</strong>
+          </p>
+          <ol class="mt-1 mb-1">
             <li>
-              <a class="" href="data:application/pdf;base64,{{ doc_carta_final }}" download="CartaPresentacionFinal_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+              <a class="mt-1 mb-1" href="data:application/pdf;base64,{{ inf_proyecto.doc_carta }}" download="CartaPresentacion {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
             <li>
-              <a class="" href="data:application/pdf;base64,{{ doc_proyecto_final }}" download="Proyecto_Final_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+              <a class="mt-1 mb-1" href="data:application/pdf;base64,{{ inf_proyecto.doc_anteproyecto }}" download="Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
             </li>
           </ol>
+
+          {% if evaluaciones %}
+            <div class="">
+              <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar jurados</button>
+              <p class="card-text m-0 p-0 text-center">
+                <strong class="text-center">Directores o director asignado</strong>
+              </p>
+              {% for evaluacion in evaluaciones %}
+                <div class="list-group-item">
+                  <h6 class="mb-1">{{ evaluacion.jurado.nombre_completo }}</h6>
+                  <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
+                  {% if evaluacion.comentarios %}
+                    <p class="card-text mb-1">
+                      <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+                    </p>
+                    <p class="card-text mb-1">
+                      <strong>Calificación:</strong> {{ evaluacion.calificacion }}
+                    </p>
+                    <p class="card-text mb-1">
+                      <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
+                    </p>
+                    <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_concepto">Enviar concepto de anteproyecto</button>
+                  {% else %}
+                    <p class="card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar Jurados</button>
+            <p class="card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
+          {% endif %}
         </div>
-        <div class="col mt-2 p-2">
-          <p class="text-center">
+        <div class="info-integrantes-ante col mt-2 p-2">
+          <p class="card-text text-center">
             <strong>Miembros</strong>
           </p>
           {% for key, integrante in datos_integrantes.items %}
@@ -64,8 +270,7 @@
               {% else %}
                 <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
               {% endif %}
-
-              <p class="m-1">
+              <p class="card-text m-1">
                 {{ integrante.nombre }}<br />
                 <strong>{{ integrante.grupo }}</strong>
               </p>
@@ -73,29 +278,468 @@
           {% endfor %}
         </div>
       </div>
+      <div class="container-fluid col mt-4">
+        {% if documento_radicado %}
+          <div class="p-4">
+            <h4 class="">Radicado ya enviado</h4>
+            <p>
+              card-text El radicado ya ha sido enviado al anteproyecto <strong>{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</strong>.
+            </p>
 
-      {% comment %}apartado de retroalimentacione{% endcomment %}
-      <div class="col container-fluid mt-4">
-        <h3>Enviar Retroalimentación</h3>
-        <form class="container-fluid p-2" action="{% url 'correspondencia:ver_proyecto_final' inf_proyecto.anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="form-group row m-3">
-            <label class="p-0 m-0" for="id_retroalimentacion"><strong>Retroalimentación:</strong></label>
-            {{ form_retroalimentacion.retroalimentacion }}
-          </div>
-          <div class="row container-fluid mt-2">
-            <div class="form-group col m-2">
-              <label class="p-0 m-0" for="id_doc_retroalimentacion"><strong>Documento de Retroalimentación:</strong></label>
-              {{ form_retroalimentacion.doc_retroalimentacion_convert }}
+            <!-- Enlace para descargar el PDF -->
+            <a class="btn btn-primary mb-3" href="data:application/pdf;base64,{{ documento_radicado }}" download="Radicado_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Descargar Radicado</a>
+
+            <!-- Vista previa del PDF embebido -->
+            <div class="border p-2">
+              <embed src="data:application/pdf;base64,{{ documento_radicado }}" type="application/pdf" width="100%" height="400px" />
             </div>
-            <div class="form-group col m-2">
-              <label class="p-0 m-0" for="id_estado"><strong>Estado:</strong></label>
-              {{ form_retroalimentacion.estado }}
+
+            <hr />
+            <p class="card-text mb-0">Si necesita hacer algún cambio, por favor actualice el documento.</p>
+            <form id="radicadoForm" action="{% url 'correspondencia:editar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="pdfFile" class="form-label">Carga el radicado</label>
+                <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
+                <small class="form-text text-muted">Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
+              </div>
+              <button type="submit" class="btn btn-primary btns-solicitudes" id="submitBtn">Subir Documento</button>
+            </form>
+          </div>
+        {% else %}
+          <div class="row align-items-start">
+            <!-- Columna del título -->
+            <div class="col-lg-6 col-md-12 mb-3">
+              <h3 class="text-center text-lg-start">Enviar radicado al proyecto "{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}"</h3>
+            </div>
+
+            <h1>{{ inf_proyecto.id }}</h1>
+            <!-- Columna del formulario -->
+            <div class="col-lg-6 col-md-12">
+              <form id="radicadoForm" action="{% url 'correspondencia:cargar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="pdfFile" class="form-label">Carga el radicado</label>
+                  <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
+                  <small class="form-text text-muted">Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
+                </div>
+                <button type="sumbit" class="btn btn-success" id="submitBtn">Subir Documento</button>
+              </form>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
+        {% endif %}
+      </div>
+      {% comment %} <div class="col container-fluid mt-4"></div> {% endcomment %}
+
+      <style>
+        .correspondencia .modal-content {
+          border: none;
+          border-radius: 12px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .correspondencia .modal-header {
+          border-bottom: 1px solid #eee;
+          padding: 1.5rem;
+          background: linear-gradient(145deg, #f8f9fa, #ffffff);
+        }
+        .correspondencia .modal-title {
+          font-size: 1.5rem;
+          font-weight: 500;
+          color: #333;
+        }
+        .correspondencia .btn-close {
+          opacity: 0.5;
+          transition: opacity 0.2s;
+        }
+        .correspondencia .btn-close:hover {
+          opacity: 1;
+        }
+        .correspondencia .form-directores-description {
+          color: #666;
+          font-size: 0.95rem;
+          margin-bottom: 1.5rem;
+          padding: 0.5rem;
+          background-color: #f8f9fa;
+          border-radius: 6px;
+        }
+        .correspondencia .form-directores-container {
+          max-height: 300px;
+          overflow-y: auto;
+          padding-right: 10px;
+        }
+        .correspondencia .form-directores-item {
+          padding: 0.75rem;
+          border-radius: 8px;
+          transition: background-color 0.2s;
+          cursor: pointer;
+        }
+        .correspondencia .form-directores-item:hover {
+          background-color: #f8f9fa;
+        }
+        .correspondencia .form-directores-label {
+          margin-bottom: 0;
+          cursor: pointer;
+          font-weight: 500;
+          flex-grow: 1;
+        }
+        .correspondencia .form-directores-checkbox {
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+        }
+        .correspondencia .modal-footer {
+          border-top: 1px solid #eee;
+          padding: 1rem 1.5rem;
+        }
+        .correspondencia .btn-primary {
+          background: linear-gradient(145deg, #007bff, #0056b3);
+          border: none;
+          padding: 0.5rem 1.5rem;
+          border-radius: 6px;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .correspondencia .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .correspondencia .btn-secondary {
+          background: #6c757d;
+          border: none;
+          padding: 0.5rem 1.5rem;
+          border-radius: 6px;
+        }
+      </style>
+
+      <div id="formJuradosModal" class="modal fade" tabindex="-1" aria-labelledby="formJuradosModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="formJuradosModalLabel">Seleccionar Jurados</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p class="card-text form-directores-description">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
+                  <path d="M card-text 8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path d="m card-text 8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                </svg>Selecciona uno o más jurados para asignar a este proyecto. Puedes elegir varios si es necesario.
+              </p>
+              <style>
+                .correspondencia .form-directores-container {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                  gap: 12px;
+                  max-height: 300px;
+                  overflow-y: auto;
+                  padding: 4px;
+                }
+                .correspondencia .form-directores-item {
+                  position: relative;
+                  padding: 12px 16px;
+                  border: 1px solid #e0e0e0;
+                  border-radius: 8px;
+                  transition: all 0.2s ease;
+                  cursor: pointer;
+                }
+                .correspondencia .form-directores-item:hover {
+                  background-color: #f8f9fa;
+                  border-color: #007bff;
+                }
+                .correspondencia .form-directores-checkbox {
+                  position: absolute;
+                  opacity: 0;
+                  cursor: pointer;
+                }
+                .correspondencia .form-directores-label {
+                  display: flex;
+                  align-items: center;
+                  margin: 0;
+                  padding-left: 32px;
+                  cursor: pointer;
+                  font-weight: 500;
+                  color: #333;
+                }
+                .correspondencia .form-directores-label::before {
+                  content: '';
+                  position: absolute;
+                  left: 16px;
+                  width: 20px;
+                  height: 20px;
+                  border: 2px solid #adb5bd;
+                  border-radius: 4px;
+                  transition: all 0.2s ease;
+                }
+                .correspondencia .form-directores-checkbox:checked + .form-directores-label::before {
+                  background-color: #007bff;
+                  border-color: #007bff;
+                }
+                .correspondencia .form-directores-checkbox:checked + .form-directores-label::after {
+                  content: '✓';
+                  position: absolute;
+                  left: 20px;
+                  color: white;
+                  font-size: 14px;
+                }
+                .correspondencia .form-directores-item:has(.form-directores-checkbox:checked) {
+                  background-color: #e8f0fe;
+                  border-color: #007bff;
+                }
+              </style>
+
+              <form id="directoresForm" action="{% url 'correspondencia:asignar_jurados' inf_proyecto.id %}" class="needs-validation form-directores-form" novalidate method="post">
+                {% csrf_token %}
+                <div class="form-directores-container">
+                  {% for director in directores %}
+                    <div class="form-directores-item" style=" display: flex !important;
+                flex-direction: row-reverse;
+                justify-content: center;
+                align-items: center;">
+                      {% if director.nombre_completo != inf_proyecto.anteproyecto.director or director.nombre_completo != inf_proyecto.anteproyecto.director %}
+                        <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.id }}" class="form-directores-checkbox" />
+                        <label for="{{ director.nombre_completo }}" class="form-directores-label">{{ director.nombre_completo }}</label>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" form="directoresForm" id="btnEnviarDirectores" class="btn btn-primary">
+                <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modal_concepto" tabindex="-1" aria-labelledby="modalConceptoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalConceptoLabel">Enviar Concepto de Anteproyecto</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion' inf_proyecto.anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                  <label class="p-0 m-0" for="id_retroalimentacion"><strong>Concepto:</strong></label>
+                  <textarea rows="" cols="" name="retroalimentacion" required></textarea>
+                  <small class="form-text text-muted">Por favor, proporciona un resumen claro y conciso del concepto.</small>
+                </div>
+
+                <div class="row container-fluid mt-2">
+                  <div class="form-group col-12 col-md-6 mb-3">
+                    <label for="formFile" class="form-label">Documento de Concepto:</label>
+                    <input class="form-control" type="file" id="formFile" name="doc_retroalimentacion" required />
+                    <small class="form-text text-muted">Sube un archivo PDF que contenga el concepto.</small>
+                  </div>
+
+                  <div class="form-group col-12 col-md-6 mb-3">
+                    <label class="p-0 m-0" for="id_estado"><strong>Estado:</strong></label>
+                    <select name="estado" required>
+                      <option value="True">Aprobado</option>
+                      <option value="False">Rechazado</option>
+                    </select>
+                    <small class="form-text text-muted">Selecciona el estado correspondiente al concepto.</small>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('btn-asignar').addEventListener('click', function () {
+        const formdirectores = document.getElementById('formDirectores')
+        formdirectores.style.position = 'fixed'
+        formdirectores.style.top = '50%'
+        formdirectores.style.left = '50%'
+        formdirectores.style.transform = 'translate(-50%, -50%)'
+        formdirectores.style.transition = 'opacity 0.5s'
+        formdirectores.style.opacity = '1'
+        formdirectores.style.zIndex = '1000'
+      })
+    
+      document.getElementById('btn-cerrar-directores').addEventListener('click', function () {
+        const formdirectores = document.getElementById('formDirectores')
+        console.log('funcionando')
+        formdirectores.style.opacity = '0'
+        formdirectores.style.transition = 'opacity 0.5s'
+    
+        setTimeout(() => {
+          formdirectores.style.zIndex = '-1'
+          formdirectores.style.position = 'absolute'
+        }, 500)
+      })
+    
+      document.getElementById('directoresForm').addEventListener('submit', function (event) {
+        event.preventDefault() // Prevenir el envío predeterminado
+    
+        const form = event.target
+    
+        // Verificar si el formulario es válido
+        if (!form.checkValidity()) {
+          event.stopPropagation()
+          form.classList.add('was-validated') // Mostrar errores de validación
+          Swal.fire({
+            icon: 'error',
+            title: 'Formulario incompleto',
+            text: 'Por favor, complete todos los campos requeridos antes de enviar.'
+          })
+          return
+        }
+    
+        Swal.fire({
+          title: '¿Está seguro de que desea enviar?',
+          text: 'Una vez enviado, no podrá cambiar su selección.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, enviar',
+          cancelButtonText: 'No, cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Mostrar animación de carga
+            Swal.fire({
+              title: 'Enviando...',
+              allowOutsideClick: false,
+              didOpen: () => {
+                Swal.showLoading() // Mostrar el spinner de carga
+              }
+            })
+    
+            // Agregar un delay de 3000 ms antes de enviar el formulario
+            setTimeout(() => {
+              form.submit() // Enviar el formulario después de 3 segundos
+            }, 3000)
+          }
+        })
+      })
+    
+      document.getElementById('submitBtn').addEventListener('click', function () {
+        const form = document.getElementById('radicadoForm')
+        const fileInput = document.getElementById('pdfFile')
+    
+        // Verificar si se ha seleccionado un archivo
+        if (!fileInput.files.length) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Formulario incompleto',
+            text: 'Por favor, complete todos los campos requeridos antes de enviar.'
+          })
+          return
+        }
+    
+        // Mostrar alerta de confirmación
+        Swal.fire({
+          title: '¿Está seguro de que desea enviar?',
+          text: 'Una vez enviado, no podrá cambiar su selección.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, enviar',
+          cancelButtonText: 'No, cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Mostrar animación de carga
+            Swal.fire({
+              title: 'Enviando...',
+              allowOutsideClick: false,
+              didOpen: () => {
+                Swal.showLoading() // Mostrar el spinner de carga
+              }
+            })
+    
+            // Agregar un delay de 3000 ms antes de enviar el formulario
+            setTimeout(() => {
+              form.submit() // Enviar el formulario después de 3 segundos
+            }, 3000)
+          }
+        })
+      })
+    
+      // Manejar el botón de enviar concepto
+      document.querySelector('.btn-concepto').addEventListener('click', function () {
+        const formConcepto = document.getElementById('formconcepto')
+    
+        formConcepto.style.position = 'fixed'
+        formConcepto.style.top = '50%'
+        formConcepto.style.left = '50%'
+        formConcepto.style.transform = 'translate(-50%, -50%)'
+        formConcepto.style.transition = 'opacity 0.5s'
+        formConcepto.style.opacity = '1'
+        formConcepto.style.zIndex = '1000'
+      })
+    
+      // Manejar el botón de cerrar el formulario
+      document.getElementById('btn-cerrar-concepto').addEventListener('click', function () {
+        const formConcepto = document.getElementById('formconcepto')
+        formConcepto.style.opacity = '0'
+        formConcepto.style.transition = 'opacity 0.5s'
+    
+        setTimeout(() => {
+          formConcepto.style.zIndex = '-1'
+          formConcepto.style.position = 'absolute'
+        }, 500)
+      })
+    
+      // Manejar el envío del formulario de concepto
+      document.getElementById('formconcepto').addEventListener('submit', function (event) {
+        event.preventDefault() // Prevenir el envío predeterminado
+    
+        const form = event.target
+    
+        // Verificar si el formulario es válido
+        if (!form.checkValidity()) {
+          event.stopPropagation()
+          form.classList.add('was-validated') // Mostrar errores de validación
+          Swal.fire({
+            icon: 'error',
+            title: 'Formulario incompleto',
+            text: 'Por favor, complete todos los campos requeridos antes de enviar.'
+          })
+          return
+        }
+    
+        Swal.fire({
+          title: '¿Está seguro de que desea enviar?',
+          text: 'Una vez enviado, no podrá cambiar su selección.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, enviar',
+          cancelButtonText: 'No, cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Mostrar animación de carga
+            Swal.fire({
+              title: 'Enviando...',
+              allowOutsideClick: false,
+              didOpen: () => {
+                Swal.showLoading() // Mostrar el spinner de carga
+              }
+            })
+    
+            // Agregar un delay de 3000 ms antes de enviar el formulario
+            setTimeout(() => {
+              form.submit() // Enviar el formulario después de 3 segundos
+            }, 3000)
+          }
+        })
+      })
+    })
+  </script>
 {% endblock %}

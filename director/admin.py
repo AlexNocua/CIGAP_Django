@@ -9,7 +9,7 @@ class ModelEvaluacionAnteproyectoAdmin(admin.ModelAdmin):
     date_hierarchy = 'fecha_evaluacion'
 
 class ModelEvaluacionProyectoFinalAdmin(admin.ModelAdmin):
-    list_display = ('evaluador', 'proyecto_final', 'calificacion', 'fecha_evaluacion', 'estado')
+    list_display = ('jurado', 'proyecto_final', 'calificacion', 'fecha_evaluacion', 'estado')
     search_fields = ('evaluador__email', 'proyecto_final__nombre')  # Ajusta según el campo correspondiente en ModelProyectoFinal
     list_filter = ('estado', 'fecha_evaluacion')
     ordering = ('-fecha_evaluacion',)
