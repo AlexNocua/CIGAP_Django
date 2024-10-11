@@ -68,35 +68,12 @@ class ModelFechasComiteAdmin(admin.ModelAdmin):
         "cuarto_encuentro",
         "extraordinaria",
     )
-    list_filter = (
-        "ano_actual",
-        "periodo_academico",
-        "primer_encuentro",
-        "segundo_encuentro",
-        "tercer_encuentro",
-        "cuarto_encuentro",
-        "extraordinaria",
-    )
-    search_fields = (
-        "ano_actual",
-        "periodo_academico",
-        "primer_encuentro",
-        "segundo_encuentro",
-        "tercer_encuentro",
-        "cuarto_encuentro",
-        "extraordinaria",
-    )
-    ordering = (
-        "-ano_actual",
-    )  # Ordena de forma descendente por la primera fecha de encuentro.
-    date_hierarchy = (
-        "ano_actual"  # Añade un filtro de jerarquía de fechas por `primer_encuentro`.
-    )
+    search_fields = ("ano_actual", "periodo_academico")
+    list_filter = ("periodo_academico",)
 
-    # Esto hará que las fechas se muestren con campos de selección de fecha y hora en el admin
     fieldsets = (
         (
-            "Fechas de Encuentros",
+            None,
             {
                 "fields": (
                     "ano_actual",
@@ -110,3 +87,8 @@ class ModelFechasComiteAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+
+        return form

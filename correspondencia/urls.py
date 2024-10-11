@@ -14,6 +14,11 @@ urlpatterns = [
         views.asignar_fechas_encuentros,
         name="asignar_fechas_encuentros",
     ),
+    path(
+        "editar_fechas_comite/<int:id>",
+        views.editar_fechas_comite,
+        name="editar_fechas_comite",
+    ),
     ###################################################################################################
     path("solicitudes", views.solicitudes, name="solicitudes"),
     path(

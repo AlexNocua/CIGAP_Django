@@ -159,10 +159,12 @@ class ModelDocumentos(models.Model):
 
 
 class ModelFechasComite(models.Model):
-    ano_actual = models.DateTimeField(null=True, blank=True)
+    ano_actual = models.IntegerField(null=True, blank=True)  # Cambiar a IntegerField
     periodo_academico = models.IntegerField(null=True, blank=True)
-    primer_encuentro = models.DateTimeField(null=True, blank=True)
-    segundo_encuentro = models.DateTimeField(null=True, blank=True)
-    tercer_encuentro = models.DateTimeField(null=True, blank=True)
-    cuarto_encuentro = models.DateTimeField(null=True, blank=True)
-    extraordinaria = models.DateTimeField(null=True, blank=True)
+    primer_encuentro = models.DateField(
+        null=True, blank=True
+    )  # Si solo necesitas la fecha
+    segundo_encuentro = models.DateField(null=True, blank=True)
+    tercer_encuentro = models.DateField(null=True, blank=True)
+    cuarto_encuentro = models.DateField(null=True, blank=True)
+    extraordinaria = models.DateField(null=True, blank=True)

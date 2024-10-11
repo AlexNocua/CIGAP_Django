@@ -322,28 +322,106 @@ def recuperar_directores():
         directores = None
         return directores
 
+
 def asignar_fechas_encuentros(request):
-    if request.method == 'POST':
-        ano_actual = request.POST.get('')
-        periodo_academico =request.POST.get('')
-        primer_encuentro =request.POST.get('')
-        segundo_encuentro =request.POST.get('')
-        tercer_encuentro =request.POST.get('')
-        cuarto_encuentro =request.POST.get('')
-        extraordinaria =request.POST.get('')
-        
-        new_fechas_encuentro = ModelFechasComite(
-            ano_actual = ano_actual,
-            periodo_academico = periodo_academico,
-             primer_encuentro =primer_encuentro,
-        segundo_encuentro =segundo_encuentro,
-        tercer_encuentro =tercer_encuentro,
-        cuarto_encuentro =cuarto_encuentro,
-        extraordinaria = extraordinaria
-        )
-        return redirect('correspondencia:principal_correspondencia')
+    if request.method == "POST":
+        ano_actual = datetime.now().year
+        periodo_academico = int(
+            request.POST.get("periodo_academico")
+        )  # Convertir a entero
+        primer_encuentro = request.POST.get("fecha_primer_encuentro")
+        segundo_encuentro = request.POST.get("fecha_segundo_encuentro")
+        tercer_encuentro = request.POST.get("fecha_tercer_encuentro")
+        cuarto_encuentro = request.POST.get("fecha_cuarto_encuentro")
+        extraordinaria = request.POST.get("fecha_extraordinaria")
+
+        fecha_hoy = datetime.now().date()
+        fechas_validas = True
+
+        # Determinar el periodo académico actual basado en la fecha actual
+        if fecha_hoy.month <= 6:
+            periodo_actual = 1
+        else:
+            periodo_actual = 2
+
+        # Verificar si ya existen fechas para el año y periodo académico actual
+        if ModelFechasComite.objects.filter(
+            ano_actual=ano_actual, periodo_academico=periodo_actual
+        ).exists():
+            messages.error(
+                request,
+                "Ya se han registrado fechas para este periodo académico en el año actual, edite las existentes.",
+            )
+            return redirect("correspondencia:principal_correspondencia")
+
+        # Validar si el periodo académico ingresado coincide con el actual
+        if periodo_academico != periodo_actual:
+            messages.error(
+                request,
+                f"No puedes registrar fechas para el periodo académico {periodo_academico} porque actualmente estamos en el periodo académico {periodo_actual}.",
+            )
+            return redirect("correspondencia:principal_correspondencia")
+
+        # Comparar las fechas de los encuentros con la fecha actual
+        if primer_encuentro and primer_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del primer encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if segundo_encuentro and segundo_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del segundo encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if tercer_encuentro and tercer_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del tercer encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if cuarto_encuentro and cuarto_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del cuarto encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if extraordinaria and extraordinaria < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha de la reunión extraordinaria debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        # Si todas las fechas son válidas, guardar los datos
+        if fechas_validas:
+            new_fechas_encuentro = ModelFechasComite(
+                ano_actual=ano_actual,
+                periodo_academico=periodo_academico,
+                primer_encuentro=primer_encuentro,
+                segundo_encuentro=segundo_encuentro,
+                tercer_encuentro=tercer_encuentro,
+                cuarto_encuentro=cuarto_encuentro,
+                extraordinaria=extraordinaria,
+            )
+            new_fechas_encuentro.save()
+            messages.success(
+                request, "Las fechas de los encuentros han sido asignadas exitosamente."
+            )
+            return redirect("correspondencia:principal_correspondencia")
+        else:
+            # En caso de fechas inválidas, redirigir sin guardar
+            return redirect("correspondencia:principal_correspondencia")
     else:
-        return redirect('correspondencia:principal_correspondencia')
+        messages.error(request, "El método utilizado no es válido.")
+        return redirect("correspondencia:principal_correspondencia")
+
+    return redirect("correspondencia:principal_correspondencia")
 
 
 @login_required
@@ -351,18 +429,87 @@ def asignar_fechas_encuentros(request):
 def principal_correspondencia(request):
     context = datosusuario(request)
     fechas_comite = recuperar_fechas_comite()
-    if fechas_comite :
-        context['fechas_comite'] = fechas_comite
+    ano_actual = datetime.now().year
+    context["ano_actual"] = ano_actual
+    if fechas_comite:
+        context["fechas_comite"] = fechas_comite
     num_solicitudes = recuperar_num_solicitudes()
     num_formatos = recuperar_num_formatos_comite()
     num_proyectos = recuperar_num_proyectos_pendientes()
     num_respuestas = recuperar_num_respuestas()
 
+    fecha_actual = datetime.now().date()
+    context["fecha_actual"] = fecha_actual
     context["num_solicitudes"] = num_solicitudes
     context["num_formatos"] = num_formatos
     context["num_proyectos"] = num_proyectos
     context["num_respuestas"] = num_respuestas
     return render(request, "correspondencia/base_correspondencia.html", context)
+
+
+def editar_fechas_comite(request, id):
+    fechas = (
+        ModelFechasComite.objects.get(id=id)
+        if ModelFechasComite.objects.filter(id=id).exists()
+        else None
+    )
+    fecha_hoy = datetime.now().date()
+    fechas_validas = True
+
+    if fechas:
+        primer_encuentro = request.POST.get("fecha_primer_encuentro")
+        segundo_encuentro = request.POST.get("fecha_segundo_encuentro")
+        tercer_encuentro = request.POST.get("fecha_tercer_encuentro")
+        cuarto_encuentro = request.POST.get("fecha_cuarto_encuentro")
+        extraordinaria = request.POST.get("fecha_extraordinaria")
+
+        if primer_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del primer encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if segundo_encuentro and segundo_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del segundo encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if tercer_encuentro and tercer_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del tercer encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if cuarto_encuentro and cuarto_encuentro < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha del cuarto encuentro debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+
+        if extraordinaria and extraordinaria < fecha_hoy.isoformat():
+            messages.error(
+                request,
+                "La fecha de la reunión extraordinaria debe ser hoy o una fecha futura.",
+            )
+            fechas_validas = False
+        if fechas_validas:
+            fechas.primer_encuentro = primer_encuentro
+            fechas.segundo_encuentro = segundo_encuentro
+            fechas.tercer_encuentro = tercer_encuentro
+            fechas.cuarto_encuentro = cuarto_encuentro
+            fechas.extraordinaria = extraordinaria
+            fechas.save()
+            messages.success(
+                request,
+                "Las fechas de los encuentros han sido actualizadas exitosamente.",
+            )
+            return redirect("correspondencia:principal_correspondencia")
+        return redirect("correspondencia:principal_correspondencia")
 
 
 ########################################################################################################################
