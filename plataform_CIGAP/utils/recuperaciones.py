@@ -13,6 +13,7 @@ from estudiante.models import (
 from director.models import *
 from correspondencia.models import (
     ModelDocumentos,
+    ModelFechasComite,
     ModelSolicitudes,
     ModelInformacionEntregaFinal,
     ModelRetroalimentaciones,
@@ -135,6 +136,15 @@ def recuperar_fechas_proyecto(proyecto):
     fechas = (
         ModelFechasProyecto.objects.get(proyecto_final=proyecto)
         if ModelFechasProyecto.objects.filter(proyecto_final=proyecto).exists()
+        else None
+    )
+    return fechas
+
+
+def recuperar_fechas_comite():
+    fechas = (
+        ModelFechasComite.objects.all()
+        if ModelFechasComite.objects.all().exists()
         else None
     )
     return fechas

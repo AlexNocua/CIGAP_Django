@@ -1,41 +1,112 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import ModelRetroalimentaciones, ModelAsignacionJurados, ModelInformacionEntregaFinal, ModelSolicitudes,ModelDocumentos
+from .models import (
+    ModelFechasComite,
+    ModelRetroalimentaciones,
+    ModelAsignacionJurados,
+    ModelInformacionEntregaFinal,
+    ModelSolicitudes,
+    ModelDocumentos,
+)
 import base64
+
 # Register your models here.
 
 # Registro del modelo de retroalimentaciones en el panel admin
 
 
 class ModelRetroalimentacionesAdmin(admin.ModelAdmin):
-    list_display = ('anteproyecto', 'proyecto_final', 'retroalimentacion', 'fecha_retroalimentacion',
-                    'estado', 'revs_dadas', 'doc_retroalimentacion_link')
+    list_display = (
+        "anteproyecto",
+        "proyecto_final",
+        "retroalimentacion",
+        "fecha_retroalimentacion",
+        "estado",
+        "revs_dadas",
+        "doc_retroalimentacion_link",
+    )
 
     def doc_retroalimentacion_link(self, obj):
         if obj.doc_retroalimentacion:
             if isinstance(obj.doc_retroalimentacion, bytes):
-                base64_data = base64.b64encode(
-                    obj.doc_retroalimentacion).decode('utf8')
-                url = f'data:application/octet-stream;base64,{base64_data}'
+                base64_data = base64.b64encode(obj.doc_retroalimentacion).decode("utf8")
+                url = f"data:application/octet-stream;base64,{base64_data}"
                 if obj.anteproyecto:
                     nombre_anteproyecto = obj.anteproyecto.nombre_anteproyecto
                 else:
-                    nombre_anteproyecto = 'Desconocido'
-                return format_html('<a href="{}" download="{}">Descargar Carta de Presentación</a>',
-                                   url,
-                                   f'Retroalimentacion_{nombre_anteproyecto}.pdf')
-        return 'No Cargado'
-    doc_retroalimentacion_link.short_description = 'Documento retroalimentado'
+                    nombre_anteproyecto = "Desconocido"
+                return format_html(
+                    '<a href="{}" download="{}">Descargar Carta de Presentación</a>',
+                    url,
+                    f"Retroalimentacion_{nombre_anteproyecto}.pdf",
+                )
+        return "No Cargado"
+
+    doc_retroalimentacion_link.short_description = "Documento retroalimentado"
 
 
-admin.site.register(ModelRetroalimentaciones,
-                    ModelRetroalimentacionesAdmin)
+admin.site.register(ModelRetroalimentaciones, ModelRetroalimentacionesAdmin)
 
 # Registro del modelo de Asignacion de jurados en el panel admin
 admin.site.register(ModelAsignacionJurados)
 # Registro del modelo de Informacion de entrega Final de jurados en el panel admin
 admin.site.register(ModelInformacionEntregaFinal)
 # registro del modelo de solicitudes especificas
-admin.site.register(ModelSolicitudes) 
+admin.site.register(ModelSolicitudes)
 # registro del modele de formatos
-admin.site.register(ModelDocumentos) 
+admin.site.register(ModelDocumentos)
+
+
+@admin.register(ModelFechasComite)
+class ModelFechasComiteAdmin(admin.ModelAdmin):
+    list_display = (
+        "ano_actual",
+        "periodo_academico",
+        "primer_encuentro",
+        "segundo_encuentro",
+        "tercer_encuentro",
+        "cuarto_encuentro",
+        "extraordinaria",
+    )
+    list_filter = (
+        "ano_actual",
+        "periodo_academico",
+        "primer_encuentro",
+        "segundo_encuentro",
+        "tercer_encuentro",
+        "cuarto_encuentro",
+        "extraordinaria",
+    )
+    search_fields = (
+        "ano_actual",
+        "periodo_academico",
+        "primer_encuentro",
+        "segundo_encuentro",
+        "tercer_encuentro",
+        "cuarto_encuentro",
+        "extraordinaria",
+    )
+    ordering = (
+        "-ano_actual",
+    )  # Ordena de forma descendente por la primera fecha de encuentro.
+    date_hierarchy = (
+        "ano_actual"  # Añade un filtro de jerarquía de fechas por `primer_encuentro`.
+    )
+
+    # Esto hará que las fechas se muestren con campos de selección de fecha y hora en el admin
+    fieldsets = (
+        (
+            "Fechas de Encuentros",
+            {
+                "fields": (
+                    "ano_actual",
+                    "periodo_academico",
+                    "primer_encuentro",
+                    "segundo_encuentro",
+                    "tercer_encuentro",
+                    "cuarto_encuentro",
+                    "extraordinaria",
+                )
+            },
+        ),
+    )

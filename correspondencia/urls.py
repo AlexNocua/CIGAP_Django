@@ -9,6 +9,11 @@ urlpatterns = [
     # verificacion del funcionamiento de las rutas de las aplicaciones
     # path('', views.funcionando, name='funcionando')
     path("", views.principal_correspondencia, name="principal_correspondencia"),
+    path(
+        "asignar_fechas_encuentros",
+        views.asignar_fechas_encuentros,
+        name="asignar_fechas_encuentros",
+    ),
     ###################################################################################################
     path("solicitudes", views.solicitudes, name="solicitudes"),
     path(

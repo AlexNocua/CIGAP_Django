@@ -17,6 +17,7 @@ from login.views import editar_usuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.recuperaciones import (
+    recuperar_fechas_comite,
     recuperar_fechas_proyecto,
     recuperar_num_proyectos_terminados,
     recuperar_num_proyectos_pendientes,
@@ -42,6 +43,7 @@ from estudiante.models import ModelAnteproyecto, ModelProyectoFinal, ModelFechas
 from director.models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
 from login.models import Usuarios
 from correspondencia.models import (
+    ModelFechasComite,
     ModelRetroalimentaciones,
     ModelSolicitudes,
     ModelAsignacionJurados,
@@ -320,11 +322,37 @@ def recuperar_directores():
         directores = None
         return directores
 
+def asignar_fechas_encuentros(request):
+    if request.method == 'POST':
+        ano_actual = request.POST.get('')
+        periodo_academico =request.POST.get('')
+        primer_encuentro =request.POST.get('')
+        segundo_encuentro =request.POST.get('')
+        tercer_encuentro =request.POST.get('')
+        cuarto_encuentro =request.POST.get('')
+        extraordinaria =request.POST.get('')
+        
+        new_fechas_encuentro = ModelFechasComite(
+            ano_actual = ano_actual,
+            periodo_academico = periodo_academico,
+             primer_encuentro =primer_encuentro,
+        segundo_encuentro =segundo_encuentro,
+        tercer_encuentro =tercer_encuentro,
+        cuarto_encuentro =cuarto_encuentro,
+        extraordinaria = extraordinaria
+        )
+        return redirect('correspondencia:principal_correspondencia')
+    else:
+        return redirect('correspondencia:principal_correspondencia')
+
 
 @login_required
 @grupo_usuario("Correspondencia")
 def principal_correspondencia(request):
     context = datosusuario(request)
+    fechas_comite = recuperar_fechas_comite()
+    if fechas_comite :
+        context['fechas_comite'] = fechas_comite
     num_solicitudes = recuperar_num_solicitudes()
     num_formatos = recuperar_num_formatos_comite()
     num_proyectos = recuperar_num_proyectos_pendientes()

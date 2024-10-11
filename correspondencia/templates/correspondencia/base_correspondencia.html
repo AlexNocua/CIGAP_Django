@@ -93,7 +93,7 @@
     }
   </style>
 
-  <main class="contenido_correspondencia container mt-5 d-flex position-relative justify-content-center align-items-center">
+  <main class="contenido_correspondencia container mt-5 d-flex flex-column position-relative justify-content-center align-items-center">
     <style>
       /**/
       
@@ -110,7 +110,6 @@
       .btn-primary,
       .btn-warning,
       .btn-danger {
-      
         border: none;
         border-radius: 6px;
         padding: 0.5rem 1rem;
@@ -143,7 +142,7 @@
         transform: scale(1.1);
       }
       
-      .card-text  {
+      .card-text {
         color: #666;
         font-size: 0.95rem;
       }
@@ -217,121 +216,270 @@
       .correspondencia .card-content {
         padding: 0.5rem;
       }
+      .content_fechas {
+        margin: 4px 0;
+        border-top: 1px solid #cacaca;
+      }
+      
+      .btn_fecha {
+        border: none;
+        background: linear-gradient(136deg, #437c30, 10%, #081905);
+        border-radius: 12px;
+        color: #fff;
+        padding: 4px 12px;
+      }
+      .col_fechas {
+        margin: 8px;
+      }
+      
+      .div_content_fechas {
+        color: #fff;
+        width: 100%;
+        background: var(--colores_institucionalesfondoDegradado1);
+        padding: 8px 4px;
+        border-radius: 30px;
+      }
+      .div_content_fechas .col {
+        margin: 8px;
+      }
+      .div_content_fechas .num_encuentro {
+        display: flex;
+        text-align: center;
+        color: #3d7431;
+        background: #fff;
+        font-weight: 700;
+        font-size: 20px;
+        width: 30px;
+        border-radius: 50%;
+        height: 30px;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
-    <div class="correspondencia row content_correspondecia justify-content-center position-relative g-4">
-      <!-- Card 1 -->
-      <div class="card-content col-md-3">
-        <div class="d-flex card h-100 text-center">
-          <div class="card-body">
-            <h2 class="card-title">Solicitudes</h2>
-            <p class="card-text">Explore las solicitudes presentadas por los estudiantes.</p>
-          </div>
-          <div class="card-footer link-card">
-            <a href="{% url 'correspondencia:solicitudes' %}" class="d-block">
-              <img src="{% static 'correspondencia/icons/image_documentos.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de solicitudes: {{ num_solicitudes }}</p>
-            </a>
+
+    <div class="correspondencia d-flex justify-content-center align-items-center flex-column">
+      <div class="row row content_correspondecia justify-content-center position-relative g-4">
+        <!-- Card 1 -->
+        <div class="card-content col-md-3">
+          <div class="d-flex card h-100 text-center">
+            <div class="card-body">
+              <h2 class="card-title">Solicitudes</h2>
+              <p class="card-text">Explore las solicitudes presentadas por los estudiantes.</p>
+            </div>
+            <div class="card-footer link-card">
+              <a href="{% url 'correspondencia:solicitudes' %}" class="d-block">
+                <img src="{% static 'correspondencia/icons/image_documentos.png' %}" alt="icon" class="img-fluid mb-2" />
+                <p class="card-text">Número de solicitudes: {{ num_solicitudes }}</p>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Card 2 -->
-      <div class="card-content col-md-3">
-        <div class="d-flex card h-100 text-center">
-          <div class="card-body">
-            <h2 class="card-title">Respuestas</h2>
-            <p class="card-text">Infórmese sobre las respuestas a las solicitudes realizadas.</p>
-          </div>
-          <div class="card-footer link-card">
-            <a href="{% url 'correspondencia:solicitudes_respondidas' %}" class="d-block">
-              <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de respuestas: {{ num_respuestas }}</p>
-            </a>
+        <!-- Card 2 -->
+        <div class="card-content col-md-3">
+          <div class="d-flex card h-100 text-center">
+            <div class="card-body">
+              <h2 class="card-title">Respuestas</h2>
+              <p class="card-text">Infórmese sobre las respuestas a las solicitudes realizadas.</p>
+            </div>
+            <div class="card-footer link-card">
+              <a href="{% url 'correspondencia:solicitudes_respondidas' %}" class="d-block">
+                <img src="{% static 'correspondencia/icons/image_respuesta.png' %}" alt="icon" class="img-fluid mb-2" />
+                <p class="card-text">Número de respuestas: {{ num_respuestas }}</p>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Card 3 -->
-      <div class="card-content col-md-3">
-        <div class="d-flex card h-100 text-center">
-          <div class="card-body">
-            <h2 class="card-title">Proyectos</h2>
-            <p class="card-text">Infórmese sobre los proyectos en curso y finalizados.</p>
-          </div>
-          <div class="card-footer link-card">
-            <a href="{% url 'correspondencia:proyectos' %}" class="d-block">
-              <img src="{% static 'correspondencia/icons/image_proyecto.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Proyectos en curso: {{ num_proyectos }}</p>
-            </a>
+        <!-- Card 3 -->
+        <div class="card-content col-md-3">
+          <div class="d-flex card h-100 text-center">
+            <div class="card-body">
+              <h2 class="card-title">Proyectos</h2>
+              <p class="card-text">Infórmese sobre los proyectos en curso y finalizados.</p>
+            </div>
+            <div class="card-footer link-card">
+              <a href="{% url 'correspondencia:proyectos' %}" class="d-block">
+                <img src="{% static 'correspondencia/icons/image_proyecto.png' %}" alt="icon" class="img-fluid mb-2" />
+                <p class="card-text">Proyectos en curso: {{ num_proyectos }}</p>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Card 4 -->
-      <div class="card-content col-md-3">
-        <div class="d-flex card h-100 text-center">
-          <div class="card-body">
-            <h2 class="card-title">Formatos</h2>
-            <p class="card-text">Cargue y revise los formatos de documentos correspondientes.</p>
+        <!-- Card 4 -->
+        <div class="card-content col-md-3">
+          <div class="d-flex card h-100 text-center">
+            <div class="card-body">
+              <h2 class="card-title">Formatos</h2>
+              <p class="card-text">Cargue y revise los formatos de documentos correspondientes.</p>
+            </div>
+            <div class="card-footer link-card">
+              <a href="{% url 'correspondencia:formatos_documentos' %}" class="d-block">
+                <img src="{% static 'correspondencia/icons/image_solicitud.png' %}" alt="icon" class="img-fluid mb-2" />
+                <p class="card-text">Número de formatos: {{ num_formatos }}</p>
+              </a>
+            </div>
           </div>
-          <div class="card-footer link-card">
-            <a href="{% url 'correspondencia:formatos_documentos' %}" class="d-block">
-              <img src="{% static 'correspondencia/icons/image_solicitud.png' %}" alt="icon" class="img-fluid mb-2" />
-              <p class="card-text">Número de formatos: {{ num_formatos }}</p>
-            </a>
-          </div>
+        </div>
+        <div class="views position-relative justify-content-center align-items-center w-100">
+          {% block content_solicitudes %}
+
+          {% endblock %}
+          {% block list_proyect %}
+
+          {% endblock %}
+          {% block view_anteproyecto %}
+
+          {% endblock %}
+          {% block view_proyecto %}
+
+          {% endblock %}
+          {% block view_solicitud_especial %}
+
+          {% endblock %}
+          {% block asignacion_jurados %}
+
+          {% endblock %}
+          {% block view_solicitudes %}
+
+          {% endblock %}
+          {% block view_retroalimentacion %}
+
+          {% endblock %}
+          {% block view_documentos_cargados %}
+
+          {% endblock %}
+          {% block view_documentos_correspondencia %}
+
+          {% endblock %}
+          {% block formato %}
+
+          {% endblock %}
+          {% block proyectos %}
+
+          {% endblock %}
+          {% block proyectos_finalizados %}
+
+          {% endblock %}
+          {% block proyectos_actuales %}
+
+          {% endblock %}
+          {% block proyecto %}
+
+          {% endblock %}
+          {% include 'components/toasts.html' %}
         </div>
       </div>
     </div>
-
-    <div class="views position-relative justify-content-center align-items-center w-100">
-      {% block content_solicitudes %}
-
-      {% endblock %}
-      {% block list_proyect %}
-
-      {% endblock %}
-      {% block view_anteproyecto %}
-
-      {% endblock %}
-      {% block view_proyecto %}
-
-      {% endblock %}
-      {% block view_solicitud_especial %}
-
-      {% endblock %}
-      {% block asignacion_jurados %}
-
-      {% endblock %}
-      {% block view_solicitudes %}
-
-      {% endblock %}
-      {% block view_retroalimentacion %}
-
-      {% endblock %}
-      {% block view_documentos_cargados %}
-
-      {% endblock %}
-      {% block view_documentos_correspondencia %}
-
-      {% endblock %}
-      {% block formato %}
-
-      {% endblock %}
-      {% block proyectos %}
-
-      {% endblock %}
-      {% block proyectos_finalizados %}
-
-      {% endblock %}
-      {% block proyectos_actuales %}
-
-      {% endblock %}
-      {% block proyecto %}
-
-      {% endblock %}
-      {% include 'components/toasts.html' %}
-    </div>
+    {% if fechas_comite %}
+      <nav class="row w-100 mt-3 d-flex flex-column justify-content-center align-items-center">
+        <p class="text-center mb-2" style="border-top:1px solid #cacaca;">
+          <b>Fechas de encuentro del semestre actual</b>
+          <br />
+          <small class="text-center">Fechas de encuentro del semestre actual</small>
+        </p>
+        <div class="content_fechas d-flex justify-content-center align-items-center">
+          <div class="col_fechas col">
+            <div class="div_content_fechas d-flex justify-content-around align-items-center">
+              <h6 class="num_encuentro m-0">1</h6>
+              <p class="p-0 m-0">2 de octubre</p>
+            </div>
+          </div>
+          <div class="col_fechas col">
+            <div class="div_content_fechas d-flex justify-content-around align-items-center">
+              <h6 class="num_encuentro m-0">1</h6>
+              <p class="p-0 m-0">2 de octubre</p>
+            </div>
+          </div>
+          <div class="col_fechas col">
+            <div class="div_content_fechas d-flex justify-content-around align-items-center">
+              <h6 class="num_encuentro m-0">1</h6>
+              <p class="p-0 m-0">2 de octubre</p>
+            </div>
+          </div>
+          <div class="col_fechas col">
+            <div class="div_content_fechas d-flex justify-content-around align-items-center">
+              <h6 class="num_encuentro m-0">1</h6>
+              <p class="p-0 m-0">2 de octubre</p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+          <button type="button" class="btn_fecha btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFechasComite"><small>Edite o agregue alguna fecha</small></button>
+        </div>
+      </nav>
+    {% else %}
+      <div class="d-flex mt-3 flex-column justify-content-center align-items-center"></div>
+      <p class="text-center mb-2" style="border-top:1px solid #cacaca;">
+        <b>Fechas de encuentro del semestre actual</b>
+        <br />
+        <small class="text-center">No se encuentra ninguna fecha registrada</small>
+      </p>
+      <div class="d-flex justify-content-center align-items-center">
+        <button type="button" class="btn_fecha btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFechasComite"><small>Edite o agregue alguna fecha</small></button>
+      </div>
+    {% endif %}
   </main>
+
+  <div class="modal fade" id="modalFechasComite" tabindex="-1" aria-labelledby="modalFechasComiteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFechasComiteLabel">Editar o agregar fechas del comité</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario con inputs tipo date -->
+          <form id="formFechasComite" action="{% url 'correspondencia:asignar_fechas_encuentros' %}" method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="fecha_primer_encuentro" class="form-label">Seleccione el periodo academico</label>
+              <select required name="periodo_academico">
+                <option checked>Seleccione el periodo academico</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select>
+              <small class="form-text text-muted">Seleccione la fecha del primer encuentro.</small>
+            </div>
+            <div class="mb-3">
+              <label for="fecha_primer_encuentro" class="form-label">Fecha del Primer Encuentro</label>
+              <input type="date" class="form-control" id="fecha_primer_encuentro" name="fecha_primer_encuentro" required />
+              <small class="form-text text-muted">Seleccione la fecha del primer encuentro.</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="fecha_segundo_encuentro" class="form-label">Fecha del Segundo Encuentro</label>
+              <input type="date" class="form-control" id="fecha_segundo_encuentro" name="fecha_segundo_encuentro" />
+              <small class="form-text text-muted">Seleccione la fecha del segundo encuentro (opcional).</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="fecha_tercer_encuentro" class="form-label">Fecha del Tercer Encuentro</label>
+              <input type="date" class="form-control" id="fecha_tercer_encuentro" name="fecha_tercer_encuentro" />
+              <small class="form-text text-muted">Seleccione la fecha del tercer encuentro (opcional).</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="fecha_cuarto_encuentro" class="form-label">Fecha del Cuarto Encuentro</label>
+              <input type="date" class="form-control" id="fecha_cuarto_encuentro" name="fecha_cuarto_encuentro" />
+              <small class="form-text text-muted">Seleccione la fecha del cuarto encuentro (opcional).</small>
+            </div>
+            <div class="mb-3">
+              <label for="fecha_cuarto_encuentro" class="form-label">Fecha de una Reunion Extraordinaria</label>
+              <input type="date" class="form-control" id="fecha_cuarto_encuentro" name="fecha_cuarto_encuentro" />
+              <small class="form-text text-muted">Seleccione la fecha del cuarto encuentro (opcional).</small>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" form="formFechasComite" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {% include 'components/config_user.html' %}
 {% endblock %}
