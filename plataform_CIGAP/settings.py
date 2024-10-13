@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
+DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
@@ -65,8 +65,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "plataform_CIGAP.urls"
@@ -111,10 +111,20 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-DATABASES = {
-    "default": dj_database_url.parse(os.getenv("DATABASE_URL"), conn_max_age=600),
-}
 
+
+database_url = os.getenv("DATABASE_URL")
+
+
+def base_dir():
+    print(f"Database URL: {database_url}")
+    return f"Database URL: {database_url}"
+
+
+# Configurar la base de datos
+DATABASES = {
+    "default": dj_database_url.parse(database_url, conn_max_age=600),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -194,4 +204,4 @@ CSRF_FAILURE_VIEW = "plataform_CIGAP.views.csrf_failure"
 # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 # DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

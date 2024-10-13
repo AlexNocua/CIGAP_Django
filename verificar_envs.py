@@ -1,6 +1,9 @@
 import os
 from dotenv import load_dotenv
 
+from plataform_CIGAP.settings import base_dir
+
+print(base_dir())
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
