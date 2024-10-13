@@ -1,4 +1,5 @@
 # Asegúrate de que la ruta de importación sea correcta
+from plataform_CIGAP.settings import base_dir
 from .models import Usuarios  # Asegúrate de importar tu modelo
 import pythoncom
 import win32com.client as win32
@@ -18,12 +19,14 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 import re
+
 # Create your views here.
 
 
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
+
 # from django.contrib.auth.models import User
 # importacion de los models
 
@@ -44,8 +47,11 @@ from .models import Usuarios
 
 # utilidades
 def existe_usuario(email):
-    usuario = Usuarios.objects.get(email=email) if Usuarios.objects.filter(
-        email=email).exists() else None
+    usuario = (
+        Usuarios.objects.get(email=email)
+        if Usuarios.objects.filter(email=email).exists()
+        else None
+    )
     if not usuario:
         return None
     return True
@@ -53,9 +59,11 @@ def existe_usuario(email):
 
 # Creacion de la vista global del login
 def loginapps(request):
-    if request.method == 'POST':
-        username = request.POST.get('email')
-        password = request.POST.get('password')
+
+    # print(base_dir())
+    if request.method == "POST":
+        username = request.POST.get("email")
+        password = request.POST.get("password")
         print(f"Username: {username}, Password: {password}")
         user = authenticate(request, username=username, password=password)
         print(f"Authenticated User: {user}")
@@ -63,54 +71,61 @@ def loginapps(request):
         if user is not None:
             print("User is authenticated")
             auth_login(request, user)
-            user_groups = user.groups.values_list('name', flat=True)
+            user_groups = user.groups.values_list("name", flat=True)
             print(f"User Groups: {user_groups}")
-            if 'Estudiantes' in user_groups:
-                return redirect('estudiante:principal_estudiante')
-            elif 'Directores' in user_groups:
-                return redirect('director:principal_director')
-            elif 'Correspondencia' in user_groups:
-                return redirect('correspondencia:principal_correspondencia')
+            if "Estudiantes" in user_groups:
+                return redirect("estudiante:principal_estudiante")
+            elif "Directores" in user_groups:
+                return redirect("director:principal_director")
+            elif "Correspondencia" in user_groups:
+                return redirect("correspondencia:principal_correspondencia")
             else:
                 return HttpResponse("No tienes acceso a ninguna sección.")
         else:
-            messages.error(request, "Verifique que el correo y la contraseña sean correctos.")
+            messages.error(
+                request, "Verifique que el correo y la contraseña sean correctos."
+            )
             return redirect("login:loginapps")
 
     else:
         form = FormRegistro
-        return render(request, "login.html", {'form': form})
+        return render(request, "login.html", {"form": form})
 
 
 def registro(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = FormRegistro(request.POST)
-        email = form.data.get('email')
+        email = form.data.get("email")
         existe = existe_usuario(email)
 
         if existe:
             messages.error(
-                request, f"Error en el registro. El correo electrónico {email} ya se encuentra registrado.")
-            return redirect('login:loginapps')
+                request,
+                f"Error en el registro. El correo electrónico {email} ya se encuentra registrado.",
+            )
+            return redirect("login:loginapps")
 
         if form.is_valid():
             user = form.save()
             messages.success(
-                request, f"El usuario {user.email} ha sido registrado exitosamente.")
-            return redirect('login:loginapps')
+                request, f"El usuario {user.email} ha sido registrado exitosamente."
+            )
+            return redirect("login:loginapps")
         else:
 
-            password1_errors = form.errors.get('password1', [])
-            password2_errors = form.errors.get('password2', [])
+            password1_errors = form.errors.get("password1", [])
+            password2_errors = form.errors.get("password2", [])
             if password1_errors:
                 messages.error(
-                    request, f"Error en el registro. {' '.join(password1_errors)}")
+                    request, f"Error en el registro. {' '.join(password1_errors)}"
+                )
             if password2_errors:
                 messages.error(
-                    request, f"Error en el registro. {' '.join(password2_errors)}")
-            return redirect('login:loginapps')
+                    request, f"Error en el registro. {' '.join(password2_errors)}"
+                )
+            return redirect("login:loginapps")
     else:
-        return redirect('login:loginapps')
+        return redirect("login:loginapps")
 
 
 # esta es la funcion que permite cambiar los datos de cada uno de los estudiantes
@@ -119,10 +134,9 @@ def editar_usuario(request):
     # recuperacion de la imagen propia del usuaario en formato binario
     # print(imagen, 'esta es la imagen')
     imagen = usuario.imagen
-    imagen_convertida = base64.b64encode(
-        imagen).decode('utf-8') if imagen else ''
+    imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = FormEditarUsuario(request.POST, request.FILES, instance=usuario)
         if form.is_valid():
             user = form.save()
@@ -131,26 +145,34 @@ def editar_usuario(request):
             # Autenticar de nuevo al usuario si el correo electrónico ha cambiado
             if user.email != request.user.email:
                 auth_login(request, user)
-            user_groups = user.groups.values_list('name', flat=True)
-            if 'Estudiantes' in user_groups:
-                return redirect('estudiante:principal_estudiante')
-            elif 'Directores' in user_groups:
-                return redirect('director:principal_director')
-            elif 'Correspondencia' in user_groups:
-                return redirect('correspondencia:principal_correspondencia')
+            user_groups = user.groups.values_list("name", flat=True)
+            if "Estudiantes" in user_groups:
+                return redirect("estudiante:principal_estudiante")
+            elif "Directores" in user_groups:
+                return redirect("director:principal_director")
+            elif "Correspondencia" in user_groups:
+                return redirect("correspondencia:principal_correspondencia")
             else:
                 return HttpResponse("No tienes acceso a ninguna seción")
-            return redirect('director:base_director')
+            return redirect("director:base_director")
         else:
-            return render(request, 'director/base_director.html', {'form_config': form, 'usuario': usuario, 'user_img': imagen_convertida})
+            return render(
+                request,
+                "director/base_director.html",
+                {
+                    "form_config": form,
+                    "usuario": usuario,
+                    "user_img": imagen_convertida,
+                },
+            )
 
 
 def recuperar_cuenta(request):
     # Inicializa el entorno COM
     pythoncom.CoInitialize()
 
-    if request.method == 'POST':
-        email = request.POST.get('email')
+    if request.method == "POST":
+        email = request.POST.get("email")
 
         try:
             user = Usuarios.objects.get(email=email)
@@ -159,10 +181,11 @@ def recuperar_cuenta(request):
             user.save()
 
             recovery_link = request.build_absolute_uri(
-                reverse('login:recuperar_cuenta_confirm', args=[token]))
+                reverse("login:recuperar_cuenta_confirm", args=[token])
+            )
 
             # Configurar Outlook
-            outlook = win32.Dispatch('outlook.application')
+            outlook = win32.Dispatch("outlook.application")
 
             # Configurar los detalles del correo
             asunto = "Recuperación de cuenta"
@@ -198,32 +221,34 @@ def recuperar_cuenta(request):
             mail.Send()
 
             messages.success(
-                request, 'Se ha enviado un enlace de recuperación a tu correo electrónico.')
-            return redirect('login:loginapps')
+                request,
+                "Se ha enviado un enlace de recuperación a tu correo electrónico.",
+            )
+            return redirect("login:loginapps")
 
         except Usuarios.DoesNotExist:
-            messages.error(
-                request, 'No existe un usuario con ese correo electrónico.')
+            messages.error(request, "No existe un usuario con ese correo electrónico.")
 
         except Exception as e:
             messages.error(
-                request, f'Hubo un error al enviar el correo de recuperación: {str(e)}. Por favor, intenta nuevamente.')
-            return render(request, 'recuperar_cuenta.html')
+                request,
+                f"Hubo un error al enviar el correo de recuperación: {str(e)}. Por favor, intenta nuevamente.",
+            )
+            return render(request, "recuperar_cuenta.html")
 
-    return render(request, 'recuperar_cuenta.html')
+    return render(request, "recuperar_cuenta.html")
 
 
 def recuperar_cuenta_confirm(request, token):
     # Aquí deberías validar el token y permitir que el usuario restablezca su contraseña
-    if request.method == 'POST':
-        nueva_contrasena = request.POST.get('nueva_contrasena')
+    if request.method == "POST":
+        nueva_contrasena = request.POST.get("nueva_contrasena")
         # Obtener la contraseña de confirmación
-        confirmar_contrasena = request.POST.get('confirmar_contrasena')
+        confirmar_contrasena = request.POST.get("confirmar_contrasena")
 
         # Verificar si las contraseñas coinciden
         if nueva_contrasena != confirmar_contrasena:
-            messages.error(
-                request, 'Las contraseñas no coinciden. Inténtalo de nuevo.')
+            messages.error(request, "Las contraseñas no coinciden. Inténtalo de nuevo.")
         else:
             # Aquí deberías implementar la lógica para encontrar al usuario por el token
             try:
@@ -231,14 +256,13 @@ def recuperar_cuenta_confirm(request, token):
                 # Establecer nueva contraseña
                 user.set_password(nueva_contrasena)
                 user.save()  # Guardar el usuario
-                messages.success(request, 'Tu contraseña ha sido actualizada.')
+                messages.success(request, "Tu contraseña ha sido actualizada.")
                 # Redirigir a la página de inicio de sesión
-                return redirect('login:loginapps')
+                return redirect("login:loginapps")
             except Usuarios.DoesNotExist:
-                messages.error(
-                    request, 'El token de recuperación es inválido.')
+                messages.error(request, "El token de recuperación es inválido.")
 
-    return render(request, 'recuperar_cuenta_confirm.html', {'token': token})
+    return render(request, "recuperar_cuenta_confirm.html", {"token": token})
 
 
 # resend.api_key = "re_i2AKGn92_3GqGVCbZP4y8sw3Ash4xEsKM"
