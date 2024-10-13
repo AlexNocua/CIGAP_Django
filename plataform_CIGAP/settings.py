@@ -123,7 +123,10 @@ def base_dir():
 
 # Configurar la base de datos
 DATABASES = {
-    "default": dj_database_url.parse(database_url, conn_max_age=600),
+    "default": dj_database_url.parse(
+        "postgresql://cigap_ubate_user:4I175zIDOlNFrUsJjnQCmmtdmAsbqMQ9@dpg-cs5i43a3esus73avoekg-a.oregon-postgres.render.com/cigap_ubate",
+        conn_max_age=600,
+    ),
 }
 
 # Password validation
