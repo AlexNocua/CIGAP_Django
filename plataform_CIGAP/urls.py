@@ -19,6 +19,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+#  """"asi esta"""
 # configuracion del logout de las cuentas
 from django.contrib.auth import views as auth_views
 from .views import handler400, logout_user, errores
