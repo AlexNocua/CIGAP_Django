@@ -2,7 +2,7 @@
 from plataform_CIGAP.settings import base_dir
 from .models import Usuarios  # Asegúrate de importar tu modelo
 # import pythoncom
-import win32com.client as win32
+# import win32com.client as win32
 from django.conf import settings
 import requests
 from .models import Usuarios  # Asegúrate de importar tu modelo Usuarios
