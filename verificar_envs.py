@@ -16,6 +16,7 @@ env_vars = [
 ]
 
 print(os.getenv("DATABASE_URL"))
+print(os.getenv("ALLOWED_HOSTS"))
 # Verificar y imprimir la existencia de cada variable de entorno
 for var in env_vars:
     value = os.getenv(var)
