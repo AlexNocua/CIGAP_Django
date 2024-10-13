@@ -71,8 +71,9 @@
     }
     
     .contenido_correspondencia {
+      display: flex;
     }
-    .contenido_correspondencia .views {
+    .views {
       border: 1px solid #cacaca;
       border-radius: 12px;
       box-shadow: inset 0px 0px 20px -5px #d8d8d8;
@@ -336,123 +337,124 @@
             </div>
           </div>
         </div>
-        <div class="views position-relative justify-content-center align-items-center w-100">
-          {% block content_solicitudes %}
+        {% if fechas_comite.ano_actual == ano_actual %}
+          <nav class="row w-100 mt-3 d-flex flex-column justify-content-center align-items-center">
+            <p class="text-center mb-2" style="border-top:1px solid #cacaca;">
+              <b>Fechas de encuentro del semestre actual</b>
+              <br />
+              <small class="text-center">
+                Fechas de encuentro del semestre actual <br />
+                {% if fechas_comite.periodo_academico == 1 %}
+                  Primer periodo académico
+                {% else %}
+                  {% if fechas_comite.periodo_academico == 2 %}
+                    Segundo periodo académico
+                  {% else %}
+                    Aún no se registran fechas.
+                  {% endif %}
+                {% endif %}
+              </small>
+            </p>
+            <div class="content_fechas d-flex justify-content-center align-items-center">
+              <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                <h6 class="num_encuentro m-0">1</h6>
+                <p class="p-0 m-0">
+                  <small><strong>{{ fechas_comite.primer_encuentro }}</strong></small>
+                </p>
+              </div>
+              <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                <h6 class="num_encuentro m-0">2</h6>
+                <p class="p-0 m-0">
+                  <small><strong>{{ fechas_comite.segundo_encuentro }}</strong></small>
+                </p>
+              </div>
+              <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                <h6 class="num_encuentro m-0">3</h6>
+                <p class="p-0 m-0">
+                  <small><strong>{{ fechas_comite.tercer_encuentro }}</strong></small>
+                </p>
+              </div>
+              <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                <h6 class="num_encuentro m-0">4</h6>
 
-          {% endblock %}
-          {% block list_proyect %}
+                <p class="p-0 m-0">
+                  <small><strong>{{ fechas_comite.cuarto_encuentro }}</strong></small>
+                </p>
+              </div>
+              {% if fechas_comite.extraordinaria %}
+                <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                  <h6 class="num_encuentro m-0">5</h6>
+                  <p class="p-0 m-0">
+                    <small><strong>{{ fechas_comite.extraordinaria }}</strong></small>
+                  </p>
+                </div>
+              {% endif %}
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <button type="button" class="btn_fecha btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modalEditarFechasComite"><small>Edite alguna fecha</small></button>
+            </div>
+          </nav>
+        {% else %}
+          <div class="d-flex mt-3 flex-column justify-content-center align-items-center"></div>
+          <p class="text-center mb-2" style="border-top:1px solid #cacaca;">
+            <b>Fechas de encuentro del semestre actual</b>
+            <br />
+            <small class="text-center">No se encuentra ninguna fecha registrada</small>
+          </p>
+          <div class="d-flex justify-content-center align-items-center">
+            <button type="button" class="btn_fecha btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFechasComite"><small>Edite o agregue alguna fecha</small></button>
+          </div>
+        {% endif %}
+      </div>
 
-          {% endblock %}
-          {% block view_anteproyecto %}
+      <div class="views position-relative justify-content-center align-items-center w-100">
+        {% block content_solicitudes %}
 
-          {% endblock %}
-          {% block view_proyecto %}
+        {% endblock %}
+        {% block list_proyect %}
 
-          {% endblock %}
-          {% block view_solicitud_especial %}
+        {% endblock %}
+        {% block view_anteproyecto %}
 
-          {% endblock %}
-          {% block asignacion_jurados %}
+        {% endblock %}
+        {% block view_proyecto %}
 
-          {% endblock %}
-          {% block view_solicitudes %}
+        {% endblock %}
+        {% block view_solicitud_especial %}
 
-          {% endblock %}
-          {% block view_retroalimentacion %}
+        {% endblock %}
+        {% block asignacion_jurados %}
 
-          {% endblock %}
-          {% block view_documentos_cargados %}
+        {% endblock %}
+        {% block view_solicitudes %}
 
-          {% endblock %}
-          {% block view_documentos_correspondencia %}
+        {% endblock %}
+        {% block view_retroalimentacion %}
 
-          {% endblock %}
-          {% block formato %}
+        {% endblock %}
+        {% block view_documentos_cargados %}
 
-          {% endblock %}
-          {% block proyectos %}
+        {% endblock %}
+        {% block view_documentos_correspondencia %}
 
-          {% endblock %}
-          {% block proyectos_finalizados %}
+        {% endblock %}
+        {% block formato %}
 
-          {% endblock %}
-          {% block proyectos_actuales %}
+        {% endblock %}
+        {% block proyectos %}
 
-          {% endblock %}
-          {% block proyecto %}
+        {% endblock %}
+        {% block proyectos_finalizados %}
 
-          {% endblock %}
-        </div>
+        {% endblock %}
+        {% block proyectos_actuales %}
+
+        {% endblock %}
+        {% block proyecto %}
+
+        {% endblock %}
       </div>
     </div>
-    {% if fechas_comite.ano_actual == ano_actual %}
-      <nav class="row w-100 mt-3 d-flex flex-column justify-content-center align-items-center">
-        <p class="text-center mb-2" style="border-top:1px solid #cacaca;">
-          <b>Fechas de encuentro del semestre actual</b>
-          <br />
-          <small class="text-center">
-            Fechas de encuentro del semestre actual <br />
-            {% if fechas_comite.periodo_academico == 1 %}
-              Primer periodo académico
-            {% else %}
-              {% if fechas_comite.periodo_academico == 2 %}
-                Segundo periodo académico
-              {% else %}
-                Aún no se registran fechas.
-              {% endif %}
-            {% endif %}
-          </small>
-        </p>
-        <div class="content_fechas d-flex justify-content-center align-items-center">
-          <div class="div_content_fechas d-flex justify-content-around align-items-center">
-            <h6 class="num_encuentro m-0">1</h6>
-            <p class="p-0 m-0">
-              <small><strong>{{ fechas_comite.primer_encuentro }}</strong></small>
-            </p>
-          </div>
-          <div class="div_content_fechas d-flex justify-content-around align-items-center">
-            <h6 class="num_encuentro m-0">2</h6>
-            <p class="p-0 m-0">
-              <small><strong>{{ fechas_comite.segundo_encuentro }}</strong></small>
-            </p>
-          </div>
-          <div class="div_content_fechas d-flex justify-content-around align-items-center">
-            <h6 class="num_encuentro m-0">3</h6>
-            <p class="p-0 m-0">
-              <small><strong>{{ fechas_comite.tercer_encuentro }}</strong></small>
-            </p>
-          </div>
-          <div class="div_content_fechas d-flex justify-content-around align-items-center">
-            <h6 class="num_encuentro m-0">4</h6>
-
-            <p class="p-0 m-0">
-              <small><strong>{{ fechas_comite.cuarto_encuentro }}</strong></small>
-            </p>
-          </div>
-          {% if fechas_comite.extraordinaria %}
-            <div class="div_content_fechas d-flex justify-content-around align-items-center">
-              <h6 class="num_encuentro m-0">5</h6>
-              <p class="p-0 m-0">
-                <small><strong>{{ fechas_comite.extraordinaria }}</strong></small>
-              </p>
-            </div>
-          {% endif %}
-        </div>
-        <div class="d-flex justify-content-center align-items-center">
-          <button type="button" class="btn_fecha btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modalEditarFechasComite"><small>Edite alguna fecha</small></button>
-        </div>
-      </nav>
-    {% else %}
-      <div class="d-flex mt-3 flex-column justify-content-center align-items-center"></div>
-      <p class="text-center mb-2" style="border-top:1px solid #cacaca;">
-        <b>Fechas de encuentro del semestre actual</b>
-        <br />
-        <small class="text-center">No se encuentra ninguna fecha registrada</small>
-      </p>
-      <div class="d-flex justify-content-center align-items-center">
-        <button type="button" class="btn_fecha btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFechasComite"><small>Edite o agregue alguna fecha</small></button>
-      </div>
-    {% endif %}
   </main>
 
   <div class="modal fade" id="modalFechasComite" tabindex="-1" aria-labelledby="modalFechasComiteLabel" aria-hidden="true">

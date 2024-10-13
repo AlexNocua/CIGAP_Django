@@ -4,7 +4,6 @@ import pythoncom
 import win32com.client as win32
 from django.conf import settings
 import requests
-import resend
 from .models import Usuarios  # Asegúrate de importar tu modelo Usuarios
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail

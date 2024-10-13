@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block principal_director %}
+  {% include 'components/modal_fechas.html' %}
   {% include 'components/header.html' %}
   {% include 'director/components/nav_modulos.html' %}
   <style>
@@ -96,6 +97,7 @@
 
   <div class="director position-relative container justify-content-center align-items-center w-100">
     {% include 'components/config_user.html' %}
+
     <div class="principal_director">
       {% include 'components/view_drcr.html' %}
     </div>

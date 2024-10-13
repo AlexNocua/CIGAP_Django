@@ -1,0 +1,71 @@
+{% load static %}
+<style>
+  .btn_fechas {
+    padding: 0;
+    position: fixed;
+    top: 50%;
+    z-index: 101;
+    transform: translateY(calc(-70%));
+    min-width: 70px;
+    min-height: 70px;
+    box-shadow: 0 0 8px 0px #a4a4a4;
+    border: 1px solid #caca;
+    background: #ffffff;
+    border-radius: 0 50% 50% 0;
+    transition: all 0.2s;
+  }
+  .btn_fechas:hover {
+    border: 1px solid #cacaca;
+    background: #f3f3f3;
+    transition: all 0.2s;
+    scale: 1.05;
+  }
+  .imagen_fechas {
+    animation: 1s animacion_imagen infinite;
+  }
+  @keyframes animacion_imagen {
+    0% {
+      transform: rotate(0deg);
+      top: 0px;
+    }
+    50% {
+      transform: rotate(-10deg);
+      top: -5px;
+    }
+    100% {
+      transform: rotate(0deg);
+      top: 0px;
+    }
+  }
+</style>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn_fechas" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="imagen_fechas" src="{% static 'icons/image_pendiente.png' %}" alt="" /></button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recordatorio de Entrega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Estimados estudiantes y directores,</p>
+        <p>Les recordamos que las fechas límite para las entregas son las siguientes:</p>
+        <ul>
+          <li>
+            <strong>Anteproyectos</strong>: Entrega antes del <strong>1 de noviembre de 2024</strong>.
+          </li>
+          <li>
+            <strong>Proyectos finales</strong>: Entrega antes del <strong>15 de noviembre de 2024</strong>.
+          </li>
+        </ul>
+        <p>Por favor, asegúrense de cumplir con los plazos establecidos para evitar inconvenientes.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
