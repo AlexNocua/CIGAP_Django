@@ -37,9 +37,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["cigap-django.onrender.com/"]
+ALLOWED_HOSTS = ["cigap-django.onrender.com"]
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
 
 
@@ -209,3 +209,19 @@ CSRF_FAILURE_VIEW = "plataform_CIGAP.views.csrf_failure"
 # DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",  # Cambia a 'ERROR' después de depurar
+        },
+    },
+}
