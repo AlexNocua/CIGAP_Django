@@ -7,7 +7,7 @@ import dj_database_url
 
 class DatabaseConnectionTest(TestCase):
     def setUp(self):
-        # Carga la URL de la base de datos desde las variables de entorno
+       
         self.database_url = "postgresql://cigap_ubate_user:4I175zIDOlNFrUsJjnQCmmtdmAsbqMQ9@dpg-cs5i43a3esus73avoekg-a.oregon-postgres.render.com/cigap_ubate"
 
     def test_database_connection(self):
