@@ -21,7 +21,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # cargar la variable de entorno
-load_dotenv()
+# load_dotenv()
 
 
 def base_dir():
@@ -32,7 +32,7 @@ def base_dir():
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -113,8 +113,8 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 
 # Configurar la base de datos
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL'),
+    "default": dj_database_url.parse(
+        config("DATABASE_URL"),
         conn_max_age=600,
         conn_health_checks=True,
     )
