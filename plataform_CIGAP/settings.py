@@ -113,8 +113,8 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 
 # Configurar la base de datos
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL'),
         conn_max_age=600,
         conn_health_checks=True,
     )
@@ -208,18 +208,18 @@ CSRF_FAILURE_VIEW = "plataform_CIGAP.views.csrf_failure"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "DEBUG",  # Cambia a 'ERROR' después de depurar
-        },
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {
+#         "console": {
+#             "class": "logging.StreamHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": ["console"],
+#             "level": "ERROR",  # Cambia a 'ERROR' después de depurar
+#         },
+#     },
+# }
