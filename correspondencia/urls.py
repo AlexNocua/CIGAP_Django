@@ -57,6 +57,11 @@ urlpatterns = [
         name="enviar_retroalimentacion_solicitud",
     ),
     path(
+        "enviar_retroalimentacion_concepto/<int:id_proyecto>",
+        views.enviar_retroalimentacion_concepto,
+        name="enviar_retroalimentacion_concepto",
+    ),
+    path(
         "asignar_fecha_sustentacion/<int:id>",
         views.asignar_fecha_sustentacion,
         name="asignar_fecha_sustentacion",
@@ -109,6 +114,11 @@ urlpatterns = [
         name="enviar_retroalimentacion",
     ),
     path("asignar_jurados/<int:id>", views.asignar_jurados, name="asignar_jurados"),
+    path(
+        "eliminar_jurado/<int:id>/<str:nombre_proyecto>",
+        views.eliminar_jurado,
+        name="eliminar_jurado",
+    ),
     ##############################################################################################
     path("proyectos", views.proyectos, name="proyectos"),
     path(

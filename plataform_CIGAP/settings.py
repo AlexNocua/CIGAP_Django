@@ -32,12 +32,12 @@ def base_dir():
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "pvj1rd@(@mz%h9c+k=3-om38%r5s00#@bw--putsf5d($$3(!y"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["cigap-django.onrender.com", "*"]
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
@@ -105,6 +105,20 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
+# def base_dir():
+#     print(f"Database URL: {database_url}")
+#     return f"Database URL: {database_url}"
+
+
+# Configurar la base de datos
+DATABASES = {
+    "default": dj_database_url.parse(
+        os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+    ),
+}
+
 # base de datos predefinida
 # DATABASES = {
 #     "default": {
@@ -112,23 +126,6 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-
-
-database_url = os.getenv("DATABASE_URL")
-
-
-def base_dir():
-    print(f"Database URL: {database_url}")
-    return f"Database URL: {database_url}"
-
-
-# Configurar la base de datos
-DATABASES = {
-    "default": dj_database_url.parse(
-        "postgresql://cigap_ubate_user:4I175zIDOlNFrUsJjnQCmmtdmAsbqMQ9@dpg-cs5i43a3esus73avoekg-a.oregon-postgres.render.com/cigap_ubate",
-        conn_max_age=600,
-    ),
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -210,18 +207,18 @@ CSRF_FAILURE_VIEW = "plataform_CIGAP.views.csrf_failure"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "DEBUG",  # Cambia a 'ERROR' después de depurar
-        },
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {
+#         "console": {
+#             "class": "logging.StreamHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": ["console"],
+#             "level": "ERROR",  # Cambia a 'ERROR' después de depurar
+#         },
+#     },
+# }

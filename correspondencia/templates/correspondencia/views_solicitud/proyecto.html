@@ -229,13 +229,39 @@
 
           {% if evaluaciones %}
             <div class="">
-              <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar jurados</button>
               <p class="card-text m-0 p-0 text-center">
                 <strong class="text-center">Directores o director asignado</strong>
               </p>
+              <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar Jurados</button>
+
               {% for evaluacion in evaluaciones %}
                 <div class="list-group-item">
-                  <h6 class="mb-1">{{ evaluacion.jurado.nombre_completo }}</h6>
+                  <div class="row d-flex justify-content-between align-items-center">
+                    <div class="col">
+                      <h6 class="mb-1">{{ evaluacion.jurado.nombre_completo }}</h6>
+                    </div>
+                    <div class="col">
+                      <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModalJurado">Eliminar asignación</a>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
+                          <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
                   {% if evaluacion.comentarios %}
                     <p class="card-text mb-1">
@@ -257,7 +283,6 @@
               {% endfor %}
             </div>
           {% else %}
-            <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar Jurados</button>
             <p class="card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
           {% endif %}
         </div>
@@ -492,15 +517,12 @@
                 {% csrf_token %}
                 <div class="form-directores-container">
                   {% for director in directores %}
-                    <div class="form-directores-item" style=" display: flex !important;
-                flex-direction: row-reverse;
-                justify-content: center;
-                align-items: center;">
-                      {% if director.nombre_completo != inf_proyecto.anteproyecto.director or director.nombre_completo != inf_proyecto.anteproyecto.director %}
+                    {% if director.nombre_completo != inf_proyecto.anteproyecto.director %}
+                      <div class="form-directores-item" style="display: flex !important; flex-direction: row-reverse; justify-content: center; align-items: center;">
                         <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.id }}" class="form-directores-checkbox" />
                         <label for="{{ director.nombre_completo }}" class="form-directores-label">{{ director.nombre_completo }}</label>
-                      {% endif %}
-                    </div>
+                      </div>
+                    {% endif %}
                   {% endfor %}
                 </div>
               </form>
@@ -548,24 +570,24 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalConceptoLabel">Enviar Concepto de Anteproyecto</h5>
+              <h5 class="modal-title" id="modalConceptoLabel">Enviar Concepto de Proyecto Final</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion' inf_proyecto.anteproyecto.nombre_anteproyecto %}" method="post" enctype="multipart/form-data">
+              <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion_concepto' inf_proyecto.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div class="form-group mb-3">
                   <label class="p-0 m-0" for="id_retroalimentacion"><strong>Concepto:</strong></label>
                   <textarea rows="" cols="" name="retroalimentacion" required></textarea>
-                  <small class="form-text text-muted">Por favor, proporciona un resumen claro y conciso del concepto.</small>
+                  <small class="form-text text-muted">Por favor, proporcione un resumen claro y conciso del concepto.</small>
                 </div>
 
                 <div class="row container-fluid mt-2">
                   <div class="form-group col-12 col-md-6 mb-3">
                     <label for="formFile" class="form-label">Documento de Concepto:</label>
-                    <input class="form-control" type="file" id="formFile" name="doc_retroalimentacion" required />
-                    <small class="form-text text-muted">Sube un archivo PDF que contenga el concepto.</small>
+                    <input class="form-control" type="file" id="formFile" name="doc_retroalimentacion" accept="application/pdf" required />
+                    <small class="form-text text-muted">Suba un archivo PDF que contenga el concepto.</small>
                   </div>
 
                   <div class="form-group col-12 col-md-6 mb-3">
@@ -574,7 +596,7 @@
                       <option value="True">Aprobado</option>
                       <option value="False">Rechazado</option>
                     </select>
-                    <small class="form-text text-muted">Selecciona el estado correspondiente al concepto.</small>
+                    <small class="form-text text-muted">Seleccione el estado correspondiente al concepto.</small>
                   </div>
                 </div>
 

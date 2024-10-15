@@ -136,7 +136,7 @@
           <div class="carousel-item {% if forloop.first %} active {% endif %}">
             <div class="d-flex justify-content-center">
               <!-- Mostrar la retroalimentación -->
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 100%; max-width: 18rem;">
                 <div class="card-body">
                   <h5 class="card-title">Retroalimentación {{ forloop.counter }}</h5>
                   <p class="card-text">
@@ -146,9 +146,9 @@
                     <strong>Observaciones:</strong> {{ retro.retroalimentacion.retroalimentacion }}
                   </p>
 
-                  <!-- Mostrar el documento (si es una imagen) -->
                   {% if retro.doc_retro %}
-                    <img src="data:image/png;base64,{{ retro.doc_retro }}" class="card-img-top" alt="Documento retroalimentación" />
+                    <a href="data:application/pdf;base64,{{ retro.doc_retro }}" target="_blank" class="" style="border-radius: 8px;">Ver Documento PDF</a>
+                    <embed class="embed-responsive-item" src="data:application/pdf;base64,{{ retro.doc_retro }}" type="application/pdf" style="border-radius: 8px; width: 100%; height: auto;" />
                   {% else %}
                     <p>No hay documento disponible.</p>
                   {% endif %}

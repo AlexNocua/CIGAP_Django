@@ -4,9 +4,11 @@ from django.db import models
 # importacion de los modelos de los estudiantes
 from estudiante.models import (
     ModelAnteproyecto,
+    ModelFechasProyecto,
     ModelProyectoFinal,
     ModelAsignacionJurados,
 )
+from director.models import ModelEvaluacionProyectoFinal
 
 ######################################################################################
 ######################################################################################
@@ -76,27 +78,26 @@ class ModelInformacionEntregaFinal(models.Model):
         blank=True,
         null=True,
     )
-    proyecto_final = models.ForeignKey(
+    proyecto_final = models.OneToOneField(
         ModelProyectoFinal,
         on_delete=models.CASCADE,
         related_name="Informacion_Entrega_Final",
         blank=True,
         null=True,
     )
-    jurado = models.ForeignKey(
-        ModelAsignacionJurados,
+    doc_proyecto_final_cedido = models.BinaryField(
+        blank=True,
+        null=True,
+    )
+
+    fechas_proyecto = models.OneToOneField(
+        ModelFechasProyecto,
         on_delete=models.CASCADE,
         related_name="Informacion_Entrega_Final",
         blank=True,
         null=True,
     )
-    retroalimentaciones = models.ForeignKey(
-        ModelRetroalimentaciones,
-        on_delete=models.CASCADE,
-        related_name="Informacion_Entrega_Final",
-        blank=True,
-        null=True,
-    )
+    fecha_finalizacion = models.DateTimeField(null=None, blank=True)
 
 
 # creacion del modelo de solicitudes para el cambio de infromacion respecto al proyecto

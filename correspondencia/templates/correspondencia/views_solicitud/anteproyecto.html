@@ -235,7 +235,14 @@
               </p>
               {% for evaluacion in evaluaciones %}
                 <div class="list-group-item">
-                  <h6 class="mb-1">{{ evaluacion.evaluador.nombre_completo }}</h6>
+                  <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col">
+                      <h6 class="mb-1">{{ evaluacion.evaluador.nombre_completo }}</h6>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'correspondencia:eliminar_evaluador' evaluacion.id inf_anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
+                    </div>
+                  </div>
                   <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
                   {% if evaluacion.comentarios %}
                     <p class="card-text mb-1">

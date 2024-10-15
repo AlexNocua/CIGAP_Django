@@ -40,8 +40,6 @@ errores = {
 }
 
 
-
-
 def handler404(request, exception):
     return render(request, "errors.html", errores["404"])
 
@@ -66,12 +64,12 @@ def csrf_failure(request, reason=""):
 # esta no maneja excepcion
 
 
-import traceback
+# import traceback
 
-def handler500(request):
-    error_message = traceback.format_exc()  # Obtén el traceback del error
-    errores["500"]["detalle"] = error_message  # Añade el detalle al mensaje de error
-    return render(request, "errors.html", errores["500"])
+# def handler500(request):
+#     error_message = traceback.format_exc()
+#     errores["500"]["detalle"] = error_message
+#     return render(request, "errors.html", errores["500"])
 # def handler500(request):
 #     return render(request, "errors.html", errores["500"])
 

@@ -6,7 +6,7 @@ from plataform_CIGAP.settings import base_dir
 print(base_dir())
 load_dotenv()
 
-# Lista de variables de entorno a verificar
+
 env_vars = [
     "SECRET_KEY",
     "ALLOWED_HOSTS",
@@ -17,10 +17,10 @@ env_vars = [
     "SUPERUSER_PASSWORD",
 ]
 
-print(os.getenv("SECRET_KEY"),"-----------------------")
-print(os.getenv("DATABASE_URL"))
+print(os.getenv("SECRET_KEY"), "-----------------------")
+print(os.getenv("DATABASE_URL"), "base de datos ")
 print(os.getenv("ALLOWED_HOSTS"))
-# Verificar y imprimir la existencia de cada variable de entorno
+
 for var in env_vars:
     value = os.getenv(var)
     print(f"{var} exists: {bool(value)}")

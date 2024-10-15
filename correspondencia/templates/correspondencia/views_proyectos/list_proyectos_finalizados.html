@@ -71,7 +71,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre del proyecto</th>
-            <th scope="col">Jurados</th>
+
             <th scope="col">Director</th>
             <th scope="col">Codirector</th>
             <th scope="col">Fecha de aprovación</th>
@@ -83,13 +83,7 @@
             <tr>
               <td>{{ forloop.counter }}</td>
               <td>{{ value.proyecto.anteproyecto.nombre_anteproyecto }}</td>
-              {% if value.proyecto.jurado %}
-                <td>{{ value.proyecto.jurado.nombre_jurado }}</td>
-              {% else %}
-                <td>
-                  <a class="btn btn-primary" href="{% url 'correspondencia:asignar_jurados' value.proyecto.anteproyecto.nombre_anteproyecto %}" style="text-decoration: none;">Asignar jurado</a>
-                </td>
-              {% endif %}
+
               <td>{{ value.proyecto.director }}</td>
               {% if value.proyecto.codirector %}
                 <td>{{ value.proyecto.codirector }}</td>

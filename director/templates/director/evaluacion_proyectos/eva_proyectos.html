@@ -34,7 +34,7 @@
             <h2 class="card-title h5">Anteproyectos</h2>
             <p class="card-text">Evalúa y proporciona retroalimentación a los anteproyectos.</p>
             <p class="text-success">
-              Anteproyectos pendientes: <span aria-label="3 anteproyectos">{{anteproyectos_a_evaluar}}</span>
+              Anteproyectos pendientes: <span aria-label="3 anteproyectos">{{ anteproyectos_a_evaluar }}</span>
             </p>
             <a href="{% url 'director:view_evaluador_anteproyectos' %}" class="btn btn-outline-success">Revisar Anteproyectos</a>
           </div>
@@ -79,7 +79,7 @@
   {% block anteproyecto %}
 
   {% endblock %}
-  {% block proyecto %}
+  {% block proyecto_evaluar %}
 
   {% endblock %}
 {% endblock %}

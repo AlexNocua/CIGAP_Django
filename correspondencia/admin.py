@@ -50,7 +50,36 @@ admin.site.register(ModelRetroalimentaciones, ModelRetroalimentacionesAdmin)
 # Registro del modelo de Asignacion de jurados en el panel admin
 admin.site.register(ModelAsignacionJurados)
 # Registro del modelo de Informacion de entrega Final de jurados en el panel admin
-admin.site.register(ModelInformacionEntregaFinal)
+from django.contrib import admin  # type: ignore
+from .models import ModelInformacionEntregaFinal
+
+
+@admin.register(ModelInformacionEntregaFinal)
+class ModelInformacionEntregaFinalAdmin(admin.ModelAdmin):
+    list_display = (
+        "anteproyecto",
+        "proyecto_final",
+        "fecha_finalizacion",
+    )
+    search_fields = ("anteproyecto__nombre", "proyecto_final__nombre")
+    list_filter = ("fecha_finalizacion",)
+    readonly_fields = ("doc_proyecto_final_cedido",)
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "anteproyecto",
+                    "proyecto_final",
+                    "fechas_proyecto",
+                    "fecha_finalizacion",
+                    "doc_proyecto_final_cedido",
+                )
+            },
+        ),
+    )
+
+
 # registro del modelo de solicitudes especificas
 admin.site.register(ModelSolicitudes)
 # registro del modele de formatos

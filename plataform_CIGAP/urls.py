@@ -30,24 +30,21 @@ urlpatterns = [
     #  ruta de registro para el patterns de la app
     # path('registro/', views.registro, name='registro'),
     # path('', views.loginapps, name='loginapps'),
-    path('admin/', admin.site.urls),
-    path('estudiante/', include('estudiante.urls')),
-    path('director/', include('director.urls')),
-    path('correspondencia/', include('correspondencia.urls')),
-    path('', include('login.urls')),
+    path("admin/", admin.site.urls),
+    path("estudiante/", include("estudiante.urls")),
+    path("director/", include("director.urls")),
+    path("correspondencia/", include("correspondencia.urls")),
+    path("", include("login.urls")),
     # vista y url del logout
-    path('logout/', views.logout_user, name='logout_user'),
+    path("logout/", views.logout_user, name="logout_user"),
     # ruta de errores
     # path('errors/', views.errors, name='errors'),
-    path('submit_error/', views.submit_error, name='submit_error'),
-
-
-
+    path("submit_error/", views.submit_error, name="submit_error"),
 ]
 
 # vistas de manejo de errores
-handler400 = 'plataform_CIGAP.views.handler400'
-handler500 = 'plataform_CIGAP.views.handler500'
+handler400 = "plataform_CIGAP.views.handler400"
+handler500 = "plataform_CIGAP.views.handler500"
 # handler401 = 'plataform_CIGAP.views.handler401'
 # handler403 = 'plataform_CIGAP.views.handler403'
-handler404 = 'plataform_CIGAP.views.handler404'
+handler404 = "plataform_CIGAP.views.handler404"

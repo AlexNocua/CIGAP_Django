@@ -46,7 +46,7 @@ from correspondencia.models import (
     ModelFechasComite,
     ModelRetroalimentaciones,
     ModelSolicitudes,
-    ModelAsignacionJurados,
+    ModelInformacionEntregaFinal,
     ModelDocumentos,
 )
 
@@ -919,6 +919,62 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
     return redirect("correspondencia:solicitudes")
 
 
+def enviar_retroalimentacion_concepto(request, id_proyecto):
+    if request.method == "POST":
+        proyecto = recuperar_proyecto_final_id(id_proyecto)
+
+        if proyecto:
+            fechas_proyecto = ModelFechasProyecto.objects.get(proyecto_final=proyecto)
+            text_retroalimentaicion = request.POST.get("retroalimentacion")
+            estado = request.POST.get("estado")
+            doc_concepto = request.FILES.get("doc_retroalimentacion")
+            if estado == "True":
+
+                new_retro = ModelRetroalimentaciones(
+                    user=request.user,
+                    proyecto_final=proyecto,
+                    retroalimentacion=text_retroalimentaicion,
+                    fecha_retroalimentacion=fecha_actual(),
+                    doc_retroalimentacion=doc_concepto.read(),
+                    estado=True,
+                )
+                new_retro.save()
+                proyecto.estado = True
+                proyecto.save()
+
+                new_informacion_entrega_final = ModelInformacionEntregaFinal(
+                    anteproyecto=proyecto.anteproyecto,
+                    proyecto_final=proyecto,
+                    fechas_proyecto=fechas_proyecto,
+                    fecha_finalizacion=fecha_actual(),
+                )
+                new_informacion_entrega_final.save()
+                messages.success(request, "Bien")
+                return redirect("correspondencia:proyectos_finalizados")
+            else:
+                if estado == "False":
+                    proyecto.proyecto_final = None
+                    proyecto.estado = False
+                    proyecto.solicitud_enviada = False
+                    proyecto.fecha_envio = None
+                    proyecto.proyecto_final = None
+                    new_retro = ModelRetroalimentaciones(
+                        user=request.user,
+                        proyecto_final=proyecto,
+                        retroalimentacion=text_retroalimentaicion,
+                        fecha_retroalimentacion=fecha_actual(),
+                        doc_retroalimentacion=doc_concepto.read(),
+                        estado=estado,
+                    )
+                    proyecto.save()
+                    new_retro.save()
+                    messages.success(request, "Bien, envia")
+                    return redirect("correspondencia:solicitudes")
+    else:
+        messages.error(request, "error, envia")
+        return redirect("correspondencia:solicitudes")
+
+
 # vista de informacion de proyecto
 def recuperar_evaluaciones_jurados(proyecto):
     evaluaciones = ModelEvaluacionProyectoFinal.objects.filter(proyecto_final=proyecto)
@@ -1121,6 +1177,56 @@ def asignar_jurados(request, id):
     return redirect(
         "correspondencia:ver_proyecto_final",
         nombre=proyecto.anteproyecto.nombre_anteproyecto,
+    )
+
+
+def eliminar_jurado(request, id, nombre_proyecto):
+    evaluacion = (
+        ModelEvaluacionProyectoFinal.objects.get(id=id)
+        if ModelEvaluacionProyectoFinal.objects.filter(id=id).exists()
+        else None
+    )
+
+    if evaluacion:
+        evaluacion.delete()
+        messages.success(
+            request,
+            f"El jurado del proyecto '{nombre_proyecto}' ha sido eliminada exitosamente.",
+        )
+    else:
+        messages.error(
+            request,
+            f"No se pudo encontrar el jurado para el proyecto '{nombre_proyecto}'.",
+        )
+
+    return redirect(
+        "correspondencia:ver_proyecto_final",
+        nombre=nombre_proyecto,
+    )
+
+
+def eliminar_evaluador(request, id, nombre_anteproyecto):
+    evaluacion = (
+        ModelEvaluacionAnteproyecto.objects.get(id=id)
+        if ModelEvaluacionAnteproyecto.objects.filter(id=id).exists()
+        else None
+    )
+
+    if evaluacion:
+        evaluacion.delete()
+        messages.success(
+            request,
+            f"El evaluador del proyecto '{nombre_anteproyecto}' ha sido eliminada exitosamente.",
+        )
+    else:
+        messages.error(
+            request,
+            f"No se pudo encontrar el evaluador para el proyecto '{nombre_anteproyecto}'.",
+        )
+
+    return redirect(
+        "correspondencia:ver_anteproyecto",
+        nombre_anteproyecto=nombre_anteproyecto,
     )
 
 
