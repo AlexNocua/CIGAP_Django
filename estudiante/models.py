@@ -25,8 +25,8 @@ class ModelAnteproyecto(models.Model):
     )  # Cambio aquí
     carta_presentacion = models.BinaryField(null=True, blank=True)
     anteproyecto = models.BinaryField(null=True, blank=True)
-    director = models.CharField(max_length=200, null=True)
-    codirector = models.CharField(max_length=200, null=True, blank=True)  # Cambio aquí
+    director = models.CharField(max_length=50, null=True)
+    codirector = models.CharField(max_length=50, null=True, blank=True)  # Cambio aquí
     fecha_envio = models.DateTimeField(null=True, blank=True)
     documento_radicado = models.BinaryField(null=True, blank=True)
     # estas son modificadas por correspondencia

@@ -18,11 +18,11 @@ class ModelEvaluacionAnteproyecto(models.Model):
         ModelAnteproyecto, on_delete=models.CASCADE, related_name='evaluacion_anteproyectos', blank=True, null=True)
     calificacion = models.DecimalField(
         max_digits=5, decimal_places=2, blank=True, null=True)
-    doc_evaluacion_anteproyecto = models.BinaryField(blank=True, null=True)
     comentarios = models.CharField(max_length=10000, blank=True, null=True)
     fecha_evaluacion = models.DateTimeField(blank=True, null=True)
     fecha_asignacion = models.DateTimeField(blank=True, null=True)
     estado = models.BooleanField(default=False, null=True, blank=True)
+    doc_evaluacion_anteproyecto = models.BinaryField(blank=True, null=True)
 
 
 # creacion del modelo de evaluador de jurado
