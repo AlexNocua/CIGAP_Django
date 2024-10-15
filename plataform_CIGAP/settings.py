@@ -32,7 +32,7 @@ def base_dir():
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -112,13 +112,16 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 
 
 # Configurar la base de datos
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),  # Carga la URL de la base de datos desde .env
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv("DATABASE_URL"),  # Carga la URL de la base de datos desde .env
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 # base de datos predefinida
 # DATABASES = {
