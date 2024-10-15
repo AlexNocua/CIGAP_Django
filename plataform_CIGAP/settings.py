@@ -109,12 +109,12 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 # def base_dir():
 #     print(f"Database URL: {database_url}")
 #     return f"Database URL: {database_url}"
-
+DB_URL = os.getenv("DATABASE_URL")
 
 # Configurar la base de datos
 DATABASES = {
     "default": dj_database_url.parse(
-        os.getenv("DATABASE_URL"),
+        os.getenv(DB_URL),
         conn_max_age=600,
     ),
 }
