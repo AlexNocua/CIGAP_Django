@@ -26,3 +26,4 @@ env_vars = [
 #     print(f"{var} exists: {bool(value)}")
 
 print(config("SECRET_KEY"))
+print(config("DATABASE_URL"))
