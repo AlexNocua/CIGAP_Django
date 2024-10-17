@@ -112,16 +112,15 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 
 
 # Configurar la base de datos
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.getenv("DATABASE_URL"),  # Carga la URL de la base de datos desde .env
-#         conn_max_age=600,
-#         conn_health_checks=True,
-#     )
-# }
-database_url = os.environ.get("DATABASE_URL")
-
-DATABASES["default"] = dj_database_url.parse(database_url)
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),  
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
+# database_url = os.environ.get("DATABASE_URL")
+# DATABASES["default"] = dj_database_url.parse(database_url) 
 
 # base de datos predefinida
 # DATABASES = {
