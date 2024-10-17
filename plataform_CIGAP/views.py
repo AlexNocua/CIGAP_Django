@@ -93,7 +93,11 @@ def submit_error(request):
 
         print(f"Estado recibido: {codigo}")
 
-        model = ModelError(estado=int(codigo), fecha_hora_error=datetime.datetime.now())
+        model = ModelError(
+            user=request.user,
+            estado=int(codigo),
+            fecha_hora_error=datetime.datetime.now(),
+        )
 
         model.save()
         logout(request)

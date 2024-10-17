@@ -74,7 +74,7 @@ class ModelRetroalimentaciones(models.Model):
 
 
 class ModelInformacionEntregaFinal(models.Model):
-    anteproyecto = models.ForeignKey(
+    anteproyecto = models.OneToOneField(
         ModelAnteproyecto,
         on_delete=models.CASCADE,
         related_name="Informacion_Entrega_Final",
@@ -132,13 +132,6 @@ class ModelSolicitudes(models.Model):
     )
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="Solicitudes",
-    )
-    retroalimentaciones = models.ForeignKey(
-        ModelRetroalimentaciones,
         on_delete=models.CASCADE,
         blank=True,
         null=True,

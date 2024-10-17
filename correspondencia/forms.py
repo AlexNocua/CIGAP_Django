@@ -109,7 +109,7 @@ class FormSolicitudes(forms.ModelForm):
         model = ModelSolicitudes
         fields = [
             
-            'retroalimentaciones',
+           
             'tipo_solicitud',
             'motivo_solicitud',
             'documento_soporte_convert',

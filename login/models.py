@@ -1,3 +1,4 @@
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -14,12 +15,6 @@ import datetime
 from .managers import UserManager
 
 
-class ModelError(models.Model):
-    estado = models.IntegerField()
-    fecha_hora_error = models.DateTimeField()
-
-    class Meta:
-        verbose_name_plural = "Errores"
 
 
 class Usuarios(AbstractUser):
@@ -51,3 +46,17 @@ class Usuarios(AbstractUser):
 
     class Meta:
         verbose_name_plural = "Usuarios"
+
+class ModelError(models.Model):
+    user = models.ForeignKey(
+        Usuarios,
+        on_delete=models.CASCADE,
+        related_name="Error",
+        blank=True,
+        null=True,
+    )
+    estado = models.IntegerField()
+    fecha_hora_error = models.DateTimeField()
+
+    class Meta:
+        verbose_name_plural = "Errores"
