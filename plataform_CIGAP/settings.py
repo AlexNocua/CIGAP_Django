@@ -39,7 +39,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
 
 
-ALLOWED_HOSTS = [os.getenv(ALLOWED_HOSTS)]
+ALLOWED_HOSTS = [os.getenv(ALLOWED_HOSTS),]
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
 
 
