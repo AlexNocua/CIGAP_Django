@@ -35,6 +35,9 @@ class ModelAnteproyecto(models.Model):
     documento_radicado = models.BinaryField(null=True, blank=True)
     documento_concepto = models.BinaryField(null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Anteproyectos"
+
 
 # creacion del modelo de monografia o proyecto de grado
 
@@ -64,6 +67,9 @@ class ModelProyectoFinal(models.Model):
 
     def save(self, *args, **kwargs):
         super(ModelProyectoFinal, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Proyectos Finales"
 
 
 # creacion del modelo de jurados
@@ -98,6 +104,9 @@ class ModelObjetivoGeneral(models.Model):
     )
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Objetivos Generales"
+
 
 class ModelObjetivosEspecificos(models.Model):
     objetivo_general = models.ForeignKey(
@@ -114,6 +123,9 @@ class ModelObjetivosEspecificos(models.Model):
     documento_avance = models.BinaryField(blank=True, null=True)
     documento_correcciones = models.BinaryField(blank=True, null=True)
     estado = models.BooleanField(blank=True, default=False)
+
+    class Meta:
+        verbose_name_plural = "Objetivos especificos"
 
 
 class ModelActividades(models.Model):
@@ -134,6 +146,9 @@ class ModelActividades(models.Model):
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
     estado = models.BooleanField(blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Actividades"
+
 
 class ModelFechasProyecto(models.Model):
     proyecto_final = models.ForeignKey(
@@ -151,3 +166,6 @@ class ModelFechasProyecto(models.Model):
 
     def __str__(self):
         return f"Fechas del proyecto {self.proyecto_final.anteproyecto.nombre_anteproyecto}"
+
+    class Meta:
+        verbose_name_plural = "Fechas de proyectos"

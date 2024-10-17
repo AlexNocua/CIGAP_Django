@@ -18,12 +18,15 @@ class ModelError(models.Model):
     estado = models.IntegerField()
     fecha_hora_error = models.DateTimeField()
 
+    class Meta:
+        verbose_name_plural = "Errores"
+
 
 class Usuarios(AbstractUser):
     ROLES_CHOICES = (
-        ('estudiante', 'Estudiante'),
-        ('director', 'Director'),
-        ('correspondencia', 'Correspondencia'),
+        ("estudiante", "Estudiante"),
+        ("director", "Director"),
+        ("correspondencia", "Correspondencia"),
     )
 
     nombres = models.CharField(max_length=100)
@@ -34,8 +37,8 @@ class Usuarios(AbstractUser):
     imagen = models.BinaryField(null=True, blank=True)
     token = models.CharField(max_length=32, blank=True, null=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nombres', 'apellidos']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["nombres", "apellidos"]
 
     objects = UserManager()
 
@@ -46,4 +49,5 @@ class Usuarios(AbstractUser):
     def __str__(self):
         return self.email
 
-
+    class Meta:
+        verbose_name_plural = "Usuarios"

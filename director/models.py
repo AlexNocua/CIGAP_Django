@@ -23,6 +23,8 @@ class ModelEvaluacionAnteproyecto(models.Model):
     fecha_asignacion = models.DateTimeField(blank=True, null=True)
     estado = models.BooleanField(default=False, null=True, blank=True)
     doc_evaluacion_anteproyecto = models.BinaryField(blank=True, null=True)
+    class Meta:
+        verbose_name_plural = "Evaluaciones de Anteproyectos"
 
 
 # creacion del modelo de evaluador de jurado
@@ -38,3 +40,5 @@ class ModelEvaluacionProyectoFinal(models.Model):
     fecha_asignacion = models.DateTimeField(blank=True, null=True)
     estado = models.BooleanField(default=False, null=True, blank=True)
     doc_evaluacion_proyecto = models.BinaryField(blank=True, null=True)
+    class Meta:
+        verbose_name_plural = "Evaluaciones de Proyectos Finales"
