@@ -65,7 +65,7 @@ class ModelRetroalimentaciones(models.Model):
             return f"{self.anteproyecto.nombre_anteproyecto} - {self.estado}"
         else:
             return f"Solicitud eliminada - {self.estado}"
-        
+
     class Meta:
         verbose_name_plural = "Retroalimentaciones"
 
@@ -104,6 +104,7 @@ class ModelInformacionEntregaFinal(models.Model):
 
     class Meta:
         verbose_name_plural = "Informaciones de Entregas Finales"
+
 
 # creacion del modelo de solicitudes para el cambio de infromacion respecto al proyecto
 
@@ -146,6 +147,7 @@ class ModelSolicitudes(models.Model):
     documento_soporte = models.BinaryField(blank=True, null=True)
     fecha_envio = models.DateTimeField(blank=True, null=True)
     estado = models.BooleanField(default=False)
+
     class Meta:
         verbose_name_plural = "Solicitudes"
 
@@ -157,13 +159,14 @@ class ModelDocumentos(models.Model):
     descripcion = models.CharField(max_length=500)
     documento = models.BinaryField(blank=True, null=True)
     fecha_cargue = models.DateTimeField(blank=True, null=True)
+
     class Meta:
         verbose_name_plural = "Documentos"
 
 
 class ModelFechasComite(models.Model):
     ano_actual = models.IntegerField(null=True, blank=True)  # Cambiar a IntegerField
-    periodo_academico = models.IntegerField(null=True, blank=True)
+    periodo_academico = models.CharField(max_length=255, null=True, blank=True)
     primer_encuentro = models.DateField(
         null=True, blank=True
     )  # Si solo necesitas la fecha
@@ -171,5 +174,6 @@ class ModelFechasComite(models.Model):
     tercer_encuentro = models.DateField(null=True, blank=True)
     cuarto_encuentro = models.DateField(null=True, blank=True)
     extraordinaria = models.DateField(null=True, blank=True)
+
     class Meta:
         verbose_name_plural = "Fechas de Comite"

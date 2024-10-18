@@ -146,14 +146,14 @@ def recuperar_fechas_comite():
     fecha_actual = datetime.now()
     mes_actual = fecha_actual.month
     if mes_actual <= 6:
-        periodo_academico_actual = 1
+        periodo_academico_actual = int(1)
     else:
-        periodo_academico_actual = 2
+        periodo_academico_actual = int(2)
 
     fechas = (
-        ModelFechasComite.objects.get(periodo_academico=periodo_academico_actual)
+        ModelFechasComite.objects.get(periodo_academico=int(periodo_academico_actual))
         if ModelFechasComite.objects.filter(
-            periodo_academico=periodo_academico_actual
+            periodo_academico=int(periodo_academico_actual)
         ).exists()
         else None
     )

@@ -15,11 +15,11 @@ django.setup()
 from login.models import Usuarios
 
 # Obtener variables de entorno para el superusuario
-print(os.environ.get("SUPERUSER_PASSWORD"))
+print(os.environ.get("PASSWORD"))
 nombres = os.getenv("SUPERUSER_NOMBRES")
 apellidos = os.getenv("SUPERUSER_APELLIDOS")
 email = os.getenv("SUPERUSER_EMAIL")
-password = os.getenv("SUPERUSER_PASSWORD")
+password = os.getenv("PASSWORD")
 
 # Imprimir email y contraseña
 print(f"Email: {email}")
