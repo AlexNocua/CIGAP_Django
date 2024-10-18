@@ -11,8 +11,6 @@ db.sqlite3
 *.egg-info/
 dist/
 build/
-crear_grupos.py
-crear_super.py
 
 # IDEs
 .vscode/

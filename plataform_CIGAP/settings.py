@@ -33,7 +33,7 @@ def base_dir():
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
-# SECRET_KEY = "pvj1rd@(@mz%h9c+k=3-om38%r5s00#@bw--putsf5d($$3(!y"
+
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
