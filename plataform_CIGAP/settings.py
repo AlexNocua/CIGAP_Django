@@ -33,14 +33,16 @@ def base_dir():
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = "pvj1rd@(@mz%h9c+k=3-om38%r5s00#@bw--putsf5d($$3(!y"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+# DEBUG = True
 
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
+# ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -105,12 +107,6 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
-# def base_dir():
-#     print(f"Database URL: {database_url}")
-#     return f"Database URL: {database_url}"
-
-
 # Configurar la base de datos
 DATABASES = {
     'default': dj_database_url.config(
@@ -119,8 +115,6 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
-# database_url = os.environ.get("DATABASE_URL")
-# DATABASES["default"] = dj_database_url.parse(database_url) 
 
 # base de datos predefinida
 # DATABASES = {

@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block extra_head %}
-  <!--                                                                                               
+  <!--                                                                                                            
     Importacion de la carpeta static styles y manipulacion del DOM    
-                                                                                                   -->
+                                                                                                                -->
   {% load static %}
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
@@ -19,6 +19,27 @@
   <link rel="stylesheet" href="{% static 'css/alertRecuperarCuenta.css' %}" />
 {% endblock %}
 {% block content_login %}
+  <style>
+    .link_admin {
+      animation: admin 2s infinite;
+      
+    }
+    
+    @keyframes admin {
+      0% {
+        scale: 1;
+      }
+      50% {
+        scale: 1.05;
+        transform: rotate(-10deg);
+      }
+      100% {
+        scale: 1;
+        transform: rotate(0deg);
+      }
+    }
+  </style>
+
   <div class="d-flex justify-content-center align-items-center h-100 position-relative">
     <div class="container recuperar_cuenta d-flex justify-content-center align-items-center position-absolute" style="    padding: 0;">
       <div class="recuperar_cuenta">
@@ -33,7 +54,6 @@
         <div id="contentINF1" class="classInfo col w-100 h-100 flex-column p-3 pb-5 justify-content-end" style="display: flex; color: aliceblue;">
           <div class="pb-5">
             <h1>CIGAP Ubaté</h1>
-            <h4>Prueba deploy</h4>
             <p>Plataforma virtual para el control de información y gestión de anteproyectos y proyectos de grado.</p>
           </div>
 
@@ -58,7 +78,19 @@
       </div>
       <div id="col_datos" class="w-50">
         <section id="sectionLogin" class="login rounded overflow-hidden justify-content-center flex-row w-100 h-100" style="display: flex;">
-          <div class="d-flex w-100 h-100 justify-content-around align-items-center" style="background:#2a2a2a ;">
+          <div class="d-flex w-100 h-100 justify-content-around align-items-center position-relative" style="background:#2a2a2a ;">
+            <a class="admin d-flex justify-content_center align-items-center" href="{% url 'admin:index' %}" style="margin: 12px;
+    top: 0;
+    font-size: 12px;
+    right: 0;
+    position: absolute;
+    flex-direction: column;
+    text-decoration: none;
+    color: green;
+"><img class="link_admin" src="{% static 'icons/usuario.png' %}" alt="imagen usuario" style="    height: 20px;
+    width: 20px;
+" />Admin</a>
+
             <div id="camposDoLogin" class="camposLogin col justify-content-end w-100 h-100 d-flex flex-column">
               <div class="contentLogin d-flex w-100 flex-column justify-content-center align-items-center">
                 <h1 class="pb-3 text-center">Inicia sesión</h1>
