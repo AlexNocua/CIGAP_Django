@@ -1,3 +1,4 @@
+{% load static %}
 <style>
   .toast {
     z-index: 2001;
@@ -39,10 +40,10 @@
     {% for message in messages %}
       <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 10px;">
         <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="..." />
-          <strong class="me-auto">Bootstrap</strong>
-          <small class="text-muted">Ahora</small> <!-- Este texto será blanco -->
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> <!-- Icono de cerrar en blanco -->
+          <img src="{% static 'icons/gestion-de-proyectos.png' %}" class="rounded me-2" alt="..." style="width: 30px; height: 30px;" />
+          <strong class="me-auto">Plataforma CIGAP</strong>
+          <small class="text-muted" style="color: #fff !important;">Ahora</small> <!-- Este texto será blanco -->
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" style="color: #fff!important;"></button> <!-- Icono de cerrar en blanco -->
         </div>
         <div class="toast-body">{{ message }}</div>
       </div>

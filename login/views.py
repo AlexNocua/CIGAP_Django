@@ -33,7 +33,7 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .forms import FormRegistro, FormEditarUsuario
 
@@ -43,6 +43,8 @@ import base64
 
 # importacion de modelo de usuarios
 from .models import Usuarios
+
+
 
 
 # utilidades

@@ -46,296 +46,407 @@
       border-color: #80bdff;
       background-color: #e2e6ea;
     }
+    .contenido_solicitud {
+      overflow: hidden;
+      margin-top: 28px;
+      padding: 0;
+      border: 1px solid #cacaca;
+      border-radius: 12px;
+      box-shadow: 0 0 4px 2px #dadada;
+    }
+    .carousel-inner {
+      z-index: 20;
+      border-top: 1px solid #cacaca;
+      border-bottom: 1px solid #cacaca;
+      padding: 12px 0;
+      margin: 12px;
+      transition: all 0.3s;
+    }
   </style>
   {% comment %}este estilo es para ocultar los cards del usuario ya que estan estaplecidos en la base{% endcomment %}
 
-  <h2 class="m-3">Cree una solicitud de anteproyecto</h2>
-  {% if anteproyecto %}
-    <h3>Detalles del Anteproyecto</h3>
+  <div class="contenido_solicitud">
+    <h3 class="tittles_h3"><i class="fas fa-file-alt"></i> Cree una solicitud de anteproyecto</h3>
+    <div class="p-2">
+      {% if anteproyecto %}
+        <h4 class="titulos_estudiante"><i class="fas fa-info-circle"></i> Detalles del Anteproyecto</h4>
 
-    {% if observaciones %}
-      <h5>Observaciones:</h5>
-      <div id="observacionesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <!-- Mostrar número de observaciones -->
-        <div style="text-align: center; margin-bottom: 15px;">
-          <strong>Total de Observaciones:</strong> {{ observaciones.items|length }}
-        </div>
+        {% if observaciones %}
+          <p>
+            <i class="fas fa-comments"></i> Observaciones realizadas por el directo o codirector
+          </p>
+          <div id="observacionesCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Mostrar número de observaciones -->
+            <div style="text-align: center; margin-bottom: 15px;">
+              <strong>Total de Observaciones:</strong> {{ observaciones.items|length }}
+            </div>
 
-        <div class="carousel-inner" style="z-index: 20;     border-top: 2px solid #259100;
-    border-bottom: 2px solid #259100;
-    padding: 12px 0;">
-          {% for key, observacion in observaciones.items %}
-            <div class="carousel-item {% if forloop.first %} active {% endif %}">
-              <div class="card mx-auto" style="width: 50%; padding: 20px; margin: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <div class="card-body">
-                  <!-- Título con observación y usuario -->
-                  <div class="d-flex justify-content-between">
-                    <h5 class="card-title">Observación {{ forloop.counter }}</h5>
-                    <p>
-                      {% if observacion %}
-                        <strong>Por:</strong> {{ observacion.observacion.user.nombre_completo }}
+            <div class="carousel-inner" style="">
+              {% for key, observacion in observaciones.items %}
+                <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                  <div class="card mx-auto" style="width: 50%; padding: 20px; margin: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                      <!-- Título con observación y usuario -->
+                      <div class="d-flex justify-content-between">
+                        <h5 class="card-title"><i class="fas fa-comment-alt"></i> Observación {{ forloop.counter }}</h5>
+                        <p>
+                          {% if observacion %}
+                            <strong><i class="fas fa-user"></i> Por:</strong> {{ observacion.observacion.user.nombre_completo }}
+                          {% endif %}
+                        </p>
+                      </div>
+
+                      <!-- Fecha de retroalimentación -->
+                      <p>
+                        <strong><i class="fas fa-calendar-alt"></i> Fecha de Retroalimentación:</strong> {{ observacion.observacion.fecha_retroalimentacion }}
+                      </p>
+
+                      <!-- Documento de evaluación si existe -->
+                      {% if observacion.doc_evaluacion_anteproyecto %}
+                        <p>
+                          <strong><i class="fas fa-file-pdf"></i> Documento de Evaluación:</strong>
+                          <a href="data:application/pdf;base64,{{ observacion.doc_evaluacion_anteproyecto }}" download="evaluacion_{{ forloop.counter }}_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-sm btn-outline-primary solicitudes"><i class="fas fa-download"></i> Descargar Documento</a>
+                        </p>
                       {% endif %}
-                    </p>
+
+                      <!-- Revisiones dadas -->
+                      <p>
+                        <strong><i class="fas fa-comments"></i> Revisiones dadas:</strong> {{ observacion.observacion.retroalimentacion }}
+                      </p>
+
+                      <!-- Revisiones adicionales si existen -->
+                      {% if observacion.observacion.revs_dadas %}
+                        <p>
+                          <small><strong><i class="fas fa-edit"></i> Revisiones adicionales:</strong> {{ observacion.observacion.revs_dadas }}</small>
+                        </p>
+                      {% endif %}
+                    </div>
                   </div>
+                </div>
+              {% endfor %}
+            </div>
 
-                  <!-- Fecha de retroalimentación -->
-                  <p>
-                    <strong>Fecha de Retroalimentación:</strong> {{ observacion.observacion.fecha_retroalimentacion }}
-                  </p>
+            <!-- Controles de navegación con colores personalizados -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="prev" style="z-index: 21; border-radius: 50%;">
+              <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="next" style="z-index: 21; border-radius: 50%;">
+              <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
 
-                  <!-- Documento de evaluación si existe -->
-                  {% if observacion.doc_evaluacion_anteproyecto %}
-                    <p>
-                      <strong>Documento de Evaluación:</strong>
-                      <a href="data:application/pdf;base64,{{ observacion.doc_evaluacion_anteproyecto }}" download="evaluacion_{{ forloop.counter }}_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-sm btn-outline-primary">Descargar Documento</a>
-                    </p>
-                  {% endif %}
+          {% if anteproyecto.estado == False %}
+            <form method="POST" enctype="multipart/form-data" action="{% url 'estudiante:actualizar_documentos_anteproyecto' anteproyecto.id %}">
+              <h3 class=""><i class="fas fa-edit"></i> Ajuste el contenido del anteproyecto según las observaciones realizadas</h3>
 
-                  <!-- Revisiones dadas -->
-                  <p>
-                    <strong>Revisiones dadas:</strong> {{ observacion.observacion.retroalimentacion }}
-                  </p>
+              {% csrf_token %}
+              <!-- Nombre del Proyecto y Resumen -->
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
+                  <input type="text" id="id_nombre_proyecto" name="nombre_proyecto" value="{{ anteproyecto.nombre_anteproyecto }}" class="form-control" />
+                  <small class="form-text text-muted">Ingresa el nombre del proyecto.</small>
+                </div>
 
-                  <!-- Revisiones adicionales si existen -->
-                  {% if observacion.observacion.revs_dadas %}
-                    <p>
-                      <small><strong>Revisiones adicionales:</strong> {{ observacion.observacion.revs_dadas }}</small>
-                    </p>
-                  {% endif %}
+                <div class="form-group col-md-6">
+                  <label for="id_descripcion"><b>Resumen</b></label>
+                  <textarea id="id_descripcion" name="descripcion" class="form-control">{{ anteproyecto.descripcion }}</textarea>
+                  <small class="form-text text-muted">Ingrese el resumen del proyecto. (No mayor a 400 palabras.)</small>
                 </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
 
-        <!-- Controles de navegación con colores personalizados -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="prev" style="z-index: 21 ; border-radius: 50%;">
-          <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="next" style="z-index: 21 ; border-radius: 50%;">
-          <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-
-      {% if anteproyecto.estado == False %}
-        <form method="POST" enctype="multipart/form-data" action="{% url 'estudiante:actualizar_documentos_anteproyecto' anteproyecto.id %}">
-          <h3 class="m-3">Ajuste el cotenido del anteproyecto según las observaciones realizadas</h3>
-          {% csrf_token %}
-          <!-- Nombre del Proyecto y Resumen -->
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
-              <input type="text" id="id_nombre_proyecto" name="nombre_proyecto" value="{{ anteproyecto.nombre_anteproyecto }}" class="form-control" />
-              <small class="form-text text-muted">Ingresa el nombre del proyecto.</small>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="id_descripcion"><b>Resumen</b></label>
-              <textarea id="id_descripcion" name="descripcion" class="form-control">{{ anteproyecto.descripcion }}</textarea>
-              <small class="form-text text-muted">Ingrese el resumen del proyecto. (No mayor a 400 palabras.)</small>
-            </div>
-          </div>
-
-          <!-- Nombres de Integrantes -->
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
-              <input type="text" id="id_nombre_integrante1" name="nombre_integrante1" value="{{ anteproyecto.nombre_integrante1 }}" class="form-control" />
-              <small class="form-text text-muted">Escriba el nombre completo del primer integrante.</small>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
-              <input type="text" id="id_nombre_integrante2" name="nombre_integrante2" value="{{ anteproyecto.nombre_integrante2 }}" class="form-control" />
-              <small class="form-text text-muted">Escriba el nombre completo del segundo integrante.</small>
-            </div>
-          </div>
-          <!-- Director y Codirector -->
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="id_director"><b>Director</b></label>
-              <select id="id_director" name="director" class="form-control">
-                <option value="{{ anteproyecto.director }}">{{ anteproyecto.director }}</option>
-              </select>
-              <small class="form-text text-muted">Seleccione el director del proyecto.</small>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="id_codirector"><b>Codirector</b></label>
-              <select id="id_codirector" name="codirector" class="form-control">
-                <option value="{{ anteproyecto.codirector }}">{{ anteproyecto.codirector }}</option>
-              </select>
-              <small class="form-text text-muted">Seleccione el codirector del proyecto (opcional).</small>
-            </div>
-          </div>
-
-          <!-- Archivos Adicionales -->
-          <div class="form-group">
-            <label for="anteproyecto"><strong>Editar Documento de Anteproyecto:</strong></label>
-            <input type="file" name="anteproyecto" id="anteproyecto" accept="application/pdf" class="form-control-file" required />
-            <small class="form-text text-muted">Por favor, asegúrese de que el archivo del anteproyecto sea un documento PDF.</small>
-          </div>
-
-          <div class="form-group">
-            <label for="carta_anteproyecto"><strong>Editar Carta del Anteproyecto:</strong></label>
-            <input type="file" name="carta_anteproyecto" id="carta_anteproyecto" accept="application/pdf" class="form-control-file" required />
-            <small class="form-text text-muted">Por favor, asegúrese de que la carta del anteproyecto sea un documento PDF.</small>
-          </div>
-
-          <!-- Botón de Envío -->
-          <button type="submit" class="btn btn-primary mt-3">Subir Nuevos Documentos</button>
-        </form>
-      {% else %}
-        <div class="p-2" style="border: 1px solid #CACACB;
-    border-radius: 12px">
-          <h3 class="text-center">Enviado al comité</h3>
-          <p>El anteproyecto está siendo revisado por el comité, pendiente a observaciones y evaluaciones.</p>
-          <p>
-            <strong>Nota:</strong>
-            <small>Este anteproyecto aún no ha sido evaluado por el comité.</small><br />
-
-            <small><strong>Fecha de envio de la solicitud:</strong> {{ anteproyecto.fecha_envio }}</small><br />
-            {% if fecha_respuesta_maxima %}
-              <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
-            {% endif %}
-          </p>
-        </div>
-      {% endif %}
-    {% else %}
-      <p>El anteproyecto está siendo revisado por el director y codirector, pendiente a observaciones y evaluaciones.</p>
-      <p>
-        <strong>Nota:</strong> <small>Este anteproyecto aún no ha sido evaluado.</small>
-      </p>
-    {% endif %}
-  {% else %}
-    <div class="solicitud d-flex flex-column contenido_estudiante_view">
-      {% if not existe_solicitud %}
-        <div class="col w-100">
-          <div class="acuerdos">
-            <h4>Consideraciones previas al envío de su anteproyecto:</h4>
-            <p>Una vez que haya enviado su anteproyecto, este será revisado por el comité correspondiente. Es de suma importancia que esté atento a la retroalimentación proporcionada por dicho comité, ya que su respuesta podría ser una de las siguientes:</p>
-            <ul>
-              <li>
-                <strong>Aprobado:</strong> El anteproyecto cumple con los requisitos establecidos, lo que le permitirá continuar con la siguiente fase del proceso.
-              </li>
-              <li>
-                <strong>Rechazado:</strong> El anteproyecto no cumple con los criterios necesarios para avanzar. En este caso, será necesario realizar una revisión exhaustiva y presentarlo nuevamente en una convocatoria futura.
-              </li>
-            </ul>
-            <p>Es igualmente esencial que verifique la documentación que está enviando. Asegúrese de que todos los archivos adjuntos sean los correctos y cumplan con las especificaciones solicitadas, ya que un error en esta etapa podría retrasar el proceso de revisión.</p>
-            <p>Por favor, manténgase atento a las notificaciones y responda de manera oportuna a cualquier solicitud del comité, con el fin de garantizar un proceso ágil y eficiente.</p>
-          </div>
-
-          <form id="anteproyectoForm" action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h4>Ingrese los siguientes datos</h4>
-            <div class="col">
-              <!-- Nombre del Proyecto -->
-              <div class="form-group col-md-6">
-                <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
-                <input type="text" id="id_nombre_proyecto" name="nombre_anteproyecto" class="form-control" placeholder="Escriba el nombre del proyecto" required />
-                <small class="form-text text-muted">Ingresa el nombre del proyecto.</small>
-              </div>
-
-              <!-- Descripción -->
-              <div class="form-group col-md-6 d-flex flex-column">
-                <label class="m-0 p-0" for="id_descripcion"><b>Resumen</b></label>
-                <textarea id="id_descripcion" name="descripcion" class="form-control" rows="4" placeholder="Ingrese el resumen del proyecto. (No mayor a 400 palabras)" required></textarea>
-                <small class="form-text text-muted">Ingrese el resumen del proyecto. (No mayor a 400 palabras.)</small>
-              </div>
-
+              <!-- Nombres de Integrantes -->
               <div class="row">
-                <!-- Nombre del Primer Integrante -->
                 <div class="form-group col-md-6">
-                  <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
-                  <input type="text" id="id_nombre_integrante1" name="nombre_integrante1" value="{{ usuario.nombre_completo }}" class="form-control" placeholder="Escriba el nombre completo del primer integrante" required />
+                  <label for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
+                  <input type="text" id="id_nombre_integrante1" name="nombre_integrante1" value="{{ anteproyecto.nombre_integrante1 }}" class="form-control" />
                   <small class="form-text text-muted">Escriba el nombre completo del primer integrante.</small>
                 </div>
 
-                <!-- Nombre del Segundo Integrante -->
                 <div class="form-group col-md-6">
-                  <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
-                  <input type="text" id="id_nombre_integrante2" name="nombre_integrante2" class="form-control" placeholder="Escriba el nombre completo del segundo integrante (opcional)" />
-                  <small class="form-text text-muted">Escriba el nombre completo del segundo integrante (opcional).</small>
+                  <label for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
+                  <input type="text" id="id_nombre_integrante2" name="nombre_integrante2" value="{{ anteproyecto.nombre_integrante2 }}" class="form-control" />
+                  <small class="form-text text-muted">Escriba el nombre completo del segundo integrante.</small>
                 </div>
               </div>
-
+              <!-- Director y Codirector -->
               <div class="row">
-                <!-- Carta de Presentación -->
                 <div class="form-group col-md-6">
-                  <label class="m-0 p-0" for="id_carta_presentacion_convert"><b>Carta de Presentación</b></label>
-                  <input type="file" id="id_carta_presentacion_convert" name="carta_presentacion_convert" accept=".pdf" />
-                  <small class="form-text text-muted">Suba la carta de presentación en formato PDF.</small>
-                </div>
-
-                <!-- Anteproyecto -->
-                <div class="form-group col-md-6">
-                  <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
-                  <input type="file" id="id_anteproyecto_convert" name="anteproyecto_convert" accept=".pdf" />
-                  <small class="form-text text-muted">Adjunte el anteproyecto en formato PDF.</small>
-                </div>
-              </div>
-
-              <div class="row">
-                <!-- Director -->
-                <div class="form-group col-md-6">
-                  <label class="m-0 p-0" for="id_director"><b>Director</b></label>
-                  <select id="id_director" name="director" class="form-control" required>
-                    <option value="" selected>Seleccione el director</option>
-                    {% for director in directores %}
-                      <option value="{{ director.nombre_completo }}">{{ director.nombre_completo }}</option>
-                    {% endfor %}
+                  <label for="id_director"><b>Director</b></label>
+                  <select id="id_director" name="director" class="form-control">
+                    <option value="{{ anteproyecto.director }}">{{ anteproyecto.director }}</option>
                   </select>
                   <small class="form-text text-muted">Seleccione el director del proyecto.</small>
                 </div>
-                <!-- Codirector -->
+
                 <div class="form-group col-md-6">
-                  <label class="m-0 p-0" for="id_codirector"><b>Codirector</b></label>
-                  <select id="id_codirector" name="codirector" class="form-control p-1">
-                    <option value="" selected>(opcional)</option>
-                    {% for director in directores %}
-                      <option value="{{ director.nombre_completo }}">{{ director.nombre_completo }}</option>
-                    {% endfor %}
+                  <label for="id_codirector"><b>Codirector</b></label>
+                  <select id="id_codirector" name="codirector" class="form-control">
+                    <option value="{{ anteproyecto.codirector }}">{{ anteproyecto.codirector }}</option>
                   </select>
                   <small class="form-text text-muted">Seleccione el codirector del proyecto (opcional).</small>
                 </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col-12">
-                <input type="submit" value="Enviar" class="btn btn-primary mt-3" />
+              <!-- Archivos Adicionales -->
+              <div class="row">
+                <div class="form-group d-flex flex-column col-md-6">
+                  <label for="anteproyecto"><strong>Editar Documento de Anteproyecto:</strong></label>
+                  <div class="file-input-container">
+                    <svg class="file-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                      <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    <span class="file-input-label">Seleccionar archivo</span>
+                    <input type="file" name="anteproyecto" id="anteproyecto" accept="application/pdf" class="form-control-file" required />
+                  </div>
+
+                  <script>
+                    document.getElementById('anteproyecto').addEventListener('change', function (e) {
+                      var fileName = e.target.files[0].name
+                      document.querySelector('.file-input-label').textContent = fileName
+                    })
+                  </script>
+                  <small class="form-text text-muted">Por favor, asegúrese de que el archivo del anteproyecto sea un documento PDF.</small>
+                </div>
+
+                <div class="form-group d-flex flex-column col-md-6">
+                  <label for="carta_anteproyecto"><strong>Editar Carta del Anteproyecto:</strong></label>
+                  <div class="file-input-container">
+                    <svg class="file-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                      <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    <span class="file-input-label">Seleccionar archivo</span>
+                    <input type="file" name="carta_anteproyecto" id="carta_anteproyecto" accept="application/pdf" class="form-control-file" required />
+                  </div>
+
+                  <script>
+                    document.getElementById('carta_anteproyecto').addEventListener('change', function (e) {
+                      var fileName = e.target.files[0].name
+                      document.querySelector('.file-input-label').textContent = fileName
+                    })
+                  </script>
+                  <small class="form-text text-muted">Por favor, asegúrese de que la carta del anteproyecto sea un documento PDF.</small>
+                </div>
               </div>
+
+              <!-- Botón de Envío -->
+              <button type="submit" class="btn btn-primary btns-solicitudes mt-3">Subir Nuevos Documentos</button>
+            </form>
+          {% else %}
+            <div class="p-2" style="border: 1px solid #CACACB;
+    border-radius: 12px">
+              <h3 class="text-center">Enviado al comité</h3>
+              <p>El anteproyecto está siendo revisado por el comité, pendiente a observaciones y evaluaciones.</p>
+              <p>
+                <strong>Nota:</strong>
+                <small>Este anteproyecto aún no ha sido evaluado por el comité.</small><br />
+
+                <small><strong>Fecha de envio de la solicitud:</strong> {{ anteproyecto.fecha_envio }}</small><br />
+                {% if fecha_respuesta_maxima %}
+                  <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
+                {% endif %}
+              </p>
             </div>
-          </form>
-        </div>
-      {% else %}
-        {% if respuesta %}
-          <p>
-            <strong>El comité ha respondido a su solicitud de anteproyecto. La respuesta es:</strong> {{ respuesta.respuesta.estado }}
-            <br />
-            <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-            <strong>Fecha de respuesta por parte del comité:</strong> {{ respuesta.respuesta.fecha_retroalimentacion }}
-            <br />
-            <strong>Documento retroalimentado:</strong>
-            <a class="mt-2" href="data:application/octet-stream;base64,{{ respuesta.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
-            <br /><br />
-            <strong>Observaciones del comité:</strong> {{ respuesta.respuesta.retroalimentacion }}
-          </p>
+          {% endif %}
         {% else %}
+          <p>El anteproyecto está siendo revisado por el director y codirector, pendiente a observaciones y evaluaciones.</p>
           <p>
-            <strong>Usted ya ha enviado una solicitud. Por favor, espere la respuesta del comité.</strong>
-            <br />
-            <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
-            <strong>Estado actual:</strong> En revisión
+            <strong>Nota:</strong> <small>Este anteproyecto aún no ha sido evaluado.</small>
           </p>
         {% endif %}
-      {% endif %}
-    </div>
-  {% endif %}
+      {% else %}
+        <div class="solicitud d-flex flex-column contenido_estudiante_view">
+          {% if not existe_solicitud %}
+            <div class="col w-100">
+              <div class="acuerdos">
+                <h4 class="titulos_estudiante">Consideraciones previas al envío de su anteproyecto:</h4>
+                <p>Una vez que haya enviado su anteproyecto, este será revisado por el comité correspondiente. Es de suma importancia que esté atento a la retroalimentación proporcionada por dicho comité, ya que su respuesta podría ser una de las siguientes:</p>
+                <ul>
+                  <li>
+                    <strong>Aprobado:</strong> El anteproyecto cumple con los requisitos establecidos, lo que le permitirá continuar con la siguiente fase del proceso.
+                  </li>
+                  <li>
+                    <strong>Rechazado:</strong> El anteproyecto no cumple con los criterios necesarios para avanzar. En este caso, será necesario realizar una revisión exhaustiva y presentarlo nuevamente en una convocatoria futura.
+                  </li>
+                </ul>
+                <p>Es igualmente esencial que verifique la documentación que está enviando. Asegúrese de que todos los archivos adjuntos sean los correctos y cumplan con las especificaciones solicitadas, ya que un error en esta etapa podría retrasar el proceso de revisión.</p>
+                <p>Por favor, manténgase atento a las notificaciones y responda de manera oportuna a cualquier solicitud del comité, con el fin de garantizar un proceso ágil y eficiente.</p>
+              </div>
 
+              <form id="anteproyectoForm" action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h4 class="titulos_estudiante">Ingrese los siguientes datos</h4>
+                <div class="col">
+                  <!-- Nombre del Proyecto -->
+                  <div class="form-group col-md-6">
+                    <label class="m-0 p-0" for="id_nombre_proyecto"><b>Nombre del Proyecto</b></label>
+                    <input type="text" id="id_nombre_proyecto" name="nombre_anteproyecto" class="form-control" placeholder="Escriba el nombre del proyecto" required />
+                    <small class="form-text text-muted">Ingresa el nombre del proyecto.</small>
+                  </div>
+
+                  <!-- Descripción -->
+                  <div class="form-group col-md-6 d-flex flex-column">
+                    <label class="m-0 p-0" for="id_descripcion"><b>Resumen</b></label>
+                    <textarea id="id_descripcion" name="descripcion" class="form-control" rows="4" placeholder="Ingrese el resumen del proyecto. (No mayor a 400 palabras)" required></textarea>
+                    <small class="form-text text-muted">Ingrese el resumen del proyecto. (No mayor a 400 palabras.)</small>
+                  </div>
+
+                  <div class="row">
+                    <!-- Nombre del Primer Integrante -->
+                    <div class="form-group col-md-6">
+                      <label class="m-0 p-0" for="id_nombre_integrante1"><b>Nombre del Primer Integrante</b></label>
+                      <input type="text" id="id_nombre_integrante1" name="nombre_integrante1" value="{{ usuario.nombre_completo }}" class="form-control" placeholder="Escriba el nombre completo del primer integrante" required />
+                      <small class="form-text text-muted">Escriba el nombre completo del primer integrante.</small>
+                    </div>
+
+                    <!-- Nombre del Segundo Integrante -->
+                    <div class="form-group col-md-6">
+                      <label class="m-0 p-0" for="id_nombre_integrante2"><b>Nombre del Segundo Integrante</b></label>
+                      <input type="text" id="id_nombre_integrante2" name="nombre_integrante2" class="form-control" placeholder="Escriba el nombre completo del segundo integrante (opcional)" />
+                      <small class="form-text text-muted">Escriba el nombre completo del segundo integrante (opcional).</small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <!-- Carta de Presentación -->
+                    <div class="form-group d-flex flex-column col-md-6">
+                      <label class="m-0 p-0" for="id_carta_presentacion_convert"><b>Carta de Presentación</b></label>
+                      <div class="file-input-container">
+                        <svg class="file-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                          <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <span class="file-input-label">Seleccionar archivo</span>
+                        <input type="file" id="id_carta_presentacion_convert" name="carta_presentacion_convert" accept=".pdf" />
+                      </div>
+
+                      <script>
+                        document.getElementById('id_carta_presentacion_convert').addEventListener('change', function (e) {
+                          var fileName = e.target.files[0].name
+                          document.querySelector('.file-input-label').textContent = fileName
+                        })
+                      </script> <small class="form-text text-muted">Suba la carta de presentación en formato PDF.</small>
+                    </div>
+
+                    <!-- Anteproyecto -->
+                    <div class="form-group d-flex flex-column col-md-6">
+                      <label class="m-0 p-0" for="id_anteproyecto"><b>Anteproyecto</b></label>
+                      <div class="file-input-container">
+                        <svg class="file-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                          <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <span class="file-input-label">Seleccionar archivo</span>
+                        <input type="file" id="id_anteproyecto_convert" name="anteproyecto_convert" accept=".pdf" class="form-control-file form-control-lg" />
+                      </div>
+
+                      <script>
+                        document.getElementById('id_anteproyecto_convert').addEventListener('change', function (e) {
+                          var fileName = e.target.files[0].name
+                          document.querySelector('.file-input-label').textContent = fileName
+                        })
+                      </script>
+
+                      <small class="form-text text-muted">Adjunte el anteproyecto en formato PDF.</small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <!-- Director -->
+                    <div class="form-group col-md-6">
+                      <label class="m-0 p-0" for="id_director"><b>Director</b></label>
+                      <select id="id_director" name="director" class="form-control" required>
+                        <option value="" selected>Seleccione el director</option>
+                        {% for director in directores %}
+                          <option value="{{ director.nombre_completo }}">{{ director.nombre_completo }}</option>
+                        {% endfor %}
+                      </select>
+                      <small class="form-text text-muted">Seleccione el director del proyecto.</small>
+                    </div>
+                    <!-- Codirector -->
+                    <div class="form-group col-md-6">
+                      <label class="m-0 p-0" for="id_codirector"><b>Codirector</b></label>
+                      <select id="id_codirector" name="codirector" class="form-control p-1">
+                        <option value="" selected>(opcional)</option>
+                        {% for director in directores %}
+                          <option value="{{ director.nombre_completo }}">{{ director.nombre_completo }}</option>
+                        {% endfor %}
+                      </select>
+                      <small class="form-text text-muted">Seleccione el codirector del proyecto (opcional).</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <input type="submit" value="Enviar" class="btn btn-primary btns-solicitudes mt-3" />
+                  </div>
+                </div>
+              </form>
+            </div>
+          {% else %}
+            {% if respuesta %}
+              <p>
+                <strong>El comité ha respondido a su solicitud de anteproyecto. La respuesta es:</strong> {{ respuesta.respuesta.estado }}
+                <br />
+                <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+                <strong>Fecha de respuesta por parte del comité:</strong> {{ respuesta.respuesta.fecha_retroalimentacion }}
+                <br />
+                <strong>Documento retroalimentado:</strong>
+                <a class="mt-2" href="data:application/octet-stream;base64,{{ respuesta.doc_retroalimentacion }}" download="Retroalimentaciones_{{ nombre_anteproyecto }}.pdf">Carta de solicitud</a>
+                <br /><br />
+                <strong>Observaciones del comité:</strong> {{ respuesta.respuesta.retroalimentacion }}
+              </p>
+            {% else %}
+              <p>
+                <strong>Usted ya ha enviado una solicitud. Por favor, espere la respuesta del comité.</strong>
+                <br />
+                <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
+                <strong>Estado actual:</strong> En revisión
+              </p>
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="solicitud contenido_estudiante_view mt-4">
+        <h3 class="mt-2">¿Tiene alguna otra solicitud?</h3>
+        <form action="{% url 'estudiante:solicitudes_especificas' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Tipo de Solicitud</label>
+                <div style="cursor: pointer;">{{ form_solicitudes.tipo_solicitud }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Motivo de la Solicitud</label>
+                <div style="cursor: pointer;">{{ form_solicitudes.motivo_solicitud }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Documento de Soporte</label>
+                <div style="cursor: pointer;">{{ form_solicitudes.documento_soporte_convert }}</div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btns-solicitudes">Enviar</button>
+            </div>
+            <div class="col-md-6">
+              <h3 class="text-center">Cosas a tener en cuenta:</h3>
+              <p class="">
+                <strong>Recuerde subir los documentos correctos</strong> y asegurarse de que estén completos y en el formato adecuado (pdf). <br />
+                <strong>Verifique toda la información antes de enviarla.</strong> <br />
+                <strong>Esté pendiente a las respuestas del comité</strong>, ya que podrían ser necesarios ajustes adicionales. <br />
+                <strong>Considere las posibles fechas de sustentación</strong> y planifique en consecuencia. <br />
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   {% comment %}tener en cuenta que este cambia segun la respuesta del comite{% if respuesta %}
     <h2 class="mt-4">Cree una solicitud de proyecto final</h2>
     {% if respuesta.respuesta.estado == 'Aprobado' or respuesta.respuesta.estado == 'Aprobado_con_correcciones' %}
@@ -383,39 +494,6 @@
       <h1>errorc</h1>
     {% endif %}
   {% endif %} {% endcomment %}
-  <h3 class="mt-4">¿Tiene alguna otra solicitud?</h3>
-  <div class="solicitud contenido_estudiante_view">
-    <form action="{% url 'estudiante:solicitudes_especificas' %}" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label class="form-label fw-bold">Tipo de Solicitud</label>
-            <div style="cursor: pointer;">{{ form_solicitudes.tipo_solicitud }}</div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label fw-bold">Motivo de la Solicitud</label>
-            <div style="cursor: pointer;">{{ form_solicitudes.motivo_solicitud }}</div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label fw-bold">Documento de Soporte</label>
-            <div style="cursor: pointer;">{{ form_solicitudes.documento_soporte_convert }}</div>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </div>
-        <div class="col-md-6">
-          <h3 class="text-center">Cosas a tener en cuenta:</h3>
-          <p class="">
-            <strong>Recuerde subir los documentos correctos</strong> y asegurarse de que estén completos y en el formato adecuado (pdf). <br />
-            <strong>Verifique toda la información antes de enviarla.</strong> <br />
-            <strong>Esté pendiente a las respuestas del comité</strong>, ya que podrían ser necesarios ajustes adicionales. <br />
-            <strong>Considere las posibles fechas de sustentación</strong> y planifique en consecuencia. <br />
-          </p>
-        </div>
-      </div>
-    </form>
-  </div>
 
   <script>
     document.getElementById('anteproyectoForm').addEventListener('submit', function (event) {

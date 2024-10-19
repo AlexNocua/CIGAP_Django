@@ -166,7 +166,7 @@ class ModelDocumentos(models.Model):
 
 class ModelFechasComite(models.Model):
     ano_actual = models.IntegerField(null=True, blank=True)  # Cambiar a IntegerField
-    periodo_academico = models.CharField(max_length=255, null=True, blank=True)
+    periodo_academico = models.CharField(max_length=10, null=True, blank=True)
     primer_encuentro = models.DateField(
         null=True, blank=True
     )  # Si solo necesitas la fecha

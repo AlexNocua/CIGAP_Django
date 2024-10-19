@@ -104,35 +104,7 @@
     <style>
       /**/
       
-      .btns-editar {
-        background: linear-gradient(141deg, #ffe56c, #ff6300) !important;
-        color: #fff !important;
-        border: none !important;
-      }
-      .btns-cancelar-cerrar {
-        background: linear-gradient(141deg, #ff9e9e, red) !important;
-        border: none !important;
-      }
-      
-      .btn-primary,
-      .btn-warning,
-      .btn-danger {
-        border: none;
-        border-radius: 6px;
-        padding: 0.5rem 1rem;
-        color: white;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      .btn-primary:hover,
-      .btn-warning:hover,
-      .btn-danger:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      }
-      
-      .btns-solicitudes {
-        background: linear-gradient(150deg, #7fddfb, 20%, #004886) !important;
-      }
+     
       .notif_pendientes {
         border: none;
         border-radius: 50%;
@@ -396,7 +368,7 @@
               {% endif %}
             </div>
             <div class="d-flex justify-content-center align-items-center">
-              <button type="button" class="btn_fecha btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modalEditarFechasComite"><small>Edite alguna fecha</small></button>
+              <button type="button" class="botones_envios btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modalEditarFechasComite"><small>Edite alguna fecha</small></button>
             </div>
           </nav>
         {% else %}
@@ -407,7 +379,7 @@
             <small class="text-center">No se encuentra ninguna fecha registrada</small>
           </p>
           <div class="d-flex justify-content-center align-items-center">
-            <button type="button" class="btn_fecha btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFechasComite"><small>Edite o agregue alguna fecha</small></button>
+            <button type="button" class="btn btn-primary botones_envios" data-bs-toggle="modal" data-bs-target="#modalFechasComite"><small>Edite o agregue alguna fecha</small></button>
           </div>
         {% endif %}
       </div>
