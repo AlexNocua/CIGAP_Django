@@ -72,7 +72,7 @@
         <h4 class="titulos_estudiante"><i class="fas fa-info-circle"></i> Detalles del Anteproyecto</h4>
 
         {% if observaciones %}
-          <p>
+          <p class="etiquetas_parrafos">
             <i class="fas fa-comments"></i> Observaciones realizadas por el directo o codirector
           </p>
           <div id="observacionesCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -89,7 +89,7 @@
                       <!-- Título con observación y usuario -->
                       <div class="d-flex justify-content-between">
                         <h5 class="card-title"><i class="fas fa-comment-alt"></i> Observación {{ forloop.counter }}</h5>
-                        <p>
+                        <p class="etiquetas_parrafos">
                           {% if observacion %}
                             <strong><i class="fas fa-user"></i> Por:</strong> {{ observacion.observacion.user.nombre_completo }}
                           {% endif %}
@@ -97,26 +97,26 @@
                       </div>
 
                       <!-- Fecha de retroalimentación -->
-                      <p>
+                      <p class="etiquetas_parrafos">
                         <strong><i class="fas fa-calendar-alt"></i> Fecha de Retroalimentación:</strong> {{ observacion.observacion.fecha_retroalimentacion }}
                       </p>
 
                       <!-- Documento de evaluación si existe -->
                       {% if observacion.doc_evaluacion_anteproyecto %}
-                        <p>
+                        <p class="etiquetas_parrafos">
                           <strong><i class="fas fa-file-pdf"></i> Documento de Evaluación:</strong>
                           <a href="data:application/pdf;base64,{{ observacion.doc_evaluacion_anteproyecto }}" download="evaluacion_{{ forloop.counter }}_{{ anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-sm btn-outline-primary solicitudes"><i class="fas fa-download"></i> Descargar Documento</a>
                         </p>
                       {% endif %}
 
                       <!-- Revisiones dadas -->
-                      <p>
+                      <p class="etiquetas_parrafos">
                         <strong><i class="fas fa-comments"></i> Revisiones dadas:</strong> {{ observacion.observacion.retroalimentacion }}
                       </p>
 
                       <!-- Revisiones adicionales si existen -->
                       {% if observacion.observacion.revs_dadas %}
-                        <p>
+                        <p class="etiquetas_parrafos">
                           <small><strong><i class="fas fa-edit"></i> Revisiones adicionales:</strong> {{ observacion.observacion.revs_dadas }}</small>
                         </p>
                       {% endif %}
@@ -237,24 +237,51 @@
               <button type="submit" class="btn btn-primary btns-solicitudes mt-3">Subir Nuevos Documentos</button>
             </form>
           {% else %}
-            <div class="p-2" style="border: 1px solid #CACACB;
-    border-radius: 12px">
-              <h3 class="text-center">Enviado al comité</h3>
-              <p>El anteproyecto está siendo revisado por el comité, pendiente a observaciones y evaluaciones.</p>
-              <p>
-                <strong>Nota:</strong>
-                <small>Este anteproyecto aún no ha sido evaluado por el comité.</small><br />
+            {% if anteproyecto.solicitud_enviada %}
+              {% if anteproyecto.estado == False %}
+                <div class="p-0" style="border: 1px solid #CACACB;border-radius: 12px;overflow: hidden;">
+                  <h3 class="tittles_h3"><i class="fas fa-check-circle"></i> Enviado al comité</h3>
 
-                <small><strong>Fecha de envio de la solicitud:</strong> {{ anteproyecto.fecha_envio }}</small><br />
-                {% if fecha_respuesta_maxima %}
-                  <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
+                  <div class="p-2">
+                    <p class="etiquetas_parrafos">El anteproyecto está siendo revisado por el comité, pendiente a observaciones y evaluaciones.</p>
+                    <p class="etiquetas_parrafos">
+                      <strong>Nota:</strong>
+                      <small>Este anteproyecto aún no ha sido evaluado por el comité.</small><br />
+
+                      <small><strong>Fecha de envio de la solicitud:</strong> {{ anteproyecto.fecha_envio }}</small><br />
+                      {% if fecha_respuesta_maxima %}
+                        <small><strong>Fecha de respuesta maxima por parte del comité:</strong> {{ fecha_respuesta_maxima }}</small>
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+              {% else %}
+                {% if anteproyecto.estado == True %}
+                  <div class="p-0" style="border: 1px solid #CACACB;border-radius: 12px;overflow: hidden;">
+                    <h3 class="tittles_h3"><i class="fas fa-check-circle"></i> Aprobado por el comité</h3>
+
+                    <div class="p-2">
+                      <p class="etiquetas_parrafos">El anteproyecto fue aprobado por el comité.</p>
+                      <p class="etiquetas_parrafos">
+                        <strong>Aprobado en la fecha:</strong> {{ fechas_proyecto.fecha_inicio }}<br />
+                        Tenga en cuenta que la fecha estimada para finalizar y entregar el proyecto final es para <strong>{{ fecha_finalizacion }}</strong>.
+                        <br />
+                        <a href="{% url 'estudiante:avances_proyecto' %}" class="btn btn-outline-primary"><i class="fas fa-graduation-cap"></i> Accede al módulo de Proyecto Final</a>
+                      </p>
+                      <p class="etiquetas_parrafos">
+                        <small><strong>Fecha de envio de la solicitud:</strong> {{ anteproyecto.fecha_envio }}</small><br />
+                      </p>
+                    </div>
+                  </div>
                 {% endif %}
-              </p>
-            </div>
+              {% endif %}
+            {% else %}
+              {% if anteproyecto.aprobado %}{% endif %}
+            {% endif %}
           {% endif %}
         {% else %}
-          <p>El anteproyecto está siendo revisado por el director y codirector, pendiente a observaciones y evaluaciones.</p>
-          <p>
+          <p class="etiquetas_parrafos">El anteproyecto está siendo revisado por el director y codirector, pendiente a observaciones y evaluaciones.</p>
+          <p class="etiquetas_parrafos">
             <strong>Nota:</strong> <small>Este anteproyecto aún no ha sido evaluado.</small>
           </p>
         {% endif %}
@@ -264,7 +291,7 @@
             <div class="col w-100">
               <div class="acuerdos">
                 <h4 class="titulos_estudiante">Consideraciones previas al envío de su anteproyecto:</h4>
-                <p>Una vez que haya enviado su anteproyecto, este será revisado por el comité correspondiente. Es de suma importancia que esté atento a la retroalimentación proporcionada por dicho comité, ya que su respuesta podría ser una de las siguientes:</p>
+                <p class="etiquetas_parrafos">Una vez que haya enviado su anteproyecto, este será revisado por el comité correspondiente. Es de suma importancia que esté atento a la retroalimentación proporcionada por dicho comité, ya que su respuesta podría ser una de las siguientes:</p>
                 <ul>
                   <li>
                     <strong>Aprobado:</strong> El anteproyecto cumple con los requisitos establecidos, lo que le permitirá continuar con la siguiente fase del proceso.
@@ -273,8 +300,8 @@
                     <strong>Rechazado:</strong> El anteproyecto no cumple con los criterios necesarios para avanzar. En este caso, será necesario realizar una revisión exhaustiva y presentarlo nuevamente en una convocatoria futura.
                   </li>
                 </ul>
-                <p>Es igualmente esencial que verifique la documentación que está enviando. Asegúrese de que todos los archivos adjuntos sean los correctos y cumplan con las especificaciones solicitadas, ya que un error en esta etapa podría retrasar el proceso de revisión.</p>
-                <p>Por favor, manténgase atento a las notificaciones y responda de manera oportuna a cualquier solicitud del comité, con el fin de garantizar un proceso ágil y eficiente.</p>
+                <p class="etiquetas_parrafos">Es igualmente esencial que verifique la documentación que está enviando. Asegúrese de que todos los archivos adjuntos sean los correctos y cumplan con las especificaciones solicitadas, ya que un error en esta etapa podría retrasar el proceso de revisión.</p>
+                <p class="etiquetas_parrafos">Por favor, manténgase atento a las notificaciones y responda de manera oportuna a cualquier solicitud del comité, con el fin de garantizar un proceso ágil y eficiente.</p>
               </div>
 
               <form id="anteproyectoForm" action="{% url 'estudiante:solicitud' %}" method="post" enctype="multipart/form-data">
@@ -390,7 +417,7 @@
             </div>
           {% else %}
             {% if respuesta %}
-              <p>
+              <p class="etiquetas_parrafos">
                 <strong>El comité ha respondido a su solicitud de anteproyecto. La respuesta es:</strong> {{ respuesta.respuesta.estado }}
                 <br />
                 <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
@@ -402,7 +429,7 @@
                 <strong>Observaciones del comité:</strong> {{ respuesta.respuesta.retroalimentacion }}
               </p>
             {% else %}
-              <p>
+              <p class="etiquetas_parrafos">
                 <strong>Usted ya ha enviado una solicitud. Por favor, espere la respuesta del comité.</strong>
                 <br />
                 <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }} <br />
@@ -412,9 +439,10 @@
           {% endif %}
         </div>
       {% endif %}
-      <div class="solicitud contenido_estudiante_view mt-4">
-        <h3 class="mt-2">¿Tiene alguna otra solicitud?</h3>
-        <form action="{% url 'estudiante:solicitudes_especificas' %}" method="post" enctype="multipart/form-data">
+      <div class="solicitud contenido_estudiante_view p-0 mt-4" style="overflow: hidden;">
+        <h3 class="tittles_h3"><i class="fas fa-envelope"></i> ¿Tiene alguna otra solicitud?</h3>
+
+        <form class="p-3" action="{% url 'estudiante:solicitudes_especificas' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="row">
             <div class="col-md-6">
@@ -452,7 +480,7 @@
     {% if respuesta.respuesta.estado == 'Aprobado' or respuesta.respuesta.estado == 'Aprobado_con_correcciones' %}
       <div class="container solicitud contenido_estudiante_view">
         {% if proyecto_final %}
-          <p>
+          <p class="etiquetas_parrafos">
             <strong>Ya envio una solicitud, espere la respuesta del comité.</strong> <br />
             <strong>Nombre del proyecto:</strong> {{ proyecto_final.anteproyecto.nombre_anteproyecto }} <br />
             <strong>Fecha de envío de la solicitud:</strong> {{ proyecto_final.fecha_envio }} <br />

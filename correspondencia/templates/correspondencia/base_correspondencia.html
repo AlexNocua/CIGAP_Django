@@ -79,10 +79,12 @@
       display: flex;
     }
     .views {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       border: 1px solid #cacaca;
       border-radius: 12px;
       box-shadow: inset 0px 0px 20px -5px #d8d8d8;
-      padding: 16px;
     }
     
     .contenido_correspondencia .fondo {
@@ -104,7 +106,6 @@
     <style>
       /**/
       
-     
       .notif_pendientes {
         border: none;
         border-radius: 50%;
@@ -333,31 +334,42 @@
               </small>
             </p>
             <div class="content_fechas d-flex justify-content-center align-items-center">
-              <div class="div_content_fechas d-flex justify-content-around align-items-center">
-                <h6 class="num_encuentro m-0">1</h6>
-                <p class="p-0 m-0">
-                  <small><strong>{{ fechas_comite.primer_encuentro }}</strong></small>
-                </p>
-              </div>
-              <div class="div_content_fechas d-flex justify-content-around align-items-center">
-                <h6 class="num_encuentro m-0">2</h6>
-                <p class="p-0 m-0">
-                  <small><strong>{{ fechas_comite.segundo_encuentro }}</strong></small>
-                </p>
-              </div>
-              <div class="div_content_fechas d-flex justify-content-around align-items-center">
-                <h6 class="num_encuentro m-0">3</h6>
-                <p class="p-0 m-0">
-                  <small><strong>{{ fechas_comite.tercer_encuentro }}</strong></small>
-                </p>
-              </div>
-              <div class="div_content_fechas d-flex justify-content-around align-items-center">
-                <h6 class="num_encuentro m-0">4</h6>
+              {% if fechas_comite.primer_encuentro %}
+                <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                  <h6 class="num_encuentro m-0">1</h6>
+                  <p class="p-0 m-0">
+                    <small><strong>{{ fechas_comite.primer_encuentro }}</strong></small>
+                  </p>
+                </div>
+              {% endif %}
 
-                <p class="p-0 m-0">
-                  <small><strong>{{ fechas_comite.cuarto_encuentro }}</strong></small>
-                </p>
-              </div>
+              {% if fechas_comite.segundo_encuentro %}
+                <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                  <h6 class="num_encuentro m-0">2</h6>
+                  <p class="p-0 m-0">
+                    <small><strong>{{ fechas_comite.segundo_encuentro }}</strong></small>
+                  </p>
+                </div>
+              {% endif %}
+
+              {% if fechas_comite.tercer_encuentro %}
+                <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                  <h6 class="num_encuentro m-0">3</h6>
+                  <p class="p-0 m-0">
+                    <small><strong>{{ fechas_comite.tercer_encuentro }}</strong></small>
+                  </p>
+                </div>
+              {% endif %}
+
+              {% if fechas_comite.cuarto_encuentro %}
+                <div class="div_content_fechas d-flex justify-content-around align-items-center">
+                  <h6 class="num_encuentro m-0">4</h6>
+                  <p class="p-0 m-0">
+                    <small><strong>{{ fechas_comite.cuarto_encuentro }}</strong></small>
+                  </p>
+                </div>
+              {% endif %}
+
               {% if fechas_comite.extraordinaria %}
                 <div class="div_content_fechas d-flex justify-content-around align-items-center">
                   <h6 class="num_encuentro m-0">5</h6>
@@ -367,6 +379,7 @@
                 </div>
               {% endif %}
             </div>
+
             <div class="d-flex justify-content-center align-items-center">
               <button type="button" class="botones_envios btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modalEditarFechasComite"><small>Edite alguna fecha</small></button>
             </div>
@@ -384,7 +397,7 @@
         {% endif %}
       </div>
 
-      <div class="views position-relative justify-content-center align-items-center w-100">
+      <div class="views container p-0 position-relative justify-content-center align-items-center w-100">
         {% block content_solicitudes %}
 
         {% endblock %}
@@ -449,7 +462,7 @@
 
             <div class="mb-3">
               <label for="periodo_academico" class="form-label">Seleccione el periodo académico</label>
-              <select required name="periodo_academico">
+              <select name="periodo_academico" required>
                 <option selected>Seleccione el periodo académico</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -459,7 +472,7 @@
 
             <div class="mb-3">
               <label for="fecha_primer_encuentro" class="form-label">Fecha del Primer Encuentro</label>
-              <input type="date" class="form-control" id="fecha_primer_encuentro" name="fecha_primer_encuentro" required min="{{ fecha_actual|date:'Y-m-d' }}" />
+              <input type="date" class="form-control" id="fecha_primer_encuentro" name="fecha_primer_encuentro" min="{{ fecha_actual|date:'Y-m-d' }}" />
               <small class="form-text text-muted">Seleccione la fecha del primer encuentro.</small>
             </div>
 
@@ -511,7 +524,7 @@
               <!-- Campo para el primer encuentro -->
               <div class="mb-3">
                 <label for="primerEncuentro" class="form-label">Fecha del Primer Encuentro <small>(Fecha actual: {{ fechas_comite.primer_encuentro }})</small></label>
-                <input type="date" class="form-control" id="primerEncuentro" name="fecha_primer_encuentro" value="{{ fechas_comite.primer_encuentro|date:'Y-m-d' }}" min="{{ fecha_actual|date:'Y-m-d' }}" required />
+                <input type="date" class="form-control" id="primerEncuentro" name="fecha_primer_encuentro" value="{{ fechas_comite.primer_encuentro|date:'Y-m-d' }}" min="{{ fecha_actual|date:'Y-m-d' }}" />
               </div>
               <!-- Campo para el segundo encuentro -->
               <div class="mb-3">

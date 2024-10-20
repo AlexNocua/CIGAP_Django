@@ -326,23 +326,45 @@ def recuperar_directores():
 def asignar_fechas_encuentros(request):
     if request.method == "POST":
         ano_actual = datetime.now().year
-        periodo_academico = int(
-            request.POST.get("periodo_academico")
-        )  # Convertir a entero
-        primer_encuentro = request.POST.get("fecha_primer_encuentro")
-        segundo_encuentro = request.POST.get("fecha_segundo_encuentro")
-        tercer_encuentro = request.POST.get("fecha_tercer_encuentro")
-        cuarto_encuentro = request.POST.get("fecha_cuarto_encuentro")
-        extraordinaria = request.POST.get("fecha_extraordinaria")
+        periodo_academico = (
+            (request.POST.get("periodo_academico"))
+            if request.POST.get("periodo_academico")
+            else None
+        )
+        primer_encuentro = (
+            request.POST.get("fecha_primer_encuentro")
+            if request.POST.get("fecha_primer_encuentro")
+            else None
+        )
+        segundo_encuentro = (
+            request.POST.get("fecha_segundo_encuentro")
+            if request.POST.get("fecha_segundo_encuentro")
+            else None
+        )
+        tercer_encuentro = (
+            request.POST.get("fecha_tercer_encuentro")
+            if request.POST.get("fecha_tercer_encuentro")
+            else None
+        )
+        cuarto_encuentro = (
+            request.POST.get("fecha_cuarto_encuentro")
+            if request.POST.get("fecha_cuarto_encuentro")
+            else None
+        )
+        extraordinaria = (
+            request.POST.get("fecha_extraordinaria")
+            if request.POST.get("fecha_extraordinaria")
+            else None
+        )
 
         fecha_hoy = datetime.now().date()
         fechas_validas = True
 
         # Determinar el periodo académico actual basado en la fecha actual
         if fecha_hoy.month <= 6:
-            periodo_actual = 1
+            periodo_actual = "1"
         else:
-            periodo_actual = 2
+            periodo_actual = "2"
 
         # Verificar si ya existen fechas para el año y periodo académico actual
         if ModelFechasComite.objects.filter(
@@ -358,7 +380,7 @@ def asignar_fechas_encuentros(request):
         if periodo_academico != periodo_actual:
             messages.error(
                 request,
-                f"No puedes registrar fechas para el periodo académico {periodo_academico} porque actualmente estamos en el periodo académico {periodo_actual}.",
+                f"No puedes registrar fechas para el periodo académico {periodo_academico}, actualmente estamos en el periodo académico {periodo_actual}.",
             )
             return redirect("correspondencia:principal_correspondencia")
 
@@ -398,7 +420,6 @@ def asignar_fechas_encuentros(request):
             )
             fechas_validas = False
 
-        # Si todas las fechas son válidas, guardar los datos
         if fechas_validas:
             new_fechas_encuentro = ModelFechasComite(
                 ano_actual=ano_actual,
@@ -420,8 +441,6 @@ def asignar_fechas_encuentros(request):
     else:
         messages.error(request, "El método utilizado no es válido.")
         return redirect("correspondencia:principal_correspondencia")
-
-    return redirect("correspondencia:principal_correspondencia")
 
 
 @login_required
@@ -814,6 +833,7 @@ def editar_radicado(request, id):
 
 
 def enviar_retroalimentacion(request, nombre_anteproyecto):
+
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
     if anteproyecto is None:
         messages.error(
@@ -834,89 +854,56 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
             )
             return redirect("correspondencia:solicitudes")
 
-        else:
+        doc_retro = request.FILES.get("doc_retroalimentacion")
+        if doc_retro:
+            doc_binario = doc_retro.read()
 
-            doc_retro = request.FILES.get("doc_retroalimentacion")
             anteproyecto.estado = True
-            anteproyecto.documento_concepto = doc_retro.read()
+            anteproyecto.documento_concepto = doc_binario
+            anteproyecto.save(update_fields=["estado", "documento_concepto"])
 
-            if doc_retro:
-                doc_binario = doc_retro.read()
-                print(doc_binario)
-                print(anteproyecto.documento_concepto)
-                messages.success(
-                    request,
-                    f" El concepto del anteproyecto se ha cargado exitosamente.",
-                )
-
-            else:
-                messages.error(request, "Error: Documento no encontrado")
-                return redirect("correspondencia:solicitudes")
-            # anteproyecto.save(
-            #     update_fields=['estado', 'documento_concepto'])
             retroalimentacion = ModelRetroalimentaciones(
                 user=request.user,
                 anteproyecto=anteproyecto,
                 retroalimentacion=text_retroalimentaicion,
                 fecha_retroalimentacion=fecha_actual(),
-                doc_retroalimentacion=doc_retro.read(),
+                doc_retroalimentacion=doc_binario,
                 estado=estado,
             )
-            anteproyecto.save()
+            retroalimentacion.save()
+
             nuevo_proyecto_final = ModelProyectoFinal(
                 user=anteproyecto.user,
                 anteproyecto=anteproyecto,
             )
             nuevo_proyecto_final.save()
-            retroalimentacion.save()
+
+            fecha_actual_datetime = datetime.strptime(
+                fecha_actual(), "%Y-%m-%d %H:%M:%S"
+            ).date()
+            fechas_proyecto_final = ModelFechasProyecto(
+                proyecto_final=nuevo_proyecto_final,
+                fecha_inicio=fecha_actual_datetime,
+                fecha_etapa_uno=fecha_actual_datetime + timedelta(days=30),
+                fecha_etapa_dos=fecha_actual_datetime + timedelta(days=60),
+                fecha_etapa_tres=fecha_actual_datetime + timedelta(days=90),
+                fecha_etapa_cuatro=fecha_actual_datetime + timedelta(days=120),
+                fecha_etapa_cinco=fecha_actual_datetime + timedelta(days=150),
+                fecha_etapa_seis=fecha_actual_datetime + timedelta(days=165),
+            )
+            fechas_proyecto_final.save()
+
             messages.success(
                 request, "La retroalimentación se ha enviado exitosamente."
             )
-            fechas_proyecto_final = ModelFechasProyecto(
-                proyecto_final=nuevo_proyecto_final,
-                fecha_inicio=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date(),
-                fecha_etapa_uno=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date()
-                + timedelta(days=30),
-                fecha_etapa_dos=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date()
-                + timedelta(days=60),
-                fecha_etapa_tres=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date()
-                + timedelta(days=90),
-                fecha_etapa_cuatro=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date()
-                + timedelta(days=120),
-                fecha_etapa_cinco=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date()
-                + timedelta(days=150),
-                fecha_etapa_seis=datetime.strptime(
-                    fecha_actual(), "%Y-%m-%d %H:%M:%S"
-                ).date()
-                + timedelta(days=165),
-            )
-
-            fechas_proyecto_final.save()
-            if retroalimentacion.doc_retroalimentacion:
-                print("Documento subido correctamente")
-                messages.info(request, "Documento subido correctamente.")
-            else:
-                print("Error al subir el documento")
-                messages.error(request, "Error al subir el documento.")
-
             return redirect("correspondencia:solicitudes")
+        else:
+            messages.error(request, "Error: Documento no encontrado")
+            return redirect("correspondencia:solicitudes")
+
     else:
         messages.error(request, "Por favor, corrige los errores en el formulario.")
         return redirect("correspondencia:solicitudes")
-
-    return redirect("correspondencia:solicitudes")
 
 
 def enviar_retroalimentacion_concepto(request, id_proyecto):

@@ -14,7 +14,6 @@
     }
     
     .info_proyect {
-   
     }
     
     .info-block {
@@ -126,10 +125,11 @@
             </div>
             {% for key, value in content_retroalimentacion.items %}
               <div class="mt-2 retroalimentaciones">
+                <p>Por: {{ value.respuesta.user.nombre_completo }}</p>
                 <p>
                   <strong>Fecha y hora de respuesta:</strong> {{ value.respuesta.fecha_retroalimentacion }}<br />
                 </p>
-                {% if value.doc_retroalimentacion %}
+                {% if value.respuesta.doc_retroalimentacion %}
                   <p>
                     <strong>Documento retroalimentado:</strong>
                     <a class="mt-2" href="data:application/octet-stream;base64,{{ value.doc_retroalimentacion }}" download="Retroalimentación_{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>

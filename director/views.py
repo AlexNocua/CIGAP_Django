@@ -565,6 +565,17 @@ def enviar_evaluacion(request, id):
     return redirect("director:evaluar_anteproyecto", id=id)
 
 
+
+def eliminar_evaluacion(request, id):
+    evaluacion = ModelEvaluacionAnteproyecto.objects.get(id=id) if ModelEvaluacionAnteproyecto.objects.filter(id=id).exists() else None
+    if evaluacion:
+        evaluacion.delete()
+        messages.success(request, "La evaluación ha sido eliminada exitosamente.")
+    else:
+        messages.error(request, "No se encontró la evaluación especificada.")
+    return redirect('director:view_evaluador_anteproyectos')
+
+    
 def recuperar_proyectos_jurado(usuario):
     evaluaciones = ModelEvaluacionProyectoFinal.objects.filter(jurado=usuario)
     return evaluaciones

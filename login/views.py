@@ -1,6 +1,8 @@
 # Asegúrate de que la ruta de importación sea correcta
 from plataform_CIGAP.settings import base_dir
 from .models import Usuarios  # Asegúrate de importar tu modelo
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 # import pythoncom
 # import win32com.client as win32
 from django.conf import settings
@@ -43,8 +45,6 @@ import base64
 
 # importacion de modelo de usuarios
 from .models import Usuarios
-
-
 
 
 # utilidades
@@ -170,101 +170,171 @@ def editar_usuario(request):
 
 
 def recuperar_cuenta(request):
-    # # Inicializa el entorno COM
-    # pythoncom.CoInitialize()
+    context = {}
+    if request.method == "POST":
+        email = request.POST.get("email")
+        if email:
+            user = (
+                Usuarios.objects.get(email=email)
+                if Usuarios.objects.filter(email=email).exists()
+                else None
+            )
+            if user:
+                token = get_random_string(length=32)
+                user.token = token
+                user.save()
+                recovery_link = request.build_absolute_uri(
+                    reverse("login:recuperar_cuenta_confirm", args=[token])
+                )
+                context["link_recuperar"] = recovery_link
+                context["usuario"] = {
+                    "email": email,
+                    "nombre_completo": user.nombre_completo,
+                }
+                messages.success(
+                    request,
+                    "Se ha enviado un enlace de recuperación a tu correo electrónico.",
+                )
+                return render(request, "recuperar_cuenta.html", context)
+            else:
+                messages.error(
+                    request,
+                    f"El email {email} no esta registrado en la plataforma, verifica de nuevo.",
+                )
+                return render(request, "login.html")
+        else:
 
-    # if request.method == "POST":
-    #     email = request.POST.get("email")
-
-    #     try:
-    #         user = Usuarios.objects.get(email=email)
-    #         token = get_random_string(length=32)
-    #         user.token = token
-    #         user.save()
-
-    #         recovery_link = request.build_absolute_uri(
-    #             reverse("login:recuperar_cuenta_confirm", args=[token])
-    #         )
-
-    #         # Configurar Outlook
-    #         outlook = win32.Dispatch("outlook.application")
-
-    #         # Configurar los detalles del correo
-    #         asunto = "Recuperación de cuenta"
-    #         cuerpo_html = f"""
-    #         <div style="font-family: 'Saira', sans-serif; border-radius: 10px; padding: 20px; background-color: #002412; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
-    #             <div style="background: #ffffff; border-radius: 12px;">
-    #                 <header style="width: 100%; display: flex; background: #ffffff; padding: 0; border-radius: 10px 10px 0 0; align-items: center; justify-content: center;">
-    #                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_Universidad_de_Cundinamarca.png" alt="Logo Universidad de Cundinamarca" style="margin: 0 auto; padding: 8px; z-index: 0; max-width: 100%; max-height: 165px;">
-    #                 </header>
-    #                 <h1 style="width: 100%; background-color: #002412; margin: 0; padding: 12px 0; text-align: center; color: #ffffff; margin-bottom: 20px;">Plataforma CIGAP Ubaté</h1>
-    #                 <h2 style="color: #000000;padding: 0 12px;">Recuperación de contraseña para <span style="font-weight: bold;">{email}</span></h2>
-    #                 <p style="padding: 0 12px; color: #666666;">Hola <span style="color: #007A3D; font-weight: bold;">{user.nombres}</span>, has solicitado la recuperación de tu contraseña para la cuenta creada con el correo <span style="color: #007A3D; font-weight: bold;">{email}</span>.</p>
-    #                 <p style="padding: 0 12px; color: #666666;">Para restablecer tu contraseña, haz clic en el siguiente enlace: <a href="{recovery_link}" style="color: #007A3D; text-decoration: none;">Recuperar cuenta</a></p>
-    #                 <p style="padding: 0 12px; color: #666666;">Recuerda que la protección de tus datos es importante, puedes cambiar tu contraseña accediendo a la plataforma.</p>
-    #                 <h3 style="padding: 0 12px; color: #000000;">Estaremos en contacto.</h3>
-    #                 <div style="width: 100%; background: #3C3C3B; padding: 0; border-radius: 0 0 10px 10px;">
-    #                     <div style="padding: 8px;">
-    #                         <h2 style="color: #fff; margin-bottom: 5px; font-weight: 600; text-align: center;">Respuesta automática de la plataforma <br> CIGAP</h2>
-    #                         <p style="color: #fff; margin-top: 5px; text-align: center; font-size: 12px;">No responder a este correo.</p>
-    #                     </div>
-    #                 </div>
-    #             </div>
-    #         </div>
-    #         """
-
-    #         # Crear y enviar el mensaje
-    #         mail = outlook.CreateItem(0)
-    #         mail.To = email
-    #         mail.Subject = asunto
-    #         mail.HTMLBody = cuerpo_html
-
-    #         # Enviar el correo
-    #         mail.Send()
-
-    #         messages.success(
-    #             request,
-    #             "Se ha enviado un enlace de recuperación a tu correo electrónico.",
-    #         )
-    #         return redirect("login:loginapps")
-
-    #     except Usuarios.DoesNotExist:
-    #         messages.error(request, "No existe un usuario con ese correo electrónico.")
-
-    #     except Exception as e:
-    #         messages.error(
-    #             request,
-    #             f"Hubo un error al enviar el correo de recuperación: {str(e)}. Por favor, intenta nuevamente.",
-    #         )
-    #         return render(request, "recuperar_cuenta.html")
+            messages.error(
+                request,
+                f"El email {email} no esta registrado en la plataforma, verifica de nuevo.",
+            )
+            return render(request, "recuperar_cuenta.html")
 
     return render(request, "recuperar_cuenta.html")
 
 
+# def recuperar_cuenta(request):
+
+#     pythoncom.CoInitialize()
+
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+
+#         try:
+#             user = Usuarios.objects.get(email=email)
+#             token = get_random_string(length=32)
+#             user.token = token
+#             user.save()
+
+#             recovery_link = request.build_absolute_uri(
+#                 reverse("login:recuperar_cuenta_confirm", args=[token])
+#             )
+
+#             # Configurar Outlook
+#             outlook = win32.Dispatch("outlook.application")
+
+#             # Configurar los detalles del correo
+#             asunto = "Recuperación de cuenta"
+#             cuerpo_html = f"""
+#             <div style="font-family: 'Saira', sans-serif; border-radius: 10px; padding: 20px; background-color: #002412; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
+#                 <div style="background: #ffffff; border-radius: 12px;">
+#                     <header style="width: 100%; display: flex; background: #ffffff; padding: 0; border-radius: 10px 10px 0 0; align-items: center; justify-content: center;">
+#                         <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_Universidad_de_Cundinamarca.png" alt="Logo Universidad de Cundinamarca" style="margin: 0 auto; padding: 8px; z-index: 0; max-width: 100%; max-height: 165px;">
+#                     </header>
+#                     <h1 style="width: 100%; background-color: #002412; margin: 0; padding: 12px 0; text-align: center; color: #ffffff; margin-bottom: 20px;">Plataforma CIGAP Ubaté</h1>
+#                     <h2 style="color: #000000;padding: 0 12px;">Recuperación de contraseña para <span style="font-weight: bold;">{email}</span></h2>
+#                     <p style="padding: 0 12px; color: #666666;">Hola <span style="color: #007A3D; font-weight: bold;">{user.nombres}</span>, has solicitado la recuperación de tu contraseña para la cuenta creada con el correo <span style="color: #007A3D; font-weight: bold;">{email}</span>.</p>
+#                     <p style="padding: 0 12px; color: #666666;">Para restablecer tu contraseña, haz clic en el siguiente enlace: <a href="{recovery_link}" style="color: #007A3D; text-decoration: none;">Recuperar cuenta</a></p>
+#                     <p style="padding: 0 12px; color: #666666;">Recuerda que la protección de tus datos es importante, puedes cambiar tu contraseña accediendo a la plataforma.</p>
+#                     <h3 style="padding: 0 12px; color: #000000;">Estaremos en contacto.</h3>
+#                     <div style="width: 100%; background: #3C3C3B; padding: 0; border-radius: 0 0 10px 10px;">
+#                         <div style="padding: 8px;">
+#                             <h2 style="color: #fff; margin-bottom: 5px; font-weight: 600; text-align: center;">Respuesta automática de la plataforma <br> CIGAP</h2>
+#                             <p style="color: #fff; margin-top: 5px; text-align: center; font-size: 12px;">No responder a este correo.</p>
+#                         </div>
+#                     </div>
+#                 </div>
+#             </div>
+#             """
+
+#             # Crear y enviar el mensaje
+#             mail = outlook.CreateItem(0)
+#             mail.To = email
+#             mail.Subject = asunto
+#             mail.HTMLBody = cuerpo_html
+
+#             # Enviar el correo
+#             mail.Send()
+
+#             messages.success(
+#                 request,
+#                 "Se ha enviado un enlace de recuperación a tu correo electrónico.",
+#             )
+#             return redirect("login:loginapps")
+
+#         except Usuarios.DoesNotExist:
+#             messages.error(request, "No existe un usuario con ese correo electrónico.")
+
+#         except Exception as e:
+#             messages.error(
+#                 request,
+#                 f"Hubo un error al enviar el correo de recuperación: {str(e)}. Por favor, intenta nuevamente.",
+#             )
+#             return render(request, "recuperar_cuenta.html")
+
+#     return render(request, "recuperar_cuenta.html")
+
+
+
+
+
+
+def validar_contrasena(contrasena, user):
+    if len(contrasena) < 8:
+        return "La contraseña debe contener al menos 8 caracteres."
+    
+    if user.nombres.lower() in contrasena.lower() or user.apellidos.lower() in contrasena.lower() or user.email.lower() in contrasena.lower():
+        return "La contraseña no debe ser demasiado similar a tu información personal."
+    
+    contrasenas_comunes = ["12345678", "password", "qwerty"]
+    if contrasena in contrasenas_comunes:
+        return "La contraseña no debe ser una contraseña comúnmente utilizada."
+    
+    if not (re.search(r'[A-Za-z]', contrasena) and re.search(r'\d', contrasena) and re.search(r'[^\w\s]', contrasena)):
+        return "La contraseña debe incluir una combinación de letras, números y símbolos."
+
+    return None
+
 def recuperar_cuenta_confirm(request, token):
-    # Aquí deberías validar el token y permitir que el usuario restablezca su contraseña
     if request.method == "POST":
         nueva_contrasena = request.POST.get("nueva_contrasena")
-        # Obtener la contraseña de confirmación
         confirmar_contrasena = request.POST.get("confirmar_contrasena")
 
-        # Verificar si las contraseñas coinciden
         if nueva_contrasena != confirmar_contrasena:
             messages.error(request, "Las contraseñas no coinciden. Inténtalo de nuevo.")
         else:
-            # Aquí deberías implementar la lógica para encontrar al usuario por el token
             try:
                 user = Usuarios.objects.get(token=token)
-                # Establecer nueva contraseña
+                user.token = None
+                error = validar_contrasena(nueva_contrasena, user)
+                if error:
+                    messages.error(request, error)
+                    
+
                 user.set_password(nueva_contrasena)
-                user.save()  # Guardar el usuario
+                user.save()
                 messages.success(request, "Tu contraseña ha sido actualizada.")
-                # Redirigir a la página de inicio de sesión
                 return redirect("login:loginapps")
+
             except Usuarios.DoesNotExist:
                 messages.error(request, "El token de recuperación es inválido.")
 
     return render(request, "recuperar_cuenta_confirm.html", {"token": token})
+
+
+
+
+
 
 
 # resend.api_key = "re_i2AKGn92_3GqGVCbZP4y8sw3Ash4xEsKM"

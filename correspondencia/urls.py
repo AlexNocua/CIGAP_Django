@@ -32,6 +32,11 @@ urlpatterns = [
         name="asignar_evaluadores_ante",
     ),
     path(
+        "eliminar_evaluador/<int:id>/<str:nombre_anteproyecto>",
+        views.eliminar_evaluador,
+        name="eliminar_evaluador",
+    ),
+    path(
         "solicitudes_proyectos_finales",
         views.solicitudes_proyectos_finales,
         name="solicitudes_proyectos_finales",

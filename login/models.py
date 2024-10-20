@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -13,8 +12,6 @@ import datetime
 
 # importacion de managers con el fin de gestionar la creacion de supeusuarios de manera correcta
 from .managers import UserManager
-
-
 
 
 class Usuarios(AbstractUser):
@@ -47,6 +44,7 @@ class Usuarios(AbstractUser):
     class Meta:
         verbose_name_plural = "Usuarios"
 
+
 class ModelError(models.Model):
     user = models.ForeignKey(
         Usuarios,
@@ -55,6 +53,7 @@ class ModelError(models.Model):
         blank=True,
         null=True,
     )
+    ruta_origen = models.CharField(max_length=255, null=True, blank=True)
     estado = models.IntegerField()
     fecha_hora_error = models.DateTimeField()
 

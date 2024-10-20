@@ -87,7 +87,7 @@ def handler500(request):
 
 
 def submit_error(request):
-
+    ruta_origen = request.META.get("HTTP_REFERER", "Desconocido")
     if request.method == "POST":
         codigo = request.POST.get("estado")
 
@@ -96,6 +96,7 @@ def submit_error(request):
         model = ModelError(
             user=request.user,
             estado=int(codigo),
+            ruta_origen=ruta_origen,
             fecha_hora_error=datetime.datetime.now(),
         )
 

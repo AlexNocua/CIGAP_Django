@@ -58,6 +58,11 @@ urlpatterns = [
     path(
         "enviar_evaluacion/<int:id>", views.enviar_evaluacion, name="enviar_evaluacion"
     ),
+    path(
+        "eliminar_evaluacion/<int:id>",
+        views.eliminar_evaluacion,
+        name="eliminar_evaluacion",
+    ),
     path("view_jurado", views.view_jurado, name="view_jurado"),
     path(
         "evaluar_proyecto_final/<int:id>",
