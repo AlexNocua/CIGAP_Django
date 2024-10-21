@@ -33,7 +33,7 @@ from .models import (
 import base64
 
 # modelo de correspondencia
-from correspondencia.models import ModelRetroalimentaciones
+from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes
 
 # importacion de modelos del director
 from director.models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
@@ -331,8 +331,17 @@ def principal_estudiante(request):
     return render(request, "estudiante/base_estudiante.html", context)
 
 
-# vista del template para la solicitud
-#!funcionando
+
+
+def recuperar_solicitud_especifica_aceptada(anteproyecto):
+    solicitudes_especificas = (
+        ModelSolicitudes.objects.filter(
+            Q(anteproyecto=anteproyecto) & Q(estado=True)
+        ).order_by('-id')
+    )
+
+    return solicitudes_especificas.first() if solicitudes_especificas.exists() else None
+
 
 
 @login_required
@@ -341,7 +350,6 @@ def solicitud(request):
     context = datosusuario(request)
     directores = recuperar_directores()
     context["directores"] = directores
-    # Si el método es POST, procesamos el formulario.
     if request.method == "POST":
 
         nombre_integrante2 = request.POST.get("nombre_integrante2")
@@ -444,8 +452,28 @@ def solicitud(request):
         try:
             anteproyecto = recuperar_anteproyecto(request)
             if anteproyecto:
-                context["anteproyecto"] = anteproyecto
 
+                solicitud_especifica_pendiente = (
+                    ModelSolicitudes.objects.get(
+                        Q(anteproyecto=anteproyecto) & Q(estado=False)
+                    )
+                    if ModelSolicitudes.objects.filter(
+                        Q(anteproyecto=anteproyecto) & Q(estado=False)
+                    ).exists()
+                    else None
+                )
+                if solicitud_especifica_pendiente:
+                    context["solicitud_especifica_pendiente"] = (
+                        solicitud_especifica_pendiente
+                    )
+                solicitd_especifica = recuperar_solicitud_especifica_aceptada(
+                    anteproyecto
+                )
+                if solicitd_especifica:
+                    context["solicitud_especifica"] = solicitd_especifica
+                context["anteproyecto"] = anteproyecto
+                print(solicitud_especifica_pendiente)
+                print(solicitd_especifica)
                 if anteproyecto.fecha_envio:
                     context["fecha_respuesta_maxima"] = fecha_maxima_respuesta(
                         anteproyecto.fecha_envio
@@ -555,7 +583,6 @@ def solicitudes_especificas(request):
             solicitud.estado = False
             solicitud.save()
 
-            # Enviar mensaje de éxito
             messages.success(request, "Solicitud enviada con éxito.")
             return redirect("estudiante:solicitud")
         else:

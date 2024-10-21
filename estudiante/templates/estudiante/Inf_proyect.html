@@ -22,7 +22,6 @@
       padding: 15px;
       margin-bottom: 15px;
       border-radius: 5px;
-      /* Tener el texto ajustado dentro del bloque */
       word-wrap: break-word;
       position: relative;
     }
@@ -31,6 +30,7 @@
       border-bottom: 1px solid #cacaca;
       margin: 8px 0;
     }
+    
     .icons-informacion {
       padding: 4px;
       margin: 4px;
@@ -46,25 +46,30 @@
 
   {% if solicitud_enviada %}
     {% include 'components/toasts.html' %}
-    <h3 class="m-3">Información del Proyecto</h3>
-    <section class="row contenido_estudiante_view">
-      <div class="col-md-6">
+    <section class="row contenido_estudiante_view" style="overflow: hidden;">
+      <h3 class="tittles_h3"><i class="fas fa-info-circle"></i> Información del Proyecto</h3>
+
+      <div class="col-md-6 mt-3">
         <div class="info-block p-3 mb-3 border rounded">
           <div class="d-flex justify-content-between header-cards">
-            <h4>Proyecto</h4>
+            <h4 class="tittles_h4">Proyecto</h4>
             <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_proyect.png' %}" alt="" />
           </div>
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-project-diagram"></i>
             <strong>Nombre del proyecto:</strong> {{ nombre_anteproyecto }}
           </p>
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-align-left"></i>
             <strong>Descripción del proyecto:</strong> {{ descripcion }}
           </p>
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-calendar-alt"></i>
             <strong>Fecha de envío de la solicitud:</strong> {{ fecha_envio }}
           </p>
 
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-check-circle"></i>
             {% if proyecto_final %}
               <strong>Anteproyecto:</strong> Aprobado<br />
               <strong>Proyecto final:</strong> En desarrollo<br />
@@ -74,12 +79,14 @@
             {% endif %}
           </p>
         </div>
+
         <div class="info-block p-3 mb-3 border rounded">
           <div class="d-flex justify-content-between header-cards">
-            <h4>Miembros</h4>
+            <h4 class="tittles_h4">Miembros</h4>
             <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_integrantes.png' %}" alt="" />
           </div>
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-users"></i>
             <strong>Integrantes:</strong>
             {% if integrante2 == Null %}
               {{ integrante1 }}
@@ -87,14 +94,17 @@
               {{ integrante1 }} y {{ integrante2 }}
             {% endif %}
           </p>
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-chalkboard-teacher"></i>
             <strong>Director:</strong> {{ director }}<br />
             {% if codirector %}
+              <i class="fas fa-chalkboard-teacher"></i>
               <strong>Codirector:</strong> {{ codirector }}
             {% endif %}
           </p>
 
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-clipboard-check"></i>
             <strong>Estado de solicitud:</strong>
             {% if content_retroalimentacion.respuesta.estado == 'aprobado' or content_retroalimentacion.respuesta.estado == 'Aprobado_con_correcciones' %}
               Aprobado
@@ -103,43 +113,53 @@
             {% endif %}
           </p>
         </div>
+
         <div class="info-block p-3 mb-3 border rounded">
           <div class="d-flex justify-content-between header-cards">
-            <h4>Archivos del proyecto</h4>
+            <h4 class="tittles_h4">Archivos del proyecto</h4>
             <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_doc.png' %}" alt="" />
           </div>
-          <p>
+          <p class="m-2 p-2 etiquetas_parrafos">
+            <i class="fas fa-file-alt"></i>
             <strong>Documentos cargados:</strong><br />
-            <a href="data:application/octet-stream;base64,{{ carta }}" download="Carta_presentación_{{ nombre_anteproyecto }}.pdf">Carta de presentación</a><br />
-            <a href="data:application/octet-stream;base64,{{ anteproyecto }}" download="Anteproyecto_{{ nombre_anteproyecto }}.pdf">Anteproyecto</a>
+
+            <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ carta }}" download="Carta_presentación_Anteproyecto{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Carta de presentación anteproyecto</a><br />
+            <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ anteproyecto }}" download="Anteproyecto_{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Anteproyecto</a>
           </p>
         </div>
       </div>
 
       {% if content_retroalimentacion %}
-        <div class="col-md-6">
+        <div class="col-md-6 mt-3">
           <div class="info-block p-3 mb-3 border rounded">
             <div class="d-flex justify-content-between header-cards">
-              <h4>Respuestas</h4>
+              <h4 class="tittles_h4">Respuestas</h4>
               <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_respuesta.png' %}" alt="" />
             </div>
             {% for key, value in content_retroalimentacion.items %}
               <div class="mt-2 retroalimentaciones">
-                <p>Por: {{ value.respuesta.user.nombre_completo }}</p>
-                <p>
+                <p class="m-2 p-2 etiquetas_parrafos">
+                  <i class="fas fa-user"></i>
+                  Por: {{ value.respuesta.user.nombre_completo }}
+                </p>
+                <p class="m-2 p-2 etiquetas_parrafos">
+                  <i class="fas fa-clock"></i>
                   <strong>Fecha y hora de respuesta:</strong> {{ value.respuesta.fecha_retroalimentacion }}<br />
                 </p>
                 {% if value.respuesta.doc_retroalimentacion %}
-                  <p>
+                  <p class="m-2 p-2 etiquetas_parrafos">
+                    <i class="fas fa-file-alt"></i>
                     <strong>Documento retroalimentado:</strong>
-                    <a class="mt-2" href="data:application/octet-stream;base64,{{ value.doc_retroalimentacion }}" download="Retroalimentación_{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf">Retroalimentación del comité</a>
+                    <a class="mt-2 btn btn-outline-primary" href="data:application/octet-stream;base64,{{ value.doc_retroalimentacion }}" download="Retroalimentación_{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Retroalimentación del comité</a>
                   </p>
                 {% else %}
-                  <p>
+                  <p class="m-2 p-2 etiquetas_parrafos">
+                    <i class="fas fa-exclamation-circle"></i>
                     <strong>Documento retroalimentado:</strong> No hay documento disponible.
                   </p>
                 {% endif %}
-                <p>
+                <p class="m-2 p-2 etiquetas_parrafos">
+                  <i class="fas fa-comments"></i>
                   <strong>Retroalimentación:</strong><br />{{ value.respuesta.retroalimentacion }}
                 </p>
               </div>
@@ -150,14 +170,14 @@
     </section>
   {% else %}
     <div class="info_proyect">
-      <h1 class="m-3">Aún no ha enviado una solicitud de anteproyecto al comite al comité.</h1>
-      <p class="mb-0">
+      <h3 class="m-3">Aún no ha enviado una solicitud de anteproyecto al comité.</h3>
+      <p class="m-2 p-2 etiquetas_parrafos" class="mb-0">
         Su anteproyecto se encuentra actualmente en proceso de evaluación por parte del director y codirector. Le recomendamos estar atento a las retroalimentaciones que se publicarán en el apartado de solicitudes.
         <br /><br />
       </p>
       <small>
-        Acceda al modulo de solicitudes
-        <a href="{% url 'estudiante:solicitud' %}">Haga clic aquí.</a>
+        Acceda al módulo de solicitudes
+        <a class="btn btn-outline-primary" href="{% url 'estudiante:solicitud' %}">Haga clic aquí.</a>
       </small>
     </div>
   {% endif %}

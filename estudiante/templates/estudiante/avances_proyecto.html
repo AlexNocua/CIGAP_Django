@@ -101,14 +101,14 @@
     </style>
 
     <div class="project-header">
-      <h1 class="project-title">Avances del Proyecto Final</h1>
-      <span class="project-subtitle">{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</span>
+      <h3 class="project-title tittles_h3">Avances del Proyecto Final</h3>
+      <h4 class="text-center mt-4">{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</h4>
 
-      <section class="info-section">
-        <h2 class="info-title">
+      <section class="info-section p-3">
+        <h4 class="info-title tittles_h4">
           <i class="fas fa-info-circle"></i>
           Información General
-        </h2>
+        </h4>
         <div class="info-grid">
           <div class="info-item">
             <span class="info-label">Fecha de Inicio</span>
@@ -135,14 +135,13 @@
         {% for key, retro in retroalimentaciones.items %}
           <div class="carousel-item {% if forloop.first %} active {% endif %}">
             <div class="d-flex justify-content-center">
-              <!-- Mostrar la retroalimentación -->
               <div class="card" style="width: 100%; max-width: 18rem;">
                 <div class="card-body">
                   <h5 class="card-title">Retroalimentación {{ forloop.counter }}</h5>
-                  <p class="card-text">
+                  <p class="etiquetas_parrafos card-text">
                     <strong>Por:</strong> {{ retro.retroalimentacion.user.nombre_completo }}
                   </p>
-                  <p class="card-text">
+                  <p class="etiquetas_parrafos card-text">
                     <strong>Observaciones:</strong> {{ retro.retroalimentacion.retroalimentacion }}
                   </p>
 
@@ -356,7 +355,7 @@
             <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" type="application/pdf" style="border-radius: 8px;" />
             <div class="card-body">
               <h5 class="card-title">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
-              <p class="card-text">
+              <p class="etiquetas_parrafos card-text">
                 <strong>Descripción:</strong> Proyecto final cargado por los estudiantes.
               </p>
             </div>
@@ -366,7 +365,7 @@
             <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.carta_final }}" type="application/pdf" style="border-radius: 8px;" />
             <div class="card-body">
               <h5 class="card-title">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
-              <p class="card-text">
+              <p class="etiquetas_parrafos card-text">
                 <strong>Descripción:</strong> Carta de solicitud de proyecto final cargada por los estudiantes.
               </p>
             </div>
@@ -526,7 +525,7 @@
         <h2 class="section-title"><i class="fas fa-bullseye"></i> Objetivo General</h2>
 
         {% if obj_general %}
-          <p class="lead">{{ obj_general.descripcion }}</p>
+          <p class="etiquetas_parrafos lead">{{ obj_general.descripcion }}</p>
 
           <!-- Botón para mostrar el acordeón de opciones -->
           <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#accordionObjGeneral" aria-expanded="false" aria-controls="accordionObjGeneral">Opciones</button>
@@ -659,7 +658,7 @@
 
       {% if obj_general %}
         <div class="main-card">
-          <h2 class="section-title"><i class="fas fa-list-check"></i> Objetivos Específicos</h2>
+          <h4 class="section-title tittles_h4"><i class="fas fa-list-check"></i> Objetivos Específicos</h4>
 
           <div class="specific-objectives-grid row row-cols-1 row-cols-md-2 g-3">
             <!-- Rejilla responsive -->
@@ -701,7 +700,7 @@
                       <div id="eliminarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
                         <form method="POST" action="{% url 'estudiante:eliminar_objetivo_especifico' id=obj_especifico.id %}">
                           {% csrf_token %}
-                          <p class="text-danger">¿Está seguro de que desea eliminar este objetivo específico?</p>
+                          <p class="etiquetas_parrafos text-danger">¿Está seguro de que desea eliminar este objetivo específico?</p>
                           <button type="submit" class="btn btn-sm btn-danger w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
                         </form>
                       </div>
@@ -745,7 +744,7 @@
                                   <div id="eliminarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
                                     <form method="POST" action="{% url 'estudiante:eliminar_actividad' id=actividad.id %}">
                                       {% csrf_token %}
-                                      <p class="text-danger small">¿Está seguro de que desea eliminar esta actividad?</p>
+                                      <p class="etiquetas_parrafos text-danger small">¿Está seguro de que desea eliminar esta actividad?</p>
                                       <button type="submit" class="btn btn-sm btn-danger w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
                                     </form>
                                   </div>
@@ -754,7 +753,7 @@
                             {% endfor %}
                           {% endfor %}
                         {% else %}
-                          <p class="text-muted">Sin actividades definidas</p>
+                          <p class="etiquetas_parrafos text-muted">Sin actividades definidas</p>
                         {% endif %}
                       </div>
                       {% if obj_especifico.documento_avance %}
@@ -886,7 +885,7 @@
       <div class="col-md-8 text-center">
         <h1 class="h2 mt-3 mb-4">Avances del Proyecto Final</h1>
 
-        <p class="text-muted mb-0">Aun no se ha aprovado alguna solicitud de anteproyecto.</p>
+        <p class="etiquetas_parrafos text-muted mb-0">Aun no se ha aprovado alguna solicitud de anteproyecto.</p>
 
         <small class="text-secondary">
           Crea una solicitud en el siguiente link

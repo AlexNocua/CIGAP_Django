@@ -77,6 +77,15 @@ from django.views.generic.edit import CreateView
 # Recuperar informaciones y funciones especificas para las vistas
 
 
+def recuperar_directores():
+    directores = list(
+        Usuarios.objects.filter(groups__name="Directores").values(
+            "id", "nombre_completo", "email"
+        )
+    )
+    return directores
+
+
 def recuperar_usuario(id):
     usuario = Usuarios.objects.get(id=id)
     if not usuario:
@@ -599,7 +608,8 @@ def solicitudes_especiales(request):
 
 def view_solicitud_especial(request, id):
     context = datosusuario(request)
-
+    directores = recuperar_directores()
+    context["directores"] = directores
     solicitud_especial = recuperar_solicitud_especial(id)
 
     context["solicitud_especial"] = solicitud_especial
@@ -640,13 +650,23 @@ def actualizar_datos_solicitud_anteproyecto(request, id):
         form_anteproyecto = FormAnteproyecto(
             request.POST, request.FILES, instance=anteproyecto
         )
+
         if form_anteproyecto.is_valid():
             form_anteproyecto.save()
+            messages.success(request, "Los datos se han actualizado correctamente.")
             return redirect("correspondencia:view_solicitud_especial", id=id)
         else:
-            # Mostrar errores del formulario
-            return HttpResponse(f"Algo pasó: {form_anteproyecto.errors}")
-    return HttpResponse("Terminado")
+            messages.error(
+                request, "Algo pasó: por favor revisa los errores en el formulario."
+            )
+            return render(
+                request,
+                "nombre_template.html",
+                {"form_anteproyecto": form_anteproyecto},
+            )
+
+    messages.warning(request, "Método no permitido. Intenta de nuevo.")
+    return redirect("correspondencia:view_solicitud_especial", id=id)
 
 
 def actualizar_datos_solicitud_proyecto(request, id):
@@ -661,7 +681,6 @@ def actualizar_datos_solicitud_proyecto(request, id):
         director = request.POST.get("director")
         codirector = request.POST.get("codirector")
 
-        # No se actualizan los archivos si no se envían
         if form_proyecto.is_valid():
             if not request.FILES.get("doc_proyecto_final_form"):
                 form_proyecto.cleaned_data.pop("doc_proyecto_final_form", None)
@@ -676,11 +695,14 @@ def actualizar_datos_solicitud_proyecto(request, id):
         else:
             return HttpResponse(f"Error: {form_proyecto.errors}")
     else:
-        # Inicializar el formulario con la instancia del proyecto existente
+
         form_proyecto = FormActualizarProyectoFinal(instance=proyecto)
         context["form_proyecto"] = form_proyecto
     return render(request, "ruta_de_template.html", context)
 
+
+from django.contrib import messages  # Importa el módulo de mensajes
+from django.shortcuts import redirect, render
 
 def enviar_retroalimentacion_solicitud(request, id):
     solicitud_especial = recuperar_solicitud_especial(id)
@@ -688,33 +710,57 @@ def enviar_retroalimentacion_solicitud(request, id):
     if solicitud_especial.anteproyecto:
         form_retro = FormRetroalimentacionAnteproyecto(request.POST, request.FILES)
         if form_retro.is_valid():
-            solicitud_especial.estado = True
-            solicitud_especial.save()
+            
             retroalimentacion = form_retro.save(commit=False)
+            retroalimentacion.user =request.user
             retroalimentacion.anteproyecto = solicitud_especial.anteproyecto
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
-            retroalimentacion.save()
-            return redirect("correspondencia:solicitudes")
-        else:
-            return HttpResponse(f"Algo paso: {form_retro.errors}")
-    else:
-        if solicitud_especial.proyecto_final:
-            form_retro = FormRetroalimentacionAnteproyecto(request.POST, request.FILES)
-            if form_retro.is_valid():
-                solicitud_especial.estado = True
+
+            # Verificar el estado de la retroalimentación
+            if form_retro.cleaned_data['estado'] == 'Rechazado':
+                solicitud_especial.delete()  # Eliminar la solicitud
+                messages.success(request, "La solicitud ha sido rechazada y eliminada correctamente.")
+            else:  # Si el estado es "Aprobado" u otro
+                solicitud_especial.estado = True  # Asigna el estado verdadero
                 solicitud_especial.save()
-                retroalimentacion = form_retro.save(commit=False)
-                retroalimentacion.proyecto_final = solicitud_especial.proyecto_final
-                retroalimentacion.fecha_retroalimentacion = fecha_actual()
-                retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
+                retroalimentacion.estado = "Aprobado"  # Asegúrate de asignar el estado correcto
                 retroalimentacion.save()
-                return redirect("correspondencia:solicitudes")
-            else:
-                return HttpResponse(f"Algo paso: {form_retro.errros}")
+                messages.success(request, "La retroalimentación del anteproyecto se ha enviado correctamente.")
 
-    return HttpResponse(solicitud_especial)
+            return redirect("correspondencia:solicitudes")
 
+        else:
+            messages.error(request, "Algo pasó: por favor revisa los errores en el formulario.")
+            return render(request, 'nombre_template.html', {'form_retro': form_retro})
+
+    elif solicitud_especial.proyecto_final:
+        form_retro = FormRetroalimentacionAnteproyecto(request.POST, request.FILES)
+        if form_retro.is_valid():
+            retroalimentacion = form_retro.save(commit=False)
+            retroalimentacion.proyecto_final = solicitud_especial.proyecto_final
+            retroalimentacion.fecha_retroalimentacion = fecha_actual()
+            retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
+
+            # Verificar el estado de la retroalimentación
+            if form_retro.cleaned_data['estado'] == 'Rechazado':
+                solicitud_especial.delete()  # Eliminar la solicitud
+                messages.success(request, "La solicitud ha sido rechazada y eliminada correctamente.")
+            else:  # Si el estado es "Aprobado" u otro
+                solicitud_especial.estado = True  # Asigna el estado verdadero
+                solicitud_especial.save()
+                retroalimentacion.estado = "Aprobado"  # Asegúrate de asignar el estado correcto
+                retroalimentacion.save()
+                messages.success(request, "La retroalimentación del proyecto final se ha enviado correctamente.")
+
+            return redirect("correspondencia:solicitudes")
+
+        else:
+            messages.error(request, "Algo pasó: por favor revisa los errores en el formulario.")
+            return render(request, 'nombre_template.html', {'form_retro': form_retro})
+
+    messages.warning(request, "No se puede enviar la retroalimentación: solicitud no válida.")
+    return redirect("correspondencia:solicitudes")
 
 ########################################################################################################################
 # vista para conocer la informacion del anteproyecto
