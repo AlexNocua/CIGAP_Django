@@ -22,18 +22,14 @@
     border: 1px solid #cacaca;border-radius:8px;">
         <p class="p-0 m-0">
           <b>Anteproyecto:</b>
-          {% if anteproyecto %}
-            {% if retroalimentacion_anteproyecto %}
-              {% if retroalimentacion_anteproyecto.estado %}
-                Aprobado.
-              {% else %}
-                Rechazado.
-              {% endif %}
+          {% if anteproyecto.estado %}
+            Aprobado.
+          {% else %}
+            {% if anteproyecto.estado == False %}
+              Rechazado.
             {% else %}
               Aún no hay una respuesta.
-            {% endif %}
-          {% else %}
-            Aún no hay una solicitud de anteproyecto.
+            {% endif %}Aún no hay una solicitud de anteproyecto.
           {% endif %}
         </p>
 

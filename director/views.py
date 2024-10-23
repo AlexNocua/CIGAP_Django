@@ -504,6 +504,7 @@ def evaluacion_proyectos(request):
 def view_evaluador_anteproyectos(request):
     context = datos_usuario_director(request)
     anteproyectos = recuperar_anteproyectos_a_evaluar(request)
+    print(anteproyecto)
     if anteproyectos:
         context["anteproyectos"] = anteproyectos
     return render(request, "director/evaluacion_proyectos/list_evaluador.html", context)
@@ -537,7 +538,7 @@ def enviar_evaluacion(request, id):
 
             evaluacion_anteproyecto.calificacion = request.POST.get("calificacion")
             evaluacion_anteproyecto.comentarios = request.POST.get("comentarios")
-            evaluacion_anteproyecto.estado = request.POST.get("estado") == "True"
+            evaluacion_anteproyecto.estado = True
             doc_retro = request.FILES.get("doc_retroalimentacion_convert")
 
             if doc_retro:

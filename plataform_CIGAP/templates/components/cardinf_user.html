@@ -12,9 +12,9 @@
     /*distancia entre componentes dentro del Grid*/
     grid-gap: 20px;
     /*Alineacion de componentes del grid
-                                                                                                                                                                                                    justify-self: center;
-                                                                                                                                                                                                    align-self: center;
-                                                                                                                                                                                                    */
+                                                                                                                                                                                                      justify-self: center;
+                                                                                                                                                                                                      align-self: center;
+                                                                                                                                                                                                      */
   }
   
   .cards img {
@@ -26,7 +26,7 @@
     padding: 12px;
   
     /*                    esta configuracion es para recortar la imagen sin que pierda sus proporciones iniciales
-                                                                                                                                                                                                */
+                                                                                                                                                                                                  */
     object-fit: cover;
   }
   
@@ -45,7 +45,7 @@
 </style>
 
 <!-- card de información del usuario -->
-<div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
+<div class="card mb-5 d-flex justify-content-center align-items-center" style="width: 18rem;">
   {% if user_img %}
     <img src="data:image/jpeg;base64,{{ user_img }}" alt="Imagen de usuario" />
   {% else %}

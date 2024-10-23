@@ -1,4 +1,5 @@
 # get_object_or_404 para el manejo de errores si no se encuentra un modelo con los siguientes datos
+from datetime import datetime, date
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
@@ -331,17 +332,12 @@ def principal_estudiante(request):
     return render(request, "estudiante/base_estudiante.html", context)
 
 
-
-
 def recuperar_solicitud_especifica_aceptada(anteproyecto):
-    solicitudes_especificas = (
-        ModelSolicitudes.objects.filter(
-            Q(anteproyecto=anteproyecto) & Q(estado=True)
-        ).order_by('-id')
-    )
+    solicitudes_especificas = ModelSolicitudes.objects.filter(
+        Q(anteproyecto=anteproyecto) & Q(estado=True)
+    ).order_by("-id")
 
     return solicitudes_especificas.first() if solicitudes_especificas.exists() else None
-
 
 
 @login_required
@@ -737,14 +733,16 @@ def avances_proyecto(request):
         print(proyecto_final)
         fechas = ModelFechasProyecto.objects.get(proyecto_final=proyecto_final)
         if fechas:
-            context["fechas"] = fechas
-            context["fecha_culminacion_anteproyecto"] = fecha_culminacion_anteproyecto(
-                fechas.fecha_inicio
-            )
+
+            context["fecha_actual"] = fecha_actual() 
+            context["fechas"] = fechas  
+            context["fecha_actual"] = datetime.strptime(context["fecha_actual"], "%Y-%m-%d %H:%M:%S").date()
+
         if proyecto_final:
             context["proyecto_final"] = proyecto_final
 
         obj_general = recuperar_objetivo_general(proyecto_final)
+        porcentaje = 0
         if obj_general:
             context["obj_general"] = obj_general
             objs_especificos = recuperar_objetivos_especificos(obj_general)
@@ -761,9 +759,17 @@ def avances_proyecto(request):
                     )
                     actividades = recuperar_actividades(obj_especifico)
                     if actividades:
+                        num_actividades = actividades.count()
+                        num_actividades_hechas = 0
+                        for actividad in actividades:
+                            if actividad.estado == True:
+                                num_actividades_hechas += 1
                         dict_actividades[f"actividades_obj_especifico_{i}"] = (
                             actividades
                         )
+                        porcentaje = (num_actividades_hechas / num_actividades) * 100
+                        context["pocentaje"] = porcentaje
+                print(porcentaje)
                 context["actividades"] = dict_actividades
                 context["docs_avances"] = dict_docs_avances
 

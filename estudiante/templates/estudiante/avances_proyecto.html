@@ -43,7 +43,7 @@
         background: #ffffff;
         border-radius: 16px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        padding: 2rem;
+        padding: 20px;
         margin-bottom: 2.5rem;
       }
       
@@ -98,799 +98,999 @@
         border-radius: 100px;
         transition: width 0.5s ease;
       }
+      .fechas .col {
+        margin: 4px;
+        background: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 1px solid #cacaca;
+        border-radius: 16px;
+        font-size: 14px;
+      }
+      .fechas .col p {
+        margin: 0;
+        padding: 4px 4px;
+      }
     </style>
+    <div class="mt-5" style="overflow: hidden; border:1px solid #cacaca; border-radius: 12px;">
+      <div class="project-header">
+        <h3 class="project-title tittles_h3"><i class="fas fa-check-circle"></i> Avances del Proyecto Final</h3>
 
-    <div class="project-header">
-      <h3 class="project-title tittles_h3">Avances del Proyecto Final</h3>
-      <h4 class="text-center mt-4">{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</h4>
+        <h5 class="m-1 p-3"><i class="fas fa-folder"></i> Proyecto: {{ proyecto_final.anteproyecto.nombre_anteproyecto }}</h5>
 
-      <section class="info-section p-3">
-        <h4 class="info-title tittles_h4">
-          <i class="fas fa-info-circle"></i>
-          Información General
-        </h4>
-        <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label">Fecha de Inicio</span>
-            <time class="info-value" datetime="{{ fechas.fecha_inicio }}">{{ fechas.fecha_inicio|date:'d \d\e F \d\e Y' }}</time>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Fecha Estimada de Finalización</span>
-            <time class="info-value" datetime="{{ fecha_culminacion_anteproyecto }}">{{ fecha_culminacion_anteproyecto|date:'d \d\e F \d\e Y' }}</time>
-          </div>
-
-          <div class="info-item">
-            <span class="info-label">Progreso General</span>
-            <div class="progress-container">
-              <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+        <section class="info-section m-3" style="overflow: hidden; border:1px solid #cacaca; border-radius: 12px;">
+          <h5 class="info-title tittles_h4">
+            <i class="fas fa-info-circle"></i>
+            Información General
+          </h5>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Fecha de Inicio</span>
+              <time class="info-value" datetime="{{ fechas.fecha_inicio }}">{{ fechas.fecha_inicio|date:'d \d\e F \d\e Y' }}</time>
             </div>
-            <span class="info-value text-end mt-1">65%</span>
-          </div>
-        </div>
-      </section>
-    </div>
+            <div class="info-item">
+              <span class="info-label">Fecha Estimada de Finalización</span>
+              <time class="info-value" datetime="{{ fecha_culminacion_anteproyecto }}">{{ fecha_culminacion_anteproyecto|date:'d \d\e F \d\e Y' }}</time>
+            </div>
 
-    <div id="retroalimentacionesCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        {% for key, retro in retroalimentaciones.items %}
-          <div class="carousel-item {% if forloop.first %} active {% endif %}">
-            <div class="d-flex justify-content-center">
-              <div class="card" style="width: 100%; max-width: 18rem;">
-                <div class="card-body">
-                  <h5 class="card-title">Retroalimentación {{ forloop.counter }}</h5>
-                  <p class="etiquetas_parrafos card-text">
-                    <strong>Por:</strong> {{ retro.retroalimentacion.user.nombre_completo }}
-                  </p>
-                  <p class="etiquetas_parrafos card-text">
-                    <strong>Observaciones:</strong> {{ retro.retroalimentacion.retroalimentacion }}
-                  </p>
-
-                  {% if retro.doc_retro %}
-                    <a href="data:application/pdf;base64,{{ retro.doc_retro }}" target="_blank" class="" style="border-radius: 8px;">Ver Documento PDF</a>
-                    <embed class="embed-responsive-item" src="data:application/pdf;base64,{{ retro.doc_retro }}" type="application/pdf" style="border-radius: 8px; width: 100%; height: auto;" />
+            <div class="info-item">
+              <span class="info-label">Progreso General</span>
+              {% if porcentaje %}
+                <div class="progress-container">
+                  <div class="progress-bar" role="progressbar" style="width: {{ porcentaje }}%;" aria-valuenow="{{ porcentaje }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  <span class="info-value text-end mt-1">{{ porcentaje }}%</span>
                   {% else %}
-                    <p>No hay documento disponible.</p>
-                  {% endif %}
+
+                  <p class="etiquetas_parrafos">
+                    <i class="fas fa-exclamation-circle"></i> Aún no ha cargado actividades o el director no ha evaluado avances.
+                  </p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="retroalimentacionesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for key, retro in retroalimentaciones.items %}
+            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+              <div class="d-flex justify-content-center">
+                <div class="card" style="width: 100%; max-width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Retroalimentación {{ forloop.counter }}</h5>
+                    <p class="etiquetas_parrafos card-text">
+                      <strong>Por:</strong> {{ retro.retroalimentacion.user.nombre_completo }}
+                    </p>
+                    <p class="etiquetas_parrafos card-text">
+                      <strong>Observaciones:</strong> {{ retro.retroalimentacion.retroalimentacion }}
+                    </p>
+
+                    {% if retro.doc_retro %}
+                      <a href="data:application/pdf;base64,{{ retro.doc_retro }}" target="_blank" class="" style="border-radius: 8px;">Ver Documento PDF</a>
+                      <embed class="embed-responsive-item" src="data:application/pdf;base64,{{ retro.doc_retro }}" type="application/pdf" style="border-radius: 8px; width: 100%; height: auto;" />
+                    {% else %}
+                      <p>No hay documento disponible.</p>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
-      </div>
-
-      <!-- Controles del carrusel -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#retroalimentacionesCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#retroalimentacionesCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
-    </div>
-
-    <style>
-      .objectives-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 12px;
-        font-family: 'Inter', sans-serif;
-      }
-      .main-card {
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        margin-bottom: 2.5rem;
-        padding: 2rem;
-      }
-      .section-title {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #1a1a1a;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-      .section-title i {
-        color: #0d6efd;
-        font-size: 1.25rem;
-      }
-      .specific-objectives-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.5rem;
-      }
-      .objective-card {
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-        border: 1px solid #f0f0f0;
-        overflow: hidden;
-      }
-      .objective-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-      }
-      .objective-header {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 1.25rem;
-        border-bottom: 1px solid #e0e0e0;
-      }
-      .objective-header h3 {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #2c3e50;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .objective-number {
-        background: #0d6efd;
-        color: white;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.875rem;
-        font-weight: 600;
-      }
-      .objective-body {
-        padding: 1.25rem;
-      }
-      .activities-title {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #6c757d;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .activity-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.75rem;
-        padding: 0.75rem;
-        background: #f8f9fa;
-        border-radius: 6px;
-        transition: background 0.2s ease;
-      }
-      .activity-item:hover {
-        background: #e9ecef;
-      }
-      .btn-primary {
-        background: #0d6efd;
-        color: white;
-        border: none;
-        padding: 0.75rem 1rem;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-      }
-      .btn-primary:hover {
-        background: #0b5ed7;
-        transform: translateY(-1px);
-      }
-      .form-control {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
-        margin-bottom: 0.75rem;
-        transition: border-color 0.2s ease;
-      }
-      .form-control:focus {
-        outline: none;
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
-      }
-      .add-objective-card {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: #f8f9fa;
-        border: 2px dashed #dee2e6;
-        border-radius: 12px;
-        padding: 2rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        height: 100%;
-        min-height: 200px;
-      }
-      .add-objective-card:hover {
-        background: #e9ecef;
-        border-color: #0d6efd;
-      }
-      .add-objective-card i {
-        color: #0d6efd;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-      .add-objective-card h4 {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #6c757d;
-        margin: 0;
-      }
-      .accordion-body {
-        padding: 8px !important;
-      }
-    </style>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Bootstrap JS, Popper.js, y jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-
-    <div class="objectives-container">
-      <!-- Incluir Bootstrap y Bootstrap Icons -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-      <div class="d-flex justify-content-around align-items-center">
-        {% if proyecto_final.proyecto_final %}
-          {% if proyecto_final.carta_presentacion %}
-            <p>Ya se cargaron dos documenetos previos a la solicitud de proyecto final y el proyecto final.</p>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="bi bi-upload"></i> Subir Archivos</button>
-          {% endif %}
-        {% endif %}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModificarArchivosModal"><i class="bi bi-upload"></i> Editar archivos cargados</button>
-      </div>
-
-      {% if docs_finales %}
-        <div class="d-flex justify-content-around align-items-center">
-          <div class="card">
-            <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" type="application/pdf" style="border-radius: 8px;" />
-            <div class="card-body">
-              <h5 class="card-title">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
-              <p class="etiquetas_parrafos card-text">
-                <strong>Descripción:</strong> Proyecto final cargado por los estudiantes.
-              </p>
-            </div>
-            <a href="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" download="Proyecto_final_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="boton-descargar">Descargar</a>
-          </div>
-          <div class="card">
-            <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.carta_final }}" type="application/pdf" style="border-radius: 8px;" />
-            <div class="card-body">
-              <h5 class="card-title">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
-              <p class="etiquetas_parrafos card-text">
-                <strong>Descripción:</strong> Carta de solicitud de proyecto final cargada por los estudiantes.
-              </p>
-            </div>
-            <a href="data:application/pdf;base64,{{ docs_finales.carta_final }}" download="Carta_solicitud_proyecto_final{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="boton-descargar">Descargar</a>
-          </div>
+          {% endfor %}
         </div>
-      {% endif %}
-      <!-- Botón para abrir el modal -->
 
-      <!-- Modal -->
-      <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="uploadModalLabel"><i class="bi bi-cloud-upload"></i> Subir Archivos</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-              <form id="uploadForm" action="{% url 'estudiante:cargar_docs_final' proyecto_final.id %} " method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                  <label for="file1" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Cargue la solicitud de proyecto final</label>
-                  <input type="file" id="file1" class="form-control" name="carta_final" accept="application/pdf" required />
-                  <small class="text-muted">Solo se permite el formato PDF.</small>
-                </div>
-                <div class="mb-3">
-                  <label for="file2" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Cargue el proyecto final.</label>
-                  <input type="file" id="file2" class="form-control" name="proyecto_final" accept="application/pdf" required />
-                  <small class="text-muted">Solo se permite el formato PDF.</small>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cancelar</button>
-              <button type="button" class="btn btn-primary" onclick="confirmUpload()"><i class="bi bi-cloud-upload"></i> Subir</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="ModificarArchivosModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="uploadModalLabel"><i class="bi bi-pencil-square"></i> Modificar Archivos</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-              <form id="modifyForm" action="{% url 'estudiante:modificar_docs_final' proyecto_final.id %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                  <label for="fileCartaFinal" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Modificar la solicitud de proyecto final</label>
-                  <input type="file" id="fileCartaFinal" class="form-control" name="carta_final" accept="application/pdf" required />
-                  <small class="text-muted">Solo se permite el formato PDF.</small>
-                </div>
-                <div class="mb-3">
-                  <label for="fileProyectoFinal" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Modificar el proyecto final</label>
-                  <input type="file" id="fileProyectoFinal" class="form-control" name="proyecto_final" accept="application/pdf" required />
-                  <small class="text-muted">Solo se permite el formato PDF.</small>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cancelar</button>
-              <button type="button" class="btn btn-primary" onclick="confirmAndSubmit()"><i class="bi bi-cloud-upload"></i> Guardar Cambios</button>
-            </div>
-          </div>
-        </div>
+        <!-- Controles del carrusel -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#retroalimentacionesCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#retroalimentacionesCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
       </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <script>
-        function confirmAndSubmit() {
-          // Verifica si los archivos cargados son PDF
-          const fileCartaFinal = document.getElementById('fileCartaFinal').files[0]
-          const fileProyectoFinal = document.getElementById('fileProyectoFinal').files[0]
+      <style>
+        .objectives-container {
+          max-width: 1200px;
+          margin: 0 auto;
         
-          // Validación del tipo de archivo
-          if (fileCartaFinal && fileCartaFinal.type !== 'application/pdf') {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'El archivo de la solicitud de proyecto final debe ser un PDF.',
-              confirmButtonText: 'Aceptar'
-            })
-            return
-          }
-        
-          if (fileProyectoFinal && fileProyectoFinal.type !== 'application/pdf') {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'El archivo del proyecto final debe ser un PDF.',
-              confirmButtonText: 'Aceptar'
-            })
-            return
-          }
-        
-          // Confirmación con SweetAlert
-          Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Los archivos serán modificados.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, modificar!',
-            cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Si se confirma, enviar el formulario
-              document.getElementById('modifyForm').submit()
-            }
-          })
+          font-family: 'Inter', sans-serif;
+          overflow: hidden;
+          border: 1px solid #cacaca;
+          border-radius: 12px;
         }
-      </script>
+        .main-card {
+          background: #ffffff;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          margin-bottom: 2.5rem;
+        }
+        .section-title {
+          font-size: 1.5rem;
+          font-weight: 500;
+          color: #1a1a1a;
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        .section-title i {
+          color: #0d6efd;
+          font-size: 1.25rem;
+        }
+        .specific-objectives-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 1.5rem;
+        }
+        .objective-card {
+          background: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+          transition: all 0.3s ease;
+          border: 1px solid #f0f0f0;
+          overflow: hidden;
+        }
+        .objective-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+        .objective-header {
+          padding: 1.25rem;
+          border-bottom: 1px solid #e0e0e0;
+        }
+        .objective-header h3 {
+          font-size: 1rem;
+          font-weight: 500;
+          min-height: 120px;
+          overflow: hidden;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .objective-number {
+          background: #0d6efd;
+          color: white;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.875rem;
+          font-weight: 600;
+        }
+        .objective-body {
+          padding: 1.25rem;
+        }
+        .activities-title {
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: #6c757d;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .activity-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.75rem;
+          padding: 0.75rem;
+          border-radius: 6px;
+          transition: background 0.2s ease;
+        }
+        .activity-item:hover {
+          background: #e9ecef;
+        }
+        .btn-primary {
+          background: #0d6efd;
+          color: white;
+          border: none;
+          padding: 0.75rem 1rem;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+        .btn-primary:hover {
+          background: #0b5ed7;
+          transform: translateY(-1px);
+        }
+        .form-control {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #dee2e6;
+          border-radius: 6px;
+          margin-bottom: 0.75rem;
+          transition: border-color 0.2s ease;
+        }
+        .form-control:focus {
+          outline: none;
+          border-color: #0d6efd;
+          box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+        }
+        .add-objective-card {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background: #f8f9fa;
+          border: 2px dashed #dee2e6;
+          border-radius: 12px;
+          padding: 2rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          height: 100%;
+          min-height: 200px;
+        }
+        .add-objective-card:hover {
+          background: #e9ecef;
+          border-color: #0d6efd;
+        }
+        .add-objective-card i {
+          color: #0d6efd;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+        .add-objective-card h4 {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #6c757d;
+          margin: 0;
+        }
+        .accordion-body {
+          padding: 8px !important;
+        }
+      </style>
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-      <!-- Incluir scripts de Bootstrap, SweetAlert y script para confirmación -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <!-- Bootstrap JS, Popper.js, y jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
-      <!-- Script para confirmación de SweetAlert -->
-      <script>
-        function confirmUpload() {
-          const file1 = document.getElementById('file1').value
-          const file2 = document.getElementById('file2').value
-        
-          if (!file1 || !file2) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Por favor, cargue ambos archivos en formato PDF.'
-            })
-          } else {
+      <div class="objectives-container mt-4">
+        <!-- Incluir Bootstrap y Bootstrap Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+        <div class="d-flex justify-content-around align-items-center">
+          {% if proyecto_final.proyecto_final %}
+            {% if proyecto_final.carta_presentacion %}
+              <p>Ya se cargaron dos documenetos previos a la solicitud de proyecto final y el proyecto final.</p>
+              <button type="button" class="btn btn-primary botones_envios" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="bi bi-upload"></i> Subir Archivos</button>
+            {% endif %}
+          {% else %}
+            {% if proyecto_final.proyecto_final and proyecto_final.carta_presentacion %}
+              {% if docs_finales %}
+                <div class="d-flex justify-content-around align-items-center">
+                  <div class="card">
+                    <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" type="application/pdf" style="border-radius: 8px;" />
+                    <div class="card-body">
+                      <h5 class="">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
+                      <p class="etiquetas_parrafos card-text">
+                        <strong>Descripción:</strong> Proyecto final cargado por los estudiantes.
+                      </p>
+                    </div>
+                    <a href="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" download="Proyecto_final_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="boton-descargar">Descargar</a>
+                  </div>
+                  <div class="card">
+                    <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.carta_final }}" type="application/pdf" style="border-radius: 8px;" />
+                    <div class="card-body">
+                      <h5 class="">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
+                      <p class="etiquetas_parrafos card-text">
+                        <strong>Descripción:</strong> Carta de solicitud de proyecto final cargada por los estudiantes.
+                      </p>
+                    </div>
+                    <a href="data:application/pdf;base64,{{ docs_finales.carta_final }}" download="Carta_solicitud_proyecto_final{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="boton-descargar">Descargar</a>
+                  </div>
+                </div>
+              {% endif %}
+              <button type="button" class="btn btn-primary btns-editar" data-bs-toggle="modal" data-bs-target="#ModificarArchivosModal"><i class="bi bi-upload"></i> Editar archivos cargados</button>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <!-- Botón para abrir el modal -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel"><i class="bi bi-cloud-upload"></i> Subir Archivos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <form id="uploadForm" action="{% url 'estudiante:cargar_docs_final' proyecto_final.id %} " method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="file1" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Cargue la solicitud de proyecto final</label>
+                    <input type="file" id="file1" class="form-control" name="carta_final" accept="application/pdf" required />
+                    <small class="text-muted">Solo se permite el formato PDF.</small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="file2" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Cargue el proyecto final.</label>
+                    <input type="file" id="file2" class="form-control" name="proyecto_final" accept="application/pdf" required />
+                    <small class="text-muted">Solo se permite el formato PDF.</small>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cancelar</button>
+                <button type="button" class="btn btn-primary botones_envios" onclick="confirmUpload()"><i class="bi bi-cloud-upload"></i> Subir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="ModificarArchivosModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel"><i class="bi bi-pencil-square"></i> Modificar Archivos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <form id="modifyForm" action="{% url 'estudiante:modificar_docs_final' proyecto_final.id %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="fileCartaFinal" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Modificar la solicitud de proyecto final</label>
+                    <input type="file" id="fileCartaFinal" class="form-control" name="carta_final" accept="application/pdf" required />
+                    <small class="text-muted">Solo se permite el formato PDF.</small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="fileProyectoFinal" class="form-label"><i class="bi bi-file-earmark-arrow-up"></i> Modificar el proyecto final</label>
+                    <input type="file" id="fileProyectoFinal" class="form-control" name="proyecto_final" accept="application/pdf" required />
+                    <small class="text-muted">Solo se permite el formato PDF.</small>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cancelar</button>
+                <button type="button" class="btn btn-primary btns-editar" onclick="confirmAndSubmit()"><i class="bi bi-cloud-upload"></i> Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          function confirmAndSubmit() {
+            // Verifica si los archivos cargados son PDF
+            const fileCartaFinal = document.getElementById('fileCartaFinal').files[0]
+            const fileProyectoFinal = document.getElementById('fileProyectoFinal').files[0]
+          
+            // Validación del tipo de archivo
+            if (fileCartaFinal && fileCartaFinal.type !== 'application/pdf') {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El archivo de la solicitud de proyecto final debe ser un PDF.',
+                confirmButtonText: 'Aceptar'
+              })
+              return
+            }
+          
+            if (fileProyectoFinal && fileProyectoFinal.type !== 'application/pdf') {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El archivo del proyecto final debe ser un PDF.',
+                confirmButtonText: 'Aceptar'
+              })
+              return
+            }
+          
+            // Confirmación con SweetAlert
             Swal.fire({
               title: '¿Estás seguro?',
-              text: 'Estás a punto de subir los archivos.',
+              text: 'Los archivos serán modificados.',
               icon: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
-              confirmButtonText: 'Sí, subir',
+              confirmButtonText: 'Sí, modificar!',
               cancelButtonText: 'Cancelar'
             }).then((result) => {
               if (result.isConfirmed) {
-                document.getElementById('uploadForm').submit()
+                // Si se confirma, enviar el formulario
+                document.getElementById('modifyForm').submit()
               }
             })
           }
-        }
-      </script>
+        </script>
 
-      {% if puede_enviar %}
-        <form action="">label</form>
-      {% endif %}
+        <!-- Incluir scripts de Bootstrap, SweetAlert y script para confirmación -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-      <div class="main-card">
-        <h2 class="section-title"><i class="fas fa-bullseye"></i> Objetivo General</h2>
-
-        {% if obj_general %}
-          <p class="etiquetas_parrafos lead">{{ obj_general.descripcion }}</p>
-
-          <!-- Botón para mostrar el acordeón de opciones -->
-          <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#accordionObjGeneral" aria-expanded="false" aria-controls="accordionObjGeneral">Opciones</button>
-
-          <!-- Acordeón para editar o eliminar -->
-          <div id="accordionObjGeneral" class="collapse mt-3">
-            <!-- Formulario para editar el objetivo general -->
-            <form id="editarObjetivoForm" method="POST" action="{% url 'estudiante:editar_objetivo_general' obj_general.id %}" class="needs-validation" novalidate>
-              {% csrf_token %}
-              <div class="form-group mb-3">
-                <label for="editar_objetivo_general" class="form-label fw-bold">Objetivo General</label>
-                <textarea id="editar_objetivo_general" name="editar_objetivo_general" class="form-control" rows="3" required placeholder="Escriba aquí el objetivo general...">{{ obj_general.descripcion }}</textarea>
-                <div class="invalid-feedback">Por favor, ingrese el objetivo general.</div>
-              </div>
-              <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-warning">
-                  <i class="fas fa-edit me-1"></i>
-                  <span>Editar Objetivo General</span>
-                  <span class="spinner-border spinner-border-sm d-none ms-1" role="status" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-danger" id="btnEliminarObjetivo">
-                  <i class="fas fa-trash me-1"></i>
-                  <span>Eliminar Objetivo General</span>
-                </button>
-              </div>
-            </form>
-
-            <!-- Formulario oculto para eliminar -->
-            <form id="eliminarObjetivoForm" method="POST" action="{% url 'estudiante:eliminar_objetivo_general' obj_general.id %}" class="d-none">
-              {% csrf_token %}
-            </form>
-          </div>
-
-          <script>
-            document.addEventListener('DOMContentLoaded', function () {
-              const editarForm = document.getElementById('editarObjetivoForm')
-              const eliminarForm = document.getElementById('eliminarObjetivoForm')
-              const btnEliminar = document.getElementById('btnEliminarObjetivo')
-            
-              // Manejar la edición del objetivo
-              editarForm.addEventListener('submit', function (event) {
-                event.preventDefault()
-            
-                if (!this.checkValidity()) {
-                  event.stopPropagation()
-                  this.classList.add('was-validated')
-                  return
+        <!-- Script para confirmación de SweetAlert -->
+        <script>
+          function confirmUpload() {
+            const file1 = document.getElementById('file1').value
+            const file2 = document.getElementById('file2').value
+          
+            if (!file1 || !file2) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Por favor, cargue ambos archivos en formato PDF.'
+              })
+            } else {
+              Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Estás a punto de subir los archivos.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, subir',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  document.getElementById('uploadForm').submit()
                 }
-            
-                const submitBtn = this.querySelector('button[type="submit"]')
-                const spinner = submitBtn.querySelector('.spinner-border')
-                const btnText = submitBtn.querySelector('span')
-                const originalText = btnText.textContent
-            
-                submitBtn.disabled = true
-                spinner.classList.remove('d-none')
-                btnText.textContent = 'Guardando...'
-            
-                Swal.fire({
-                  title: '¿Confirmar cambios?',
-                  text: 'Estás a punto de modificar el objetivo general',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#ffc107',
-                  cancelButtonColor: '#6c757d',
-                  confirmButtonText: 'Sí, modificar',
-                  cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.submit()
-                  } else {
-                    submitBtn.disabled = false
-                    spinner.classList.add('d-none')
-                    btnText.textContent = originalText
-                  }
-                })
               })
-            
-              // Manejar la eliminación del objetivo
-              btnEliminar.addEventListener('click', function () {
-                Swal.fire({
-                  title: '¿Estás seguro?',
-                  text: 'Esta acción eliminará el objetivo general. Esta acción no se puede deshacer.',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#dc3545',
-                  cancelButtonColor: '#6c757d',
-                  confirmButtonText: 'Sí, eliminar',
-                  cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    eliminarForm.submit()
-                  }
-                })
-              })
-            })
-          </script>
+            }
+          }
+        </script>
 
-          <style>
-            #accordionObjGeneral {
-              background-color: #f8f9fa;
-              border-radius: 8px;
-              padding: 20px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            }
-            
-            #accordionObjGeneral textarea {
-              resize: vertical;
-              min-height: 100px;
-            }
-            
-            #accordionObjGeneral .btn {
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              min-width: 160px;
-            }
-          </style>
-        {% else %}
-          <!-- Si no existe el objetivo general, muestra el formulario para agregarlo -->
-          <form method="POST" action="{% url 'estudiante:subir_objetivo_general' proyecto_final.id %}">
-            {% csrf_token %}
-            <div class="form-group">
-              <textarea id="descripcion_objetivo_general" name="descripcion_objetivo_general" class="form-control" rows="3" required placeholder="Describe el objetivo general de tu proyecto..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2"><i class="fas fa-plus-circle"></i> Definir Objetivo General</button>
-          </form>
+        {% if puede_enviar %}
+          <form action="">label</form>
         {% endif %}
-      </div>
 
-      {% if obj_general %}
-        <div class="main-card">
-          <h4 class="section-title tittles_h4"><i class="fas fa-list-check"></i> Objetivos Específicos</h4>
+        <div class="mt-0 p-0">
+          <h4 class="tittles_h3"><i class="fas fa-bullseye"></i> Objetivo General</h4>
+          <div class="p-3">
+            <p class="etiquetas_parrafos">
+              <i class="fas fa-pencil-alt"></i> Ingrese un Objetivo General
+            </p>
 
-          <div class="specific-objectives-grid row row-cols-1 row-cols-md-2 g-3">
-            <!-- Rejilla responsive -->
-            {% if objs_especificos %}
-              <div class="objectives-grid w-100 position-relative" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 4fr)); gap: 1rem;">
-                {% for obj_especifico in objs_especificos %}
-                  <div class="objective-card card h-100">
-                    <div class="objective-header card-header d-flex justify-content-between">
-                      <h3>
-                        <span class="objective-number">{{ forloop.counter }}</span>
-                        {{ obj_especifico.descripcion }}
-                      </h3>
-                      <div>
-                        <!-- Botones para editar y eliminar -->
-                        <button class="btn btn-sm btn-warning" data-bs-toggle="collapse" data-bs-target="#editarObjetivo{{ forloop.counter }}" aria-expanded="false" aria-controls="editarObjetivo{{ forloop.counter }}"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="collapse" data-bs-target="#eliminarObjetivo{{ forloop.counter }}" aria-expanded="false" aria-controls="eliminarObjetivo{{ forloop.counter }}"><i class="fas fa-trash"></i> Eliminar</button>
+            {% if obj_general %}
+              <div class="p-2">
+                <p class="etiquetas_parrafos">{{ obj_general.descripcion }}</p>
+
+                <div class="row m-3">
+                  <div class="col">
+                    <button type="button" class="btn btn-warning btns-editar" data-bs-toggle="modal" data-bs-target="#modalEditarObjetivo">
+                      <i class="fas fa-edit me-1"></i>
+                      Editar Objetivo General
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-danger btns-cancelar-cerrar" data-bs-toggle="modal" data-bs-target="#modalEliminarObjetivo">
+                      <i class="fas fa-trash me-1"></i>
+                      Eliminar Objetivo General
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Modal para editar el objetivo general -->
+                <div class="modal fade" id="modalEditarObjetivo" tabindex="-1" aria-labelledby="editarObjetivoLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="editarObjetivoLabel">Editar Objetivo General</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                    </div>
-
-                    <!-- Acordeón para edición y eliminación de objetivos -->
-                    <div class="accordion" id="accordionObjetivosEspecificos">
-                      <!-- Formulario para editar -->
-                      <div id="editarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
-                        <form class="d-flex flex-column gap-2" method="POST" action="{% url 'estudiante:editar_objetivo_especifico' id=obj_especifico.id %}">
+                      <div class="modal-body">
+                        <form id="editarObjetivoForm" method="POST" action="{% url 'estudiante:editar_objetivo_general' obj_general.id %}" class="needs-validation" novalidate>
                           {% csrf_token %}
-                          <div class="row g-2">
-                            <div class="col-9">
-                              <input type="text" name="editar_objetivo_especifico" class="form-control form-control-sm m-0" value="{{ obj_especifico.descripcion }}" required />
-                              <small class="text-muted">Ingrese el objetivo específico que desea actualizar.</small>
-                            </div>
-                            <div class="col-3">
-                              <button type="submit" class="btn btn-sm btn-success w-100"><i class="fas fa-save"></i> Guardar</button>
-                            </div>
+                          <div class="form-group mb-3">
+                            <label for="editar_objetivo_general" class="form-label fw-bold">Objetivo General</label>
+                            <textarea id="editar_objetivo_general" name="editar_objetivo_general" class="form-control" rows="3" required placeholder="Escriba aquí el objetivo general...">{{ obj_general.descripcion }}</textarea>
+                            <div class="invalid-feedback">Por favor, ingrese el objetivo general.</div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-warning btns-editar">
+                              <i class="fas fa-edit me-1"></i>
+                              Guardar Cambios
+                              <span class="spinner-border spinner-border-sm d-none ms-1" role="status" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal">Cerrar</button>
                           </div>
                         </form>
                       </div>
-
-                      <!-- Confirmación de eliminación -->
-                      <div id="eliminarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
-                        <form method="POST" action="{% url 'estudiante:eliminar_objetivo_especifico' id=obj_especifico.id %}">
-                          {% csrf_token %}
-                          <p class="etiquetas_parrafos text-danger">¿Está seguro de que desea eliminar este objetivo específico?</p>
-                          <button type="submit" class="btn btn-sm btn-danger w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
-                        </form>
-                      </div>
-                    </div>
-
-                    <div class="objective-body card-body" style="background: #29a70921;">
-                      <h4 class="activities-title"><i class="fas fa-tasks"></i> Actividades</h4>
-                      <div class="activities-list">
-                        {% if actividades %}
-                          {% for key, actividades in actividades.items %}
-                            {% for actividad in actividades %}
-                              {% if actividad.objetivos_especificos == obj_especifico %}
-                                <div class="activity-item d-flex justify-content-between align-items-center mb-2">
-                                  <div class="d-flex align-items-center">
-                                    <label class="form-check-label" for="actividad{{ forloop.counter }}">{{ actividad.descripcion }}</label>
-                                  </div>
-                                  <div class="btn-group" role="group" aria-label="Acciones de actividad">
-                                    <button class="btn btn-sm btn-outline-warning" data-bs-toggle="collapse" data-bs-target="#editarActividad{{ forloop.counter }}"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="collapse" data-bs-target="#eliminarActividad{{ forloop.counter }}"><i class="fas fa-trash"></i></button>
-                                  </div>
-                                </div>
-
-                                <div class="accordion" id="accordionactividades">
-                                  <!-- Formulario para editar actividad -->
-                                  <div id="editarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
-                                    <form class="d-flex flex-column gap-2" method="POST" action="{% url 'estudiante:editar_actividad' id=actividad.id %}">
-                                      {% csrf_token %}
-                                      <div class="row g-2">
-                                        <div class="col-9">
-                                          <input type="text" name="editar_actividad" class="form-control form-control-sm m-0" value="{{ actividad.descripcion }}" required />
-                                          <small class="text-muted">Ingrese la descripción actualizada de la actividad.</small>
-                                        </div>
-                                        <div class="col-3">
-                                          <button type="submit" class="btn btn-sm btn-success w-100"><i class="fas fa-save"></i> Guardar</button>
-                                        </div>
-                                      </div>
-                                    </form>
-                                  </div>
-
-                                  <!-- Confirmación de eliminación -->
-                                  <div id="eliminarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
-                                    <form method="POST" action="{% url 'estudiante:eliminar_actividad' id=actividad.id %}">
-                                      {% csrf_token %}
-                                      <p class="etiquetas_parrafos text-danger small">¿Está seguro de que desea eliminar esta actividad?</p>
-                                      <button type="submit" class="btn btn-sm btn-danger w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
-                                    </form>
-                                  </div>
-                                </div>
-                              {% endif %}
-                            {% endfor %}
-                          {% endfor %}
-                        {% else %}
-                          <p class="etiquetas_parrafos text-muted">Sin actividades definidas</p>
-                        {% endif %}
-                      </div>
-                      {% if obj_especifico.documento_avance %}
-                        <div class="accordion" id="accordionExample">
-                          <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading{{ i }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ i }}" aria-expanded="false" aria-controls="collapse{{ i }}">Objetivo Específico {{ forloop.counter }}</button></h2>
-                            <div id="collapse{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading{{ i }}" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                <div class="document-container w-100">
-                                  <!-- Visualización del documento cargado -->
-
-                                  <!-- Formulario para editar/eliminar el archivo -->
-                                  <form method="POST" action="{% url 'estudiante:editar_eliminar_archivo' obj_especifico.id %}" enctype="multipart/form-data" class="document-actions mt-3">
-                                    {% csrf_token %}
-                                    <!-- Campo para editar el archivo -->
-                                    <div class="file-upload mb-3">
-                                      <p>
-                                        <small>Ya subio un avance, actualice el documento</small>
-                                      </p>
-                                      <label for="archivo_nuevo_{{ forloop.parentloop.counter }}" class="form-label"><i class="fas fa-edit"></i> Subir nuevo archivo:</label>
-                                      <input type="file" class="form-control" id="archivo_nuevo_{{ forloop.parentloop.counter }}" name="archivo_nuevo" accept="application/pdf" />
-                                    </div>
-
-                                    <!-- Botones de acción -->
-                                    <div class="action-buttons">
-                                      <button type="submit" name="accion" value="editar" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Actualizar Documento</button>
-
-                                      <button type="submit" name="accion" value="eliminar" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Eliminar Documento</button>
-                                    </div>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      {% else %}
-                        <form method="POST" action="{% url 'estudiante:subir_actividad' id_proyecto=proyecto_final.id id_esp=obj_especifico.id %}">
-                          {% csrf_token %}
-                          <input type="text" name="descripcion" class="form-control" placeholder="Describe una nueva actividad..." required />
-                          <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus"></i> Agregar Actividad</button>
-                        </form>
-
-                        <!-- Botón para mostrar/ocultar el formulario -->
-                        <button class="btn btn-primary w-100 mt-3" data-bs-toggle="collapse" data-bs-target="#uploadForm{{ forloop.counter }}"><i class="fas fa-upload"></i> Cargar Avance</button>
-
-                        <!-- Formulario desplegable -->
-                        <div id="uploadForm{{ forloop.counter }}" class="collapse mt-3">
-                          <div class="card card-body">
-                            <form method="post" enctype="multipart/form-data" action="{% url 'estudiante:subir_avance' obj_especifico.id %}">
-                              {% csrf_token %}
-                              <div class="mb-3">
-                                <label for="documentFile{{ forloop.counter }}" class="form-label">Seleccionar Archivo</label>
-                                <input type="file" class="form-control" id="documento_avance{{ forloop.counter }}" name="documento_avance" required accept=".pdf" />
-                                <small class="form-text text-muted">Este archivo debe subirse siempre y cuando todas las actividades estén completadas y debe ser un archivo PDF.</small>
-                              </div>
-                              <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary">Subir Documento</button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      {% endif %}
                     </div>
                   </div>
-                {% endfor %}
-
-                <div class="card objective-card document mt-2" style="width: 18rem;">
-                  <h6>Documentos carcados de avances</h6>
-                  {% with counter=0 %}
-                    {% for key, doc in docs_avances.items %}
-                      <a href="data:application/pdf;base64,{{ doc }}" download="Avance_objetivo_{{ forloop.counter }}_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-primary mb-1">Avance del objetivo específico {{ forloop.counter }}</a>
-                    {% endfor %}
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos"><small>Envía retroalimentaciones respecto a los avances.</small></a>
-                  {% endwith %}
                 </div>
-                <!-- Botón para nuevo objetivo -->
-
-                <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
-                  <i class="fas fa-plus-circle"></i>
-                  <h4>Nuevo objetivo específico</h4>
-
-                  <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
-                    {% csrf_token %}
-                    <input type="text" class="form-control mt-1" name="descripcion" placeholder="Descripción del objetivo específico" required />
-                    <button type="submit" class="btn btn-success w-100 mt-2">Crear objetivo específico</button>
-                  </form>
+                <!-- Modal para eliminar el objetivo general -->
+                <div class="modal fade" id="modalEliminarObjetivo" tabindex="-1" aria-labelledby="eliminarObjetivoLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarObjetivoLabel">Eliminar Objetivo General</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>¿Está seguro de que desea eliminar el objetivo general?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <form id="eliminarObjetivoForm" method="POST" action="{% url 'estudiante:eliminar_objetivo_general' obj_general.id %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger btns-cancelar-cerrar">
+                            <i class="fas fa-trash me-1"></i>
+                            Confirmar Eliminación
+                          </button>
+                        </form>
+                        <button type="button" class="btn btn-secondary btns-solicitudes" data-bs-dismiss="modal">Cancelar</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                  const editarForm = document.getElementById('editarObjetivoForm')
+                  const eliminarForm = document.getElementById('eliminarObjetivoForm')
+                  const btnEliminar = document.getElementById('btnEliminarObjetivo')
+                
+                  // Manejar la edición del objetivo
+                  editarForm.addEventListener('submit', function (event) {
+                    event.preventDefault()
+                
+                    if (!this.checkValidity()) {
+                      event.stopPropagation()
+                      this.classList.add('was-validated')
+                      return
+                    }
+                
+                    const submitBtn = this.querySelector('button[type="submit"]')
+                    const spinner = submitBtn.querySelector('.spinner-border')
+                    const btnText = submitBtn.querySelector('span')
+                    const originalText = btnText.textContent
+                
+                    submitBtn.disabled = true
+                    spinner.classList.remove('d-none')
+                    btnText.textContent = 'Guardando...'
+                
+                    Swal.fire({
+                      title: '¿Confirmar cambios?',
+                      text: 'Estás a punto de modificar el objetivo general',
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#ffc107',
+                      cancelButtonColor: '#6c757d',
+                      confirmButtonText: 'Sí, modificar',
+                      cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        this.submit()
+                      } else {
+                        submitBtn.disabled = false
+                        spinner.classList.add('d-none')
+                        btnText.textContent = originalText
+                      }
+                    })
+                  })
+                
+                  // Manejar la eliminación del objetivo
+                  btnEliminar.addEventListener('click', function () {
+                    Swal.fire({
+                      title: '¿Estás seguro?',
+                      text: 'Esta acción eliminará el objetivo general. Esta acción no se puede deshacer.',
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#dc3545',
+                      cancelButtonColor: '#6c757d',
+                      confirmButtonText: 'Sí, eliminar',
+                      cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        eliminarForm.submit()
+                      }
+                    })
+                  })
+                })
+              </script>
+
+              <style>
+                #accordionObjGeneral {
+                  background-color: #f8f9fa;
+                  border-radius: 8px;
+                  padding: 20px;
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                }
+                
+                #accordionObjGeneral textarea {
+                  resize: vertical;
+                  min-height: 100px;
+                }
+                
+                #accordionObjGeneral .btn {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  min-width: 160px;
+                }
+              </style>
             {% else %}
-              <!-- Botón para nuevo objetivo -->
-              <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
-                <i class="fas fa-plus-circle"></i>
-                <h4>Nuevo objetivo específico</h4>
-
-                <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
-                  {% csrf_token %}
-                  <input type="text" class="form-control mt-1" name="descripcion" placeholder="Descripción del objetivo específico" required />
-                  <button type="submit" class="btn btn-success w-100 mt-2">Crear objetivo específico</button>
-                </form>
-              </div>
+              <!-- Si no existe el objetivo general, muestra el formulario para agregarlo -->
+              <form method="POST" action="{% url 'estudiante:subir_objetivo_general' proyecto_final.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <textarea id="descripcion_objetivo_general" name="descripcion_objetivo_general" class="form-control" rows="3" required placeholder="Describe el objetivo general de tu proyecto..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btns-solicitudes mt-2"><i class="fas fa-plus-circle"></i> Definir Objetivo General</button>
+              </form>
             {% endif %}
           </div>
         </div>
-      {% endif %}
-    </div>
 
-    <section class="mb-5">
-      <h2>Próximas Entregas</h2>
-      <ul class="list-group">
-        {% if actividades %}
-          {% for key, actividades in actividades.items %}
-            {% for actividad in actividades %}
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ actividad.descripcion }}
-                <span class="badge bg-primary rounded-pill"><time datetime="2024-10-15"></time></span>
-              </li>
-            {% endfor %}
-          {% endfor %}
+        {% if obj_general %}
+          <div class="main-card">
+            <h4 class="tittles_h3"><i class="fas fa-list-check"></i> Objetivos Específicos</h4>
+
+            <div class="p-2">
+              <div class="m-0 p-3 specific-objectives-grid row row-cols-1 row-cols-md-2 g-3">
+                <!-- Rejilla responsive -->
+                {% if objs_especificos %}
+                  <div class="objectives-grid w-100 position-relative" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 4fr)); gap: 1rem;">
+                    {% for obj_especifico in objs_especificos %}
+                      <div class="objective-card card h-100">
+                        <div class="objective-header card-header d-flex flex-column justify-content-between">
+                          <h3>
+                            <span class="objective-number" style="position: absolute;top: 0;right: 0;">{{ forloop.counter }}</span>
+                            {{ obj_especifico.descripcion }}
+                          </h3>
+                          <div class="mt-1">
+                            <button class="btn btn-sm btn-warning btns-editar" data-bs-toggle="collapse" data-bs-target="#editarObjetivo{{ forloop.counter }}" aria-expanded="false" aria-controls="editarObjetivo{{ forloop.counter }}"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-sm btn-danger btns-cancelar-cerrar" data-bs-toggle="collapse" data-bs-target="#eliminarObjetivo{{ forloop.counter }}" aria-expanded="false" aria-controls="eliminarObjetivo{{ forloop.counter }}"><i class="fas fa-trash"></i> Eliminar</button>
+                          </div>
+                        </div>
+
+                        <!-- Acordeón para edición y eliminación de objetivos -->
+                        <div class="accordion" id="accordionObjetivosEspecificos">
+                          <!-- Formulario para editar -->
+                          <div id="editarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
+                            <form class="d-flex flex-column gap-2" method="POST" action="{% url 'estudiante:editar_objetivo_especifico' id=obj_especifico.id %}">
+                              {% csrf_token %}
+                              <div class="row g-2">
+                                <div class="col-9">
+                                  <input type="text" name="editar_objetivo_especifico" class="form-control form-control-sm m-0" value="{{ obj_especifico.descripcion }}" required />
+                                  <small class="text-muted">Ingrese el objetivo específico que desea actualizar.</small>
+                                </div>
+                                <div class="col-3">
+                                  <button type="submit" class="btn btn-sm btn-success btns-solicitudes w-100"><i class="fas fa-save"></i> Guardar</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+
+                          <!-- Confirmación de eliminación -->
+                          <div id="eliminarObjetivo{{ forloop.counter }}" class="collapse mt-2 card-body" data-bs-parent="#accordionObjetivosEspecificos">
+                            <form method="POST" action="{% url 'estudiante:eliminar_objetivo_especifico' id=obj_especifico.id %}">
+                              {% csrf_token %}
+                              <p class="etiquetas_parrafos text-danger">¿Está seguro de que desea eliminar este objetivo específico?</p>
+                              <button type="submit" class="btn btn-sm btn-danger btns-cancelar-cerrar w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
+                            </form>
+                          </div>
+                        </div>
+
+                        <div class="objective-body card-body">
+                          <h4 class="activities-title"><i class="fas fa-tasks"></i> Actividades</h4>
+                          <div class="activities-list">
+                            {% if actividades %}
+                              <div class="contenido_actividades" style="min-height: 250px;overflow: scroll; max-height: 250px;">
+                                {% for key, actividades in actividades.items %}
+                                  {% for actividad in actividades %}
+                                    {% if actividad.objetivos_especificos == obj_especifico %}
+                                      <div class="activity-item d-flex justify-content-between align-items-center mb-2">
+                                        <div class="d-flex align-items-center">
+                                          <label class="form-check-label" for="actividad{{ forloop.counter }}">{{ forloop.counter }}.{{ actividad.descripcion }}</label>
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="Acciones de actividad">
+                                          <button class="btn btn-sm btn-outline-warning btns-editar" data-bs-toggle="collapse" data-bs-target="#editarActividad{{ forloop.counter }}"><i class="fas fa-edit"></i></button>
+                                          <button class="btn btn-sm btn-outline-danger btns-cancelar-cerrar" data-bs-toggle="collapse" data-bs-target="#eliminarActividad{{ forloop.counter }}"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                      </div>
+
+                                      <div class="accordion" id="accordionactividades">
+                                        <!-- Formulario para editar actividad -->
+                                        <div id="editarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
+                                          <form class="d-flex flex-column gap-2" method="POST" action="{% url 'estudiante:editar_actividad' id=actividad.id %}">
+                                            {% csrf_token %}
+                                            <div class="row g-2">
+                                              <div class="col-9">
+                                                <input type="text" name="editar_actividad" class="form-control form-control-sm m-0" value="{{ actividad.descripcion }}" required />
+                                                <small class="text-muted">Ingrese la descripción actualizada de la actividad.</small>
+                                              </div>
+                                              <div class="col-3">
+                                                <button type="submit" class="btn btn-sm btn-success botones_envios w-100"><i class="fas fa-save"></i> Guardar</button>
+                                              </div>
+                                            </div>
+                                          </form>
+                                        </div>
+
+                                        <!-- Confirmación de eliminación -->
+                                        <div id="eliminarActividad{{ forloop.counter }}" class="collapse mt-1" data-bs-parent="#accordionactividades">
+                                          <form method="POST" action="{% url 'estudiante:eliminar_actividad' id=actividad.id %}">
+                                            {% csrf_token %}
+                                            <p class="etiquetas_parrafos text-danger small">¿Está seguro de que desea eliminar esta actividad?</p>
+                                            <button type="submit" class="btn btn-sm btn-danger btns-cancelar-cerrar w-100"><i class="fas fa-trash"></i> Confirmar Eliminación</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    {% endif %}
+                                  {% endfor %}
+                                {% endfor %}
+                              </div>
+                            {% else %}
+                              <p class="etiquetas_parrafos text-muted">Sin actividades definidas</p>
+                            {% endif %}
+                          </div>
+                          {% if obj_especifico.documento_avance %}
+                            <div class="accordion" id="accordionExample">
+                              <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{ i }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ i }}" aria-expanded="false" aria-controls="collapse{{ i }}">Objetivo Específico {{ forloop.counter }}</button></h2>
+                                <div id="collapse{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading{{ i }}" data-bs-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                    <div class="document-container w-100">
+                                      <!-- Visualización del documento cargado -->
+
+                                      <!-- Formulario para editar/eliminar el archivo -->
+                                      <form method="POST" action="{% url 'estudiante:editar_eliminar_archivo' obj_especifico.id %}" enctype="multipart/form-data" class="document-actions mt-3">
+                                        {% csrf_token %}
+                                        <!-- Campo para editar el archivo -->
+                                        <div class="file-upload mb-3">
+                                          <p>
+                                            <small>Ya subio un avance, actualice el documento</small>
+                                          </p>
+                                          <label for="archivo_nuevo_{{ forloop.parentloop.counter }}" class="form-label"><i class="fas fa-edit"></i> Subir nuevo archivo:</label>
+                                          <input type="file" class="form-control" id="archivo_nuevo_{{ forloop.parentloop.counter }}" name="archivo_nuevo" accept="application/pdf" />
+                                        </div>
+
+                                        <!-- Botones de acción -->
+                                        <div class="action-buttons">
+                                          <button type="submit" name="accion" value="editar" class="btn btn-primary btns-editar btn-sm m-1"><i class="fas fa-save"></i> Actualizar Documento</button>
+
+                                          <button type="submit" name="accion" value="eliminar" class="btn btn-danger btns-cancelar-cerrar btn-sm m-1"><i class="fas fa-trash"></i> Eliminar Documento</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          {% else %}
+                            <form method="POST" action="{% url 'estudiante:subir_actividad' id_proyecto=proyecto_final.id id_esp=obj_especifico.id %}">
+                              {% csrf_token %}
+                              <input type="text" name="descripcion" class="form-control" placeholder="Describe una nueva actividad..." required />
+                              <button type="submit" class="btn btn-primary btns-solicitudes w-100"><i class="fas fa-plus"></i> Agregar Actividad</button>
+                            </form>
+
+                            <!-- Botón para mostrar/ocultar el formulario -->
+                            <button class="btn btn-primary botones_envios w-100 mt-3" data-bs-toggle="collapse" data-bs-target="#uploadForm{{ forloop.counter }}"><i class="fas fa-upload"></i> Cargar Avance</button>
+
+                            <!-- Formulario desplegable -->
+                            <div id="uploadForm{{ forloop.counter }}" class="collapse mt-3">
+                              <div class="card card-body">
+                                <form method="post" enctype="multipart/form-data" action="{% url 'estudiante:subir_avance' obj_especifico.id %}">
+                                  {% csrf_token %}
+                                  <div class="mb-3">
+                                    <label for="documentFile{{ forloop.counter }}" class="form-label">Seleccionar Archivo</label>
+                                    <input type="file" class="form-control" id="documento_avance{{ forloop.counter }}" name="documento_avance" required accept=".pdf" />
+                                    <small class="form-text text-muted">Este archivo debe subirse siempre y cuando todas las actividades estén completadas y debe ser un archivo PDF.</small>
+                                  </div>
+                                  <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary botones_envios">Subir Documento</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endfor %}
+                    {% if docs_avances != None or docs_avances != '' %}
+                      <div class="card objective-card document p-3" style="width: 18rem;">
+                        <h6><i class="fas fa-file-alt"></i> Documentos cargados de avances</h6>
+                        {% with counter=0 %}
+                          {% for key, doc in docs_avances.items %}
+                            <a href="data:application/pdf;base64,{{ doc }}" download="Avance_objetivo_{{ forloop.counter }}_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-outline-primary mb-1"><i class="fas fa-download"></i> Avance del objetivo específico {{ forloop.counter }}</a>
+                          {% endfor %}
+                          <a href="#" data-bs-toggle="modal" data-bs-target="#modalObservacionesEspecificos" class="botones_envios"><i class="fas fa-comment-dots"></i> <small>Envía retroalimentaciones respecto a los avances.</small></a>
+                        {% endwith %}
+                      </div>
+                    {% endif %}
+                    <!-- Botón para nuevo objetivo -->
+
+                    <div class="add-objective-card col" onclick="document.getElementById('newObjectiveForm').style.display='block'">
+                      <h4 class="tittles_h4"><i class="fas fa-plus-circle fa-sm"></i> Nuevo objetivo específico</h4>
+
+                      <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
+                        {% csrf_token %}
+                        <input type="text" class="form-control mt-1" name="descripcion" placeholder="Descripción del objetivo específico" required />
+                        <button type="submit" class="btn btn-success w-100 mt-2 btns-solicitudes">Crear objetivo específico</button>
+                      </form>
+                    </div>
+                  </div>
+                {% else %}
+                  <!-- Botón para nuevo objetivo -->
+                  <div class="add-objective-card col" style="" onclick="document.getElementById('newObjectiveForm').style.display='block'">
+                    <h4 class="tittles_h4"><i class="fas fa-plus-circle fa-sm"></i> Nuevo objetivo específico</h4>
+
+                    <p class="etiquetas_parrafos">Ingrese un objetivo específico</p>
+
+                    <form id="newObjectiveForm" style="display: none; width: 100%" method="POST" action="{% url 'estudiante:subir_objetivo_especifico' proyecto_final.id %}">
+                      {% csrf_token %}
+                      <input type="text" class="form-control mt-1" name="descripcion" placeholder="Descripción del objetivo específico" required />
+                      <button type="submit" class="btn btn-success w-100 mt-2 btns-solicitudes">Crear objetivo específico</button>
+                    </form>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <h4 class="tittles_h3"><i class="fas fa-calendar-alt"></i> Próximas Entregas</h4>
+
+            <div class="row fechas p-3">
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-calendar-alt"></i> Fechas para la entrega de avances
+              </p>
+              {% if fecha_actual <= fechas.fecha_etapa_uno %}
+                <style>
+                  .fechas .col {
+                    background: #11a20042;
+                  }
+                </style>
+              {% else %}
+                <style>
+                  .fechas .col {
+                    background: red;
+                  }
+                </style>
+              {% endif %}
+              <div class="col">
+                <p>
+                  <i class="fas fa-clock"></i> {{ fechas.fecha_etapa_uno }}
+                </p>
+              </div>
+              {% if fecha_actual <= fechas.fecha_etapa_dos %}
+                <style>
+                  .fechas .col {
+                    background: #11a20042;
+                  }
+                </style>
+              {% else %}
+                <style>
+                  .fechas .col {
+                    background: red;
+                  }
+                </style>
+              {% endif %}
+              <div class="col">
+                <p>
+                  <i class="fas fa-clock"></i> {{ fechas.fecha_etapa_dos }}
+                </p>
+              </div>
+
+              {% if fecha_actual <= fechas.fecha_etapa_tres %}
+                <style>
+                  .fechas .col {
+                    background: #11a20042;
+                  }
+                </style>
+              {% else %}
+                <style>
+                  .fechas .col {
+                    background: red;
+                  }
+                </style>
+              {% endif %}
+              <div class="col">
+                <p>
+                  <i class="fas fa-clock"></i> {{ fechas.fecha_etapa_tres }}
+                </p>
+              </div>
+              {% if fecha_actual <= fechas.fecha_etapa_cuatro %}
+                <style>
+                  .fechas .col {
+                    background: #11a20042;
+                  }
+                </style>
+              {% else %}
+                <style>
+                  .fechas .col {
+                    background: red;
+                  }
+                </style>
+              {% endif %}
+              <div class="col">
+                <p>
+                  <i class="fas fa-clock"></i> {{ fechas.fecha_etapa_cuatro }}
+                </p>
+              </div>
+              {% if fecha_actual <= fechas.fecha_etapa_cinco %}
+                <style>
+                  .fechas .col {
+                    background: #11a20042;
+                  }
+                </style>
+              {% else %}
+                <style>
+                  .fechas .col {
+                    background: red;
+                  }
+                </style>
+              {% endif %}
+              <div class="col">
+                <p>
+                  <i class="fas fa-clock"></i> {{ fechas.fecha_etapa_cinco }}
+                </p>
+              </div>
+              {% if fecha_actual <= fechas.fecha_etapa_seis %}
+                <style>
+                  .fechas .col {
+                    background: #11a20042;
+                  }
+                </style>
+              {% else %}
+                <style>
+                  .fechas .col {
+                    background: red;
+                  }
+                </style>
+              {% endif %}
+              <div class="col">
+                <p>
+                  <i class="fas fa-clock"></i> {{ fechas.fecha_etapa_seis }}
+                </p>
+              </div>
+            </div>
+            <section class="m-0 p-3">
+              <ul class="list-group">
+                {% if actividades %}
+                  {% for key, actividades in actividades.items %}
+                    {% for actividad in actividades %}
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ actividad.descripcion }}
+                        {% if fecha_actual <= fechas.fecha_etapa_dos %}
+                          <span class="badge bg-primary rounded-pill btns-solicitudes"><time datetime="{{ fechas.fecha_etapa_uno }}">{{ fechas.fecha_etapa_uno }}</time> - ¡A tiempo!</span>
+                        {% else %}
+                          <span class="badge bg-danger rounded-pill btns-cancelar-cerrar"><time datetime="{{ fechas.fecha_etapa_uno }}">{{ fechas.fecha_etapa_uno }}</time> - ¡Retrasado!</span>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  {% endfor %}
+                {% else %}
+                  <p class="etiquetas_parrafos">
+                    <i class="fas fa-exclamation-triangle"></i> Aún no se han registrado actividades.
+                  </p>
+                {% endif %}
+              </ul>
+            </section>
+          </div>
         {% endif %}
-      </ul>
-    </section>
-  {% else %}
-    <style>
-      .link-primary:hover {
-        text-decoration: underline !important;
-      }
-    </style>
-    <div class="row justify-content-center">
-      <div class="col-md-8 text-center">
-        <h1 class="h2 mt-3 mb-4">Avances del Proyecto Final</h1>
+      </div>
 
-        <p class="etiquetas_parrafos text-muted mb-0">Aun no se ha aprovado alguna solicitud de anteproyecto.</p>
+      {% else %}
+      <style>
+        .link-primary:hover {
+          text-decoration: underline !important;
+        }
+      </style>
+      <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+          <h3 class="">Avances del Proyecto Final</h3>
 
-        <small class="text-secondary">
-          Crea una solicitud en el siguiente link
-          <a href="{% url 'estudiante:solicitud' %}" class="link-primary ms-1 text-decoration-none">Crea una solicitud</a>
-        </small>
+          <p class="etiquetas_parrafos text-muted mb-0">Aún no se ha aprovado alguna solicitud de anteproyecto.</p>
+
+          <small class="text-secondary">
+            Crea una solicitud en el siguiente link
+            <a href="{% url 'estudiante:solicitud' %}" class="link-primary ms-1 text-decoration-none">Crea una solicitud</a>
+          </small>
+        </div>
       </div>
     </div>
   {% endif %}
