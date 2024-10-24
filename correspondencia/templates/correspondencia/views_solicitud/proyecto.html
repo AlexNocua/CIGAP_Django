@@ -199,160 +199,161 @@
       margin-right: 8px;
     }
   </style>
-  <section class="container section_anteproyecto mt-3 d-flex justify-content-center align-items-center position-relative">
+  <section class="container section_anteproyecto d-flex justify-content-center align-items-center position-relative">
     <div class="row info_anteproyecto d-flex">
-      <h3>Proyecto: {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</h3>
-      <h4>Información de la solicitud</h4>
-      <div class="container-fluid d-flex flex-column flex-md-row">
-        <div class="col mt-2 p-2">
-          <p class="card-text m-0 p-0 text-center">
-            <strong class="text-center">Información del proyecto</strong>
-          </p>
-          <p class="card-text m-0 p-0">
-            <br />
-            <strong>Nombre del proyecto:</strong> {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}
-            <br />
-            <strong>Descripción:</strong> {{ inf_proyecto.anteproyecto.descripcion }}
-          </p>
-          <br />
-          <p class="card-text mt-2">
-            <strong>Documentos cargados:</strong>
-          </p>
-          <ol class="mt-1 mb-1">
-            <li>
-              <a class="mt-1 mb-1" href="data:application/pdf;base64,{{ inf_proyecto.doc_carta }}" download="CartaPresentacion {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Carta de solicitud del proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
-            </li>
-            <li>
-              <a class="mt-1 mb-1" href="data:application/pdf;base64,{{ inf_proyecto.doc_anteproyecto }}" download="Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
-            </li>
-          </ol>
+      <h3 class="tittles_h3"><i class="fas fa-project-diagram"></i> Proyecto: {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</h3>
 
-          {% if evaluaciones %}
-            <div class="">
-              <p class="card-text m-0 p-0 text-center">
-                <strong class="text-center">Directores o director asignado</strong>
-              </p>
-              <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar Jurados</button>
+      <div class="container-fluid p-3 d-flex flex-column flex-md-row">
+        <div class="row">
+          <div class="col mt-2 p-2">
+            <p class="etiquetas_parrafos card-text m-0 p-0 text-center">
+              <i class="fas fa-info-circle"></i>
+              <strong class="text-center">Información del proyecto</strong>
+            </p>
+            <p class="etiquetas_parrafos card-text m-0 p-0">
+              <br />
+              <i class="fas fa-project-diagram"></i>
+              <strong>Nombre del proyecto:</strong> {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}
+              <br />
+              <i class="fas fa-file-alt"></i>
+              <strong>Descripción:</strong> {{ inf_proyecto.anteproyecto.descripcion }}
+            </p>
+            <br />
+            <p class="etiquetas_parrafos card-text mt-2">
+              <i class="fas fa-folder-open"></i>
+              <strong>Documentos cargados:</strong>
 
-              {% for evaluacion in evaluaciones %}
-                <div class="list-group-item">
-                  <div class="row d-flex justify-content-between align-items-center">
-                    <div class="col">
-                      <h6 class="mb-1">{{ evaluacion.jurado.nombre_completo }}</h6>
+              <a class="mt-1 mb-1 btn btn-outline-primary" href="data:application/pdf;base64,{{ inf_proyecto.doc_carta }}" download="CartaPresentacion {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-pdf"></i> Carta de solicitud del proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+
+              <a class="mt-1 mb-1 btn btn-outline-primary" href="data:application/pdf;base64,{{ inf_proyecto.doc_anteproyecto }}" download="Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-pdf"></i> Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+            </p>
+            <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar Jurados</button>
+            {% if evaluaciones %}
+              <div class="">
+                <p class="etiquetas_parrafos card-text m-0 p-0 text-center">
+                  <strong class="text-center">Directores o director asignado</strong>
+                </p>
+
+                {% for evaluacion in evaluaciones %}
+                  <div class="list-group-item">
+                    <div class="row d-flex justify-content-between align-items-center">
+                      <div class="col">
+                        <h6 class="mb-1">{{ evaluacion.jurado.nombre_completo }}</h6>
+                      </div>
+                      <div class="col">
+                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModalJurado">Eliminar asignación</a>
+                      </div>
                     </div>
-                    <div class="col">
-                      <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModalJurado">Eliminar asignación</a>
-                    </div>
-                  </div>
-                  <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
-                          <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                          <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
+                    <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
+                            <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
-                  {% if evaluacion.comentarios %}
-                    <p class="card-text mb-1">
-                      <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
-                    </p>
-                    <p class="card-text mb-1">
-                      <strong>Calificación:</strong> {{ evaluacion.calificacion }}
-                    </p>
-                    <p class="card-text mb-1">
-                      <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
-                    </p>
+                    <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
+                    {% if evaluacion.comentarios %}
+                      <p class="etiquetas_parrafos card-text mb-1">
+                        <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+                      </p>
+                      <p class="etiquetas_parrafos card-text mb-1">
+                        <strong>Calificación:</strong> {{ evaluacion.calificacion }}
+                      </p>
+                      <p class="etiquetas_parrafos card-text mb-1">
+                        <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
+                      </p>
 
-                    <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_fecha_presentacion">Asignar fecha de sustentación</button>
-                    <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_concepto">Enviar concepto de anteproyecto</button>
-                  {% else %}
-                    <p class="card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            </div>
-          {% else %}
-            <p class="card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
-          {% endif %}
-        </div>
-        <div class="info-integrantes-ante col mt-2 p-2">
-          <p class="card-text text-center">
-            <strong>Miembros</strong>
-          </p>
-          {% for key, integrante in datos_integrantes.items %}
-            <div class="d-flex mb-1">
-              {% if integrante.imagen %}
-                <img class="img-users" src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
-              {% else %}
-                <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
-              {% endif %}
-              <p class="card-text m-1">
-                {{ integrante.nombre }}<br />
-                <strong>{{ integrante.grupo }}</strong>
+                      <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_fecha_presentacion">Asignar fecha de sustentación</button>
+                      <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_concepto">Enviar concepto de anteproyecto</button>
+                    {% else %}
+                      <p class="etiquetas_parrafos card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p class="etiquetas_parrafos card-text mb-1 text-muted">
+                <i class="fas fa-exclamation-circle"></i> Aún no se ha dado una evaluación
               </p>
-            </div>
-          {% endfor %}
+            {% endif %}
+          </div>
+          <div class="info-integrantes-ante col mt-2 p-2">
+            <p class="etiquetas_parrafos card-text text-center">
+              <strong>Miembros</strong>
+            </p>
+            {% for key, integrante in datos_integrantes.items %}
+              <div class="d-flex mb-1">
+                {% if integrante.imagen %}
+                  <img class="img-users" src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
+                {% else %}
+                  <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
+                {% endif %}
+                <p class="etiquetas_parrafos card-text m-1">
+                  {{ integrante.nombre }}<br />
+                  <strong>{{ integrante.grupo }}</strong>
+                </p>
+              </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
-      <div class="container-fluid col mt-4">
+      <div class="container-fluid p-0 m-0 mt-4">
+        <h3 class="tittles_h3"><i class="fas fa-paper-plane"></i> Enviar radicado al proyecto "{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}"</h3>
+
         {% if documento_radicado %}
-          <div class="p-4">
-            <h4 class="">Radicado ya enviado</h4>
+          <div class="p-3">
+            <h4 class="tittles_h4"><i class="fas fa-paper-plane"></i> Radicado ya enviado</h4>
             <p>
+              <i class="fas fa-check-circle"></i>
               El radicado ya ha sido enviado al anteproyecto <strong>{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</strong>.
             </p>
 
             <!-- Enlace para descargar el PDF -->
-            <a class="btn btn-primary mb-3" href="data:application/pdf;base64,{{ documento_radicado }}" download="Radicado_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf">Descargar Radicado</a>
+            <a class="btn btn-primary mb-3" href="data:application/pdf;base64,{{ documento_radicado }}" download="Radicado_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-download"></i> Descargar Radicado</a>
 
             <!-- Vista previa del PDF embebido -->
             <div class="border p-2">
+              <i class="fas fa-file-pdf"></i>
               <embed src="data:application/pdf;base64,{{ documento_radicado }}" type="application/pdf" width="100%" height="400px" />
             </div>
 
             <hr />
-            <p class="card-text mb-0">Si necesita hacer algún cambio, por favor actualice el documento.</p>
+            <p class="etiquetas_parrafos card-text mb-0">
+              <i class="fas fa-info-circle"></i>
+              Si necesita hacer algún cambio, por favor actualice el documento.
+            </p>
             <form id="radicadoForm" action="{% url 'correspondencia:editar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="mb-3">
-                <label for="pdfFile" class="form-label">Carga el radicado</label>
+                <label for="pdfFile" class="form-label"><i class="fas fa-upload"></i> Carga el radicado</label>
                 <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
-                <small class="form-text text-muted">Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
+                <small class="form-text text-muted"><i class="fas fa-file-alt"></i> Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
               </div>
-              <button type="submit" class="btn btn-primary btns-solicitudes" id="submitBtn">Subir Documento</button>
+              <button type="submit" class="btn btn-primary btns-solicitudes" id="submitBtn"><i class="fas fa-check"></i> Subir Documento</button>
             </form>
           </div>
         {% else %}
           <div class="row align-items-start">
-            <!-- Columna del título -->
-            <div class="col-lg-6 col-md-12 mb-3">
-              <h3 class="text-center text-lg-start">Enviar radicado al proyecto "{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}"</h3>
-            </div>
-
-            <h1>{{ inf_proyecto.id }}</h1>
-            <!-- Columna del formulario -->
-            <div class="col-lg-6 col-md-12">
-              <form id="radicadoForm" action="{% url 'correspondencia:cargar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                  <label for="pdfFile" class="form-label">Carga el radicado</label>
-                  <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
-                  <small class="form-text text-muted">Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
-                </div>
-                <button type="sumbit" class="btn btn-success" id="submitBtn">Subir Documento</button>
-              </form>
-            </div>
+            <form id="radicadoForm" action="{% url 'correspondencia:cargar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="pdfFile" class="form-label"><i class="fas fa-upload"></i> Carga el radicado</label>
+                <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
+                <small class="form-text text-muted"><i class="fas fa-file-alt"></i> Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
+              </div>
+              <button type="submit" class="btn btn-success" id="submitBtn"><i class="fas fa-check"></i> Subir Documento</button>
+            </form>
           </div>
         {% endif %}
       </div>
@@ -445,7 +446,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p class="card-text form-directores-description">
+              <p class="etiquetas_parrafos card-text form-directores-description">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
                   <path d="M card-text 8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                   <path d="m card-text 8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />

@@ -116,7 +116,7 @@ class ModelObjetivosEspecificos(models.Model):
         blank=True,
         null=True,
     )
-    descripcion = models.CharField(max_length=200, blank=True, null=True)
+    descripcion = models.CharField(max_length=1000, blank=True, null=True)
     observaciones = models.CharField(max_length=1000, blank=True, null=True)
     fecha_envio = models.DateTimeField(blank=True, null=True)
     fecha_observacion = models.DateTimeField(blank=True, null=True)

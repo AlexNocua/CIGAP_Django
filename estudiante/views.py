@@ -349,7 +349,7 @@ def solicitud(request):
     if request.method == "POST":
 
         nombre_integrante2 = request.POST.get("nombre_integrante2")
-        print(nombre_integrante2)
+
         if nombre_integrante2:
             existing_anteproyecto = ModelAnteproyecto.objects.filter(
                 Q(nombre_integrante2=nombre_integrante2)
@@ -468,8 +468,7 @@ def solicitud(request):
                 if solicitd_especifica:
                     context["solicitud_especifica"] = solicitd_especifica
                 context["anteproyecto"] = anteproyecto
-                print(solicitud_especifica_pendiente)
-                print(solicitd_especifica)
+
                 if anteproyecto.fecha_envio:
                     context["fecha_respuesta_maxima"] = fecha_maxima_respuesta(
                         anteproyecto.fecha_envio
@@ -629,11 +628,9 @@ def info_proyect(request):
 @login_required
 @grupo_usuario("Estudiantes")
 def enviar_solicitud_proyecto(request):
-    print(f"Usuario autenticado: {request.user}")
+
     if request.method == "POST":
         anteproyecto = recuperar_anteproyecto(request)
-
-        print(f"Archivos subidos: {request.FILES}")
 
         form = FormProyectoFinal(request.POST, request.FILES)
         if form.is_valid():
@@ -647,19 +644,6 @@ def enviar_solicitud_proyecto(request):
             proyecto_final.solicitud_enviada = True
             proyecto_final.fecha_envio = fecha_actual()
 
-            # Depuración: Verificar que los archivos aún estén presentes
-            print(
-                f"Archivo proyecto_final (longitud): {len(proyecto_final.proyecto_final) if proyecto_final.proyecto_final else 'No encontrado'}"
-            )
-            print(
-                f"Archivo carta_presentacion_final (longitud): {len(proyecto_final.carta_presentacion_final) if proyecto_final.carta_presentacion_final else 'No encontrado'}"
-            )
-
-            # Guardar el proyecto final una sola vez
-            proyecto_final.save()
-
-            print(proyecto_final.codirector)
-            print("Datos enviados correctamente")
             return redirect("estudiante:solicitud")
         else:
             print(f"Errores del formulario: {form.errors}")
@@ -711,8 +695,8 @@ def recuperar_actividades(objetivo_esp):
 def avances_proyecto(request):
     context = datosusuario(request)
     proyecto_final = recuperar_proyecto_final_usuario(request.user)
-
     retroalimentaciones = recuperar_retroalimentacion_proyecto_final(proyecto_final)
+    print(retroalimentaciones)
     if retroalimentaciones:
         dict_retroalimentaciones = {}
         for i, retroalimentacion in enumerate(retroalimentaciones):
@@ -730,14 +714,21 @@ def avances_proyecto(request):
             "proyecto_final": devolver_documento_imagen(doc_proyecto_final),
             "carta_final": devolver_documento_imagen(doc_carta_final),
         }
-        print(proyecto_final)
+
         fechas = ModelFechasProyecto.objects.get(proyecto_final=proyecto_final)
         if fechas:
+            context["fecha_culminacion_anteproyecto"] = fecha_culminacion_anteproyecto(
+                fechas.fecha_inicio
+            )
 
-            context["fecha_actual"] = fecha_actual() 
-            context["fechas"] = fechas  
-            context["fecha_actual"] = datetime.strptime(context["fecha_actual"], "%Y-%m-%d %H:%M:%S").date()
+            context["fecha_actual"] = fecha_actual()
+            context["fechas"] = fechas
+            context["fecha_actual"] = datetime.strptime(
+                context["fecha_actual"], "%Y-%m-%d %H:%M:%S"
+            ).date()
 
+            print(context["fecha_actual"])
+            print(fechas.fecha_etapa_dos)
         if proyecto_final:
             context["proyecto_final"] = proyecto_final
 
@@ -750,26 +741,48 @@ def avances_proyecto(request):
             if objs_especificos:
 
                 context["objs_especificos"] = objs_especificos
+                num_especificos = objs_especificos.count()
+                num_especificos_aprobados = 0
                 dict_actividades = {}
                 dict_docs_avances = {}
-
+                actividades_hechas = 0
+                num_actividades = 0
                 for i, obj_especifico in enumerate(objs_especificos):
                     dict_docs_avances[f"doc_avance_{i}"] = devolver_documento_imagen(
                         obj_especifico.documento_avance
                     )
+                    if obj_especifico.estado:
+                        num_especificos_aprobados += 1
                     actividades = recuperar_actividades(obj_especifico)
                     if actividades:
-                        num_actividades = actividades.count()
-                        num_actividades_hechas = 0
+                        num_actividades += actividades.count()
+                    # print(actividades, "actividades")
+                    if actividades:
                         for actividad in actividades:
                             if actividad.estado == True:
-                                num_actividades_hechas += 1
+                                actividades_hechas += 1
+
                         dict_actividades[f"actividades_obj_especifico_{i}"] = (
                             actividades
                         )
-                        porcentaje = (num_actividades_hechas / num_actividades) * 100
-                        context["pocentaje"] = porcentaje
-                print(porcentaje)
+                if num_especificos == num_especificos_aprobados:
+                    messages.success(
+                        request,
+                        "Todos los objetivos específicos han sido aprobados por el director. Ahora puede cargar la carta de presentación final y el documento del proyecto final.",
+                    )
+                    context["puede_enviar"] = True
+                else:
+                    messages.warning(
+                        request,
+                        "Aún tiene actividades pendientes para cumplir. Por favor, esté atento a las observaciones del director.",
+                    )
+                if num_actividades != 0:
+                    porcentaje = (actividades_hechas / num_actividades) * 100
+                # print(actividades_hechas)
+                # print(num_actividades)
+                # print(porcentaje)
+
+                context["porcentaje"] = int(porcentaje)
                 context["actividades"] = dict_actividades
                 context["docs_avances"] = dict_docs_avances
 
@@ -780,28 +793,39 @@ def cargar_docs_final(request, id_proyecto):
     proyecto = recuperar_proyecto_final_id(id_proyecto)
 
     if proyecto:
-        messages.success(request, "Proyecto encontrado correctamente.")
+        if request.method == "POST":
+            doc_carta_final = request.FILES.get("cartaPresentacion_final")
+            if doc_carta_final:
+                if doc_carta_final.content_type == "application/pdf":
+                    proyecto.carta_presentacion_final = doc_carta_final.read()
+                    messages.success(
+                        request, "Carta de presentación final cargada correctamente."
+                    )
+                else:
+                    messages.error(
+                        request,
+                        "El archivo de la carta de presentación debe ser un PDF.",
+                    )
+                    return redirect("estudiante:avances_proyecto")
+            else:
+                messages.warning(
+                    request, "No se ha cargado ninguna carta de presentación final."
+                )
 
-        doc_carta_final = request.FILES.get("carta_final")
-        if doc_carta_final:
-            proyecto.carta_presentacion_final = doc_carta_final.read()
-            messages.success(
-                request, "Carta de presentación final cargada correctamente."
-            )
-        else:
-            messages.warning(
-                request, "No se ha cargado ninguna carta de presentación final."
-            )
+            doc_proyecto_final = request.FILES.get("documentoProyecto_final")
+            if doc_proyecto_final:
+                if doc_proyecto_final.content_type == "application/pdf":
+                    proyecto.proyecto_final = doc_proyecto_final.read()
+                    messages.success(request, "Proyecto final cargado correctamente.")
+                else:
+                    messages.error(request, "El archivo del proyecto debe ser un PDF.")
+                    return redirect("estudiante:avances_proyecto")
+            else:
+                messages.warning(request, "No se ha cargado ningún proyecto final.")
 
-        doc_proyecto_final = request.FILES.get("proyecto_final")
-        if doc_proyecto_final:
-            proyecto.proyecto_final = doc_proyecto_final.read()
-            messages.success(request, "Proyecto final cargado correctamente.")
-        else:
-            messages.warning(request, "No se ha cargado ningún proyecto final.")
+            proyecto.save()
+            return redirect("estudiante:avances_proyecto")
 
-        proyecto.save()
-        return redirect("estudiante:avances_proyecto")
     else:
         messages.error(request, "No se encontró el proyecto con el ID proporcionado.")
         return redirect("estudiante:avances_proyecto")
@@ -1043,13 +1067,14 @@ def eliminar_actividad(request, id):
 
 
 def subir_avance(request, id_esp):
-    print(id_esp)
+
     obj_esp = recuperar_objetivo_especifico(id_esp)
 
     if obj_esp:
         documento_avance = request.FILES.get("documento_avance")
 
         if documento_avance:
+            obj_esp.fecha_envio = fecha_actual()
             obj_esp.documento_avance = documento_avance.read()
             obj_esp.save()
             messages.success(

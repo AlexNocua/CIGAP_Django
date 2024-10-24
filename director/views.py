@@ -405,36 +405,33 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
 
     if request.method == "POST":
         if obj_especifico:
-            # Recuperar y procesar las observaciones y el documento
             observaciones = request.POST.get("observaciones")
-            documento = request.FILES.get("doc_retroalimentacion").read()
+            documento = request.FILES.get("doc_retroalimentacion")
 
-            if not documento:
+            if not documento or documento.content_type != 'application/pdf':
                 messages.warning(
                     request,
-                    "No se ha subido ningún documento. Por favor, suba un archivo PDF.",
+                    "No se ha subido un archivo PDF válido. Por favor, suba un archivo PDF.",
                 )
+                return redirect("director:proyecto", id=proyecto.id)
 
             obj_especifico.observaciones = observaciones
             obj_especifico.user = request.user
             obj_especifico.proyecto_final = proyecto
-            obj_especifico.documento_avance = None
-
-            if documento:
-                obj_especifico.documento_correcciones = documento
-
+            obj_especifico.documento_correcciones = documento.read() 
+            obj_especifico.documento_avance = documento.read()  
             obj_especifico.fecha_observacion = fecha_actual()
-            obj_especifico.save()  # Asegúrate de guardar los cambios en el objeto
+            obj_especifico.save() 
 
             messages.success(request, "Las observaciones se han enviado correctamente.")
+            return redirect("director:proyecto", id=proyecto.id)
         else:
             messages.error(request, "No se pudo encontrar el objetivo específico.")
-    else:
-        messages.error(
-            request, "Método no permitido. Solo se permiten solicitudes POST."
-        )
-
-    # Redirigir a la vista del proyecto
+            return redirect("director:proyecto", id=proyecto.id)
+    
+    messages.error(
+        request, "Método no permitido. Solo se permiten solicitudes POST."
+    )
     return redirect("director:proyecto", id=proyecto.id)
 
 
@@ -566,17 +563,20 @@ def enviar_evaluacion(request, id):
     return redirect("director:evaluar_anteproyecto", id=id)
 
 
-
 def eliminar_evaluacion(request, id):
-    evaluacion = ModelEvaluacionAnteproyecto.objects.get(id=id) if ModelEvaluacionAnteproyecto.objects.filter(id=id).exists() else None
+    evaluacion = (
+        ModelEvaluacionAnteproyecto.objects.get(id=id)
+        if ModelEvaluacionAnteproyecto.objects.filter(id=id).exists()
+        else None
+    )
     if evaluacion:
         evaluacion.delete()
         messages.success(request, "La evaluación ha sido eliminada exitosamente.")
     else:
         messages.error(request, "No se encontró la evaluación especificada.")
-    return redirect('director:view_evaluador_anteproyectos')
+    return redirect("director:view_evaluador_anteproyectos")
 
-    
+
 def recuperar_proyectos_jurado(usuario):
     evaluaciones = ModelEvaluacionProyectoFinal.objects.filter(jurado=usuario)
     return evaluaciones
