@@ -223,77 +223,18 @@
               <i class="fas fa-folder-open"></i>
               <strong>Documentos cargados:</strong>
 
-              <a class="mt-1 mb-1 btn btn-outline-primary" href="data:application/pdf;base64,{{ inf_proyecto.doc_carta }}" download="CartaPresentacion {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-pdf"></i> Carta de solicitud del proyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+              <a class="mt-1 mb-1 btn btn-outline-primary" href="data:application/pdf;base64,{{ doc_carta_final }}" download="CartaPresentacion {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-pdf"></i> Carta de solicitud de proyecto final {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
 
-              <a class="mt-1 mb-1 btn btn-outline-primary" href="data:application/pdf;base64,{{ inf_proyecto.doc_anteproyecto }}" download="Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-pdf"></i> Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
+              <a class="mt-1 mb-1 btn btn-outline-primary" href="data:application/pdf;base64,{{ doc_proyecto_final }}" download="Anteproyecto {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-pdf"></i> Proyecto Final {{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</a>
             </p>
-            <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal">Asignar Jurados</button>
-            {% if evaluaciones %}
-              <div class="">
-                <p class="etiquetas_parrafos card-text m-0 p-0 text-center">
-                  <strong class="text-center">Directores o director asignado</strong>
-                </p>
-
-                {% for evaluacion in evaluaciones %}
-                  <div class="list-group-item">
-                    <div class="row d-flex justify-content-between align-items-center">
-                      <div class="col">
-                        <h6 class="mb-1">{{ evaluacion.jurado.nombre_completo }}</h6>
-                      </div>
-                      <div class="col">
-                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModalJurado">Eliminar asignación</a>
-                      </div>
-                    </div>
-                    <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
-                            <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <small><strong>Fecha de asignación:</strong>{{ evaluacion.fecha_asignacion }}</small>
-                    {% if evaluacion.comentarios %}
-                      <p class="etiquetas_parrafos card-text mb-1">
-                        <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
-                      </p>
-                      <p class="etiquetas_parrafos card-text mb-1">
-                        <strong>Calificación:</strong> {{ evaluacion.calificacion }}
-                      </p>
-                      <p class="etiquetas_parrafos card-text mb-1">
-                        <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
-                      </p>
-
-                      <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_fecha_presentacion">Asignar fecha de sustentación</button>
-                      <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_concepto">Enviar concepto de anteproyecto</button>
-                    {% else %}
-                      <p class="etiquetas_parrafos card-text mb-1 text-muted">Aún no se ha dado una evaluación</p>
-                    {% endif %}
-                  </div>
-                {% endfor %}
-              </div>
-            {% else %}
-              <p class="etiquetas_parrafos card-text mb-1 text-muted">
-                <i class="fas fa-exclamation-circle"></i> Aún no se ha dado una evaluación
-              </p>
-            {% endif %}
+            <button id="btn-asignar" class="btn btn-primary btns-solicitudes mt-2 mb-3" data-bs-toggle="modal" data-bs-target="#formJuradosModal"><i class="fas fa-user-check"></i> Asignar Jurados</button>
           </div>
           <div class="info-integrantes-ante col mt-2 p-2">
             <p class="etiquetas_parrafos card-text text-center">
               <strong>Miembros</strong>
             </p>
             {% for key, integrante in datos_integrantes.items %}
-              <div class="d-flex mb-1">
+              <div class="d-flex mt-2 mb-1">
                 {% if integrante.imagen %}
                   <img class="img-users" src="data:image/jpeg;base64,{{ integrante.imagen }}" alt="Imagen de usuario" />
                 {% else %}
@@ -308,19 +249,91 @@
           </div>
         </div>
       </div>
+      <div class="p-3">
+        {% if evaluaciones %}
+          <div class="card" style="overflow: hidden;">
+            <h3 class="tittles_h3 m-0 p-0"><i class="fas fa-user-tie"></i> Directores o director asignado</h3>
+
+            {% for evaluacion in evaluaciones %}
+              <div class="list-group-item p-3">
+                <div class="row m-2 d-flex justify-content-between align-items-center">
+                  <div class="col">
+                    <h6 class="mb-1"><i class="fas fa-user"></i> {{ evaluacion.jurado.nombre_completo }}</h6>
+                  </div>
+                  <div class="col">
+                    <a href="#" class="btn btn-danger btns-cancelar-cerrar" data-bs-toggle="modal" data-bs-target="#confirmDeleteModalJurado"><i class="fas fa-trash-alt"></i> Eliminar asignación</a>
+                  </div>
+                </div>
+                <p class="etiquetas_parrafos">
+                  <strong><i class="fas fa-calendar-alt"></i> Fecha de asignación:</strong> {{ evaluacion.fecha_asignacion }}
+                </p>
+
+                <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
+                        <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                        <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% if evaluacion.comentarios %}
+                  <p class="etiquetas_parrafos card-text mb-1">
+                    <i class="fas fa-comments"></i>
+                    <strong>Comentarios:</strong> {{ evaluacion.comentarios }}
+                  </p>
+                  <p class="etiquetas_parrafos card-text mb-1">
+                    <i class="fas fa-star"></i>
+                    <strong>Calificación:</strong> {{ evaluacion.calificacion }}
+                  </p>
+                  <p class="etiquetas_parrafos card-text mb-1">
+                    <i class="fas fa-calendar-alt"></i>
+                    <strong>Fecha de Evaluación:</strong> {{ evaluacion.fecha_evaluacion }}
+                  </p>
+                {% else %}
+                  <p class="etiquetas_parrafos card-text mb-1 text-muted">
+                    <i class="fas fa-info-circle"></i> Aún no se ha dado una evaluación
+                  </p>
+                {% endif %}
+              </div>
+            {% endfor %}
+            <div class="row m-3">
+              <div class="col">
+                <button class="btn btn-primary btn-concepto btns-solicitudes" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_fecha_presentacion"><i class="fas fa-calendar-alt"></i> Asignar fecha de sustentación</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary btn-concepto botones_envios" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modal_concepto"><i class="fas fa-paper-plane"></i> Enviar concepto de Proyecto Final</button>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <p class="etiquetas_parrafos card-text mb-1 text-muted">
+            <i class="fas fa-exclamation-circle"></i> Aún no se ha dado una evaluación
+          </p>
+        {% endif %}
+      </div>
       <div class="container-fluid p-0 m-0 mt-4">
         <h3 class="tittles_h3"><i class="fas fa-paper-plane"></i> Enviar radicado al proyecto "{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}"</h3>
 
         {% if documento_radicado %}
           <div class="p-3">
             <h4 class="tittles_h4"><i class="fas fa-paper-plane"></i> Radicado ya enviado</h4>
-            <p>
+            <p class="etiquetas_parrafos">
               <i class="fas fa-check-circle"></i>
               El radicado ya ha sido enviado al anteproyecto <strong>{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}</strong>.
             </p>
 
             <!-- Enlace para descargar el PDF -->
-            <a class="btn btn-primary mb-3" href="data:application/pdf;base64,{{ documento_radicado }}" download="Radicado_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-download"></i> Descargar Radicado</a>
+            <a class="btn btn-outline-primary mb-3" href="data:application/pdf;base64,{{ documento_radicado }}" download="Radicado_{{ inf_proyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-download"></i> Descargar Radicado</a>
 
             <!-- Vista previa del PDF embebido -->
             <div class="border p-2">
@@ -333,18 +346,37 @@
               <i class="fas fa-info-circle"></i>
               Si necesita hacer algún cambio, por favor actualice el documento.
             </p>
-            <form id="radicadoForm" action="{% url 'correspondencia:editar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
+            <form id="radicadoForm" class="p-2" action="{% url 'correspondencia:editar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="mb-3">
                 <label for="pdfFile" class="form-label"><i class="fas fa-upload"></i> Carga el radicado</label>
                 <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
                 <small class="form-text text-muted"><i class="fas fa-file-alt"></i> Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
               </div>
-              <button type="submit" class="btn btn-primary btns-solicitudes" id="submitBtn"><i class="fas fa-check"></i> Subir Documento</button>
+              <button type="submit" class="btn btn-primary botones_envios" id="submitBtn"><i class="fas fa-check"></i> Enviar radicado</button>
             </form>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+              document.getElementById('radicadoForm').addEventListener('submit', function (event) {
+                const fileInput = document.getElementById('pdfFile')
+                const filePath = fileInput.value
+              
+                // Verificar que el archivo sea un PDF
+                const allowedExtensions = /(\.pdf)$/i
+                if (!allowedExtensions.exec(filePath)) {
+                  event.preventDefault() // Prevenir el envío del formulario
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Por favor, carga un archivo en formato PDF.'
+                  })
+                  fileInput.value = '' // Limpiar el input
+                }
+              })
+            </script>
           </div>
         {% else %}
-          <div class="row align-items-start">
+          <div class="row p-3 align-items-start">
             <form id="radicadoForm" action="{% url 'correspondencia:cargar_radicado_proyecto_final' inf_proyecto.id %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="mb-3">
@@ -352,8 +384,28 @@
                 <input class="form-control" type="file" id="pdfFile" name="documento_radicado" accept="application/pdf" required />
                 <small class="form-text text-muted"><i class="fas fa-file-alt"></i> Por favor, sube el archivo en formato PDF que contenga el radicado correspondiente.</small>
               </div>
-              <button type="submit" class="btn btn-success" id="submitBtn"><i class="fas fa-check"></i> Subir Documento</button>
+              <button type="submit" class="btn btn-success botones_envios" id="submitBtn"><i class="fas fa-check"></i> Enviar radicado</button>
             </form>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+              document.getElementById('radicadoForm').addEventListener('submit', function (event) {
+                const fileInput = document.getElementById('pdfFile')
+                const filePath = fileInput.value
+              
+                // Verificar que el archivo sea un PDF
+                const allowedExtensions = /(\.pdf)$/i
+                if (!allowedExtensions.exec(filePath)) {
+                  event.preventDefault() // Prevenir el envío del formulario
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Por favor, carga un archivo en formato PDF.'
+                  })
+                  fileInput.value = '' // Limpiar el input
+                }
+              })
+            </script>
           </div>
         {% endif %}
       </div>
@@ -519,20 +571,22 @@
                 <div class="form-directores-container">
                   {% for director in directores %}
                     {% if director.nombre_completo != inf_proyecto.anteproyecto.director %}
-                      <div class="form-directores-item" style="display: flex !important; flex-direction: row-reverse; justify-content: center; align-items: center;">
-                        <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.id }}" class="form-directores-checkbox" />
-                        <label for="{{ director.nombre_completo }}" class="form-directores-label">{{ director.nombre_completo }}</label>
-                      </div>
+                      {% if director.nombre_completo != inf_proyecto.anteproyecto.codirector %}
+                        <div class="form-directores-item" style="display: flex !important; flex-direction: row-reverse; justify-content: center; align-items: center;">
+                          <input type="checkbox" name="directores" id="{{ director.nombre_completo }}" value="{{ director.id }}" class="form-directores-checkbox" />
+                          <label for="{{ director.nombre_completo }}" class="form-directores-label">{{ director.nombre_completo }}</label>
+                        </div>
+                      {% endif %}
                     {% endif %}
                   {% endfor %}
                 </div>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" form="directoresForm" id="btnEnviarDirectores" class="btn btn-primary">
+              <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</button>
+              <button type="submit" form="directoresForm" id="btnEnviarDirectores" class="btn btn-primary botones_envios">
                 <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
-                Enviar
+                <i class="fas fa-paper-plane"></i> Enviar
               </button>
             </div>
           </div>
@@ -549,18 +603,16 @@
             <div class="modal-body">
               <form class="container-fluid p-2" action="{% url 'correspondencia:asignar_fecha_sustentacion' inf_proyecto.id %}" method="post">
                 {% csrf_token %}
-                <!-- Campo para la fecha y hora -->
+
                 <div class="form-group mb-3">
                   <label for="fecha_presentacion" class="form-label"><strong>Fecha y hora de sustentación:</strong></label>
-                  <input type="datetime-local" class="form-control" id="fecha_presentacion" name="fecha_presentacion" />
-                  {% comment %} <input type="datetime-local" class="form-control" id="fecha_presentacion" name="fecha_presentacion" required min="{{ fecha_actual }}" max="{{ fecha_habil }}" /> {% endcomment %}
-                  <small class="form-text text-muted">Por favor, selecciona la fecha y hora en la que se llevará a cabo la sustentación.</small>
+                  <input type="datetime-local" class="form-control" id="fecha_presentacion" name="fecha_presentacion" min="{{ fecha_actual }}" /> <small class="form-text text-muted">Por favor, selecciona la fecha y hora en la que se llevará a cabo la sustentación.</small>
                   <div class="invalid-feedback">Este campo es obligatorio.</div>
                 </div>
 
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Asignar Fecha</button>
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary botones_envios"><i class="fas fa-calendar-alt"></i> Asignar Fecha</button>
+                  <button type="button" class="btn btn-danger btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
                 </div>
               </form>
             </div>
@@ -575,7 +627,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="container-fluid p-2" action="{% url 'correspondencia:enviar_retroalimentacion_concepto' inf_proyecto.id %}" method="post" enctype="multipart/form-data">
+              <form class="container-fluid p-2" id="formconcepto" action="{% url 'correspondencia:enviar_retroalimentacion_concepto' inf_proyecto.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div class="form-group mb-3">
@@ -584,26 +636,25 @@
                   <small class="form-text text-muted">Por favor, proporcione un resumen claro y conciso del concepto.</small>
                 </div>
 
-                <div class="row container-fluid mt-2">
-                  <div class="form-group col-12 col-md-6 mb-3">
-                    <label for="formFile" class="form-label">Documento de Concepto:</label>
-                    <input class="form-control" type="file" id="formFile" name="doc_retroalimentacion" accept="application/pdf" required />
-                    <small class="form-text text-muted">Suba un archivo PDF que contenga el concepto.</small>
-                  </div>
+                <div class="form-group mb-3">
+                  <label for="formFile" class="form-label">Documento de Concepto:</label>
+                  <input class="form-control" type="file" id="formFile" name="doc_retroalimentacion" accept="application/pdf" required />
+                  <small class="form-text text-muted">Suba un archivo PDF que contenga el concepto.</small>
+                  <div class="invalid-feedback">Debe subir un archivo en formato PDF.</div>
+                </div>
 
-                  <div class="form-group col-12 col-md-6 mb-3">
-                    <label class="p-0 m-0" for="id_estado"><strong>Estado:</strong></label>
-                    <select name="estado" required>
-                      <option value="True">Aprobado</option>
-                      <option value="False">Rechazado</option>
-                    </select>
-                    <small class="form-text text-muted">Seleccione el estado correspondiente al concepto.</small>
-                  </div>
+                <div class="form-group c mb-3">
+                  <label class="p-0 m-0" for="id_estado"><strong>Estado:</strong></label>
+                  <select name="estado" required>
+                    <option value="True">Aprobado</option>
+                    <option value="False">Rechazado</option>
+                  </select>
+                  <small class="form-text text-muted">Seleccione el estado correspondiente al concepto.</small>
                 </div>
 
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Enviar</button>
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary botones_envios"><i class="fas fa-paper-plane"></i> Enviar</button>
+                  <button type="button" class="btn btn-danger btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
                 </div>
               </form>
             </div>
@@ -618,29 +669,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('btn-asignar').addEventListener('click', function () {
-        const formdirectores = document.getElementById('formDirectores')
-        formdirectores.style.position = 'fixed'
-        formdirectores.style.top = '50%'
-        formdirectores.style.left = '50%'
-        formdirectores.style.transform = 'translate(-50%, -50%)'
-        formdirectores.style.transition = 'opacity 0.5s'
-        formdirectores.style.opacity = '1'
-        formdirectores.style.zIndex = '1000'
-      })
-    
-      document.getElementById('btn-cerrar-directores').addEventListener('click', function () {
-        const formdirectores = document.getElementById('formDirectores')
-        console.log('funcionando')
-        formdirectores.style.opacity = '0'
-        formdirectores.style.transition = 'opacity 0.5s'
-    
-        setTimeout(() => {
-          formdirectores.style.zIndex = '-1'
-          formdirectores.style.position = 'absolute'
-        }, 500)
-      })
-    
       document.getElementById('directoresForm').addEventListener('submit', function (event) {
         event.preventDefault() // Prevenir el envío predeterminado
     
@@ -725,36 +753,24 @@
         })
       })
     
-      // Manejar el botón de enviar concepto
-      document.querySelector('.btn-concepto').addEventListener('click', function () {
-        const formConcepto = document.getElementById('formconcepto')
-    
-        formConcepto.style.position = 'fixed'
-        formConcepto.style.top = '50%'
-        formConcepto.style.left = '50%'
-        formConcepto.style.transform = 'translate(-50%, -50%)'
-        formConcepto.style.transition = 'opacity 0.5s'
-        formConcepto.style.opacity = '1'
-        formConcepto.style.zIndex = '1000'
-      })
-    
-      // Manejar el botón de cerrar el formulario
-      document.getElementById('btn-cerrar-concepto').addEventListener('click', function () {
-        const formConcepto = document.getElementById('formconcepto')
-        formConcepto.style.opacity = '0'
-        formConcepto.style.transition = 'opacity 0.5s'
-    
-        setTimeout(() => {
-          formConcepto.style.zIndex = '-1'
-          formConcepto.style.position = 'absolute'
-        }, 500)
-      })
-    
-      // Manejar el envío del formulario de concepto
       document.getElementById('formconcepto').addEventListener('submit', function (event) {
         event.preventDefault() // Prevenir el envío predeterminado
     
         const form = event.target
+        const fileInput = document.getElementById('formFile')
+        const file = fileInput.files[0]
+        const fileType = file ? file.type : ''
+        const validFileType = 'application/pdf'
+    
+        // Verificar si el archivo subido es un PDF
+        if (fileType !== validFileType) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Archivo no válido',
+            text: 'Por favor, suba un archivo en formato PDF.'
+          })
+          return
+        }
     
         // Verificar si el formulario es válido
         if (!form.checkValidity()) {
@@ -793,29 +809,28 @@
           }
         })
       })
-    }) <
-      //logica de alertas respecto a el envio de fechas
-      script >
-      // Validación del formulario y alerta con SweetAlert
-      document.querySelector('form').addEventListener('submit', function (event) {
-        event.preventDefault()
-        const fechaPresentacion = document.getElementById('fecha_presentacion').value
+    })
     
-        if (!fechaPresentacion) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Campo requerido',
-            text: 'Debes seleccionar una fecha y hora para la presentación.'
-          })
-        } else {
-          Swal.fire({
-            icon: 'success',
-            title: 'Fecha asignada',
-            text: 'La fecha de presentación se ha asignado correctamente.'
-          }).then(() => {
-            this.submit() // Si todo es correcto, se envía el formulario
-          })
-        }
-      })
+    // Validación del formulario y alerta con SweetAlert
+    document.querySelector('form').addEventListener('submit', function (event) {
+      event.preventDefault()
+      const fechaPresentacion = document.getElementById('fecha_presentacion').value
+    
+      if (!fechaPresentacion) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Campo requerido',
+          text: 'Debes seleccionar una fecha y hora para la presentación.'
+        })
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Fecha asignada',
+          text: 'La fecha de presentación se ha asignado correctamente.'
+        }).then(() => {
+          this.submit() // Si todo es correcto, se envía el formulario
+        })
+      }
+    })
   </script>
 {% endblock %}

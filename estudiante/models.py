@@ -155,7 +155,7 @@ class ModelFechasProyecto(models.Model):
         ModelProyectoFinal, related_name="fechas", on_delete=models.CASCADE
     )
     fecha_inicio = models.DateField(blank=True, null=True)
-    fecha_finalizacion = models.DateField(blank=True, null=True)
+    fecha_finalizacion = models.DateTimeField(blank=True, null=True)
     fecha_etapa_uno = models.DateField(blank=True, null=True)
     fecha_etapa_dos = models.DateField(blank=True, null=True)
     fecha_etapa_tres = models.DateField(blank=True, null=True)

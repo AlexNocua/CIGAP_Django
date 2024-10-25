@@ -41,6 +41,15 @@ def datosusuario(request):
     return context
 
 
+def recuperar_evaluacion_proyecto_final(id):
+    evaluacion = (
+        ModelEvaluacionProyectoFinal.objects.get(id=id)
+        if ModelEvaluacionProyectoFinal.objects.filter(id=id).exists()
+        else None
+    )
+    return evaluacion
+
+
 def recuperar_documento(documento):
     documento = base64.b64encode(documento).decode("utf-8") if documento else None
     return documento
@@ -99,9 +108,8 @@ def recuperar_proyectos_pendientes():
 
 
 def recuperar_proyectos_finalizados():
-    proyectos_finalizados = ModelProyectoFinal.objects.filter(
-        Q(solicitud_enviada=True) & Q(estado=True)
-    )
+
+    proyectos_finalizados = ModelInformacionEntregaFinal.objects.all()
     if not proyectos_finalizados:
         proyectos_finalizados = None
     return proyectos_finalizados

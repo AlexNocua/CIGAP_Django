@@ -445,14 +445,20 @@
               {% if docs_finales %}
                 <div class="d-flex m-1 justify-content-around align-items-center">
                   <div class="card p-1 m-2">
-                    <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" type="application/pdf" style="border-radius: 8px;" />
-                    <div class="card-body">
-                      <h5 class="tittles_h4">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
-                      <p class="etiquetas_parrafos card-text">
-                        <strong>Descripción:</strong> Proyecto final cargado por los estudiantes.
+                    {% if not docs_finales.proyecto_final == None %}
+                      <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" type="application/pdf" style="border-radius: 8px;" />
+                      <div class="card-body">
+                        <h5 class="tittles_h4">Documento final de "{{ proyecto_final.anteproyecto.nombre_anteproyecto }}"</h5>
+                        <p class="etiquetas_parrafos card-text">
+                          <strong>Descripción:</strong> Proyecto final cargado por los estudiantes.
+                        </p>
+                      </div>
+                      <a href="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" download="Proyecto_final_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-outline-primary"><i class="bi bi-download"></i> Descargar</a>
+                    {% else %}
+                      <p class="etiquetas_parrafos">
+                        <i class="fas fa-exclamation-circle"></i> Cargue de nuevo el documento con las correcciones sugeridas por el comité
                       </p>
-                    </div>
-                    <a href="data:application/pdf;base64,{{ docs_finales.proyecto_final }}" download="Proyecto_final_{{ proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf" class="btn btn-outline-primary"><i class="bi bi-download"></i> Descargar</a>
+                    {% endif %}
                   </div>
                   <div class="card p-1 m-2">
                     <embed class="card-img-top" src="data:application/pdf;base64,{{ docs_finales.carta_final }}" type="application/pdf" style="border-radius: 8px;" />

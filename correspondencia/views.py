@@ -17,6 +17,7 @@ from login.views import editar_usuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.recuperaciones import (
+    recuperar_evaluacion_proyecto_final,
     recuperar_fechas_comite,
     recuperar_fechas_proyecto,
     recuperar_num_proyectos_terminados,
@@ -581,7 +582,7 @@ def solicitudes_anteproyectos(request):
 def solicitudes_proyectos_finales(request):
     context = datosusuario(request)
     proyectos_finales = recuperar_proyectos_finales()
-    print(proyectos_finales)
+
     context["proyectos_finales"] = proyectos_finales
     return render(
         request, "correspondencia/views_solicitud/list_proyectos_finales.html", context
@@ -704,35 +705,45 @@ def actualizar_datos_solicitud_proyecto(request, id):
 from django.contrib import messages  # Importa el módulo de mensajes
 from django.shortcuts import redirect, render
 
+
 def enviar_retroalimentacion_solicitud(request, id):
     solicitud_especial = recuperar_solicitud_especial(id)
 
     if solicitud_especial.anteproyecto:
         form_retro = FormRetroalimentacionAnteproyecto(request.POST, request.FILES)
         if form_retro.is_valid():
-            
+
             retroalimentacion = form_retro.save(commit=False)
-            retroalimentacion.user =request.user
+            retroalimentacion.user = request.user
             retroalimentacion.anteproyecto = solicitud_especial.anteproyecto
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
 
             # Verificar el estado de la retroalimentación
-            if form_retro.cleaned_data['estado'] == 'Rechazado':
+            if form_retro.cleaned_data["estado"] == "Rechazado":
                 solicitud_especial.delete()  # Eliminar la solicitud
-                messages.success(request, "La solicitud ha sido rechazada y eliminada correctamente.")
+                messages.success(
+                    request, "La solicitud ha sido rechazada y eliminada correctamente."
+                )
             else:  # Si el estado es "Aprobado" u otro
                 solicitud_especial.estado = True  # Asigna el estado verdadero
                 solicitud_especial.save()
-                retroalimentacion.estado = "Aprobado"  # Asegúrate de asignar el estado correcto
+                retroalimentacion.estado = (
+                    "Aprobado"  # Asegúrate de asignar el estado correcto
+                )
                 retroalimentacion.save()
-                messages.success(request, "La retroalimentación del anteproyecto se ha enviado correctamente.")
+                messages.success(
+                    request,
+                    "La retroalimentación del anteproyecto se ha enviado correctamente.",
+                )
 
             return redirect("correspondencia:solicitudes")
 
         else:
-            messages.error(request, "Algo pasó: por favor revisa los errores en el formulario.")
-            return render(request, 'nombre_template.html', {'form_retro': form_retro})
+            messages.error(
+                request, "Algo pasó: por favor revisa los errores en el formulario."
+            )
+            return render(request, "nombre_template.html", {"form_retro": form_retro})
 
     elif solicitud_especial.proyecto_final:
         form_retro = FormRetroalimentacionAnteproyecto(request.POST, request.FILES)
@@ -743,24 +754,36 @@ def enviar_retroalimentacion_solicitud(request, id):
             retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
 
             # Verificar el estado de la retroalimentación
-            if form_retro.cleaned_data['estado'] == 'Rechazado':
+            if form_retro.cleaned_data["estado"] == "Rechazado":
                 solicitud_especial.delete()  # Eliminar la solicitud
-                messages.success(request, "La solicitud ha sido rechazada y eliminada correctamente.")
+                messages.success(
+                    request, "La solicitud ha sido rechazada y eliminada correctamente."
+                )
             else:  # Si el estado es "Aprobado" u otro
                 solicitud_especial.estado = True  # Asigna el estado verdadero
                 solicitud_especial.save()
-                retroalimentacion.estado = "Aprobado"  # Asegúrate de asignar el estado correcto
+                retroalimentacion.estado = (
+                    "Aprobado"  # Asegúrate de asignar el estado correcto
+                )
                 retroalimentacion.save()
-                messages.success(request, "La retroalimentación del proyecto final se ha enviado correctamente.")
+                messages.success(
+                    request,
+                    "La retroalimentación del proyecto final se ha enviado correctamente.",
+                )
 
             return redirect("correspondencia:solicitudes")
 
         else:
-            messages.error(request, "Algo pasó: por favor revisa los errores en el formulario.")
-            return render(request, 'nombre_template.html', {'form_retro': form_retro})
+            messages.error(
+                request, "Algo pasó: por favor revisa los errores en el formulario."
+            )
+            return render(request, "nombre_template.html", {"form_retro": form_retro})
 
-    messages.warning(request, "No se puede enviar la retroalimentación: solicitud no válida.")
+    messages.warning(
+        request, "No se puede enviar la retroalimentación: solicitud no válida."
+    )
     return redirect("correspondencia:solicitudes")
+
 
 ########################################################################################################################
 # vista para conocer la informacion del anteproyecto
@@ -957,7 +980,14 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
         proyecto = recuperar_proyecto_final_id(id_proyecto)
 
         if proyecto:
-            fechas_proyecto = ModelFechasProyecto.objects.get(proyecto_final=proyecto)
+            fechas_proyecto = (
+                ModelFechasProyecto.objects.get(proyecto_final=proyecto)
+                if ModelFechasProyecto.objects.filter(proyecto_final=proyecto).exists()
+                else None
+            )
+            if fechas_proyecto:
+                fechas_proyecto.fecha_finalizacion = fecha_actual()
+                fechas_proyecto.save()
             text_retroalimentaicion = request.POST.get("retroalimentacion")
             estado = request.POST.get("estado")
             doc_concepto = request.FILES.get("doc_retroalimentacion")
@@ -982,10 +1012,31 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
                     fecha_finalizacion=fecha_actual(),
                 )
                 new_informacion_entrega_final.save()
-                messages.success(request, "Bien")
+                messages.success(
+                    request,
+                    "¡El proyecto final ha sido aprobado exitosamente! Diríjase al apartado de 'Proyectos - Proyectos Finalizados' para conocer más información.",
+                )
                 return redirect("correspondencia:proyectos_finalizados")
             else:
+
                 if estado == "False":
+                    evaluaciones_del_proyecto = (
+                        ModelEvaluacionProyectoFinal.objects.filter(
+                            proyecto_final=proyecto
+                        )
+                    )
+                    evaluaciones_del_proyecto.delete()
+
+                    fechas_proyecto = (
+                        ModelFechasProyecto.objects.get(proyecto_final=proyecto)
+                        if ModelFechasProyecto.objects.filter(
+                            proyecto_final=proyecto
+                        ).exists()
+                        else None
+                    )
+                    if fechas_proyecto:
+                        fechas_proyecto.fecha_sustentacion = None
+                        fechas_proyecto.save()
                     proyecto.proyecto_final = None
                     proyecto.estado = False
                     proyecto.solicitud_enviada = False
@@ -1001,10 +1052,13 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
                     )
                     proyecto.save()
                     new_retro.save()
-                    messages.success(request, "Bien, envia")
+                    messages.success(
+                        request,
+                        f"Se ha enviado la retroalimentación para el proyecto {proyecto.anteproyecto.nombre_anteproyecto} que no fue aprobado.",
+                    )
                     return redirect("correspondencia:solicitudes")
     else:
-        messages.error(request, "error, envia")
+        messages.error(request, "Ocurrió algo.")
         return redirect("correspondencia:solicitudes")
 
 
@@ -1015,8 +1069,11 @@ def recuperar_evaluaciones_jurados(proyecto):
 
 
 def ver_proyecto_final(request, nombre):
+    print(fecha_actual())
     context = datosusuario(request)
-    context["fecha_actual"] = fecha_actual()
+    fecha_actual_str = fecha_actual()
+    fecha_actual_dt = datetime.strptime(fecha_actual_str, "%Y-%m-%d %H:%M:%S")
+    context["fecha_actual"] = fecha_actual_dt.strftime("%Y-%m-%dT%H:%M")
     ###########################################################################
     dias_habiles = 10
     context["fecha_habil"] = fecha_actual() + str(timedelta(days=dias_habiles))
@@ -1065,18 +1122,12 @@ def ver_proyecto_final(request, nombre):
                     ]
                 )
                 retroalimentacion.save()
-                # revisar esta direccion para el envio de datos de retroalimentacones
 
-            if retroalimentacion.doc_retroalimentacion:
-                print("Documento subido correctamente")
-            else:
-                print("Error al subir el documento")
-            # tener en cuenta el envio de datos desde url
             url = reverse("correspondencia:asignar_jurados", kwargs={"nombre": nombre})
             return redirect(url)
 
         else:
-            print(form_retro.errors)  # Para depuración
+            print(form_retro.errors)
     else:
 
         anteproyecto = recuperar_anteproyecto(nombre)
@@ -1092,6 +1143,7 @@ def ver_proyecto_final(request, nombre):
                 doc_radicado = recuperar_documento(proyecto_final.documento_radicado)
                 if doc_radicado:
                     context["documento_radicado"] = doc_radicado
+
                 context["inf_proyecto"] = proyecto_final
                 context["doc_proyecto_final"] = doc_proyecto_final
                 context["doc_carta_final"] = doc_carta_final
@@ -1178,8 +1230,7 @@ def asignar_jurados(request, id):
         if request.method == "POST":
             directores_seleccionados = request.POST.getlist("directores")
             for director in directores_seleccionados:
-                print(director)
-                print(type(director))
+
                 fue_asignado = fue_asignado_jurado_jurado(director)
                 if fue_asignado:
                     messages.error(request, "El director ya fue asignado como jurado")
@@ -1350,13 +1401,13 @@ def solicitudes_respondidas(request):
     for i, respuesta in enumerate(respuestas):
         doc_binario = recuperar_documento(respuesta.doc_retroalimentacion)
         if respuesta.proyecto_final:
-            print("aqui esta el proyecto")
+
             respuestas_dict[f"respuesta_{i}"] = {
                 "respuesta_proyecto_final": respuesta,
                 "doc_binario": doc_binario,
             }
         elif respuesta.anteproyecto:
-            print("aqui esta el anteproyecto")
+
             respuestas_dict[f"respuesta_{i}"] = {
                 "respuesta_anteproyecto": respuesta,
                 "doc_binario": doc_binario,
@@ -1504,7 +1555,7 @@ def proyectos_finalizados(request):
     if list_proyectos_finalizados:
 
         for i, proyecto in enumerate(list_proyectos_finalizados):
-            documento_convert = proyecto.proyecto_final
+            documento_convert = proyecto.proyecto_final.proyecto_final
             documento = recuperar_documento(documento_convert)
 
             dic_proyectos[f"proyecto{i}"] = {
@@ -1546,10 +1597,12 @@ def proyectos_actuales(request):
 def proyecto_final(request, id):
     context = datosusuario(request)
 
-    proyecto = recuperar_proyecto_finalizado(id)
-    # return HttpResponse(
-    #     proyecto
-    # )
+    proyecto = (
+        ModelInformacionEntregaFinal.objects.get(id=id)
+        if ModelInformacionEntregaFinal.objects.filter(id=id).exists()
+        else None
+    )
+
     integrantes = (
         proyecto.anteproyecto.nombre_integrante1,
         proyecto.anteproyecto.nombre_integrante2,
@@ -1566,8 +1619,12 @@ def proyecto_final(request, id):
     context["proyecto"] = proyecto
     carta_convert = recuperar_documento(proyecto.anteproyecto.carta_presentacion)
     ante_convert = recuperar_documento(proyecto.anteproyecto.anteproyecto)
-    carta_final_convert = recuperar_documento(proyecto.carta_presentacion_final)
-    proyecto__final_convert = recuperar_documento(proyecto.proyecto_final)
+    carta_final_convert = recuperar_documento(
+        proyecto.proyecto_final.carta_presentacion_final
+    )
+    proyecto__final_convert = recuperar_documento(
+        proyecto.proyecto_final.proyecto_final
+    )
 
     # añadir la logica de solicitudes pesepciales tambien pero para el proyecto finalizado
 
@@ -1596,7 +1653,7 @@ def proyecto_final(request, id):
 
     # apartado para recuperar cada una de las solicitudes especiales
     solicitudes_especiales = recuperar_solicitudes_especiales_proyecto(
-        proyecto, proyecto.anteproyecto
+        proyecto.proyecto_final, proyecto.anteproyecto
     )
     dict_solicitudes = {}
     if solicitudes_especiales:
@@ -1642,7 +1699,6 @@ def proyecto_actual(request, id):
     ante_convert = recuperar_documento(proyecto.anteproyecto.anteproyecto)
     radicado_convert = recuperar_documento(proyecto.anteproyecto.documento_radicado)
     concepto_convert = recuperar_documento(proyecto.anteproyecto.documento_concepto)
-    print(concepto_convert)
 
     retroalimentaciones = recuperar_solicitudes_anteproyecto()
 

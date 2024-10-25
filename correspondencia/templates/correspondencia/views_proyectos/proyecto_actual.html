@@ -27,27 +27,27 @@
     }
   </style>
 
-  <main class="w-100">
-    <h3>Proyecto {{ proyecto.anteproyecto.nombre_anteproyecto }}</h3>
-    <small>
-      <p class="p-0 m-0">
-        <strong>Proyecto iniciado en la fecha:</strong> {{ fechas.fecha_inicio|date:'d/M/Y' }}
-      </p>
-      <p class="p-0 m-0">
-        <strong>Fecha estimada de finalización del proyecto:</strong> {{ fecha_finalizacion|date:'d/M/Y' }}
-      </p>
-    </small>
+  <main class="">
+    <h3 class="tittles_h3"><i class="fas fa-project-diagram"></i> Proyecto {{ proyecto.anteproyecto.nombre_anteproyecto }}</h3>
 
-    <article class="w-100 mt-3 p-2 d-flex flex-column flex-md-row" style="border-top:1px solid #cacaca;">
+    <p class="etiquetas_parrafos">
+      <i class="fas fa-calendar-alt"></i> <strong>Proyecto iniciado en la fecha:</strong> {{ fechas.fecha_inicio|date:'d/M/Y' }}
+    </p>
+    <p class="etiquetas_parrafos">
+      <i class="fas fa-calendar-check"></i> <strong>Fecha estimada de finalización del proyecto:</strong> {{ fecha_finalizacion|date:'d/M/Y' }}
+    </p>
+
+    <article class="mt-3 p-2 d-flex flex-column flex-md-row" style="border-top:1px solid #cacaca;">
       <section class="w-50">
-        <h5>Datos del proyecto</h5>
-        <p class="m-0 p-0 text-center">
+        <h5><i class="fas fa-info-circle"></i> Datos del proyecto</h5>
+        <p class="etiquetas_parrafos">
           <strong>Resumen:</strong> {{ proyecto.anteproyecto.descripcion }}
         </p>
       </section>
+
       <section class="w-50">
-        <p class="text-center">
-          <strong>Miembros</strong>
+        <p class="etiquetas_parrafos">
+          <i class="fas fa-users"></i> <strong>Miembros</strong>
         </p>
         <div class="d-flex justify-content-around align-items-center flex-column flex-md-row">
           {% for key, integrante in datos_integrantes.items %}
@@ -58,8 +58,8 @@
                 <img class="img-users" src="{% static 'icons/usuario.png' %}" alt="Imagen de usuario" />
               {% endif %}
 
-              <p class="m-1">{{ integrante.nombre }}</p>
-              <p class="text-center">
+              <p class="etiquetas_parrafos">{{ integrante.nombre }}</p>
+              <p class="etiquetas_parrafos">
                 <strong>{{ integrante.grupo }}</strong>
               </p>
             </div>
@@ -67,23 +67,23 @@
         </div>
       </section>
     </article>
-    <article class="d-flex flex-column justify-content-around align-items-center" style="    margin: 12px;
-    padding: 12px;
-    border-top: 1px solid #cacaca;">
-      <h5>Documentos cargados</h5>
-      <section class="grid-container w-100">
+
+    <article class="d-flex flex-column justify-content-around align-items-center p-0 m-0" style=" border: 1px solid #cacaca; overflow: hidden; border-radius: 12px;">
+      <h3 class="tittles_h3"><i class="fas fa-file-alt"></i> Documentos cargados</h3>
+
+      <section class="grid-container w-100 p-3">
         {% if formatos %}
           <div class="card m-2 d-flex flex-column justify-content-between">
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.anteproyecto }}" type="application/pdf" />
             <div class="card-body">
-              <p class="card-text">
-                Anteproyecto cargado de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-file-pdf"></i> Anteproyecto cargado de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
               </p>
-              <p class="text-center">
-                <strong>Fecha de envio:</strong> {{ proyecto.anteproyecto.fecha_envio }}
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-calendar-day"></i> <strong>Fecha de envío:</strong> {{ proyecto.anteproyecto.fecha_envio }}
               </p>
               <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.anteproyecto }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_anteproyecto.anteproyecto.pdf">Descargar</a>
+                <a href="{{ formatos.anteproyecto }}" class="btn btn-outline-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_anteproyecto.anteproyecto.pdf"><i class="fas fa-download"></i> Descargar</a>
               </div>
             </div>
           </div>
@@ -91,47 +91,49 @@
           <div class="card m-2 d-flex flex-column justify-content-between">
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.carta_presentacion }}" type="application/pdf" />
             <div class="card-body">
-              <p class="card-text">
-                Carta cargada de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-file-pdf"></i> Carta cargada de <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
               </p>
-              <p class="text-center">
-                <strong>Fecha de envio:</strong> {{ proyecto.anteproyecto.fecha_envio }}
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-calendar-day"></i> <strong>Fecha de envío:</strong> {{ proyecto.anteproyecto.fecha_envio }}
               </p>
               <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.carta_presentacion }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_carta_presentacion.pdf">Descargar</a>
+                <a href="{{ formatos.carta_presentacion }}" class="btn btn-outline-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_carta_presentacion.pdf"><i class="fas fa-download"></i> Descargar</a>
               </div>
             </div>
           </div>
+
           <div class="card m-2 d-flex flex-column justify-content-between">
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.radicado_convert }}" type="application/pdf" />
             <div class="card-body">
-              <p class="card-text">
-                Radicado del comité para el anteproyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-file-pdf"></i> Radicado del comité para el anteproyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
               </p>
-              <p class="text-center">
-                <strong>Respuesta del comité</strong>
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-comments"></i> <strong>Respuesta del comité</strong>
               </p>
               <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.radicado_convert }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_radicado.pdf">Descargar</a>
+                <a href="{{ formatos.radicado_convert }}" class="btn btn-outline-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_radicado.pdf"><i class="fas fa-download"></i> Descargar</a>
               </div>
             </div>
           </div>
+
           <div class="card m-2 d-flex flex-column justify-content-between">
             <embed class="card-img-top" src="data:application/pdf;base64,{{ formatos.concepto_convert }}" type="application/pdf" />
             <div class="card-body">
-              <p class="card-text">
-                Concepto del comité para el anteproyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-file-pdf"></i> Concepto del comité para el anteproyecto <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong>
               </p>
-              <p class="text-center">
-                <strong>Respuesta del comite</strong>
+              <p class="etiquetas_parrafos">
+                <i class="fas fa-comments"></i> <strong>Respuesta del comité</strong>
               </p>
               <div class="botones d-flex justify-content-between">
-                <a href="{{ formatos.concepto_convert }}" class="btn btn-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_concepto.pdf">Descargar</a>
+                <a href="{{ formatos.concepto_convert }}" class="btn btn-outline-primary" target="_blank" download="{{ proyecto.anteproyecto.nombre_anteproyecto }}_concepto.pdf"><i class="fas fa-download"></i> Descargar</a>
               </div>
             </div>
           </div>
         {% else %}
-          <p>No se ha cargado ningun documento.</p>
+          <p>No se ha cargado ningún documento.</p>
         {% endif %}
       </section>
     </article>

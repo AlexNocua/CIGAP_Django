@@ -39,7 +39,7 @@ from estudiante.models import (
 )
 
 # impotacion de recuperaciones
-from plataform_CIGAP.utils.recuperaciones import recuperar_formatos, datosusuario
+from plataform_CIGAP.utils.recuperaciones import recuperar_evaluacion_proyecto_final, recuperar_formatos, datosusuario
 
 # datos del usuario
 
@@ -92,6 +92,8 @@ def recuperar_evaluacion_anteproyecto(anteproyecto, request):
     if not evaluacion:
         return None
     return evaluacion
+
+
 
 
 def recuperar_documento(documento):
@@ -408,7 +410,7 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
             observaciones = request.POST.get("observaciones")
             documento = request.FILES.get("doc_retroalimentacion")
 
-            if not documento or documento.content_type != 'application/pdf':
+            if not documento or documento.content_type != "application/pdf":
                 messages.warning(
                     request,
                     "No se ha subido un archivo PDF válido. Por favor, suba un archivo PDF.",
@@ -418,20 +420,18 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
             obj_especifico.observaciones = observaciones
             obj_especifico.user = request.user
             obj_especifico.proyecto_final = proyecto
-            obj_especifico.documento_correcciones = documento.read() 
-            obj_especifico.documento_avance = documento.read()  
+            obj_especifico.documento_correcciones = documento.read()
+            obj_especifico.documento_avance = documento.read()
             obj_especifico.fecha_observacion = fecha_actual()
-            obj_especifico.save() 
+            obj_especifico.save()
 
             messages.success(request, "Las observaciones se han enviado correctamente.")
             return redirect("director:proyecto", id=proyecto.id)
         else:
             messages.error(request, "No se pudo encontrar el objetivo específico.")
             return redirect("director:proyecto", id=proyecto.id)
-    
-    messages.error(
-        request, "Método no permitido. Solo se permiten solicitudes POST."
-    )
+
+    messages.error(request, "Método no permitido. Solo se permiten solicitudes POST.")
     return redirect("director:proyecto", id=proyecto.id)
 
 
@@ -578,7 +578,9 @@ def eliminar_evaluacion(request, id):
 
 
 def recuperar_proyectos_jurado(usuario):
-    evaluaciones = ModelEvaluacionProyectoFinal.objects.filter(jurado=usuario)
+    evaluaciones = ModelEvaluacionProyectoFinal.objects.filter(
+        Q(jurado=usuario) & Q(estado=False)
+    )
     return evaluaciones
 
 
@@ -594,51 +596,30 @@ def view_jurado(request):
 def evaluar_proyecto_final(request, id):
     context = datosusuario(request)
 
-    proyecto_final = (
-        ModelProyectoFinal.objects.get(id=id)
-        if ModelProyectoFinal.objects.filter(id=id).exists()
-        else None
-    )
+    evaluacion = recuperar_evaluacion_proyecto_final(id)
+    print(evaluacion)
 
-    if proyecto_final:
-        evaluacion = (
-            ModelEvaluacionProyectoFinal.objects.get(proyecto_final=proyecto_final)
-            if ModelEvaluacionProyectoFinal.objects.filter(
-                proyecto_final=proyecto_final
-            ).exists()
-            else None
+    if evaluacion:
+        context["evaluacion"] = evaluacion
+        context["doc_evaluacion_proyecto_final"] = recuperar_documento(
+            evaluacion.doc_evaluacion_proyecto
         )
-        if evaluacion:
-            context["evaluacion"] = evaluacion
-            context["doc_evaluacion_proyecto_final"] = recuperar_documento(
-                evaluacion.doc_evaluacion_proyecto
-            )
-        doc_proyecto_final = recuperar_documento(proyecto_final.proyecto_final)
-        if doc_proyecto_final:
-            context["doc_proyecto_final"] = doc_proyecto_final
-        context["proyecto_final"] = proyecto_final
+    doc_proyecto_final = recuperar_documento(evaluacion.proyecto_final.proyecto_final)
+    if doc_proyecto_final:
+        context["doc_proyecto_final"] = doc_proyecto_final
+        context["proyecto_final"] = evaluacion.proyecto_final
     return render(request, "director/evaluacion_proyectos/proyecto.html", context)
 
 
 def enviar_evaluacion_proyecto_final(request, id):
-    proyecto = (
-        ModelProyectoFinal.objects.get(id=id)
-        if ModelProyectoFinal.objects.filter(id=id).exists()
-        else None
-    )
+    evaluacion = recuperar_evaluacion_proyecto_final(id)
+    proyecto = evaluacion.proyecto_final
 
     if proyecto:
-        evaluacion = (
-            ModelEvaluacionProyectoFinal.objects.get(proyecto_final=proyecto)
-            if ModelEvaluacionProyectoFinal.objects.filter(
-                proyecto_final=proyecto
-            ).exists()
-            else None
-        )
-
+        
         if evaluacion:
             comentarios = request.POST.get("comentarios")
-            estado = request.POST.get("estado")
+            estado = True
             calificacion = request.POST.get("calificacion")
             doc_retroalimentacion_convert = request.FILES.get(
                 "doc_retroalimentacion_convert"
@@ -651,7 +632,7 @@ def enviar_evaluacion_proyecto_final(request, id):
                     request,
                     "Todos los campos son obligatorios para enviar la evaluación.",
                 )
-                return redirect("director:evaluar_proyecto_final", id=proyecto.id)
+                return redirect("director:evaluar_proyecto_final", id=evaluacion.id)
 
             try:
                 evaluacion.comentarios = comentarios
@@ -667,7 +648,7 @@ def enviar_evaluacion_proyecto_final(request, id):
             except Exception as e:
                 messages.error(request, f"Error al enviar la evaluación: {e}")
 
-            return redirect("director:evaluar_proyecto_final", id=proyecto.id)
+            return redirect("director:evaluar_proyecto_final", id=evaluacion.id)
 
         else:
             messages.error(
