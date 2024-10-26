@@ -27,9 +27,9 @@ class FormRetroalimentacionAnteproyecto(forms.ModelForm):
         widgets = {
             "retroalimentacion": forms.Textarea(
                 attrs={
-                    "class": "form-control",  
+                    "class": "form-control",
                     "placeholder": "Escribe la retroalimentación del anteproyecto...",
-                    "rows": 4, 
+                    "rows": 4,
                 }
             ),
             "estado": forms.Select(
@@ -48,7 +48,7 @@ class FormRetroalimentacionAnteproyecto(forms.ModelForm):
         ].read()
         estado = self.cleaned_data["estado"]
         if estado == False:
-            solcitud =  ModelSolicitudes.objects
+            solcitud = ModelSolicitudes.objects
         retroalimentacion.estado = self.cleaned_data["estado"]
         if commit:
             retroalimentacion.save()
@@ -225,11 +225,18 @@ class FormJurados(forms.ModelForm):
 
 
 class FormDocumentos(forms.ModelForm):
-    documento_convert = forms.FileField(required=False)
+    documento_convert = forms.FileField(
+        required=False, widget=forms.FileInput(attrs={"class": "form-control"})
+    )
 
     class Meta:
         model = ModelDocumentos
         fields = ["nombre_documento", "descripcion", "version", "documento_convert"]
+        widgets = {
+            "nombre_documento": forms.TextInput(attrs={"class": "form-control"}),
+            "descripcion": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "version": forms.TextInput(attrs={"class": "form-control"}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(FormDocumentos, self).__init__(*args, **kwargs)

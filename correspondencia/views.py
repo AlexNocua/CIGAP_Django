@@ -78,6 +78,22 @@ from django.views.generic.edit import CreateView
 # Recuperar informaciones y funciones especificas para las vistas
 
 
+def recuperar_retroalimentaciones_proyecto_final(proyecto_final):
+
+    retroalimentaciones = ModelRetroalimentaciones.objects.filter(
+        proyecto_final=proyecto_final
+    )
+    respuestas = {}
+    if retroalimentaciones.exists():
+        for i, retroalimentacion in enumerate(retroalimentaciones):
+            doc_convert = recuperar_documento(retroalimentacion.doc_retroalimentacion)
+            respuestas[f"retroalimentacion_{i}"] = {
+                "respuesta": retroalimentacion,
+                "doc_retroalimentacion": doc_convert,
+            }
+    return respuestas if respuestas else None
+
+
 def recuperar_directores():
     directores = list(
         Usuarios.objects.filter(groups__name="Directores").values(
@@ -1602,7 +1618,9 @@ def proyecto_final(request, id):
         if ModelInformacionEntregaFinal.objects.filter(id=id).exists()
         else None
     )
-
+    documento_cedido = recuperar_documento(proyecto.doc_proyecto_final_cedido)
+    if documento_cedido:
+        context["documento_cedido"] = documento_cedido
     integrantes = (
         proyecto.anteproyecto.nombre_integrante1,
         proyecto.anteproyecto.nombre_integrante2,
@@ -1626,10 +1644,14 @@ def proyecto_final(request, id):
         proyecto.proyecto_final.proyecto_final
     )
 
-    # añadir la logica de solicitudes pesepciales tambien pero para el proyecto finalizado
-
     retroalimentaciones = recuperar_solicitudes_anteproyecto()
-
+    retroalimentaciones_proyecto_final = recuperar_retroalimentaciones_proyecto_final(
+        proyecto.proyecto_final
+    )
+    if retroalimentaciones_proyecto_final:
+        context["retroalimentaciones_proyecto_final"] = (
+            retroalimentaciones_proyecto_final
+        )
     if retroalimentaciones:
         dic_retroalimentaciones = {}
         for i, retroalimentacion in enumerate(retroalimentaciones):
@@ -1651,7 +1673,6 @@ def proyecto_final(request, id):
             "proyecto__final_convert": carta_final_convert,
         }
 
-    # apartado para recuperar cada una de las solicitudes especiales
     solicitudes_especiales = recuperar_solicitudes_especiales_proyecto(
         proyecto.proyecto_final, proyecto.anteproyecto
     )
@@ -1687,6 +1708,14 @@ def proyecto_actual(request, id):
         proyecto.anteproyecto.director,
         proyecto.anteproyecto.codirector,
     )
+    retroalimentaciones_proyecto_final = recuperar_retroalimentaciones_proyecto_final(
+        proyecto
+    )
+    print(retroalimentaciones_proyecto_final)
+    if retroalimentaciones_proyecto_final:
+        context["retroalimentaciones_proyecto_final"] = (
+            retroalimentaciones_proyecto_final
+        )
     datos_integrantes = {}
     for i, integrante in enumerate(integrantes, start=1):
         if integrante:

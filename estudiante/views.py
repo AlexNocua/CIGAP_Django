@@ -34,7 +34,11 @@ from .models import (
 import base64
 
 # modelo de correspondencia
-from correspondencia.models import ModelRetroalimentaciones, ModelSolicitudes
+from correspondencia.models import (
+    ModelInformacionEntregaFinal,
+    ModelRetroalimentaciones,
+    ModelSolicitudes,
+)
 
 # importacion de modelos del director
 from director.models import ModelEvaluacionAnteproyecto, ModelEvaluacionProyectoFinal
@@ -252,6 +256,24 @@ def recuperar_retroalimentaciones(anteproyecto_):
 
     retroalimentaciones = ModelRetroalimentaciones.objects.filter(
         anteproyecto=anteproyecto_
+    )
+    respuestas = {}
+    if retroalimentaciones.exists():
+        for i, retroalimentacion in enumerate(retroalimentaciones):
+            doc_convert = devolver_documento_imagen(
+                retroalimentacion.doc_retroalimentacion
+            )
+            respuestas[f"retroalimentacion_{i}"] = {
+                "respuesta": retroalimentacion,
+                "doc_retroalimentacion": doc_convert,
+            }
+    return respuestas if respuestas else None
+
+
+def recuperar_retroalimentaciones_proyecto_final(proyecto_final):
+
+    retroalimentaciones = ModelRetroalimentaciones.objects.filter(
+        proyecto_final=proyecto_final
     )
     respuestas = {}
     if retroalimentaciones.exists():
@@ -611,8 +633,23 @@ def info_proyect(request):
         anteproyecto = recuperar_anteproyecto(request)
         proyecto_final = recuperar_proyecto_final(anteproyecto)
         retroalimentaciones = recuperar_retroalimentaciones(anteproyecto)
+        retroalimentaciones_proyecto_final = (
+            recuperar_retroalimentaciones_proyecto_final(proyecto_final)
+        )
+        if recuperar_retroalimentaciones_proyecto_final:
+            context["retroalimentaciones_proyecto_final"] = (
+                retroalimentaciones_proyecto_final
+            )
 
         if proyecto_final:
+            doc_proyecto_final = devolver_documento_imagen(
+                proyecto_final.proyecto_final
+            )
+            carta_presentacion_final = devolver_documento_imagen(
+                proyecto_final.carta_presentacion_final
+            )
+            context["doc_proyecto_final"] = doc_proyecto_final
+            context["carta_presentacion_final"] = carta_presentacion_final
             context["proyecto_final"] = proyecto_final
         if retroalimentaciones:
             context["content_retroalimentacion"] = retroalimentaciones
@@ -692,10 +729,55 @@ def recuperar_actividades(objetivo_esp):
     return actividades
 
 
+def cargar_editar_documento_cedido(request, id):
+    if request.method == "POST":
+        documento_cedido = request.FILES.get("documento_final")
+
+        if documento_cedido:
+            infomacion_final = ModelInformacionEntregaFinal.objects.filter(
+                id=id
+            ).first()
+
+            if infomacion_final:
+                infomacion_final.doc_proyecto_final_cedido = documento_cedido.read()
+                infomacion_final.save()
+                messages.success(
+                    request,
+                    "El documento final con sección de derechos se ha cargado/actualizado correctamente.",
+                )
+                return redirect("estudiante:avances_proyecto")
+            else:
+                messages.error(
+                    request,
+                    "No se encontró la información final para actualizar el documento.",
+                )
+                return redirect("estudiante:avances_proyecto")
+        else:
+            messages.error(request, "Por favor, sube un archivo válido.")
+            return redirect("estudiante:avances_proyecto")
+    else:
+        messages.info(request, "No se realizaron cambios en el documento.")
+        return redirect("estudiante:avances_proyecto")
+
+
 def avances_proyecto(request):
     context = datosusuario(request)
     proyecto_final = recuperar_proyecto_final_usuario(request.user)
     retroalimentaciones = recuperar_retroalimentacion_proyecto_final(proyecto_final)
+    informacion_proyecto_final = (
+        ModelInformacionEntregaFinal.objects.get(proyecto_final=proyecto_final)
+        if ModelInformacionEntregaFinal.objects.filter(
+            proyecto_final=proyecto_final
+        ).exists()
+        else None
+    )
+    if informacion_proyecto_final:
+        context["informacion_proyecto_final"] = informacion_proyecto_final
+        doc_final_cedido = devolver_documento_imagen(
+            informacion_proyecto_final.doc_proyecto_final_cedido
+        )
+        if doc_final_cedido:
+            context["doc_proyecto_final_cedido"] = doc_final_cedido
     print(retroalimentaciones)
     if retroalimentaciones:
         dict_retroalimentaciones = {}

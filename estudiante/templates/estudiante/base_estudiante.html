@@ -7,9 +7,7 @@
 {% endblock %}
 
 {% block extra_head %}
-  {% comment %}aqui se van a importar los estilos personalizados de la aplicacion estudiante{% endcomment %}
 
-  <link rel="stylesheet" href="{% static 'estudiante/css/stylePrincipla.css' %}" />
 {% endblock %}
 
 {% block principal_estudiante %}
@@ -50,7 +48,7 @@
     {% block solicitud %}
 
     {% endblock %}
-    
+
     <div class="inf_user">
       {% include 'components/view_estudiante.html' %}
     </div>

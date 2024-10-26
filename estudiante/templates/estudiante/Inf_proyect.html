@@ -71,8 +71,13 @@
           <p class="m-2 p-2 etiquetas_parrafos">
             <i class="fas fa-check-circle"></i>
             {% if proyecto_final %}
-              <strong>Anteproyecto:</strong> Aprobado<br />
-              <strong>Proyecto final:</strong> En desarrollo<br />
+              {% if proyecto_final.estado %}
+                <strong>Anteproyecto:</strong> Aprobado<br />
+                <strong>Proyecto final:</strong> Aprobado<br />
+              {% else %}
+                <strong>Anteproyecto:</strong> Aprobado<br />
+                <strong>Proyecto final:</strong> En desarrollo<br />
+              {% endif %}
             {% else %}
               <strong>Anteproyecto:</strong> Aprobado<br />
               <strong>Proyecto final:</strong> No enviado<br />
@@ -112,9 +117,29 @@
           <p class="m-2 p-2 etiquetas_parrafos">
             <i class="fas fa-file-alt"></i>
             <strong>Documentos cargados:</strong><br />
+            {% if carta %}
+              <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ carta }}" download="Carta_presentación_Anteproyecto{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Carta de presentación anteproyecto</a><br />
+            {% else %}
+              <span class="etiquetas_parrafos">No se ha cargado la Carta de presentación del anteproyecto.</span><br />
+            {% endif %}
 
-            <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ carta }}" download="Carta_presentación_Anteproyecto{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Carta de presentación anteproyecto</a><br />
-            <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ anteproyecto }}" download="Anteproyecto_{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Anteproyecto</a>
+            {% if anteproyecto %}
+              <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ anteproyecto }}" download="Anteproyecto_{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Anteproyecto</a>
+            {% else %}
+              <span class="etiquetas_parrafos">No se ha cargado el anteproyecto.</span><br />
+            {% endif %}
+
+            {% if carta_presentacion_final %}
+              <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ carta_presentacion_final }}" download="Carta_Proyecto_Final_{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Carta de Proyecto final</a>
+            {% else %}
+              <span class="etiquetas_parrafos">No se ha cargado la carta de presentación del proyecto final.</span><br />
+            {% endif %}
+
+            {% if doc_proyecto_final %}
+              <a class="btn btn-outline-primary m-1" href="data:application/octet-stream;base64,{{ doc_proyecto_final }}" download="Proyecto_Final_{{ nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Proyecto final</a>
+            {% else %}
+              <span class="etiquetas_parrafos">No se ha cargado el documento del proyecto final.</span><br />
+            {% endif %}
           </p>
         </div>
       </div>
@@ -127,6 +152,35 @@
               <img class="icons-informacion" src="{% static 'estudiante/icons/apps/icon_respuesta.png' %}" alt="" />
             </div>
             {% for key, value in content_retroalimentacion.items %}
+              <div class="mt-2 retroalimentaciones">
+                <p class="m-2 p-2 etiquetas_parrafos">
+                  <i class="fas fa-user"></i>
+                  <strong>Por:</strong> {{ value.respuesta.user.nombre_completo }}
+                </p>
+                <p class="m-2 p-2 etiquetas_parrafos">
+                  <i class="fas fa-clock"></i>
+                  <strong>Fecha y hora de respuesta:</strong> {{ value.respuesta.fecha_retroalimentacion }}<br />
+                </p>
+                {% if value.respuesta.doc_retroalimentacion %}
+                  <p class="m-2 p-2 etiquetas_parrafos">
+                    <i class="fas fa-file-alt"></i>
+                    <strong>Documento retroalimentado:</strong>
+                    <a class="mt-2 btn btn-outline-primary" href="data:application/octet-stream;base64,{{ value.doc_retroalimentacion }}" download="Retroalimentación_{{ value.respuesta.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-file-alt"></i> Retroalimentación del comité</a>
+                  </p>
+                {% else %}
+                  <p class="m-2 p-2 etiquetas_parrafos">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <strong>Documento retroalimentado:</strong> No hay documento disponible.
+                  </p>
+                {% endif %}
+                <p class="m-2 p-2 etiquetas_parrafos">
+                  <i class="fas fa-comments"></i>
+                  <strong>Retroalimentación:</strong><br />{{ value.respuesta.retroalimentacion }}
+                </p>
+              </div>
+            {% endfor %}
+            <p class="etiquetas_parrafos mt-1 mb-2">Retroalimentaciones del Proyecto Final</p>
+            {% for key, value in retroalimentaciones_proyecto_final.items %}
               <div class="mt-2 retroalimentaciones">
                 <p class="m-2 p-2 etiquetas_parrafos">
                   <i class="fas fa-user"></i>

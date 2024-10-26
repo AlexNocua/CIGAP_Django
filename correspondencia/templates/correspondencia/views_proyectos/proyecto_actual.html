@@ -136,6 +136,35 @@
           <p>No se ha cargado ningún documento.</p>
         {% endif %}
       </section>
+      {% if retroalimentaciones_proyecto_final %}
+        <article class="col d-flex flex-column m-2 p-2 w-100">
+          <div class="d-flex justify-content-between align-items-center flex-column">
+            <h5><i class="fas fa-comments"></i> Retroalimentaciones del proceso de proyectos finales <strong>{{ proyecto.anteproyecto.nombre_anteproyecto }}</strong></h5>
+            <p class="etiquetas_parrafos">Revisa cada uno de los documentos de los cuales se dio respuesta a la solicitud de los integrantes del proyecto.</p>
+          </div>
+          <section class="grid-container w-100">
+            {% for key, value in retroalimentaciones_proyecto_final.items %}
+              <div class="card m-2 d-flex flex-column justify-content-between">
+                <embed class="card-img-top" src="data:application/pdf;base64,{{ value.doc_retroalimentacion }}" type="application/pdf" />
+                <div class="card-body">
+                  <p class="card-text">
+                    Retroalimentación por: <strong>{{ value.respuesta.user }}</strong>
+                  </p>
+                  <p class="card-text">
+                    Retroalimentación por el comité para <strong>{{ proyecto.nombre_anteproyecto }}</strong>
+                  </p>
+                  <p class="etiquetas_parrafos">
+                    <strong>Fecha de retroalimentación:</strong> {{ value.respuesta.fecha_retroalimentacion }}
+                  </p>
+                  <div class="botones d-flex justify-content-between">
+                    <a href="{{ value.doc_retroalimentacion }}" class="btn btn-outline-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_retroalimentacion.pdf"><i class="fas fa-download"></i> Descargar</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </section>
+        </article>
+      {% endif %}
     </article>
   </main>
 {% endblock %}

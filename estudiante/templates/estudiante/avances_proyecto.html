@@ -155,17 +155,98 @@
         </section>
 
         {% if proyecto_final.fecha_envio %}
-          <div class="m-3">
-            <p class="etiquetas_parrafos">
-              <i class="bi bi-info-circle"></i>
-              El proyecto final <strong>{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</strong>
-              ha sido enviado al comité por parte del director, esté pendiente a las retroalimentaciones.
-            </p>
-            <p class="etiquetas_parrafos">
-              <i class="bi bi-calendar"></i>
-              <strong>Fecha de envío: {{ proyecto_final.fecha_envio }}</strong>
-            </p>
-          </div>
+          {% if proyecto_final.estado %}
+            <div class="m-3 row">
+              <div class="col">
+                <p class="etiquetas_parrafos">
+                  <i class="bi bi-trophy"></i>
+                  ¡Felicidades! Has finalizado la modalidad de proyecto final para <strong>{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</strong>.
+                </p>
+                <p class="etiquetas_parrafos">
+                  <i class="bi bi-calendar"></i>
+                  <strong>Fecha de finalización: {{ informacion_proyecto_final.fecha_finalizacion }}</strong>
+                </p>
+              </div>
+              <div class="col">
+                {% if doc_proyecto_final_cedido %}
+                  <p class="etiquetas_parrafos">
+                    <i class="fas fa-check-circle"></i> Documento final con la sección de derechos cargado.
+                  </p>
+                  <a href="data:application/pdf;base64,{{ doc_proyecto_final_cedido }}" download="Documento_Final.pdf" class="btn btn-outline-primary m-2"><i class="fas fa-download"></i> Descargar Documento Final</a>
+
+                  <button type="button" class="btn btn-primary botones_envios m-2" data-bs-toggle="modal" data-bs-target="#modalDocumentoFinal"><i class="fas fa-upload"></i> Actualiza el documento final con la sección de derechos</button>
+                {% else %}
+                  <p class="etiquetas_parrafos">
+                    <i class="fas fa-exclamation-circle"></i> Recuerde subir el documento final con la sección de derechos.
+                  </p>
+                  <button type="button" class="btn btn-primary botones_envios m-2" data-bs-toggle="modal" data-bs-target="#modalDocumentoFinal"><i class="fas fa-upload"></i> Subir el documento final con la sección de derechos</button>
+                {% endif %}
+              </div>
+
+              <div class="modal fade" id="modalDocumentoFinal" tabindex="-1" aria-labelledby="modalDocumentoFinalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalDocumentoFinalLabel"><i class="fas fa-file-pdf"></i> Documento Final con Sección de Derechos</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="formDocumentoFinal" action="{% url 'estudiante:cargar_editar_documento_cedido' informacion_proyecto_final.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label for="inputDocumentoFinal" class="form-label">Cargar documento final (PDF)</label>
+                          <input type="file" class="form-control" id="inputDocumentoFinal" name="documento_final" accept="application/pdf" required />
+                        </div>
+                        <small class="text-muted d-block mt-2">Solo se admiten archivos en formato PDF. Asegúrate de que el documento incluya la sección de derechos.</small>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+                      <button type="button" class="btn btn-primary botones_envios" onclick="submitDocumentoFinal()"><i class="fas fa-save"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+              <script>
+                function submitDocumentoFinal() {
+                  const inputFile = document.getElementById('inputDocumentoFinal')
+                  const file = inputFile.files[0]
+                
+                  if (file && file.type === 'application/pdf') {
+                    Swal.fire({
+                      title: 'Confirmación',
+                      text: '¿Deseas subir este documento?',
+                      icon: 'question',
+                      showCancelButton: true,
+                      confirmButtonText: '<i class="fas fa-check"></i> Sí, subir',
+                      cancelButtonText: '<i class="fas fa-times"></i> Cancelar'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        document.getElementById('formDocumentoFinal').submit()
+                        Swal.fire('<i class="fas fa-check-circle"></i> ¡Éxito!', 'El archivo se ha subido correctamente.', 'success')
+                      }
+                    })
+                  } else {
+                    Swal.fire('<i class="fas fa-exclamation-triangle"></i> Error', 'Por favor, sube un archivo en formato PDF.', 'error')
+                  }
+                }
+              </script>
+            </div>
+          {% else %}
+            <div class="m-3">
+              <p class="etiquetas_parrafos">
+                <i class="bi bi-info-circle"></i>
+                El proyecto final <strong>{{ proyecto_final.anteproyecto.nombre_anteproyecto }}</strong>
+                ha sido enviado al comité por parte del director, esté pendiente a las retroalimentaciones.
+              </p>
+              <p class="etiquetas_parrafos">
+                <i class="bi bi-calendar"></i>
+                <strong>Fecha de envío: {{ proyecto_final.fecha_envio }}</strong>
+              </p>
+            </div>
+          {% endif %}
         {% endif %}
       </div>
       {% if retroalimentaciones %}
@@ -264,8 +345,6 @@
         .objectives-container {
           max-width: 1200px;
           margin: 0 auto;
-        
-          font-family: 'Inter', sans-serif;
           overflow: hidden;
           border: 1px solid #cacaca;
           border-radius: 12px;
