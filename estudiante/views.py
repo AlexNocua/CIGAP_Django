@@ -205,21 +205,46 @@ def datosusuario(request):
 @login_required
 @grupo_usuario("Estudiantes")
 def contenido_anteproyecto(request):
+
     try:
+        fechas_comite = recuperar_fechas_comite()
+        ano_actual = datetime.now().year
         content_anteproyecto = (
             ModelAnteproyecto.objects.get(user=request.user)
             if ModelAnteproyecto.objects.filter(user=request.user).exists()
             else None
         )
         if content_anteproyecto == None:
+            usuario = request.user
+            imagen = usuario.imagen
+            imagen_convertida = (
+                base64.b64encode(imagen).decode("utf-8") if imagen else ""
+            )
+            form_editar_usuario = FormEditarUsuario(instance=request.user)
+            context_anteproyecto = {
+                "ano_actual": ano_actual,
+                "fechas_comite": fechas_comite,
+                "usuario": usuario,
+                "user_img": imagen_convertida,
+                "form_config": form_editar_usuario,
+            }
             return None
         else:
+            usuario = request.user
+            imagen = usuario.imagen
+            imagen_convertida = (
+                base64.b64encode(imagen).decode("utf-8") if imagen else ""
+            )
             carta_presentacion_binario = content_anteproyecto.carta_presentacion
             anteproyecto_binario = content_anteproyecto.anteproyecto
             carta_presentacion = devolver_documento_imagen(carta_presentacion_binario)
             anteproyecto = devolver_documento_imagen(anteproyecto_binario)
             form_editar_usuario = FormEditarUsuario(instance=request.user)
             context_anteproyecto = {
+                "ano_actual": ano_actual,
+                "fechas_comite": fechas_comite,
+                "usuario": usuario,
+                "user_img": imagen_convertida,
                 "form_config": form_editar_usuario,
                 "nombre_anteproyecto": content_anteproyecto.nombre_anteproyecto,
                 "integrante1": content_anteproyecto.nombre_integrante1,

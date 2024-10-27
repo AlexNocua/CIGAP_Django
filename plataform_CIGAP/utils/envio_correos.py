@@ -4,17 +4,7 @@ import resend
 from estudiante.models import ModelFechasProyecto, ModelProyectoFinal
 
 
-resend.api_key = os.environ.get('RESEND_KEY')
-
-params: resend.Emails.SendParams = {
-    "from": "Acme <onboarding@resend.dev>",
-    "to": "plataformacigapubate@outlook.com",
-    "subject": "hello world",
-    "html": "<strong>it works!</strong>",
-}
-
-email = resend.Emails.send(params)
-print(email)
+resend.api_key = os.environ.get("RESEND_KEY")
 
 
 def correo_anteproyecto_aprobado(usuario, retroalimentacion):
@@ -34,7 +24,7 @@ def correo_anteproyecto_aprobado(usuario, retroalimentacion):
         "from": "Acme <onboarding@resend.dev>",
         # activado el dominio se ajusta a f{usuario.email}
         "to": "plataformacigapubate@outlook.com",
-        "subject": "hello world",
+        "subject": "Anteproyecto Aprobado",
         "html": f"""
     <div
     style="font-family: 'Saira', sans-serif; border-radius: 10px; padding: 20px; background-color: #002412; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
@@ -115,7 +105,7 @@ def correo_anteproyecto_rechazado(usuario, retroalimentacion):
         "from": "Acme <onboarding@resend.dev>",
         # activado el dominio se ajusta a f{usuario.email}
         "to": "plataformacigapubate@outlook.com",
-        "subject": "hello world",
+        "subject": "Anteproyecto Rechazado",
         "html": f"""
     <div
     style="font-family: 'Saira', sans-serif; border-radius: 10px; padding: 20px; background-color: #002412; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
@@ -172,7 +162,7 @@ def correo_proyecto_aprobado(proyecto, txtretroalimentacion):
         "from": "Acme <onboarding@resend.dev>",
         # activado el dominio se ajusta a f{proyecto.user.email}
         "to": "plataformacigapubate@outlook.com",
-        "subject": "hello world",
+        "subject": "Proyecto Final Aprobado",
         "html": f"""
     <div
     style="font-family: 'Saira', sans-serif; border-radius: 10px; padding: 20px; background-color: #002412; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
@@ -224,7 +214,7 @@ def correo_proyecto_rechazado(proyecto, txtretroalimentacion):
         "from": "Acme <onboarding@resend.dev>",
         # activado el dominio se ajusta a f{proyecto.user.email}
         "to": "plataformacigapubate@outlook.com",
-        "subject": "hello world",
+        "subject": "Proyecto Final Rechazado",
         "html": f"""
 <div
     style="font-family: 'Saira', sans-serif; border-radius: 10px; padding: 20px; background-color: #002412; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
@@ -268,5 +258,3 @@ def correo_proyecto_rechazado(proyecto, txtretroalimentacion):
     email = resend.Emails.send(params)
     print(email)
     pass
-
-
