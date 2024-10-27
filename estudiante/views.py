@@ -58,7 +58,11 @@ from plataform_CIGAP.utils.funcionalidades_fechas import (
 )
 
 # importacion de recuperaciones
-from plataform_CIGAP.utils.recuperaciones import recuperar_fechas_comite, recuperar_formatos, datosusuario
+from plataform_CIGAP.utils.recuperaciones import (
+    recuperar_fechas_comite,
+    recuperar_formatos,
+    datosusuario,
+)
 
 # Create your views here.
 
@@ -214,8 +218,9 @@ def contenido_anteproyecto(request):
             anteproyecto_binario = content_anteproyecto.anteproyecto
             carta_presentacion = devolver_documento_imagen(carta_presentacion_binario)
             anteproyecto = devolver_documento_imagen(anteproyecto_binario)
-
+            form_editar_usuario = FormEditarUsuario(instance=request.user)
             context_anteproyecto = {
+                "form_config": form_editar_usuario,
                 "nombre_anteproyecto": content_anteproyecto.nombre_anteproyecto,
                 "integrante1": content_anteproyecto.nombre_integrante1,
                 "integrante2": content_anteproyecto.nombre_integrante2,
