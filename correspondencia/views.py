@@ -964,7 +964,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         estado = request.POST.get("estado")
 
         if not estado:
-            correo_anteproyecto_aprobado(anteproyecto.user, retroalimentacion)
+            correo_anteproyecto_rechazado(anteproyecto.user, retroalimentacion)
             anteproyecto.delete()
             messages.warning(
                 request,
@@ -988,7 +988,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 doc_retroalimentacion=doc_binario,
                 estado=estado,
             )
-            correo_anteproyecto_rechazado(anteproyecto.user, retroalimentacion)
+            correo_anteproyecto_aprobado(anteproyecto.user, retroalimentacion)
             retroalimentacion.save()
 
             nuevo_proyecto_final = ModelProyectoFinal(

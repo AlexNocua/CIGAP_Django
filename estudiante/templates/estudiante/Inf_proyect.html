@@ -213,16 +213,18 @@
       {% endif %}
     </section>
   {% else %}
-    <div class="info_proyect">
-      <h3 class="m-3">Aún no ha enviado una solicitud de anteproyecto al comité.</h3>
-      <p class="m-2 p-2 etiquetas_parrafos" class="mb-0">
-        Su anteproyecto se encuentra actualmente en proceso de evaluación por parte del director y codirector. Le recomendamos estar atento a las retroalimentaciones que se publicarán en el apartado de solicitudes.
-        <br /><br />
-      </p>
-      <small>
-        Acceda al módulo de solicitudes
-        <a class="btn btn-outline-primary" href="{% url 'estudiante:solicitud' %}">Haga clic aquí.</a>
-      </small>
+    <div class="info_proyect mt-4">
+      <h3 class="tittles_h3"><i class="fas fa-info-circle me-2"></i> Aún no ha enviado una solicitud de anteproyecto al comité.</h3>
+      <div class="m-3">
+        <p class="m-2 p-2 etiquetas_parrafos mb-0">
+          <i class="fas fa-hourglass-half me-2"></i> Su anteproyecto se encuentra actualmente en proceso de evaluación por parte del director y codirector. Le recomendamos estar atento a las retroalimentaciones que se publicarán en el apartado de solicitudes.
+          <br /><br />
+        </p>
+        <small>
+          <i class="fas fa-external-link-alt me-1"></i> Acceda al módulo de solicitudes
+          <a class="btn btn-outline-primary ms-1" href="{% url 'estudiante:solicitud' %}"><i class="fas fa-arrow-right"></i> Haga clic aquí.</a>
+        </small>
+      </div>
     </div>
   {% endif %}
 {% endblock %}
