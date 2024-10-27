@@ -39,7 +39,23 @@ from estudiante.models import (
 )
 
 # impotacion de recuperaciones
-from plataform_CIGAP.utils.recuperaciones import recuperar_evaluacion_proyecto_final, recuperar_formatos, datosusuario
+from plataform_CIGAP.utils.recuperaciones import (
+    num_anteproyecto_aprobados_director,
+    num_anteproyecto_director,
+    num_anteproyecto_pendientes_director,
+    num_evaluaciones_anteproyecto_director,
+    num_evaluaciones_anteproyecto_hechas_director,
+    num_evaluaciones_anteproyecto_pendientes_director,
+    num_evaluaciones_proyecto_final_director,
+    num_evaluaciones_proyecto_final_hechas_director,
+    num_evaluaciones_proyecto_final_pendientes_director,
+    num_proyecto_final_director,
+    num_proyecto_final_pendientes_director,
+    num_proyecto_final_terminados_director,
+    recuperar_evaluacion_proyecto_final,
+    recuperar_formatos,
+    datosusuario,
+)
 
 # datos del usuario
 
@@ -60,7 +76,6 @@ def datos_usuario_director(request):
 
 
 #############################################################################################################
-# utilidades
 
 
 def recuperar_actividad(id):
@@ -72,6 +87,8 @@ def recuperar_actividad(id):
     return actividad
 
 
+@login_required
+@grupo_usuario("Directores")
 def recuperar_proyectos_evaluador(request):
     usuario = request.user
     nombre_usuario = usuario.nombre_completo
@@ -94,13 +111,13 @@ def recuperar_evaluacion_anteproyecto(anteproyecto, request):
     return evaluacion
 
 
-
-
 def recuperar_documento(documento):
     documento = base64.b64encode(documento).decode("utf-8") if documento else None
     return documento
 
 
+@login_required
+@grupo_usuario("Directores")
 def recuperar_anteproyectos_a_evaluar(request):
     usuario = request.user
     ante_a_evaluar = ModelEvaluacionAnteproyecto.objects.filter(
@@ -111,6 +128,8 @@ def recuperar_anteproyectos_a_evaluar(request):
     return ante_a_evaluar
 
 
+@login_required
+@grupo_usuario("Directores")
 def recuperar_anteproyectos(request):
     usuario = request.user
     anteproyectos = ModelAnteproyecto.objects.filter(
@@ -132,6 +151,8 @@ def recuperar_anteproyecto(id):
     return anteproyecto
 
 
+@login_required
+@grupo_usuario("Directores")
 def recuperar_proyectos(request):
     usuario = request.user
     proyectos = ModelProyectoFinal.objects.filter(
@@ -164,9 +185,8 @@ def recuperar_proyecto(id):
 @login_required
 @grupo_usuario("Directores")
 def principal_director(request):
+
     usuario = request.user
-    # recuperacion de la imagen propia del usuaario en formato binario
-    # print(imagen, 'esta es la imagen')
     imagen = usuario.imagen
     imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
 
@@ -194,6 +214,8 @@ def principal_director(request):
 #             user = form.save()
 
 
+@login_required
+@grupo_usuario("Directores")
 def view_anteproyectos(request):
     context = datos_usuario_director(request)
     anteproyectos = recuperar_anteproyectos(request)
@@ -202,9 +224,10 @@ def view_anteproyectos(request):
     return render(request, "director/anteproyectos/anteproyectos.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def anteproyecto(request, id):
-    context = {}
-    # Recuperar el anteproyecto
+    context = datosusuario(request)
     anteproyecto = recuperar_anteproyecto(id)
     context["anteproyecto"] = anteproyecto
     if anteproyecto:
@@ -245,6 +268,8 @@ def anteproyecto(request, id):
     return render(request, "director/anteproyectos/anteproyecto.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def enviar_anteproyecto(request, id):
     anteproyecto = recuperar_anteproyecto(id)
     if anteproyecto.solicitud_enviada == True:
@@ -290,6 +315,8 @@ def recuperar_objetivo_especifico(id):
     return obj_especifico
 
 
+@login_required
+@grupo_usuario("Directores")
 def view_proyectos(request):
     context = datos_usuario_director(request)
     proyectos = recuperar_proyectos(request)
@@ -299,8 +326,10 @@ def view_proyectos(request):
     return render(request, "director/proyectos/proyectos.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def proyecto(request, id):
-    context = {}
+    context = datosusuario(request)
     proyecto = recuperar_proyecto(id)
 
     if proyecto:
@@ -377,6 +406,8 @@ def proyecto(request, id):
     return render(request, "director/proyectos/proyecto.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def enviar_proyecto(request, id):
     proyecto = recuperar_proyecto(id)
     if proyecto.solicitud_enviada == True:
@@ -401,6 +432,8 @@ def enviar_proyecto(request, id):
     # funcion para actualizar el estado de la actividad
 
 
+@login_required
+@grupo_usuario("Directores")
 def enviar_observacion_objetivo(request, id_proyect, id_esp):
     proyecto = recuperar_proyecto(id_proyect)
     obj_especifico = recuperar_objetivo_especifico(id_esp)
@@ -435,6 +468,8 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
     return redirect("director:proyecto", id=proyecto.id)
 
 
+@login_required
+@grupo_usuario("Directores")
 def actualizar_estado_objetivo_especifico(request, id_proyect, id_esp):
     proyecto = recuperar_proyecto(id_proyect)
     objetivo_especifico = recuperar_objetivo_especifico(id_esp)
@@ -452,6 +487,8 @@ def actualizar_estado_objetivo_especifico(request, id_proyect, id_esp):
         return redirect("director:proyecto", id=proyecto.id)
 
 
+@login_required
+@grupo_usuario("Directores")
 def actualizar_estado_actividad(request, actividad_id, id_proyecto):
 
     try:
@@ -487,17 +524,38 @@ def recuperar_proyectos_finales_para_evaluar(usuario):
     return proyectos_finales
 
 
+@login_required
+@grupo_usuario("Directores")
 def evaluacion_proyectos(request):
+    usuario = request.user
     context = datos_usuario_director(request)
-    anteproyectos_a_evaluar = recuperar_anteproyectos_para_evaluar(request.user)
-    proyectos_finales_a_evaluar = recuperar_proyectos_finales_para_evaluar(request.user)
-    if anteproyectos_a_evaluar:
-        context["anteproyectos_a_evaluar"] = anteproyectos_a_evaluar.count()
-    if proyectos_finales_a_evaluar:
-        context["proyectos_finales_a_evaluar"] = proyectos_finales_a_evaluar.count()
+    evaluaciones_anteproyecto_pendientes = (
+        num_evaluaciones_anteproyecto_pendientes_director(usuario)
+    )
+    print(
+        "Evaluaciones de anteproyecto pendientes:", evaluaciones_anteproyecto_pendientes
+    )
+
+    evaluaciones_proyecto_final_pendientes = (
+        num_evaluaciones_proyecto_final_pendientes_director(usuario)
+    )
+    print(
+        "Evaluaciones de proyecto final pendientes:",
+        evaluaciones_proyecto_final_pendientes,
+    )
+    if evaluaciones_anteproyecto_pendientes:
+        context["evaluaciones_anteproyecto_pendientes"] = (
+            evaluaciones_anteproyecto_pendientes
+        )
+    if evaluaciones_proyecto_final_pendientes:
+        context["evaluaciones_proyecto_final_pendientes"] = (
+            evaluaciones_proyecto_final_pendientes
+        )
     return render(request, "director/evaluacion_proyectos/eva_proyectos.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def view_evaluador_anteproyectos(request):
     context = datos_usuario_director(request)
     anteproyectos = recuperar_anteproyectos_a_evaluar(request)
@@ -507,6 +565,8 @@ def view_evaluador_anteproyectos(request):
     return render(request, "director/evaluacion_proyectos/list_evaluador.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def evaluar_anteproyecto(request, id):
     context = datos_usuario_director(request)
     anteproyecto = recuperar_anteproyecto(id)
@@ -524,6 +584,8 @@ def evaluar_anteproyecto(request, id):
     return render(request, "director/evaluacion_proyectos/anteproyecto.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def enviar_evaluacion(request, id):
     context = datos_usuario_director(request)
     anteproyecto = recuperar_anteproyecto(id)
@@ -563,6 +625,8 @@ def enviar_evaluacion(request, id):
     return redirect("director:evaluar_anteproyecto", id=id)
 
 
+@login_required
+@grupo_usuario("Directores")
 def eliminar_evaluacion(request, id):
     evaluacion = (
         ModelEvaluacionAnteproyecto.objects.get(id=id)
@@ -584,6 +648,8 @@ def recuperar_proyectos_jurado(usuario):
     return evaluaciones
 
 
+@login_required
+@grupo_usuario("Directores")
 def view_jurado(request):
     context = datos_usuario_director(request)
     proyectos_evaluar = recuperar_proyectos_jurado(request.user)
@@ -593,6 +659,8 @@ def view_jurado(request):
     return render(request, "director/evaluacion_proyectos/list_jurado.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def evaluar_proyecto_final(request, id):
     context = datosusuario(request)
 
@@ -611,12 +679,14 @@ def evaluar_proyecto_final(request, id):
     return render(request, "director/evaluacion_proyectos/proyecto.html", context)
 
 
+@login_required
+@grupo_usuario("Directores")
 def enviar_evaluacion_proyecto_final(request, id):
     evaluacion = recuperar_evaluacion_proyecto_final(id)
     proyecto = evaluacion.proyecto_final
 
     if proyecto:
-        
+
         if evaluacion:
             comentarios = request.POST.get("comentarios")
             estado = True
@@ -661,10 +731,115 @@ def enviar_evaluacion_proyecto_final(request, id):
         return redirect("director:evaluar_proyecto_final", id=id)
 
 
+@login_required
+@grupo_usuario("Directores")
+def carga(request):
+    context = datosusuario(request)
+    usuario = request.user
+    num_evaluaciones_anteproyecto = num_evaluaciones_anteproyecto_director(usuario)
+    print("Número de evaluaciones de anteproyecto:", num_evaluaciones_anteproyecto)
+
+    num_evaluaciones_proyecto = num_evaluaciones_proyecto_final_director(usuario)
+    print("Número de evaluaciones de proyecto:", num_evaluaciones_proyecto)
+
+    evaluaciones_anteproyecto_pendientes = (
+        num_evaluaciones_anteproyecto_pendientes_director(usuario)
+    )
+    print(
+        "Evaluaciones de anteproyecto pendientes:", evaluaciones_anteproyecto_pendientes
+    )
+
+    evaluaciones_proyecto_final_pendientes = (
+        num_evaluaciones_proyecto_final_pendientes_director(usuario)
+    )
+    print(
+        "Evaluaciones de proyecto final pendientes:",
+        evaluaciones_proyecto_final_pendientes,
+    )
+
+    evaluaciones_anteproyecto_hechas = num_evaluaciones_anteproyecto_hechas_director(
+        usuario
+    )
+    print("Evaluaciones de anteproyecto hechas:", evaluaciones_anteproyecto_hechas)
+
+    evaluaciones_proyecto_final_hechas = (
+        num_evaluaciones_proyecto_final_hechas_director(usuario)
+    )
+    print("Evaluaciones de proyecto final hechas:", evaluaciones_proyecto_final_hechas)
+
+    # Variables de anteproyectos y proyectos
+    num_anteproyectos_aprobados = num_anteproyecto_aprobados_director(usuario)
+    print("Número de anteproyectos aprobados:", num_anteproyectos_aprobados)
+
+    num_anteproyectos_pendientes = num_anteproyecto_pendientes_director(usuario)
+    print("Número de anteproyectos pendientes:", num_anteproyectos_pendientes)
+
+    num_proyectos_aprobados = num_proyecto_final_terminados_director(usuario)
+    print("Número de proyectos aprobados:", num_proyectos_aprobados)
+
+    num_proyectos_pendientes = num_proyecto_final_pendientes_director(usuario)
+    print("Número de proyectos pendientes:", num_proyectos_pendientes)
+
+    num_proyectos = num_proyecto_final_director(usuario)
+    print("Número total de proyectos:", num_proyectos)
+
+    num_anteproyectos = num_anteproyecto_director(usuario)
+    print("Número total de anteproyectos:", num_anteproyectos)
+
+    # Porcentajes de anteproyectos y proyectos
+    porcentaje_ante_aprobados = (
+        (num_anteproyectos_aprobados / num_anteproyectos * 100)
+        if num_anteproyectos > 0
+        else 0
+    )
+    print("Porcentaje de anteproyectos aprobados:", porcentaje_ante_aprobados)
+
+    porcentaje_ante_curso = (
+        (num_anteproyectos_pendientes / num_anteproyectos * 100)
+        if num_anteproyectos > 0
+        else 0
+    )
+    print("Porcentaje de anteproyectos en curso:", porcentaje_ante_curso)
+
+    porcentaje_proyect_aprobados = (
+        (num_proyectos_aprobados / num_proyectos * 100) if num_proyectos > 0 else 0
+    )
+    print("Porcentaje de proyectos aprobados:", porcentaje_proyect_aprobados)
+
+    porcentaje_proyect_curso = (
+        (num_proyectos_pendientes / num_proyectos * 100) if num_proyectos > 0 else 0
+    )
+    print("Porcentaje de proyectos en curso:", porcentaje_proyect_curso)
+
+    context["num_evaluaciones_anteproyecto"] = num_evaluaciones_anteproyecto
+    context["num_evaluaciones_proyecto"] = num_evaluaciones_proyecto
+    context["evaluaciones_anteproyecto_pendientes"] = (
+        evaluaciones_anteproyecto_pendientes
+    )
+    context["evaluaciones_proyecto_final_pendientes"] = (
+        evaluaciones_proyecto_final_pendientes
+    )
+    context["evaluaciones_anteproyecto_hechas"] = evaluaciones_anteproyecto_hechas
+    context["evaluaciones_proyecto_final_hechas"] = evaluaciones_proyecto_final_hechas
+    context["num_anteproyectos_aprobados"] = num_anteproyectos_aprobados
+    context["num_anteproyectos_pendientes"] = num_anteproyectos_pendientes
+    context["num_proyectos_aprobados"] = num_proyectos_aprobados
+    context["num_proyectos_pendientes"] = num_proyectos_pendientes
+    context["num_proyectos"] = num_proyectos
+    context["num_anteproyectos"] = num_anteproyectos
+    context["porcentaje_ante_aprobados"] = int(porcentaje_ante_aprobados)
+    context["porcentaje_ante_curso"] = int(porcentaje_ante_curso)
+    context["porcentaje_proyect_aprobados"] = int(porcentaje_proyect_aprobados)
+    context["porcentaje_proyect_curso"] = int(porcentaje_proyect_curso)
+    return render(request, "director/evaluacion_proyectos/carga_trabajo.html", context)
+
+
 #############################################################################################################
 # formatos de correspondencia
 
 
+@login_required
+@grupo_usuario("Directores")
 def formatos_documentos(request):
     context = datosusuario(request)
     context["formatos"] = recuperar_formatos()

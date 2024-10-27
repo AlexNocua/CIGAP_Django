@@ -134,4 +134,6 @@ urlpatterns = [
     path("proyectos_actuales", views.proyectos_actuales, name="proyectos_actuales"),
     path("proyecto_final/<int:id>", views.proyecto_final, name="proyecto_final"),
     path("proyecto_actual/<int:id>", views.proyecto_actual, name="proyecto_actual"),
+    ##############################################################################################
+    path("carga/", views.carga, name="carga"),
 ]

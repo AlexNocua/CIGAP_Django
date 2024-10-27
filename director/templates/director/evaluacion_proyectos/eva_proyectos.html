@@ -25,6 +25,9 @@
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
+    .text-info {
+      min-height: 50px;
+    }
   </style>
 
   <main class="container p-0 m-0 mt-5 content_eva_proyectos">
@@ -37,8 +40,14 @@
             <i class="fas fa-project-diagram card-icon text-success" aria-hidden="true"></i>
             <h2 class="card-title h5">Anteproyectos</h2>
             <p class="parrafos card-text">Evalúa y proporciona retroalimentación a los anteproyectos.</p>
-            <p class="parrafos text-success">
-              Anteproyectos pendientes: <span aria-label="3 anteproyectos">{{ anteproyectos_a_evaluar }}</span>
+            <p class="parrafos text-success text-info">
+              Anteproyectos pendientes: <span aria-label="3 anteproyectos">
+                {% if evaluaciones_anteproyecto_pendientes %}
+                  {{ evaluaciones_anteproyecto_pendientes }}
+                {% else %}
+                  0
+                {% endif %}
+              </span>
             </p>
             <a href="{% url 'director:view_evaluador_anteproyectos' %}" class="btn btn-primary btns-solicitudes">Revisar Anteproyectos</a>
           </div>
@@ -50,8 +59,14 @@
             <i class="fas fa-file-alt card-icon text-primary" aria-hidden="true"></i>
             <h2 class="card-title h5">Proyectos Finales</h2>
             <p class="parrafos card-text">Califica y revisa los proyectos finales de los estudiantes.</p>
-            <p class="parrafos text-primary">
-              Proyectos por calificar: <span aria-label="5 proyectos">5</span>
+            <p class="parrafos text-primary text-info">
+              Proyectos por calificar: <span aria-label="5 proyectos">
+                {% if evaluaciones_proyecto_final_pendientes %}
+                  {{ evaluaciones_proyecto_final_pendientes }}
+                {% else %}
+                  0
+                {% endif %}
+              </span>
             </p>
             <a href="{% url 'director:view_jurado' %}" class="btn btn-primary btns-solicitudes">Ver Proyectos</a>
           </div>
@@ -61,13 +76,11 @@
       <article class="col">
         <div class="card h-100">
           <div class="card-body text-center">
-            <i class="fas fa-chart-line card-icon text-info" aria-hidden="true"></i>
+            <i class="fas fa-chart-line card-icon" aria-hidden="true"></i>
             <h2 class="card-title h5">Carga de trabajo</h2>
             <p class="parrafos card-text">Visualice los anteproyectos o cantidad de proyectos que esta dirigiendo actualmente.</p>
-            <p class="parrafos text-info">
-              Cantidad general<time datetime="2024-09-26">1</time>
-            </p>
-            <a href="#" class="btn btn-primary btns-solicitudes">Ver Carga</a>
+            <p class="parrafos text-info">Accede para mas información respecto a su carga laboral</p>
+            <a href="{% url 'director:carga' %}" class="btn btn-primary btns-solicitudes">Ver Carga</a>
           </div>
         </div>
       </article>

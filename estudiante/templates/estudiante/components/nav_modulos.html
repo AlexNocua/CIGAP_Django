@@ -29,7 +29,7 @@
     font-weight: 400;
     background: var(--colores_institucionalesfondo4);
     color: #fff;
-    border-radius: 0px;
+    border-radius: 6px;
   }
   
   /*estilos de la nav de modulos*/
@@ -62,9 +62,8 @@
       </svg>
     </button>
     <div class="collapse_estudiantes collapse container-fluid navbar-collapse" id="navbarSupportedContent">
-      <div class="d-flex w-100 flex-column flex-md-row justify-content-around align-items-center">
+      <div class="d-flex w-100 flex-column flex-md-row justify-content-around text-center align-items-center">
         <a class="modulo w-100" href="{% url 'estudiante:principal_estudiante' %}">Estudiante</a>
-
         <a class="modulo w-100" href="{% url 'estudiante:solicitud' %}">Anteproyecto</a>
         <a class="modulo w-100" href="{% url 'estudiante:avances_proyecto' %}">Proyecto de grado</a>
         <a class="modulo w-100" href="{% url 'estudiante:info_proyect' %}">Información del proyecto</a>

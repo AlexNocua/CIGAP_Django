@@ -4,12 +4,13 @@
 {% endblock %}
 
 {% block extra_head %}
-  
+
 {% endblock %}
 
 {% block principal_correspondencia %}
   {% load static %}
   {% include 'components/header.html' %}
+  {% include 'components/config_user.html' %}
   {% include 'correspondencia/components/nav_modulos.html' %}
   {% include 'components/toasts.html' %}
 
@@ -436,6 +437,9 @@
         {% block proyecto %}
 
         {% endblock %}
+        {% block carga_trabajo %}
+
+        {% endblock %}
       </div>
     </div>
   </main>
@@ -550,7 +554,5 @@
         </div>
       </div>
     </div>
-
-    {% include 'components/config_user.html' %}
   {% endif %}
 {% endblock %}

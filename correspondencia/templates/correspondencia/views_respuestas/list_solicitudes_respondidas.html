@@ -2,7 +2,7 @@
 
 {% block view_solicitudes %}
   <style>
-    .views{
+    .views {
       display: flex;
     }
     .content_correspondecia {
@@ -24,7 +24,7 @@
       padding: 4px;
       border-radius: 8px;
     }
-    /*estilos de la tabla del plugin*/
+    
     .dt-layout-row {
       justify-content: space-around;
       align-items: center;
@@ -43,8 +43,6 @@
       margin-bottom: 12px;
     }
     
-    /*estilos personalizados para la tabla*/
-    
     #tabla_resultados th,
     #tabla_resultados td {
       background-color: #fff;
@@ -58,26 +56,44 @@
       color: white;
     }
     
-    /* Estilo para las filas alternas */
     #tabla_resultados tbody tr:nth-child(even) {
       background-color: #fff;
     }
   </style>
 
   <section class="container">
-    <h3 class="mt-3">Lista de solicitudes respondidas</h3>
-    <div class="container_table">
+    <h3 class="tittles_h3"><i class="fas fa-list-alt me-1"></i> Lista de solicitudes respondidas</h3>
+    <p class="etiquetas_parrafos">
+      <i class="fas fa-info-circle me-1"></i> Vea a detalle las solicitudes respondidas
+    </p>
+
+    <div class="container_table p-3 m-1">
+      <div class="mb-3">
+        <input type="text" class="form-control" id="searchInput" placeholder="Buscar en la tabla..." />
+      </div>
+
       <table class="table table-striped border" id="tabla_resultados">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre del proyecto</th>
-            <th scope="col">Anteproyecto o Proyecto Final</th>
-            <th scope="col">Respuesta</th>
-            <th scope="col">Fecha de respuesta</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Numero de revisiones</th>
-            <th scope="col">Documento con correcciones</th>
+            <th scope="col">
+              <i class="fas fa-hashtag me-1"></i>#
+            </th>
+            <th scope="col">
+              <i class="fas fa-file-alt me-1"></i> Nombre del proyecto
+            </th>
+            <th scope="col">
+              <i class="fas fa-file-signature me-1"></i> Anteproyecto o Proyecto Final
+            </th>
+            <th scope="col">
+              <i class="fas fa-eye me-1"></i> Respuesta
+            </th>
+            <th scope="col">
+              <i class="fas fa-calendar-alt me-1"></i> Fecha de respuesta
+            </th>
+
+            <th scope="col">
+              <i class="fas fa-file-download me-1"></i> Documento con correcciones
+            </th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -95,11 +111,10 @@
                 <td>{{ value.respuesta_anteproyecto.revs_dadas }}</td>
                 <td>
                   {% if value.doc_binario %}
-
+                    <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Descargar PDF</a>
                   {% else %}
                     No cargado.
                   {% endif %}
-                  <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf">{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</a>
                 </td>
               {% endif %}
               {% if value.respuesta_proyecto_final %}
@@ -107,14 +122,12 @@
                 <td>{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</td>
                 <td>Proyecto Final</td>
                 <td>
-                  <a href="{% url 'correspondencia:ver_respuesta' value.respuesta_proyecto_final.id %}">Ver respuesta</a>
+                  <a class="btn btn-primary btns-solicitudes" href="{% url 'correspondencia:ver_respuesta' value.respuesta_proyecto_final.id %}"><i class="fas fa-eye me-1"></i> Ver respuesta</a>
                 </td>
                 <td>{{ value.respuesta_proyecto_final.fecha_retroalimentacion }}</td>
-                <td>{{ value.respuesta_proyecto_final.estado }}</td>
-                <td>{{ value.respuesta_proyecto_final.revs_dadas }}</td>
                 <td>
                   {% if value.doc_binario %}
-                    <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf">{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}</a>
+                    <a class="mt-2 btn btn-outline-primary" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_proyecto_final.proyecto_final.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-download me-1"></i> Descargar PDF</a>
                   {% else %}
                     No cargado.
                   {% endif %}
@@ -125,30 +138,18 @@
         </tbody>
       </table>
     </div>
-  </section>
-  <script>
-    $(document).ready(function () {
-      $('#tabla_resultados').DataTable({
-        aLengthMenu: [
-          [3, 5, 10, 25, -1],
-          [3, 5, 10, 25, 'ALL']
-        ],
-        iDisplayLength: 7,
-        language: {
-          lengthMenu: 'Mostrar _MENU_ registros por página',
-          search: 'Buscar',
-          zeroRecords: 'Ningún Registro Encontrado',
-          info: 'Página _PAGE_ de _PAGES_',
-          infoEmpty: 'Ningún Registro Disponible',
-          infoFiltered: '(Filtrado de _MAX_ registro(s) totales)',
-          paginate: {
-            first: 'Primero',
-            last: 'Último',
-            next: 'Siguiente',
-            previous: 'Anterior'
-          }
-        }
+
+    <script>
+      document.getElementById('searchInput').addEventListener('keyup', function () {
+        const filter = this.value.toLowerCase()
+        const rows = document.querySelectorAll('#tabla_resultados tbody tr')
+      
+        rows.forEach((row) => {
+          const cells = Array.from(row.getElementsByTagName('td'))
+          const matches = cells.some((cell) => cell.textContent.toLowerCase().includes(filter))
+          row.style.display = matches ? '' : 'none'
+        })
       })
-    })
-  </script>
+    </script>
+  </section>
 {% endblock %}

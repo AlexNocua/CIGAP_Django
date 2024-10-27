@@ -74,6 +74,11 @@ urlpatterns = [
         views.enviar_evaluacion_proyecto_final,
         name="enviar_evaluacion_proyecto_final",
     ),
+    path(
+        "carga/",
+        views.carga,
+        name="carga",
+    ),
     ########################################################################
     #     vinculos de formatos por el comite
     path("formatos_documentos", views.formatos_documentos, name="formatos_documentos"),

@@ -32,8 +32,12 @@ def datosusuario(request):
     imagen = usuario.imagen
     imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
     form_editar_usuario = FormEditarUsuario(instance=usuario)
+    fechas_comite = recuperar_fechas_comite()
+    ano_actual = datetime.now().year
 
     context = {
+        "ano_actual": ano_actual,
+        "fechas_comite": fechas_comite,
         "form_config": form_editar_usuario,
         "usuario": usuario,
         "user_img": imagen_convertida,
@@ -66,7 +70,7 @@ def recuperar_num_proyectos_terminados():
 
 
 def recuperar_num_proyectos_pendientes():
-    num_proyectos_pendientes = ModelAnteproyecto.objects.filter(estado=True).count()
+    num_proyectos_pendientes = ModelProyectoFinal.objects.filter(estado=False).count()
     return num_proyectos_pendientes
 
 
@@ -196,3 +200,96 @@ def recuperar_formatos():
         documentos = None
 
     return documentos
+
+
+def num_evaluaciones_anteproyecto_director(user):
+    num_evaluaciones_anteproyectos = ModelEvaluacionAnteproyecto.objects.filter(
+        evaluador=user
+    ).count()
+    return num_evaluaciones_anteproyectos
+
+
+def num_evaluaciones_proyecto_final_director(user):
+    num_evaluaciones_final = ModelEvaluacionProyectoFinal.objects.filter(
+        jurado=user
+    ).count()
+    return num_evaluaciones_final
+
+
+def num_evaluaciones_anteproyecto_hechas_director(user):
+    num_evaluaciones_anteproyectos = ModelEvaluacionAnteproyecto.objects.filter(
+        Q(evaluador=user) & Q(estado=True)
+    ).count()
+    return num_evaluaciones_anteproyectos
+
+
+def num_evaluaciones_proyecto_final_hechas_director(user):
+    num_evaluaciones_final = ModelEvaluacionProyectoFinal.objects.filter(
+        Q(jurado=user) & Q(estado=True)
+    ).count()
+    return num_evaluaciones_final
+
+
+def num_evaluaciones_anteproyecto_pendientes_director(user):
+    num_evaluaciones_anteproyectos = ModelEvaluacionAnteproyecto.objects.filter(
+        Q(evaluador=user) & Q(estado=False)
+    ).count()
+    return num_evaluaciones_anteproyectos
+
+
+def num_evaluaciones_proyecto_final_pendientes_director(user):
+    num_evaluaciones_final = ModelEvaluacionProyectoFinal.objects.filter(
+        Q(jurado=user) & Q(estado=False)
+    ).count()
+    return num_evaluaciones_final
+
+
+def num_anteproyecto_pendientes_director(user):
+    num_anteproyectos = ModelAnteproyecto.objects.filter(
+        Q(director=user.nombre_completo)
+        | Q(codirector=user.nombre_completo) & Q(estado=False)
+    ).count()
+    return num_anteproyectos
+
+
+def num_anteproyecto_aprobados_director(user):
+    num_anteproyectos = ModelAnteproyecto.objects.filter(
+        Q(director=user.nombre_completo)
+        | Q(codirector=user.nombre_completo) & Q(estado=True)
+    ).count()
+    return num_anteproyectos
+
+
+def num_proyecto_final_pendientes_director(user):
+    num_proyectos_finales = ModelProyectoFinal.objects.filter(
+        Q(anteproyecto__director=user.nombre_completo)
+        | Q(anteproyecto__codirector=user.nombre_completo) & Q(estado=False)
+    ).count()
+    return num_proyectos_finales
+
+
+def num_proyecto_final_terminados_director(user):
+    num_proyectos_finales = ModelProyectoFinal.objects.filter(
+        Q(anteproyecto__director=user.nombre_completo)
+        | Q(anteproyecto__codirector=user.nombre_completo) & Q(estado=True)
+    ).count()
+    return num_proyectos_finales
+
+
+def num_anteproyecto_director(user):
+    num_anteproyecto = ModelAnteproyecto.objects.filter(
+        Q(director=user.nombre_completo)
+        | Q(codirector=user.nombre_completo) & Q(Q(estado=False) | Q(estado=True))
+    ).count()
+    return num_anteproyecto
+
+
+def num_proyecto_final_director(user):
+    num_proyectos_finales = ModelProyectoFinal.objects.filter(
+        (
+            Q(anteproyecto__codirector=user)
+            | Q(anteproyecto__director=user.nombre_completo)
+        )
+        & Q(Q(estado=True) | Q(estado=False))
+    ).count()
+    return num_proyectos_finales

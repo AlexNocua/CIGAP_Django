@@ -17,6 +17,11 @@ from login.views import editar_usuario
 # importacion de las funcionalidaes
 from plataform_CIGAP.utils.decoradores import grupo_usuario
 from plataform_CIGAP.utils.recuperaciones import (
+    num_anteproyecto_pendientes_director,
+    num_evaluaciones_anteproyecto_director,
+    num_evaluaciones_anteproyecto_pendientes_director,
+    num_evaluaciones_proyecto_final_pendientes_director,
+    num_proyecto_final_pendientes_director,
     recuperar_evaluacion_proyecto_final,
     recuperar_fechas_comite,
     recuperar_fechas_proyecto,
@@ -349,6 +354,7 @@ def recuperar_directores():
         return directores
 
 
+@login_required
 def asignar_fechas_encuentros(request):
     if request.method == "POST":
         ano_actual = datetime.now().year
@@ -492,6 +498,8 @@ def principal_correspondencia(request):
     return render(request, "correspondencia/base_correspondencia.html", context)
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def editar_fechas_comite(request, id):
     fechas = (
         ModelFechasComite.objects.get(id=id)
@@ -561,6 +569,7 @@ def editar_fechas_comite(request, id):
 # vista de solicitudes
 
 
+@login_required
 @grupo_usuario("Correspondencia")
 def solicitudes(request):
     context = datosusuario(request)
@@ -582,12 +591,14 @@ def solicitudes(request):
     return render(request, "correspondencia/views_solicitud/solicitudes.html", context)
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def solicitudes_anteproyectos(request):
     context = datosusuario(request)
     if request.method == "POST":
         pass
     else:
-        anteproyectos = recuperar_anteproyectos_pendientes()
+        anteproyectos = solicitudes_anteproyectos
         context["anteproyectos"] = anteproyectos
 
         return render(
@@ -595,6 +606,8 @@ def solicitudes_anteproyectos(request):
         )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def solicitudes_proyectos_finales(request):
     context = datosusuario(request)
     proyectos_finales = recuperar_proyectos_finales()
@@ -608,6 +621,8 @@ def solicitudes_proyectos_finales(request):
 # funcion de la vista de lista de solicitudes especiales
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def solicitudes_especiales(request):
     context = datosusuario(request)
 
@@ -623,6 +638,8 @@ def solicitudes_especiales(request):
         )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def view_solicitud_especial(request, id):
     context = datosusuario(request)
     directores = recuperar_directores()
@@ -659,6 +676,8 @@ def view_solicitud_especial(request, id):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def actualizar_datos_solicitud_anteproyecto(request, id):
     solicitud_especial = recuperar_solicitud_especial(id)
     anteproyecto = solicitud_especial.anteproyecto
@@ -686,6 +705,8 @@ def actualizar_datos_solicitud_anteproyecto(request, id):
     return redirect("correspondencia:view_solicitud_especial", id=id)
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def actualizar_datos_solicitud_proyecto(request, id):
     context = datosusuario(request)
     solicitud_especial = recuperar_solicitud_especial(id)
@@ -722,6 +743,8 @@ from django.contrib import messages  # Importa el módulo de mensajes
 from django.shortcuts import redirect, render
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def enviar_retroalimentacion_solicitud(request, id):
     solicitud_especial = recuperar_solicitud_especial(id)
 
@@ -805,6 +828,8 @@ def enviar_retroalimentacion_solicitud(request, id):
 # vista para conocer la informacion del anteproyecto
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def ver_anteproyecto(request, nombre_anteproyecto):
     context = datosusuario(request)
     directores = recuperar_directores()
@@ -849,6 +874,8 @@ def ver_anteproyecto(request, nombre_anteproyecto):
         return HttpResponse("Gestiona los proyectos existentes, algo pasó con este.")
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def cargar_radicado(request, id):
     anteproyecto = recuperar_anteproyecto_id(id)
 
@@ -888,6 +915,8 @@ def cargar_radicado(request, id):
         )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def editar_radicado(request, id):
     anteproyecto = recuperar_anteproyecto_id(id)
 
@@ -917,6 +946,8 @@ def editar_radicado(request, id):
         )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def enviar_retroalimentacion(request, nombre_anteproyecto):
 
     anteproyecto = recuperar_anteproyecto(nombre_anteproyecto)
@@ -991,6 +1022,8 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         return redirect("correspondencia:solicitudes")
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def enviar_retroalimentacion_concepto(request, id_proyecto):
     if request.method == "POST":
         proyecto = recuperar_proyecto_final_id(id_proyecto)
@@ -1078,12 +1111,13 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
         return redirect("correspondencia:solicitudes")
 
 
-# vista de informacion de proyecto
 def recuperar_evaluaciones_jurados(proyecto):
     evaluaciones = ModelEvaluacionProyectoFinal.objects.filter(proyecto_final=proyecto)
     return evaluaciones
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def ver_proyecto_final(request, nombre):
     print(fecha_actual())
     context = datosusuario(request)
@@ -1174,6 +1208,8 @@ def ver_proyecto_final(request, nombre):
         return render(request, "correspondencia/views_solicitud/proyecto.html", context)
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def cargar_radicado_proyecto_final(request, id_proyecto):
     proyecto_final = recuperar_proyecto_final_id(id_proyecto)
     nombre = proyecto_final.anteproyecto.nombre_anteproyecto
@@ -1202,6 +1238,8 @@ def cargar_radicado_proyecto_final(request, id_proyecto):
         return redirect("correspondencia:ver_proyecto_final", nombre=nombre)
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def editar_radicado_proyecto_final(request, id_proyecto):
     proyecto = recuperar_proyecto_final_id(id_proyecto)
 
@@ -1229,6 +1267,8 @@ def editar_radicado_proyecto_final(request, id_proyecto):
         )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def fue_asignado_jurado_jurado(nombre_completo):
     fue_asignado = ModelEvaluacionProyectoFinal.objects.filter(
         jurado__nombre_completo=nombre_completo
@@ -1239,6 +1279,8 @@ def fue_asignado_jurado_jurado(nombre_completo):
         return False
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def asignar_jurados(request, id):
     context = datosusuario(request)
     proyecto = recuperar_proyecto_final_id(id)
@@ -1280,6 +1322,8 @@ def asignar_jurados(request, id):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def eliminar_jurado(request, id, nombre_proyecto):
     evaluacion = (
         ModelEvaluacionProyectoFinal.objects.get(id=id)
@@ -1305,6 +1349,8 @@ def eliminar_jurado(request, id, nombre_proyecto):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def eliminar_evaluador(request, id, nombre_anteproyecto):
     evaluacion = (
         ModelEvaluacionAnteproyecto.objects.get(id=id)
@@ -1330,6 +1376,8 @@ def eliminar_evaluador(request, id, nombre_anteproyecto):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def asignar_fecha_sustentacion(request, id):
     proyecto = recuperar_proyecto_final_id(id)
     if proyecto:
@@ -1364,6 +1412,8 @@ def asignar_fecha_sustentacion(request, id):
         )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def asignar_evaluadores_ante(request, id):
     anteproyecto = recuperar_anteproyecto_id(id)
     if anteproyecto:
@@ -1410,6 +1460,8 @@ def asignar_evaluadores_ante(request, id):
     # listado de solicitudes
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def solicitudes_respondidas(request):
     respuestas = recuperar_solicitudes()
     context = datosusuario(request)
@@ -1440,6 +1492,8 @@ def solicitudes_respondidas(request):
 # vista de la respuesta mas detallada
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def ver_respuesta(request, id):
     context = datosusuario(request)
 
@@ -1500,6 +1554,8 @@ def ver_respuesta(request, id):
 ############################################################################
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def formatos_documentos(request):
     context = datosusuario(request)
     if request.method == "POST":
@@ -1508,6 +1564,7 @@ def formatos_documentos(request):
             cargar_documentos = form_cargar_docs.save(commit=False)
             cargar_documentos.fecha_cargue = fecha_actual()
             cargar_documentos.save()
+            return redirect("correspondencia:formatos_documentos")
         else:
             return HttpResponse(f"Error: {form_cargar_docs.errors}")
     else:
@@ -1530,6 +1587,7 @@ def eliminar_formato(request, id):
 
 # funcion para editar un formato
 def editar_formato(request, id):
+    context = datosusuario(request)
     formato = ModelDocumentos.objects.get(id=id)
 
     if request.method == "POST":
@@ -1555,6 +1613,8 @@ def editar_formato(request, id):
 # apartado de la lista de proyectos
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def proyectos(request):
     context = datosusuario(request)
     num_proyectos_terminados = recuperar_num_proyectos_terminados()
@@ -1564,6 +1624,8 @@ def proyectos(request):
     return render(request, "correspondencia/views_proyectos/proyectos.html", context)
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def proyectos_finalizados(request):
     context = datosusuario(request)
     list_proyectos_finalizados = recuperar_proyectos_finalizados()
@@ -1586,6 +1648,8 @@ def proyectos_finalizados(request):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def proyectos_actuales(request):
     context = datosusuario(request)
     proyectos_actuales = recuperar_proyectos_pendientes()
@@ -1610,6 +1674,8 @@ def proyectos_actuales(request):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def proyecto_final(request, id):
     context = datosusuario(request)
 
@@ -1689,6 +1755,8 @@ def proyecto_final(request, id):
     )
 
 
+@login_required
+@grupo_usuario("Correspondencia")
 def proyecto_actual(request, id):
     context = datosusuario(request)
     proyecto = recuperar_proyecto_actual(id)
@@ -1757,3 +1825,85 @@ def proyecto_actual(request, id):
 
 
 #####################################################################################################################
+
+
+def recuperar_directores_usuario():
+    directores = Usuarios.objects.filter(groups__name="Directores")
+    if directores:
+        return directores
+    else:
+        directores = None
+        return directores
+
+
+def num_solicitudes_ante():
+    numero = ModelAnteproyecto.objects.filter(solicitud_enviada=True).count()
+    return numero
+
+
+def num_solicitudes_final():
+    numero = ModelProyectoFinal.objects.filter(solicitud_enviada=True).count()
+    return numero
+
+
+def num_solicitudes_esp():
+    numero = ModelSolicitudes.objects.filter(estado=True).count()
+    return numero
+
+
+def num_proyectos_curso():
+    numero = ModelProyectoFinal.objects.filter(estado=False).count()
+    return numero
+
+
+def num_proyectos_terminados():
+    numero = ModelInformacionEntregaFinal.objects.all().count()
+    return numero
+
+
+@login_required
+@grupo_usuario("Correspondencia")
+def carga(request):
+    context = datosusuario(request)
+    directores = recuperar_directores_usuario()
+    context["num_solicitudes_ante"] = num_solicitudes_ante()
+    context["num_solicitudes_final"] = num_solicitudes_final()
+    context["num_solicitudes_esp"] = num_solicitudes_esp()
+    context["num_proyectos_curso"] = num_proyectos_curso()
+    context["num_proyectos_terminados"] = num_proyectos_terminados()
+
+    if directores:
+        dic_informacion_carga_directores = {}
+        for i, director in enumerate(directores):
+            usuario = director
+            evaluaciones_anteproyecto_pendientes = (
+                num_evaluaciones_anteproyecto_pendientes_director(usuario)
+            )
+            print(
+                "Evaluaciones de anteproyecto pendientes:",
+                evaluaciones_anteproyecto_pendientes,
+            )
+
+            evaluaciones_proyecto_final_pendientes = (
+                num_evaluaciones_proyecto_final_pendientes_director(usuario)
+            )
+            print(
+                "Evaluaciones de proyecto final pendientes:",
+                evaluaciones_proyecto_final_pendientes,
+            )
+            num_anteproyectos_pendientes = num_anteproyecto_pendientes_director(usuario)
+            print("Número de anteproyectos pendientes:", num_anteproyectos_pendientes)
+            num_proyectos_pendientes = num_proyecto_final_pendientes_director(usuario)
+            print("Número de proyectos pendientes:", num_proyectos_pendientes)
+
+            nombre = director.nombre_completo
+            dic_informacion_carga_directores[f"director_{i}"] = {
+                "nombre_completo": nombre,
+                "evaluaciones_anteproyecto_pendientes": evaluaciones_anteproyecto_pendientes,
+                "evaluaciones_proyecto_final_pendientes": evaluaciones_proyecto_final_pendientes,
+                "num_anteproyectos_pendientes": num_anteproyectos_pendientes,
+                "num_proyectos_pendientes": num_proyectos_pendientes,
+            }
+        context["carga_directores"] = dic_informacion_carga_directores
+
+    return render(request, "correspondencia/info_carga/carga.html", context)
