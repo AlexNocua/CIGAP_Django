@@ -619,7 +619,7 @@ def solicitudes_anteproyectos(request):
 @grupo_usuario("Correspondencia")
 def solicitudes_proyectos_finales(request):
     context = datosusuario(request)
-    proyectos_finales = recuperar_proyectos_finales()
+    proyectos_finales = recuperar_proyectos_finales_pendientes()
 
     context["proyectos_finales"] = proyectos_finales
     return render(
@@ -1841,12 +1841,12 @@ def recuperar_directores_usuario():
 
 
 def num_solicitudes_ante():
-    numero = ModelAnteproyecto.objects.filter(solicitud_enviada=True).count()
+    numero = ModelAnteproyecto.objects.filter(Q(solicitud_enviada=True) & Q(estado=False)).count()
     return numero
 
 
 def num_solicitudes_final():
-    numero = ModelProyectoFinal.objects.filter(solicitud_enviada=True).count()
+    numero = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=True) & Q(estado=False)).count()
     return numero
 
 

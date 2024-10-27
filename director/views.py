@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import redirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
@@ -53,6 +54,7 @@ from plataform_CIGAP.utils.recuperaciones import (
     num_proyecto_final_pendientes_director,
     num_proyecto_final_terminados_director,
     recuperar_evaluacion_proyecto_final,
+    recuperar_fechas_comite,
     recuperar_formatos,
     datosusuario,
 )
@@ -66,8 +68,12 @@ def datos_usuario_director(request):
     imagen = usuario.imagen
     imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
     form_editar_usuario = FormEditarUsuario(instance=usuario)
+    fechas_comite = recuperar_fechas_comite()
+    ano_actual = datetime.now().year
 
     context = {
+        "ano_actual": ano_actual,
+        "fechas_comite": fechas_comite,
         "form_config": form_editar_usuario,
         "usuario": usuario,
         "user_img": imagen_convertida,

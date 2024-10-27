@@ -113,7 +113,7 @@ class ModelSolicitudes(models.Model):
     TIPO_SOLICITUD = [
         ("cambio_nombre", "Cambio de nombre del proyecto"),
         ("ajuste_integrantes", "Ajuste de integrantes del proyecto"),
-        ("seccion_derechos", "Sección de derechos del proyecto"),
+        ("cesion_derechos", "Cesión de derechos del proyecto"),
         ("otro", "Otro"),
     ]
 
