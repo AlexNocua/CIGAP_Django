@@ -1,6 +1,11 @@
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponsePermanentRedirect
+from plataform_CIGAP.utils.envio_correos import (
+    correo_anteproyecto_aprobado,
+    correo_anteproyecto_rechazado,
+    correo_proyecto_aprobado,
+)
 from plataform_CIGAP.views import logout_user
 from django.contrib.auth.decorators import login_required
 import base64
@@ -739,10 +744,6 @@ def actualizar_datos_solicitud_proyecto(request, id):
     return render(request, "ruta_de_template.html", context)
 
 
-from django.contrib import messages  # Importa el módulo de mensajes
-from django.shortcuts import redirect, render
-
-
 @login_required
 @grupo_usuario("Correspondencia")
 def enviar_retroalimentacion_solicitud(request, id):
@@ -758,18 +759,17 @@ def enviar_retroalimentacion_solicitud(request, id):
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
 
-            # Verificar el estado de la retroalimentación
             if form_retro.cleaned_data["estado"] == "Rechazado":
-                solicitud_especial.delete()  # Eliminar la solicitud
+
+                solicitud_especial.delete()
                 messages.success(
                     request, "La solicitud ha sido rechazada y eliminada correctamente."
                 )
-            else:  # Si el estado es "Aprobado" u otro
-                solicitud_especial.estado = True  # Asigna el estado verdadero
+
+            else:
+                solicitud_especial.estado = True
                 solicitud_especial.save()
-                retroalimentacion.estado = (
-                    "Aprobado"  # Asegúrate de asignar el estado correcto
-                )
+                retroalimentacion.estado = "Aprobado"
                 retroalimentacion.save()
                 messages.success(
                     request,
@@ -782,7 +782,7 @@ def enviar_retroalimentacion_solicitud(request, id):
             messages.error(
                 request, "Algo pasó: por favor revisa los errores en el formulario."
             )
-            return render(request, "nombre_template.html", {"form_retro": form_retro})
+            return redirect("correspondencia:solicitudes")
 
     elif solicitud_especial.proyecto_final:
         form_retro = FormRetroalimentacionAnteproyecto(request.POST, request.FILES)
@@ -792,18 +792,15 @@ def enviar_retroalimentacion_solicitud(request, id):
             retroalimentacion.fecha_retroalimentacion = fecha_actual()
             retroalimentacion.revs_dadas = (retroalimentacion.revs_dadas or 0) + 1
 
-            # Verificar el estado de la retroalimentación
             if form_retro.cleaned_data["estado"] == "Rechazado":
-                solicitud_especial.delete()  # Eliminar la solicitud
+                solicitud_especial.delete()
                 messages.success(
                     request, "La solicitud ha sido rechazada y eliminada correctamente."
                 )
-            else:  # Si el estado es "Aprobado" u otro
-                solicitud_especial.estado = True  # Asigna el estado verdadero
+            else:
+                solicitud_especial.estado = True
                 solicitud_especial.save()
-                retroalimentacion.estado = (
-                    "Aprobado"  # Asegúrate de asignar el estado correcto
-                )
+                retroalimentacion.estado = "Aprobado"
                 retroalimentacion.save()
                 messages.success(
                     request,
@@ -963,6 +960,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         estado = request.POST.get("estado")
 
         if not estado:
+            correo_anteproyecto_aprobado(anteproyecto.user, retroalimentacion)
             anteproyecto.delete()
             messages.warning(
                 request,
@@ -986,6 +984,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 doc_retroalimentacion=doc_binario,
                 estado=estado,
             )
+            correo_anteproyecto_rechazado(anteproyecto.user, retroalimentacion)
             retroalimentacion.save()
 
             nuevo_proyecto_final = ModelProyectoFinal(
@@ -1065,6 +1064,7 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
                     request,
                     "¡El proyecto final ha sido aprobado exitosamente! Diríjase al apartado de 'Proyectos - Proyectos Finalizados' para conocer más información.",
                 )
+                correo_proyecto_aprobado(proyecto,text_retroalimentaicion)
                 return redirect("correspondencia:proyectos_finalizados")
             else:
 

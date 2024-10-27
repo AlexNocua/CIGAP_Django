@@ -27,3 +27,4 @@ env_vars = [
 
 print(config("SECRET_KEY"))
 print(config("DATABASE_URL"))
+print(config("RESEND_KEY"))
