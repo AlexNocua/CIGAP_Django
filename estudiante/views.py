@@ -228,7 +228,8 @@ def contenido_anteproyecto(request):
                 "user_img": imagen_convertida,
                 "form_config": form_editar_usuario,
             }
-            return None
+            return context_anteproyecto
+
         else:
             usuario = request.user
             imagen = usuario.imagen
