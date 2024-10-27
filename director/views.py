@@ -60,7 +60,7 @@ from plataform_CIGAP.utils.recuperaciones import (
 # datos del usuario
 
 
-# @login_required
+@login_required
 def datos_usuario_director(request):
     usuario = request.user
     imagen = usuario.imagen
@@ -87,8 +87,8 @@ def recuperar_actividad(id):
     return actividad
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def recuperar_proyectos_evaluador(request):
     usuario = request.user
     nombre_usuario = usuario.nombre_completo
@@ -116,8 +116,8 @@ def recuperar_documento(documento):
     return documento
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def recuperar_anteproyectos_a_evaluar(request):
     usuario = request.user
     ante_a_evaluar = ModelEvaluacionAnteproyecto.objects.filter(
@@ -128,8 +128,8 @@ def recuperar_anteproyectos_a_evaluar(request):
     return ante_a_evaluar
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def recuperar_anteproyectos(request):
     usuario = request.user
     anteproyectos = ModelAnteproyecto.objects.filter(
@@ -151,8 +151,8 @@ def recuperar_anteproyecto(id):
     return anteproyecto
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def recuperar_proyectos(request):
     usuario = request.user
     proyectos = ModelProyectoFinal.objects.filter(
@@ -182,8 +182,8 @@ def recuperar_proyecto(id):
 #############################################################################################################
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def principal_director(request):
 
     usuario = request.user
@@ -214,8 +214,8 @@ def principal_director(request):
 #             user = form.save()
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def view_anteproyectos(request):
     context = datos_usuario_director(request)
     anteproyectos = recuperar_anteproyectos(request)
@@ -224,8 +224,8 @@ def view_anteproyectos(request):
     return render(request, "director/anteproyectos/anteproyectos.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def anteproyecto(request, id):
     context = datosusuario(request)
     anteproyecto = recuperar_anteproyecto(id)
@@ -268,8 +268,8 @@ def anteproyecto(request, id):
     return render(request, "director/anteproyectos/anteproyecto.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def enviar_anteproyecto(request, id):
     anteproyecto = recuperar_anteproyecto(id)
     if anteproyecto.solicitud_enviada == True:
@@ -315,8 +315,8 @@ def recuperar_objetivo_especifico(id):
     return obj_especifico
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def view_proyectos(request):
     context = datos_usuario_director(request)
     proyectos = recuperar_proyectos(request)
@@ -326,8 +326,8 @@ def view_proyectos(request):
     return render(request, "director/proyectos/proyectos.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def proyecto(request, id):
     context = datosusuario(request)
     proyecto = recuperar_proyecto(id)
@@ -406,8 +406,8 @@ def proyecto(request, id):
     return render(request, "director/proyectos/proyecto.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def enviar_proyecto(request, id):
     proyecto = recuperar_proyecto(id)
     if proyecto.solicitud_enviada == True:
@@ -432,8 +432,8 @@ def enviar_proyecto(request, id):
     # funcion para actualizar el estado de la actividad
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def enviar_observacion_objetivo(request, id_proyect, id_esp):
     proyecto = recuperar_proyecto(id_proyect)
     obj_especifico = recuperar_objetivo_especifico(id_esp)
@@ -468,8 +468,8 @@ def enviar_observacion_objetivo(request, id_proyect, id_esp):
     return redirect("director:proyecto", id=proyecto.id)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def actualizar_estado_objetivo_especifico(request, id_proyect, id_esp):
     proyecto = recuperar_proyecto(id_proyect)
     objetivo_especifico = recuperar_objetivo_especifico(id_esp)
@@ -487,8 +487,8 @@ def actualizar_estado_objetivo_especifico(request, id_proyect, id_esp):
         return redirect("director:proyecto", id=proyecto.id)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def actualizar_estado_actividad(request, actividad_id, id_proyecto):
 
     try:
@@ -524,8 +524,8 @@ def recuperar_proyectos_finales_para_evaluar(usuario):
     return proyectos_finales
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def evaluacion_proyectos(request):
     usuario = request.user
     context = datos_usuario_director(request)
@@ -554,8 +554,8 @@ def evaluacion_proyectos(request):
     return render(request, "director/evaluacion_proyectos/eva_proyectos.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def view_evaluador_anteproyectos(request):
     context = datos_usuario_director(request)
     anteproyectos = recuperar_anteproyectos_a_evaluar(request)
@@ -565,8 +565,8 @@ def view_evaluador_anteproyectos(request):
     return render(request, "director/evaluacion_proyectos/list_evaluador.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def evaluar_anteproyecto(request, id):
     context = datos_usuario_director(request)
     anteproyecto = recuperar_anteproyecto(id)
@@ -584,8 +584,8 @@ def evaluar_anteproyecto(request, id):
     return render(request, "director/evaluacion_proyectos/anteproyecto.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def enviar_evaluacion(request, id):
     context = datos_usuario_director(request)
     anteproyecto = recuperar_anteproyecto(id)
@@ -625,8 +625,8 @@ def enviar_evaluacion(request, id):
     return redirect("director:evaluar_anteproyecto", id=id)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def eliminar_evaluacion(request, id):
     evaluacion = (
         ModelEvaluacionAnteproyecto.objects.get(id=id)
@@ -648,8 +648,8 @@ def recuperar_proyectos_jurado(usuario):
     return evaluaciones
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def view_jurado(request):
     context = datos_usuario_director(request)
     proyectos_evaluar = recuperar_proyectos_jurado(request.user)
@@ -659,8 +659,8 @@ def view_jurado(request):
     return render(request, "director/evaluacion_proyectos/list_jurado.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def evaluar_proyecto_final(request, id):
     context = datosusuario(request)
 
@@ -679,8 +679,8 @@ def evaluar_proyecto_final(request, id):
     return render(request, "director/evaluacion_proyectos/proyecto.html", context)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def enviar_evaluacion_proyecto_final(request, id):
     evaluacion = recuperar_evaluacion_proyecto_final(id)
     proyecto = evaluacion.proyecto_final
@@ -731,8 +731,8 @@ def enviar_evaluacion_proyecto_final(request, id):
         return redirect("director:evaluar_proyecto_final", id=id)
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def carga(request):
     context = datosusuario(request)
     usuario = request.user
@@ -838,8 +838,8 @@ def carga(request):
 # formatos de correspondencia
 
 
-# @login_required
-# @grupo_usuario("Directores")
+@login_required
+@grupo_usuario("Directores")
 def formatos_documentos(request):
     context = datosusuario(request)
     context["formatos"] = recuperar_formatos()
