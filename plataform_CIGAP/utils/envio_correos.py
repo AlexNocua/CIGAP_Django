@@ -4,7 +4,7 @@ import resend
 from estudiante.models import ModelFechasProyecto, ModelProyectoFinal
 
 
-resend.api_key = os.environ.get(RESEND_KEY)
+resend.api_key = os.environ.get('RESEND_KEY')
 
 params: resend.Emails.SendParams = {
     "from": "Acme <onboarding@resend.dev>",

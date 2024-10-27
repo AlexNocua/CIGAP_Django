@@ -51,7 +51,6 @@ class CustomUserCreationForm(UserCreationForm):
 
 # creacion del formulario del registro
 class FormRegistro(UserCreationForm):
-
     class Meta:
         model = Usuarios
         fields = ("nombres", "apellidos", "email", "password1", "password2")
@@ -93,12 +92,27 @@ class FormRegistro(UserCreationForm):
             ),
         }
 
-    # Función para validar las contraseñas
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get("nombres")
+        if re.search(r"\d", nombres):
+            raise ValidationError("El nombre no puede contener números.")
+        if nombres.startswith(" "):
+            raise ValidationError("El nombre no debe comenzar con un espacio.")
+        return nombres
+
+    def clean_apellidos(self):
+        apellidos = self.cleaned_data.get("apellidos")
+        if re.search(r"\d", apellidos):
+            raise ValidationError("El apellido no puede contener números.")
+        if apellidos.startswith(" "):
+            raise ValidationError("El apellido no debe comenzar con un espacio.")
+        return apellidos
+
     def clean_password1(self):
         password = self.cleaned_data.get("password1")
         if not self.password_is_strong(password):
             raise ValidationError(
-                "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un símbolo especial."
+                "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un caracter especial."
             )
         return password
 
@@ -113,7 +127,6 @@ class FormRegistro(UserCreationForm):
             return False
         return True
 
-    # Función para guardar el registro
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_active = True
