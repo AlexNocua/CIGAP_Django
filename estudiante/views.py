@@ -163,7 +163,7 @@ def devolver_documento_imagen(documento_binario):
     return documento
 
 
-@login_required
+# @login_required
 def datosusuario(request):
     anteproyecto = (
         ModelAnteproyecto.objects.get(user=request.user)
@@ -202,8 +202,8 @@ def datosusuario(request):
 
 
 # funcion para devolver un diccionario con los datos del proyecto
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def contenido_anteproyecto(request):
 
     try:
@@ -330,8 +330,8 @@ def recuperar_retroalimentaciones_proyecto_final(proyecto_final):
 # funcion parea recuperar el anteproyecto
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def recuperar_anteproyecto(request):
     anteproyecto = (
         ModelAnteproyecto.objects.get(
@@ -363,8 +363,8 @@ def recuperar_proyecto_final(anteproyecto):
     return proyecto_final
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def principal_estudiante(request):
 
     if request.method == "POST":
@@ -403,8 +403,8 @@ def recuperar_solicitud_especifica_aceptada(anteproyecto):
     return solicitudes_especificas.first() if solicitudes_especificas.exists() else None
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def solicitud(request):
     context = datosusuario(request)
     directores = recuperar_directores()
@@ -601,8 +601,8 @@ def solicitud(request):
         return render(request, "estudiante/solicitud.html", context)
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def actualizar_documentos_anteproyecto(request, id):
     anteproyecto = recuperar_anteproyecto_id(id)
 
@@ -632,8 +632,8 @@ def actualizar_documentos_anteproyecto(request, id):
 # funcion de solicitudes especificas
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def solicitudes_especificas(request):
     if request.method == "POST":
         form = FormSolicitudes(request.POST, request.FILES)
@@ -664,8 +664,8 @@ def solicitudes_especificas(request):
 # vista de la informacion del proyecto
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def info_proyect(request):
     context = datosusuario(request)
     if request.method == "POST":
@@ -708,8 +708,8 @@ def info_proyect(request):
             return render(request, "estudiante/Inf_proyect.html", context)
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def enviar_solicitud_proyecto(request):
 
     if request.method == "POST":
@@ -775,8 +775,8 @@ def recuperar_actividades(objetivo_esp):
     return actividades
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def cargar_editar_documento_cedido(request, id):
     if request.method == "POST":
         documento_cedido = request.FILES.get("documento_final")
@@ -791,7 +791,7 @@ def cargar_editar_documento_cedido(request, id):
                 infomacion_final.save()
                 messages.success(
                     request,
-                    "El documento final con sección de derechos se ha cargado/actualizado correctamente.",
+                    "El documento final con cesión de derechos se ha cargado/actualizado correctamente.",
                 )
                 return redirect("estudiante:avances_proyecto")
             else:
@@ -808,8 +808,8 @@ def cargar_editar_documento_cedido(request, id):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def avances_proyecto(request):
     context = datosusuario(request)
     proyecto_final = recuperar_proyecto_final_usuario(request.user)
@@ -921,8 +921,8 @@ def avances_proyecto(request):
     return render(request, "estudiante/avances_proyecto.html", context)
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def cargar_docs_final(request, id_proyecto):
     proyecto = recuperar_proyecto_final_id(id_proyecto)
 
@@ -965,8 +965,8 @@ def cargar_docs_final(request, id_proyecto):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def modificar_docs_final(request, id_proyecto):
     proyecto = recuperar_proyecto_final_id(id_proyecto)
 
@@ -1005,8 +1005,8 @@ def modificar_docs_final(request, id_proyecto):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def subir_objetivo_general(request, id):
     if request.method == "POST":
         objetivo_general = ModelObjetivoGeneral(
@@ -1024,8 +1024,8 @@ def subir_objetivo_general(request, id):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def editar_objetivo_general(request, id):
     objetivo_general = ModelObjetivoGeneral.objects.filter(id=id).first()
     if objetivo_general:
@@ -1048,8 +1048,8 @@ def editar_objetivo_general(request, id):
     return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def eliminar_objetivo_general(request, id):
 
     objetivo_general = ModelObjetivoGeneral.objects.filter(id=id).first()
@@ -1064,8 +1064,8 @@ def eliminar_objetivo_general(request, id):
     return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def subir_objetivo_especifico(request, id):
     if request.method == "POST":
         proyecto_final = recuperar_proyecto_final_id(id)
@@ -1085,8 +1085,8 @@ def subir_objetivo_especifico(request, id):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def editar_objetivo_especifico(request, id):
     objetivo_especifico = ModelObjetivosEspecificos.objects.filter(id=id).first()
     if objetivo_especifico:
@@ -1109,8 +1109,8 @@ def editar_objetivo_especifico(request, id):
     return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def eliminar_objetivo_especifico(request, id):
 
     objetivo_especifico = ModelObjetivosEspecificos.objects.filter(id=id).first()
@@ -1125,8 +1125,8 @@ def eliminar_objetivo_especifico(request, id):
     return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def editar_eliminar_archivo(request, id):
     # Obtener el objetivo específico correspondiente
     objetivo_especifico = ModelObjetivosEspecificos.objects.get(id=id)
@@ -1166,8 +1166,8 @@ def editar_eliminar_archivo(request, id):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def subir_actividad(request, id_proyecto, id_esp):
     if request.method == "POST":
         proyecto_final = recuperar_proyecto_final_id(id_proyecto)
@@ -1186,8 +1186,8 @@ def subir_actividad(request, id_proyecto, id_esp):
         return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def editar_actividad(request, id):
     actividad = ModelActividades.objects.filter(id=id).first()
 
@@ -1208,8 +1208,8 @@ def editar_actividad(request, id):
     return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def eliminar_actividad(request, id):
     actividad = ModelActividades.objects.filter(id=id).first()
 
@@ -1222,8 +1222,8 @@ def eliminar_actividad(request, id):
     return redirect("estudiante:avances_proyecto")
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def subir_avance(request, id_esp):
 
     obj_esp = recuperar_objetivo_especifico(id_esp)
@@ -1253,8 +1253,8 @@ def subir_avance(request, id_esp):
 # formatos del comite
 
 
-@login_required
-@grupo_usuario("Estudiantes")
+# @login_required
+# @grupo_usuario("Estudiantes")
 def formatos_documentos(request):
     context = datosusuario(request)
     context["formatos"] = recuperar_formatos()
