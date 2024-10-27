@@ -603,7 +603,11 @@ def solicitudes_anteproyectos(request):
     if request.method == "POST":
         pass
     else:
-        anteproyectos = solicitudes_anteproyectos
+        anteproyectos = (
+            ModelAnteproyecto.objects.filter(estado=False)
+            if ModelAnteproyecto.objects.filter(estado=False).exists()
+            else None
+        )
         context["anteproyectos"] = anteproyectos
 
         return render(
@@ -1064,7 +1068,7 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
                     request,
                     "¡El proyecto final ha sido aprobado exitosamente! Diríjase al apartado de 'Proyectos - Proyectos Finalizados' para conocer más información.",
                 )
-                correo_proyecto_aprobado(proyecto,text_retroalimentaicion)
+                correo_proyecto_aprobado(proyecto, text_retroalimentaicion)
                 return redirect("correspondencia:proyectos_finalizados")
             else:
 
