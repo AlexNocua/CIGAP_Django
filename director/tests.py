@@ -19,6 +19,7 @@ class ModelEvaluacionAnteproyectoTest(TestCase):
         )
         
         
+        
         self.evaluacion_anteproyecto = ModelEvaluacionAnteproyecto.objects.create(
             evaluador=self.evaluador,
             anteproyecto=self.anteproyecto,
