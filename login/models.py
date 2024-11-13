@@ -25,7 +25,7 @@ class Usuarios(AbstractUser):
     apellidos = models.CharField(max_length=100)
     nombre_completo = models.CharField(max_length=200, blank=True)
     email = models.EmailField(unique=True)
-    username = None  # Eliminamos el campo username de AbstractUser
+    username = None  
     imagen = models.BinaryField(null=True, blank=True)
     token = models.CharField(max_length=32, blank=True, null=True)
 

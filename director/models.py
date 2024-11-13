@@ -26,8 +26,6 @@ class ModelEvaluacionAnteproyecto(models.Model):
     class Meta:
         verbose_name_plural = "Evaluaciones de Anteproyectos"
 
-
-# creacion del modelo de evaluador de jurado
 class ModelEvaluacionProyectoFinal(models.Model):
     jurado = models.ForeignKey(Usuarios, on_delete=models.CASCADE,
                                   related_name='evaluacion_proyectos', blank=True, null=True)

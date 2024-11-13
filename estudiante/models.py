@@ -39,7 +39,7 @@ class ModelAnteproyecto(models.Model):
         verbose_name_plural = "Anteproyectos"
 
 
-# creacion del modelo de monografia o proyecto de grado
+
 
 
 class ModelProyectoFinal(models.Model):
@@ -72,7 +72,6 @@ class ModelProyectoFinal(models.Model):
         verbose_name_plural = "Proyectos Finales"
 
 
-# creacion del modelo de jurados
 class ModelAsignacionJurados(models.Model):
     proyecto_final = models.ForeignKey(
         ModelProyectoFinal,
@@ -89,9 +88,6 @@ class ModelAsignacionJurados(models.Model):
 
     def __str__(self):
         return f"Jurado: {self.nombre_jurado} - Proyecto: {self.proyecto_final}"
-
-
-# creacion de los modelos correspondientes a la linea de tiempo
 
 
 class ModelObjetivoGeneral(models.Model):
