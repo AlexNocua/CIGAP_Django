@@ -11,7 +11,7 @@ from django.utils import timezone
 
 
 class ModelAnteproyectoTest(TestCase):
-
+ 
     def setUp(self):
         self.user = Usuarios.objects.create(
             email="anteproyecto@correo.com",

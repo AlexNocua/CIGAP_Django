@@ -18,7 +18,7 @@ class ModelEvaluacionAnteproyectoTest(TestCase):
             descripcion="Descripción de prueba"
         )
         
-        
+         
         
         self.evaluacion_anteproyecto = ModelEvaluacionAnteproyecto.objects.create(
             evaluador=self.evaluador,

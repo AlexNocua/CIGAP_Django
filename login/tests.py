@@ -10,7 +10,7 @@ class UsuariosModelTest(TestCase):
             nombres="Juan",
             apellidos="Pérez"
         )
-
+ 
 
         print("\n--- Datos de usuario creado en test_usuario_creation ---")
         print(f"Email: {usuario.email}")
