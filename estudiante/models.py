@@ -39,9 +39,6 @@ class ModelAnteproyecto(models.Model):
         verbose_name_plural = "Anteproyectos"
 
 
-
-
-
 class ModelProyectoFinal(models.Model):
     user = models.OneToOneField(
         Usuarios,
@@ -86,8 +83,8 @@ class ModelAsignacionJurados(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return f"Jurado: {self.nombre_jurado} - Proyecto: {self.proyecto_final}"
+    class Meta:
+        verbose_name_plural = "Jurados Asignados"
 
 
 class ModelObjetivoGeneral(models.Model):

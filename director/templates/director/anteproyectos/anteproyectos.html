@@ -34,8 +34,10 @@
   </style>
 
   <article class="cont_anteproyectos" style="border:1px solid #cacaca; border-radius: 12px; overflow: hidden;">
-    <h3 class="tittles_h3">Proyectos Asignados</h3>
-    <p class="p-3 etiquetas_parrafos etiquetas_parrafos">En esta sección se presenta una descripción breve de los proyectos en los que actualmente se encuentra trabajando, incluyendo detalles relevantes y el estado de cada uno.</p>
+    <h3 class="tittles_h3"><i class="fas fa-tasks"></i> Proyectos Asignados</h3>
+    <p class="p-3 etiquetas_parrafos etiquetas_parrafos">
+      <i class="fas fa-info-circle"></i> En esta sección se presenta una descripción breve de los proyectos en los que actualmente se encuentra trabajando, incluyendo detalles relevantes y el estado de cada uno.
+    </p>
     <section class="grid-container m-3">
       {% if anteproyectos %}
         {% for anteproyecto in anteproyectos %}
@@ -45,6 +47,7 @@
               <strong>Integrantes:</strong><br />
               {% if anteproyecto.nombre_integrante2 %}
                 {{ anteproyecto.nombre_integrante1 }}
+                <br>
                 {{ anteproyecto.nombre_integrante2 }}
               {% else %}
                 {{ anteproyecto.nombre_integrante1 }}
@@ -66,9 +69,12 @@
           </div>
         {% endfor %}
       {% else %}
-        <div class="no-projects">
-          <h4>No hay proyectos asignados</h4>
-          <p class="etiquetas_parrafos etiquetas_parrafos">Actualmente no tiene ningún proyecto asignado. Por favor, revise más tarde para actualizaciones.</p>
+        <div class="no-projects text-center">
+          <i class="fas fa-folder-open fa-3x mb-3" style="color: #6c757d;"></i>
+          <h4><i class="fas fa-exclamation-circle"></i> No hay proyectos asignados</h4>
+          <p class="etiquetas_parrafos etiquetas_parrafos">
+            <i class="fas fa-info-circle"></i> Actualmente no tiene ningún proyecto asignado. Por favor, revise más tarde para actualizaciones.
+          </p>
         </div>
       {% endif %}
     </section>

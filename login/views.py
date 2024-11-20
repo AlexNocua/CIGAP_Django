@@ -3,6 +3,7 @@ from plataform_CIGAP.settings import base_dir
 from .models import Usuarios  # Asegúrate de importar tu modelo
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+
 # import pythoncom
 # import win32com.client as win32
 from django.conf import settings
@@ -61,8 +62,6 @@ def existe_usuario(email):
 
 # Creacion de la vista global del login
 def loginapps(request):
-
-    # print(base_dir())
     if request.method == "POST":
         username = request.POST.get("email")
         password = request.POST.get("password")
@@ -76,10 +75,13 @@ def loginapps(request):
             user_groups = user.groups.values_list("name", flat=True)
             print(f"User Groups: {user_groups}")
             if "Estudiantes" in user_groups:
+                messages.success(request, "Bienvenido, Estudiante!")
                 return redirect("estudiante:principal_estudiante")
             elif "Directores" in user_groups:
+                messages.success(request, "Bienvenido, Director!")
                 return redirect("director:principal_director")
             elif "Correspondencia" in user_groups:
+                messages.success(request, "Bienvenido, Correspondencia!")
                 return redirect("correspondencia:principal_correspondencia")
             else:
                 return HttpResponse("No tienes acceso a ninguna sección.")
@@ -193,7 +195,7 @@ def recuperar_cuenta(request):
                 }
                 messages.success(
                     request,
-                    "Se ha enviado un enlace de recuperación a tu correo electrónico.",
+                    "Se ha enviado un enlace de recuperación a tu correo electrónico. Espera unos segundos.",
                 )
                 return render(request, "recuperar_cuenta.html", context)
             else:
@@ -285,25 +287,32 @@ def recuperar_cuenta(request):
 #     return render(request, "recuperar_cuenta.html")
 
 
-
-
-
-
 def validar_contrasena(contrasena, user):
     if len(contrasena) < 8:
         return "La contraseña debe contener al menos 8 caracteres."
-    
-    if user.nombres.lower() in contrasena.lower() or user.apellidos.lower() in contrasena.lower() or user.email.lower() in contrasena.lower():
+
+    if (
+        user.nombres.lower() in contrasena.lower()
+        or user.apellidos.lower() in contrasena.lower()
+        or user.email.lower() in contrasena.lower()
+    ):
         return "La contraseña no debe ser demasiado similar a tu información personal."
-    
+
     contrasenas_comunes = ["12345678", "password", "qwerty"]
     if contrasena in contrasenas_comunes:
         return "La contraseña no debe ser una contraseña comúnmente utilizada."
-    
-    if not (re.search(r'[A-Za-z]', contrasena) and re.search(r'\d', contrasena) and re.search(r'[^\w\s]', contrasena)):
-        return "La contraseña debe incluir una combinación de letras, números y símbolos."
+
+    if not (
+        re.search(r"[A-Za-z]", contrasena)
+        and re.search(r"\d", contrasena)
+        and re.search(r"[^\w\s]", contrasena)
+    ):
+        return (
+            "La contraseña debe incluir una combinación de letras, números y símbolos."
+        )
 
     return None
+
 
 def recuperar_cuenta_confirm(request, token):
     if request.method == "POST":
@@ -319,7 +328,6 @@ def recuperar_cuenta_confirm(request, token):
                 error = validar_contrasena(nueva_contrasena, user)
                 if error:
                     messages.error(request, error)
-                    
 
                 user.set_password(nueva_contrasena)
                 user.save()
@@ -330,11 +338,6 @@ def recuperar_cuenta_confirm(request, token):
                 messages.error(request, "El token de recuperación es inválido.")
 
     return render(request, "recuperar_cuenta_confirm.html", {"token": token})
-
-
-
-
-
 
 
 # resend.api_key = "re_i2AKGn92_3GqGVCbZP4y8sw3Ash4xEsKM"

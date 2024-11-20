@@ -70,7 +70,7 @@ def datos_usuario_director(request):
     form_editar_usuario = FormEditarUsuario(instance=usuario)
     fechas_comite = recuperar_fechas_comite()
     ano_actual = datetime.now().year
-
+    
     context = {
         "ano_actual": ano_actual,
         "fechas_comite": fechas_comite,
@@ -195,7 +195,7 @@ def principal_director(request):
     usuario = request.user
     imagen = usuario.imagen
     imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
-
+    grupos = usuario.groups.all()
     if request.method == "POST":
         editar_usuario(request)
     else:
@@ -203,7 +203,7 @@ def principal_director(request):
         return render(
             request,
             "director/base_director.html",
-            {"form_config": form, "usuario": usuario, "user_img": imagen_convertida},
+            {"form_config": form, "usuario": usuario, "user_img": imagen_convertida, "grupos":grupos},
         )
 
 
@@ -272,6 +272,18 @@ def anteproyecto(request, id):
         formulario_retroalimentacion = FormObservacionAnteproyecto()
         context["from_retroalimentacion"] = formulario_retroalimentacion
     return render(request, "director/anteproyectos/anteproyecto.html", context)
+
+
+@login_required
+@grupo_usuario("Directores")
+def eliminar_anteproyecto(request, id):
+    anteproyecto = ModelAnteproyecto.objects.get(id=id)
+    anteproyecto.delete()
+    messages.success(
+        request,
+        f'Su participación en el anteproyecto "{anteproyecto.nombre_anteproyecto}" ha sido eliminada.',
+    )
+    return redirect("director:view_anteproyectos")
 
 
 @login_required

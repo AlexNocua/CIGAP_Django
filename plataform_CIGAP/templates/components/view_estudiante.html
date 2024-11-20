@@ -25,10 +25,14 @@
           {% if anteproyecto.estado %}
             Aprobado.
           {% else %}
-            {% if anteproyecto.estado == False %}
-              Rechazado.
-            {% else %}
+            {% if anteproyecto.estado == None %}
               Aún no hay una respuesta.
+            {% else %}
+              {% if anteproyecto.estado == False %}
+                Rechazado.
+              {% else %}
+                Aún no hay una respuesta.
+              {% endif %}
             {% endif %}Aún no hay una solicitud de anteproyecto.
           {% endif %}
         </p>

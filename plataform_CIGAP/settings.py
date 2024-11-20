@@ -33,14 +33,16 @@ def base_dir():
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "pvj1rd@(@mz%h9c+k=3-om38%r5s00#@bw--putsf5d($$3(!y"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-# DEBUG = True
+# # DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = True
+DEBUG = False
 
 
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 ALLOWED_HOSTS = ["*"]
 
 
@@ -69,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    # "plataform_CIGAP.middleware.AutoLogoutMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
@@ -108,13 +111,13 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # Configurar la base de datos
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=os.environ.get("DATABASE_URL"),
-#         conn_max_age=600,
-#         conn_health_checks=True,
-#     )
-# }
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
 
 # base de datos predefinida
 DATABASES = {
@@ -177,11 +180,10 @@ AUTH_USER_MODEL = "login.Usuarios"
 LANGUAGE_CODE = "es"
 
 
-# reajustes del direcciones depues del login
-
-# LOGIN_URL = '/'
+# reajustes del direcciones depues del login e inactividad
 # LOGIN_REDIRECT_URL = '/estudiante/'
-# LOGOUT_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = "logout"
+LOGIN_URL = "/"
 
 # autenticaciones de contraseña
 AUTHENTICATION_BACKENDS = [
@@ -191,6 +193,7 @@ AUTHENTICATION_BACKENDS = [
 
 # manejo de errores
 CSRF_FAILURE_VIEW = "plataform_CIGAP.views.csrf_failure"
+
 
 
 # # recuperacion de cuenta
@@ -219,3 +222,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #         },
 #     },
 # }
+
+
+# ajustes de cierre de sesion
+# Configuración de la duración de la sesión en minutos
+# SESSION_COOKIE_AGE = 1 * 60  # 5 minutos en segundos
+
+# Activar la expiración de la sesión al cerrar el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

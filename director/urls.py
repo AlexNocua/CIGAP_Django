@@ -16,6 +16,11 @@ urlpatterns = [
     path("view_anteproyectos", views.view_anteproyectos, name="view_anteproyectos"),
     path("anteproyecto/<int:id>", views.anteproyecto, name="anteproyecto"),
     path(
+        "eliminar_anteproyecto/<int:id>",
+        views.eliminar_anteproyecto,
+        name="eliminar_anteproyecto",
+    ),
+    path(
         "enviar_anteproyecto/<int:id>",
         views.enviar_anteproyecto,
         name="enviar_anteproyecto",

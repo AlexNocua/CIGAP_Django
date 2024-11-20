@@ -27,9 +27,6 @@ from django.views.csrf import csrf_failure
 
 
 urlpatterns = [
-    #  ruta de registro para el patterns de la app
-    # path('registro/', views.registro, name='registro'),
-    # path('', views.loginapps, name='loginapps'),
     path("admin/", admin.site.urls),
     path("estudiante/", include("estudiante.urls")),
     path("director/", include("director.urls")),
@@ -37,9 +34,9 @@ urlpatterns = [
     path("", include("login.urls")),
     # vista y url del logout
     path("logout/", views.logout_user, name="logout_user"),
+    path("submit_error/", views.submit_error, name="submit_error"),
     # ruta de errores
     # path('errors/', views.errors, name='errors'),
-    path("submit_error/", views.submit_error, name="submit_error"),
 ]
 
 # vistas de manejo de errores

@@ -163,13 +163,23 @@ def devolver_documento_imagen(documento_binario):
     return documento
 
 
-@login_required
-def datosusuario(request):
+def recuperar_proyecto_perteneciente(nombre):
     anteproyecto = (
-        ModelAnteproyecto.objects.get(user=request.user)
-        if ModelAnteproyecto.objects.filter(user=request.user).exists()
+        ModelAnteproyecto.objects.get(
+            Q(nombre_integrante1=nombre) | Q(nombre_integrante2=nombre)
+        )
+        if ModelAnteproyecto.objects.filter(
+            Q(nombre_integrante1=nombre) | Q(nombre_integrante2=nombre)
+        ).exists()
         else None
     )
+    return anteproyecto
+
+
+@login_required
+def datosusuario(request):
+    nombre_usuario = request.user.nombre_completo
+    anteproyecto = recuperar_proyecto_perteneciente(nombre_usuario)
     usuario = request.user
     imagen = usuario.imagen
     imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
@@ -337,12 +347,12 @@ def recuperar_anteproyecto(request):
         ModelAnteproyecto.objects.get(
             Q(user=request.user)
             | Q(nombre_integrante1=request.user.nombre_completo)
-            | Q(nombre_integrante1=request.user.nombre_completo)
+            | Q(nombre_integrante2=request.user.nombre_completo)
         )
         if ModelAnteproyecto.objects.filter(
             Q(user=request.user)
             | Q(nombre_integrante1=request.user.nombre_completo)
-            | Q(nombre_integrante1=request.user.nombre_completo)
+            | Q(nombre_integrante2=request.user.nombre_completo)
         ).exists()
         else None
     )
@@ -414,6 +424,13 @@ def solicitud(request):
         nombre_integrante2 = request.POST.get("nombre_integrante2")
 
         if nombre_integrante2:
+            usuario = Usuarios.objects.filter(nombre_completo=nombre_integrante2)
+            if not usuario:
+                messages.error(
+                    request,
+                    f"El estudiante {nombre_integrante2} no está registrado en la plataforma. Por favor, infórmalo para proceder con su registro y continuar con el proceso.",
+                )
+                return redirect("estudiante:solicitud")
             existing_anteproyecto = ModelAnteproyecto.objects.filter(
                 Q(nombre_integrante2=nombre_integrante2)
                 | Q(nombre_integrante1=nombre_integrante2)

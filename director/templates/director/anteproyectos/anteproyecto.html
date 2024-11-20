@@ -144,6 +144,37 @@
             </svg>
             <span class="m-1">Enviar observaciones</span>
           </a>
+          <script>
+            const eliminar_anteproyecto = document.getElementById('eliminar_anteproyecto')
+            const eliminarUrl = "{% url 'director:eliminar_anteproyecto' anteproyecto.id %}"
+            
+            function confirmar_eliminacion() {
+              Swal.fire({
+                title: '¿Está seguro de que desea eliminar su participación en este anteproyecto?',
+                text: 'Una vez eliminado, no podrá recuperar esta información.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'No, cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: 'Eliminando...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading()
+                    }
+                  })
+            
+                  setTimeout(() => {
+                    window.location.href = eliminarUrl
+                  }, 1500)
+                }
+              })
+            }
+          </script>
+
+          <a id="eliminar_anteproyecto" onclick="confirmar_eliminacion()" class="btn btn-danger btns-cancelar-cerrar d-flex justify-content-center align-items-center"><i class="fas fa-times-circle m-1"></i><span class="m-1">No participar</span></a>
           <div class="modal fade" id="formretro" tabindex="-1" aria-labelledby="formretroLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">

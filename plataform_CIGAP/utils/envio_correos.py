@@ -22,7 +22,6 @@ def correo_anteproyecto_aprobado(usuario, retroalimentacion):
     )
     params: resend.Emails.SendParams = {
         "from": "Acme <onboarding@resend.dev>",
-        # activado el dominio se ajusta a f{usuario.email}
         "to": "plataformacigapubate@outlook.com",
         "subject": "Anteproyecto Aprobado",
         "html": f"""
@@ -258,3 +257,9 @@ def correo_proyecto_rechazado(proyecto, txtretroalimentacion):
     email = resend.Emails.send(params)
     print(email)
     pass
+
+
+# correo_anteproyecto_aprobado()
+# correo_anteproyecto_rechazado()
+# correo_proyecto_aprobado()
+# correo_proyecto_rechazado()

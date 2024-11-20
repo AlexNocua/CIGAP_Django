@@ -104,14 +104,13 @@
                 <td>{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}</td>
                 <td>Anteproyecto</td>
                 <td>
-                  <a href="{% url 'correspondencia:ver_respuesta' value.respuesta_anteproyecto.id %}">Ver respuesta</a>
+                  <a class="btn btn-primary btns-solicitudes" href="{% url 'correspondencia:ver_respuesta' value.respuesta_anteproyecto.id %}"><i class="fas fa-eye me-1"></i> Ver respuesta</a>
                 </td>
                 <td>{{ value.respuesta_anteproyecto.fecha_retroalimentacion }}</td>
-                <td>{{ value.respuesta_anteproyecto.estado }}</td>
-                <td>{{ value.respuesta_anteproyecto.revs_dadas }}</td>
+
                 <td>
                   {% if value.doc_binario %}
-                    <a class="mt-2" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf">Descargar PDF</a>
+                    <a class="mt-2 btn btn-outline-primary" href="data:application/pdf;base64,{{ value.doc_binario }}" download="Retroalimentacion_{{ value.respuesta_anteproyecto.anteproyecto.nombre_anteproyecto }}.pdf"><i class="fas fa-download me-1"></i>Descargar PDF</a>
                   {% else %}
                     No cargado.
                   {% endif %}
