@@ -33,17 +33,14 @@ def base_dir():
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = "pvj1rd@(@mz%h9c+k=3-om38%r5s00#@bw--putsf5d($$3(!y"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# # DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-DEBUG = True
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-ALLOWED_HOSTS = ["*"]
+
 
 
 # Application definition
@@ -120,12 +117,12 @@ DATABASES = {
 }
 
 # base de datos predefinida
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
