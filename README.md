@@ -10,7 +10,7 @@ La Plataforma CIGAP es una solución web desarrollada en Django que facilita la 
 ## 🌍 **Hostings o Páginas Disponibles**
 - **Producción**:  
   👉 [Plataforma CIGAP (Producción)]
-  🔗 URL: `[https://plataforma-cigap.railway.app](https://cigap-django-y1zm.onrender.com/)`
+  🔗 URL: `https://cigap-django-y1zm.onrender.com/`
 
 
 Nota: Asegúrate de que tengas las credenciales correspondientes para acceder a cada entorno.
@@ -43,9 +43,4 @@ Nota: Asegúrate de que tengas las credenciales correspondientes para acceder a 
 
 
 
-## ⚙️ **Configuraciones Importantes**
 
-### 🛠️ **Ajustes en `settings.py`**
-- Definir el modelo de usuario personalizado:
-  ```python
-  AUTH_USER_MODEL = 'estudiantes.Estudiantes'
