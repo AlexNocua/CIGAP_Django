@@ -43,6 +43,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -107,12 +108,12 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Configurar la base de datos
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        conn_health_checks=True,
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL'),  
+        conn_max_age=600,                   
+        ssl_require=True                     
     )
 }
 
