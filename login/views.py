@@ -203,14 +203,14 @@ def recuperar_cuenta(request):
                     request,
                     f"El email {email} no esta registrado en la plataforma, verifica de nuevo.",
                 )
-                return render(request, "login.html")
+                return redirect('loginapps')
         else:
 
             messages.error(
                 request,
                 f"El email {email} no esta registrado en la plataforma, verifica de nuevo.",
             )
-            return render(request, "recuperar_cuenta.html")
+            return redirect('loginapps')
 
     return render(request, "recuperar_cuenta.html")
 
