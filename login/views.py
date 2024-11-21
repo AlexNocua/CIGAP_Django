@@ -157,7 +157,12 @@ def editar_usuario(request):
             elif "Correspondencia" in user_groups:
                 return redirect("correspondencia:principal_correspondencia")
             else:
-                return HttpResponse("No tienes acceso a ninguna seción")
+                if user.is_staff:
+                    messages.info(request,"Inicia sesión desde el panel administrador")
+                    return redirect('login:loginapps')
+                else:
+                    messages.info(request,"El usuario ingresado no existe o no tiene permisos.")
+                    return redirect('login:loginapps')
             return redirect("director:base_director")
         else:
             return render(

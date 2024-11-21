@@ -175,7 +175,31 @@
                   <a href="data:application/pdf;base64,{{ doc_proyecto_final_cedido }}" download="Documento_Final.pdf" class="btn btn-outline-primary m-2"><i class="fas fa-download"></i> Descargar Documento Final</a>
 
                   <button type="button" class="btn btn-primary botones_envios m-2" data-bs-toggle="modal" data-bs-target="#modalDocumentoFinal"><i class="fas fa-upload"></i> Actualiza el documento final con la cesión de derechos</button>
-                {% else %}
+                  <div class="modal fade" id="modalDocumentoFinal" tabindex="-1" aria-labelledby="modalDocumentoFinalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="modalDocumentoFinalLabel"><i class="fas fa-file-pdf"></i> Documento Final con cesión de Derechos</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form id="formDocumentoFinal" action="{% url 'estudiante:cargar_editar_documento_cedido' informacion_proyecto_final.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                              <label for="inputDocumentoFinal" class="form-label">Cargar documento final (PDF)</label>
+                              <input type="file" class="form-control" id="inputDocumentoFinal" name="documento_final" accept="application/pdf" required />
+                            </div>
+                            <small class="text-muted d-block mt-2">Solo se admiten archivos en formato PDF. Asegúrate de que el documento incluya la cesión de derechos.</small>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+                          <button type="button" class="btn btn-primary botones_envios" onclick="submitDocumentoFinal()"><i class="fas fa-save"></i> Guardar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% else %}
                   <p class="etiquetas_parrafos">
                     <i class="fas fa-exclamation-circle"></i> Recuerde subir el documento final con la cesión de derechos.
                   </p>
