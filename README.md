@@ -5,12 +5,22 @@ La **Plataforma CIGAP** es una solución web desarrollada en Django que facilita
 
 ---
 
-## 🌍 Hostings o Páginas Disponibles
+## 🌍 Hostings o Páginas Disponibles  
 - **Producción**:  
   👉 [Plataforma CIGAP (Producción)](https://cigap-django-y1zm.onrender.com/)  
   🔗 URL: `https://cigap-django-y1zm.onrender.com/`
 
-**Nota**: Asegúrate de contar con las credenciales correspondientes para acceder a cada entorno.
+## 👥 Usuarios Disponibles  
+A continuación, se presentan usuarios de prueba según sus roles:  
+
+| Rol              | Correo                     | Contraseña       |  
+|-------------------|----------------------------|------------------|  
+| 👩‍🎓 **Estudiante**  | aenocua@ucundinamarca.edu.co      | A@lexk14alex    |  
+| 👨‍🏫 **Director**     | manuel@ucundinamarca.edu.co        | M@nuEl123      |  
+| 📋 **Comité**       | correspondencia@ucundinamarca.edu.co          | 2024Cig@pCorres        |  
+| 🔑 **Administrador** | plataformaCIGAPUbate@outlook.com           | CiGAPUb@te2024         |  
+
+> ⚠️ **Nota:** Estos usuarios son solo para fines de demostración.  
 
 ---
 
