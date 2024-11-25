@@ -6,8 +6,10 @@ La **Plataforma CIGAP** es una solución web desarrollada en Django que facilita
 ## 🎥 Videos de Uso de la Plataforma  
 A continuación, se presentan videos explicativos sobre cómo usar las diferentes funcionalidades de la plataforma según el rol asignado:  
 
-1. 🔑 **Uso del Administrador**  
-   [![Ver video](https://youtu.be/Vp9n2EjykiY)  
+1. ## 🔑 Uso del Administrador  
+
+### 🎥 Video Tutorial  
+[Accede al video aquí](https://www.youtube.com/watch?v=Vp9n2EjykiY)  
    👉 **Descripción**: Este video guía al administrador en la gestión de usuarios, configuración de roles y supervisión de la plataforma.
 
 > 📌 **Nota**: Haz clic en la miniatura para acceder al video correspondiente.
