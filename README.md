@@ -3,6 +3,28 @@
 ## 📖 Descripción del Proyecto
 La **Plataforma CIGAP** es una solución web desarrollada en Django que facilita la gestión y comunicación dentro de un entorno académico. Permite un acceso controlado y organizado para diferentes roles de usuarios, tales como estudiantes, directores y correspondencia dirigida al Comité de Trabajos de Grado. Además, incluye funcionalidades personalizadas como formularios de registro adaptados, manejo de grupos de usuarios y una interfaz intuitiva.
 
+## 🎥 Videos de Uso de la Plataforma  
+A continuación, se presentan videos explicativos sobre cómo usar las diferentes funcionalidades de la plataforma según el rol asignado:  
+
+1. 🔑 **Uso del Administrador**  
+   [![Ver video](https://youtu.be/Vp9n2EjykiY)](https://youtu.be/Vp9n2EjykiY)  
+   👉 **Descripción**: Este video guía al administrador en la gestión de usuarios, configuración de roles y supervisión de la plataforma.
+
+2. 👩‍🎓 **Uso de la Aplicación Estudiante**  
+   [![Ver video](https://img.youtube.com/vi/VIDEO_ID_ESTUDIANTE/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_ESTUDIANTE)  
+   👉 **Descripción**: Aprende cómo los estudiantes pueden registrarse, acceder y gestionar sus solicitudes.
+
+3. 👨‍🏫 **Uso de la Aplicación Director**  
+   [![Ver video](https://img.youtube.com/vi/VIDEO_ID_DIRECTOR/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_DIRECTOR)  
+   👉 **Descripción**: Este video muestra las funcionalidades disponibles para los directores, como la revisión y aprobación de solicitudes.
+
+4. 📋 **Uso de la Aplicación Correspondencia**  
+   [![Ver video](https://img.youtube.com/vi/VIDEO_ID_CORRESPONDENCIA/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_CORRESPONDENCIA)  
+   👉 **Descripción**: Aprende cómo se maneja la correspondencia oficial y el seguimiento de documentos dentro de la plataforma.
+
+> 📌 **Nota**: Haz clic en la miniatura para acceder al video correspondiente.
+
+
 ---
 
 ## 🌍 Hostings o Páginas Disponibles  
