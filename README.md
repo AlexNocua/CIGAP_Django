@@ -12,15 +12,15 @@ A continuación, se presentan videos explicativos sobre cómo usar las diferente
 [Accede al video aquí](https://www.youtube.com/watch?v=Vp9n2EjykiY)  
    👉 **Descripción**: Este video guía al administrador en la gestión de usuarios, configuración de roles y supervisión de la plataforma.
 
-> 📌 **Nota**: Haz clic en la miniatura para acceder al video correspondiente.
+> 📌 **Nota**: Haz click en el hipervinculo para ir al video correspondiente.
 
 
 ---
 
 ## 🌍 Hostings o Páginas Disponibles  
 - **Producción**:  
-  👉 [Plataforma CIGAP (Producción)](https://cigap-django-y1zm.onrender.com/)  
-  🔗 URL: `https://cigap-django-y1zm.onrender.com/`
+  👉 [Plataforma CIGAP (Producción)](https://github.com/AlexNocua/CIGAP_Django/)  
+  🔗 URL: `https://github.com/AlexNocua/CIGAP_Django/`
 
 ## 👥 Usuarios Disponibles  
 A continuación, se presentan usuarios de prueba según sus roles:  
