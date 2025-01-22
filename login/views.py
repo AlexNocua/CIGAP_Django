@@ -83,13 +83,23 @@ def loginapps(request):
             elif "Correspondencia" in user_groups:
                 messages.success(request, "Bienvenido, Correspondencia!")
                 return redirect("correspondencia:principal_correspondencia")
+            elif user.is_staff:
+                messages.success(
+                    request,
+                    "Le informamos que su cuenta ha sido registrada con el rol de Administrador. Por favor, acceda al panel de administración para realizar las gestiones correspondientes.",
+                )
+                redirect("login:loginapps")
             else:
+                messages.error(
+                    request,
+                    "Le informamos que es posible que los usuarios correspondientes a las aplicaciones de Estudiantes, Directores y Correspondencia aún no hayan sido creados en la plataforma. Para resolver esta situación, le solicitamos amablemente que se comunique con un administrador del sistema para verificar y realizar las configuraciones necesarias.",
+                )
                 return HttpResponse("No tienes acceso a ninguna sección.")
         else:
             messages.error(
                 request, "Verifique que el correo y la contraseña sean correctos."
             )
-            return redirect("login:loginapps")
+            redirect("login:loginapps")
 
     else:
         form = FormRegistro
@@ -158,11 +168,13 @@ def editar_usuario(request):
                 return redirect("correspondencia:principal_correspondencia")
             else:
                 if user.is_staff:
-                    messages.info(request,"Inicia sesión desde el panel administrador")
-                    return redirect('login:loginapps')
+                    messages.info(request, "Inicia sesión desde el panel administrador")
+                    return redirect("login:loginapps")
                 else:
-                    messages.info(request,"El usuario ingresado no existe o no tiene permisos.")
-                    return redirect('login:loginapps')
+                    messages.info(
+                        request, "El usuario ingresado no existe o no tiene permisos."
+                    )
+                    return redirect("login:loginapps")
             return redirect("director:base_director")
         else:
             return render(
@@ -208,14 +220,14 @@ def recuperar_cuenta(request):
                     request,
                     f"El email {email} no esta registrado en la plataforma, verifica de nuevo.",
                 )
-                return redirect('loginapps')
+                return redirect("loginapps")
         else:
 
             messages.error(
                 request,
                 f"El email {email} no esta registrado en la plataforma, verifica de nuevo.",
             )
-            return redirect('loginapps')
+            return redirect("loginapps")
 
     return render(request, "recuperar_cuenta.html")
 

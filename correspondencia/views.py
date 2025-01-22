@@ -620,7 +620,6 @@ def solicitudes_anteproyectos(request):
 def solicitudes_proyectos_finales(request):
     context = datosusuario(request)
     proyectos_finales = recuperar_proyectos_finales_pendientes()
-
     context["proyectos_finales"] = proyectos_finales
     return render(
         request, "correspondencia/views_solicitud/list_proyectos_finales.html", context
@@ -1579,7 +1578,6 @@ def formatos_documentos(request):
     return render(
         request, "correspondencia/views_formatos/documentos_comite.html", context
     )
-
 
 # funcion para eliminar un formato cargado
 def eliminar_formato(request, id):

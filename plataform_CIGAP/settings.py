@@ -34,13 +34,13 @@ def base_dir():
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = False
 
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["cigap-django-a09b.onrender.com"]
 
 
 # Application definition
@@ -108,6 +108,7 @@ WSGI_APPLICATION = "plataform_CIGAP.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # Configurar la base de datos
+
 DATABASES = {
     "default": dj_database_url.config(
         default=os.environ.get("DATABASE_URL"),
@@ -116,7 +117,7 @@ DATABASES = {
     )
 }
 
-# base de datos predefinida
+# # base de datos predefinida
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
