@@ -94,7 +94,7 @@ def loginapps(request):
                     request,
                     "Le informamos que es posible que los usuarios correspondientes a las aplicaciones de Estudiantes, Directores y Correspondencia aún no hayan sido creados en la plataforma. Para resolver esta situación, le solicitamos amablemente que se comunique con un administrador del sistema para verificar y realizar las configuraciones necesarias.",
                 )
-                return HttpResponse("No tienes acceso a ninguna sección.")
+                redirect("login:loginapps")
         else:
             messages.error(
                 request, "Verifique que el correo y la contraseña sean correctos."
