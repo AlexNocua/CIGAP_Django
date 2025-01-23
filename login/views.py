@@ -83,12 +83,12 @@ def loginapps(request):
             elif "Correspondencia" in user_groups:
                 messages.success(request, "Bienvenido, Correspondencia!")
                 return redirect("correspondencia:principal_correspondencia")
-            elif user.is_staff:
-                messages.success(
-                    request,
-                    "Le informamos que su cuenta ha sido registrada con el rol de Administrador. Por favor, acceda al panel de administración para realizar las gestiones correspondientes.",
-                )
-                redirect("login:loginapps")
+            # elif user.is_staff:
+            #     messages.success(
+            #         request,
+            #         "Le informamos que su cuenta ha sido registrada con el rol de Administrador. Por favor, acceda al panel de administración para realizar las gestiones correspondientes.",
+            #     )
+            #     redirect("login:loginapps")
             else:
                 messages.error(
                     request,
