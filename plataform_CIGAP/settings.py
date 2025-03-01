@@ -39,8 +39,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
 
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-ALLOWED_HOSTS = ["cigap-django-a09b.onrender.com"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -116,6 +115,7 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
+
 
 # # base de datos predefinida
 # DATABASES = {

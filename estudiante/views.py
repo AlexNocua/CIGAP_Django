@@ -181,6 +181,7 @@ def datosusuario(request):
     nombre_usuario = request.user.nombre_completo
     anteproyecto = recuperar_proyecto_perteneciente(nombre_usuario)
     usuario = request.user
+    grupos = usuario.groups.all()
     imagen = usuario.imagen
     imagen_convertida = base64.b64encode(imagen).decode("utf-8") if imagen else ""
     form_editar_usuario = FormEditarUsuario(instance=usuario)
@@ -194,6 +195,7 @@ def datosusuario(request):
             "form_anteproyecto": form_solicitud,
             "form_config": form_editar_usuario,
             "usuario": usuario,
+            "grupos": grupos,
             "user_img": imagen_convertida,
             "nombre_anteproyecto": anteproyecto.nombre_anteproyecto,
         }
@@ -205,6 +207,7 @@ def datosusuario(request):
             "form_anteproyecto": form_solicitud,
             "form_config": form_editar_usuario,
             "usuario": usuario,
+            "grupos": grupos,
             "user_img": imagen_convertida,
             "nombre_anteproyecto": None,
         }
@@ -226,6 +229,7 @@ def contenido_anteproyecto(request):
         )
         if content_anteproyecto == None:
             usuario = request.user
+            grupos = usuario.groups.all()
             imagen = usuario.imagen
             imagen_convertida = (
                 base64.b64encode(imagen).decode("utf-8") if imagen else ""
@@ -235,6 +239,7 @@ def contenido_anteproyecto(request):
                 "ano_actual": ano_actual,
                 "fechas_comite": fechas_comite,
                 "usuario": usuario,
+                "grupos": grupos,
                 "user_img": imagen_convertida,
                 "form_config": form_editar_usuario,
             }
