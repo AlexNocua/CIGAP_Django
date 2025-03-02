@@ -19,7 +19,7 @@ A continuación, se presentan videos explicativos sobre cómo usar las diferente
 
 ## 🌍 Hostings o Páginas Disponibles  
 - **Producción**:  
-  👉 [Plataforma CIGAP (Producción)](https://cigap-django-a09b.onrender.com)  
+  👉 [Plataforma CIGAP (Producción)](https://cigap-django.onrender.com)  
   🔗 URL: `https://cigap-django-a09b.onrender.com`
 
 ## 👥 Usuarios Disponibles  
