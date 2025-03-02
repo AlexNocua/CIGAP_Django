@@ -226,4 +226,4 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # SESSION_COOKIE_AGE = 10 * 60  # 5 minutos en segundos
 
 # Activar la expiración de la sesión al cerrar el navegador
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
