@@ -69,8 +69,8 @@
           </p>
         </div>
         <section class="grid-container w-100">
-          {% if documento_cedido %}
-            <div class="card m-2 d-flex flex-column justify-content-between">
+          <div class="card m-2 d-flex flex-column justify-content-between">
+            {% if documento_cedido %}
               <embed class="card-img-top" src="data:application/pdf;base64,{{ documento_cedido }}" type="application/pdf" />
               <div class="card-body">
                 <p class="card-text">
@@ -80,11 +80,10 @@
                   <a href="{{ documento_cedido }}" class="btn btn-outline-primary" target="_blank" download="{{ proyecto.nombre_anteproyecto }}_cedido.pdf"><i class="fas fa-download"></i> Descargar</a>
                 </div>
               </div>
-            </div>
-          {% else %}
-            <p class="etiquetas_parrafos">No se ha cargado ningun documento.</p>
-            <button class="btn btn_primary botones_envios">Enviar notificacion para subir documento</button>
-          {% endif %}
+            {% else %}
+              <p class="etiquetas_parrafos">No se ha cargado ningun documento.</p>
+            {% endif %}
+          </div>
         </section>
         <section class="grid-container w-100">
           {% if formatos %}

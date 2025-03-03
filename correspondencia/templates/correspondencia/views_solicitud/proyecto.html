@@ -268,24 +268,6 @@
                   <strong><i class="fas fa-calendar-alt"></i> Fecha de asignación:</strong> {{ evaluacion.fecha_asignacion }}
                 </p>
 
-                <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
-                        <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
-                        <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 {% if evaluacion.comentarios %}
                   <p class="etiquetas_parrafos card-text mb-1">
                     <i class="fas fa-comments"></i>
@@ -304,6 +286,25 @@
                     <i class="fas fa-info-circle"></i> Aún no se ha dado una evaluación
                   </p>
                 {% endif %}
+
+                <div class="modal fade" id="confirmDeleteModalJurado" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ¿Estás seguro de que desea eliminar esta asignación de jurado?<br />
+                        <small>Nombre del jurado: {{ evaluacion.jurado.nombre_completo }}</small>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btns-cancelar-cerrar" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                        <a href="{% url 'correspondencia:eliminar_jurado' evaluacion.id inf_proyecto.anteproyecto.nombre_anteproyecto %}" class="btn btn-danger">Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             {% endfor %}
             <div class="row m-3">

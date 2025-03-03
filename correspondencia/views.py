@@ -961,7 +961,7 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
 
         text_retroalimentaicion = request.POST.get("retroalimentacion")
         estado = request.POST.get("estado")
-
+        print(estado)
         if not estado:
             correo_anteproyecto_rechazado(anteproyecto.user, retroalimentacion)
             anteproyecto.delete()
@@ -987,13 +987,14 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
                 doc_retroalimentacion=doc_binario,
                 estado=estado,
             )
-            correo_anteproyecto_aprobado(anteproyecto.user, retroalimentacion)
+            # correo_anteproyecto_aprobado(anteproyecto.user, retroalimentacion)
             retroalimentacion.save()
-
+            print(retroalimentacion, "retor")
             nuevo_proyecto_final = ModelProyectoFinal(
                 user=anteproyecto.user,
                 anteproyecto=anteproyecto,
             )
+            print(nuevo_proyecto_final)
             nuevo_proyecto_final.save()
 
             fecha_actual_datetime = datetime.strptime(
@@ -1024,13 +1025,19 @@ def enviar_retroalimentacion(request, nombre_anteproyecto):
         return redirect("correspondencia:solicitudes")
 
 
+
+
 @login_required
 @grupo_usuario("Correspondencia")
 def enviar_retroalimentacion_concepto(request, id_proyecto):
-    if request.method == "POST":
-        proyecto = recuperar_proyecto_final_id(id_proyecto)
+    try:
+        if request.method == "POST":
+            proyecto = recuperar_proyecto_final_id(id_proyecto)
 
-        if proyecto:
+            if not proyecto:
+                messages.error(request, "El proyecto no existe o no se encontró.")
+                return redirect("correspondencia:solicitudes")
+
             fechas_proyecto = (
                 ModelFechasProyecto.objects.get(proyecto_final=proyecto)
                 if ModelFechasProyecto.objects.filter(proyecto_final=proyecto).exists()
@@ -1039,17 +1046,18 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
             if fechas_proyecto:
                 fechas_proyecto.fecha_finalizacion = fecha_actual()
                 fechas_proyecto.save()
-            text_retroalimentaicion = request.POST.get("retroalimentacion")
+
+            text_retroalimentacion = request.POST.get("retroalimentacion")
             estado = request.POST.get("estado")
             doc_concepto = request.FILES.get("doc_retroalimentacion")
-            if estado == "True":
 
+            if estado == "True":
                 new_retro = ModelRetroalimentaciones(
                     user=request.user,
                     proyecto_final=proyecto,
-                    retroalimentacion=text_retroalimentaicion,
+                    retroalimentacion=text_retroalimentacion,
                     fecha_retroalimentacion=fecha_actual(),
-                    doc_retroalimentacion=doc_concepto.read(),
+                    doc_retroalimentacion=doc_concepto.read() if doc_concepto else None,
                     estado=True,
                 )
                 new_retro.save()
@@ -1063,54 +1071,56 @@ def enviar_retroalimentacion_concepto(request, id_proyecto):
                     fecha_finalizacion=fecha_actual(),
                 )
                 new_informacion_entrega_final.save()
+
                 messages.success(
                     request,
                     "¡El proyecto final ha sido aprobado exitosamente! Diríjase al apartado de 'Proyectos - Proyectos Finalizados' para conocer más información.",
                 )
-                correo_proyecto_aprobado(proyecto, text_retroalimentaicion)
                 return redirect("correspondencia:proyectos_finalizados")
-            else:
 
-                if estado == "False":
-                    evaluaciones_del_proyecto = (
-                        ModelEvaluacionProyectoFinal.objects.filter(
-                            proyecto_final=proyecto
-                        )
-                    )
-                    evaluaciones_del_proyecto.delete()
+            elif estado == "False":
+                evaluaciones_del_proyecto = ModelEvaluacionProyectoFinal.objects.filter(
+                    proyecto_final=proyecto
+                )
+                evaluaciones_del_proyecto.delete()
 
-                    fechas_proyecto = (
-                        ModelFechasProyecto.objects.get(proyecto_final=proyecto)
-                        if ModelFechasProyecto.objects.filter(
-                            proyecto_final=proyecto
-                        ).exists()
-                        else None
-                    )
-                    if fechas_proyecto:
-                        fechas_proyecto.fecha_sustentacion = None
-                        fechas_proyecto.save()
-                    proyecto.proyecto_final = None
-                    proyecto.estado = False
-                    proyecto.solicitud_enviada = False
-                    proyecto.fecha_envio = None
-                    proyecto.proyecto_final = None
-                    new_retro = ModelRetroalimentaciones(
-                        user=request.user,
-                        proyecto_final=proyecto,
-                        retroalimentacion=text_retroalimentaicion,
-                        fecha_retroalimentacion=fecha_actual(),
-                        doc_retroalimentacion=doc_concepto.read(),
-                        estado=estado,
-                    )
-                    proyecto.save()
-                    new_retro.save()
-                    messages.success(
-                        request,
-                        f"Se ha enviado la retroalimentación para el proyecto {proyecto.anteproyecto.nombre_anteproyecto} que no fue aprobado.",
-                    )
-                    return redirect("correspondencia:solicitudes")
-    else:
-        messages.error(request, "Ocurrió algo.")
+                fechas_proyecto = (
+                    ModelFechasProyecto.objects.get(proyecto_final=proyecto)
+                    if ModelFechasProyecto.objects.filter(proyecto_final=proyecto).exists()
+                    else None
+                )
+                if fechas_proyecto:
+                    fechas_proyecto.fecha_sustentacion = None
+                    fechas_proyecto.save()
+
+                proyecto.proyecto_final = None
+                proyecto.estado = False
+                proyecto.solicitud_enviada = False
+                proyecto.fecha_envio = None
+                proyecto.proyecto_final = None
+
+                new_retro = ModelRetroalimentaciones(
+                    user=request.user,
+                    proyecto_final=proyecto,
+                    retroalimentacion=text_retroalimentacion,
+                    fecha_retroalimentacion=fecha_actual(),
+                    doc_retroalimentacion=doc_concepto.read() if doc_concepto else None,
+                    estado=False,
+                )
+                new_retro.save()
+                proyecto.save()
+
+                messages.success(
+                    request,
+                    f"Se ha enviado la retroalimentación para el proyecto {proyecto.anteproyecto.nombre_anteproyecto} que no fue aprobado.",
+                )
+                return redirect("correspondencia:solicitudes")
+
+        messages.error(request, "Método no permitido.")
+        return redirect("correspondencia:solicitudes")
+
+    except Exception as e:
+        messages.error(request, f"Ocurrió un error inesperado: {str(e)}")
         return redirect("correspondencia:solicitudes")
 
 
@@ -1270,9 +1280,8 @@ def editar_radicado_proyecto_final(request, id_proyecto):
         )
 
 
-@login_required
-@grupo_usuario("Correspondencia")
 def fue_asignado_jurado_jurado(nombre_completo):
+
     fue_asignado = ModelEvaluacionProyectoFinal.objects.filter(
         jurado__nombre_completo=nombre_completo
     )
@@ -1286,17 +1295,23 @@ def fue_asignado_jurado_jurado(nombre_completo):
 @grupo_usuario("Correspondencia")
 def asignar_jurados(request, id):
     context = datosusuario(request)
+    # print( "eeee")
     proyecto = recuperar_proyecto_final_id(id)
     if proyecto:
         if request.method == "POST":
+
             directores_seleccionados = request.POST.getlist("directores")
             for director in directores_seleccionados:
-
+                print("eeee")
                 fue_asignado = fue_asignado_jurado_jurado(director)
+                print("uuuu")
+
                 if fue_asignado:
                     messages.error(request, "El director ya fue asignado como jurado")
                 else:
+                    print("eeee")
                     usuario = recuperar_usuario(director)
+                    print(type(usuario), "eeee")
                     if usuario:
                         new_evaluacion_proyecto_final = ModelEvaluacionProyectoFinal(
                             jurado=usuario,
@@ -1579,6 +1594,7 @@ def formatos_documentos(request):
         request, "correspondencia/views_formatos/documentos_comite.html", context
     )
 
+
 # funcion para eliminar un formato cargado
 def eliminar_formato(request, id):
     formato_id = id
@@ -1839,12 +1855,16 @@ def recuperar_directores_usuario():
 
 
 def num_solicitudes_ante():
-    numero = ModelAnteproyecto.objects.filter(Q(solicitud_enviada=True) & Q(estado=False)).count()
+    numero = ModelAnteproyecto.objects.filter(
+        Q(solicitud_enviada=True) & Q(estado=False)
+    ).count()
     return numero
 
 
 def num_solicitudes_final():
-    numero = ModelProyectoFinal.objects.filter(Q(solicitud_enviada=True) & Q(estado=False)).count()
+    numero = ModelProyectoFinal.objects.filter(
+        Q(solicitud_enviada=True) & Q(estado=False)
+    ).count()
     return numero
 
 

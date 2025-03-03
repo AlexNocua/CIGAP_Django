@@ -199,7 +199,7 @@
                       </div>
                     </div>
                   </div>
-                  {% else %}
+                {% else %}
                   <p class="etiquetas_parrafos">
                     <i class="fas fa-exclamation-circle"></i> Recuerde subir el documento final con la cesión de derechos.
                   </p>
@@ -340,28 +340,28 @@
                     </div>
                   </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" style="display: flex;
+          border-radius: 50%;
+          background: #cacaca;
+          align-items: center;
+          justify-content: center;" aria-hidden="true"><i class="fas fa-chevron-left" style="color: #fff;"></i></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" style="display: flex;
+          border-radius: 50%;
+          background: #cacaca;
+          align-items: center;
+          justify-content: center;" aria-hidden="true"><i class="fas fa-chevron-right" style="color: #fff;"></i></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
               {% endif %}
             {% endfor %}
           </div>
 
           <!-- Controles del carrusel -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" style="display: flex;
-    border-radius: 50%;
-    background: #cacaca;
-    align-items: center;
-    justify-content: center;" aria-hidden="true"><i class="fas fa-chevron-left" style="color: #fff;"></i></span>
-            <span class="visually-hidden">Anterior</span>
-          </button>
-
-          <button class="carousel-control-next" type="button" data-bs-target="#observacionesCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" style="display: flex;
-    border-radius: 50%;
-    background: #cacaca;
-    align-items: center;
-    justify-content: center;" aria-hidden="true"><i class="fas fa-chevron-right" style="color: #fff;"></i></span>
-            <span class="visually-hidden">Siguiente</span>
-          </button>
         </div>
       {% endif %}
 

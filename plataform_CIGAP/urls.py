@@ -42,6 +42,6 @@ urlpatterns = [
 # vistas de manejo de errores
 handler400 = "plataform_CIGAP.views.handler400"
 handler500 = "plataform_CIGAP.views.handler500"
-handler401 = 'plataform_CIGAP.views.handler401'
-handler403 = 'plataform_CIGAP.views.handler403'
+handler401 = "plataform_CIGAP.views.handler401"
+# handler403 = 'plataform_CIGAP.views.handler403'
 handler404 = "plataform_CIGAP.views.handler404"
