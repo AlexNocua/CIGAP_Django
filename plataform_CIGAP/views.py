@@ -74,16 +74,14 @@ def csrf_failure(request, reason=""):
 #     return render(request, "errors.html", errores["500"])
 
 
-# def handler401(request,exception):
-#     return render(request, 'errors.html', errores['401'])
 
 
 def handler500(request):
     return render(request, "errors.html", errores["500"])
 
 
-# def handler401(request,exception):
-#     return render(request, 'errors.html', errores['401'])
+def handler401(request,exception):
+    return render(request, 'errors.html', errores['401'])
 
 
 def submit_error(request):
